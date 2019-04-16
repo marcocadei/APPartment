@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">APPartment</string>
+
     <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
+
+    <string name="activity_create_home_hint_name">Nome casa</string>
+    <string name="activity_create_home_hint_password">Password</string>
+    <string name="activity_create_home_hint_repeat">Ripeti password</string>
+    <string name="activity_create_home_text_title">Crea la tua casa</string>
+    <string name="activity_create_home_img_title_description">Icona di una casa</string>
+
 </resources>
