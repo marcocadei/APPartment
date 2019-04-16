@@ -22,5 +22,14 @@ public class EnterActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button btnLogin = findViewById(R.id.activity_enter_btn_login);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EnterActivity.this, SignInActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
