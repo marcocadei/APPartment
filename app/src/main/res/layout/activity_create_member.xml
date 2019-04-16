@@ -28,7 +28,7 @@
                 android:text="@string/activity_create_member_logo_description"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="54sp"
+                android:textSize="@dimen/title_text"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_name"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_member_img_title"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -71,6 +71,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark" />
@@ -94,6 +95,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -119,6 +121,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -134,7 +137,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/activity_create_member_text_radio_gender"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="@dimen/medium_text"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_gender"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -161,15 +164,13 @@
                     android:id="@+id/activity_create_member_radio_gender_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_create_member_radio_gender_male"
-                    android:textSize="18sp" />
+                    android:text="@string/activity_create_member_radio_gender_male" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_gender_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_create_member_radio_gender_female"
-                    android:textSize="18sp" />
+                    android:text="@string/activity_create_member_radio_gender_female" />
             </RadioGroup>
 
             <TextView
@@ -180,7 +181,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/activity_create_member_text_radio_role"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="@dimen/medium_text"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_role"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -207,22 +208,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:text="@string/activity_create_member_radio_role_owner"
-                    android:textSize="18sp" />
+                    android:text="@string/activity_create_member_radio_role_owner" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_role_master"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_create_member_radio_role_master"
-                    android:textSize="18sp" />
+                    android:text="@string/activity_create_member_radio_role_master" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_role_slave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_create_member_radio_role_slave"
-                    android:textSize="18sp" />
+                    android:text="@string/activity_create_member_radio_role_slave" />
             </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
