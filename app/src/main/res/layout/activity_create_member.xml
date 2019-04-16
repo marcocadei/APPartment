@@ -7,211 +7,227 @@
     android:background="@color/colorBackground"
     tools:context=".CreateMemberActivity">
 
-    <TextView
-        android:id="@+id/activity_create_member_text_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:fontFamily="@font/shadows_into_light_two"
-        android:text="@string/activity_create_member_logo_description"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorPrimary"
-        android:textSize="54sp"
-        app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_name"
-        app:layout_constraintEnd_toStartOf="@+id/activity_create_member_img_title"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/activity_create_member_img_title"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="32dp"
-        android:contentDescription="@string/activity_create_member_logo_description"
-        android:tint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_create_member_text_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_title"
-        app:layout_constraintTop_toTopOf="@+id/activity_create_member_text_title"
-        app:srcCompat="@drawable/ic_person_add_black_24dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_create_member_input_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/activity_create_member_input_name"
-        android:textColorHint="@color/colorPrimaryLight"
-        app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_age"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark" />
+            android:background="@color/colorBackground">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/activity_create_member_text_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/shadows_into_light_two"
+                android:text="@string/activity_create_member_logo_description"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="54sp"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_name"
+                app:layout_constraintEnd_toStartOf="@+id/activity_create_member_img_title"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                app:layout_constraintVertical_chainStyle="packed" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_create_member_input_age"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/activity_create_member_input_age"
-        android:textColorHint="@color/colorPrimaryLight"
-        app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_name">
+            <ImageView
+                android:id="@+id/activity_create_member_img_title"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/activity_create_member_logo_description"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_create_member_text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_title"
+                app:layout_constraintTop_toTopOf="@+id/activity_create_member_text_title"
+                app:srcCompat="@drawable/ic_person_add_black_24dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="2"
-            android:textColor="@color/colorPrimaryDark" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_member_input_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/activity_create_member_input_name"
+                android:textColorHint="@color/colorPrimaryLight"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_age"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
 
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_create_member_input_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/activity_create_member_input_password"
-        android:textColorHint="@color/colorPrimaryLight"
-        app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_gender"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age">
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:textColor="@color/colorPrimaryDark" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_member_input_age"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/activity_create_member_input_age"
+                android:textColorHint="@color/colorPrimaryLight"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_name">
 
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textColor="@color/colorPrimaryDark" />
 
-    <TextView
-        android:id="@+id/activity_create_member_text_radio_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/activity_create_member_text_radio_gender"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_gender"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_password" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <RadioGroup
-        android:id="@+id/activity_create_member_radio_gender"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:checkedButton="@+id/activity_create_member_radio_gender_male"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_role"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_radio_gender"
-        app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_password">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_member_input_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/activity_create_member_input_password"
+                android:textColorHint="@color/colorPrimaryLight"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_gender"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age">
 
-        <RadioButton
-            android:id="@+id/activity_create_member_radio_gender_male"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/activity_create_member_radio_gender_male"
-            android:textSize="18sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorPrimaryDark" />
 
-        <RadioButton
-            android:id="@+id/activity_create_member_radio_gender_female"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/activity_create_member_radio_gender_female"
-            android:textSize="18sp" />
-    </RadioGroup>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/activity_create_member_text_radio_role"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/activity_create_member_text_radio_role"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_role"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender" />
+            <TextView
+                android:id="@+id/activity_create_member_text_radio_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/activity_create_member_text_radio_gender"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_gender"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_password" />
 
-    <RadioGroup
-        android:id="@+id/activity_create_member_radio_role"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:checkedButton="@+id/activity_create_member_radio_role_slave"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_radio_role"
-        app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender">
+            <RadioGroup
+                android:id="@+id/activity_create_member_radio_gender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                android:checkedButton="@+id/activity_create_member_radio_gender_male"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_role"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_radio_gender"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_password">
 
-        <RadioButton
-            android:id="@+id/activity_create_member_radio_role_owner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="@string/activity_create_member_radio_role_owner"
-            android:textSize="18sp" />
+                <RadioButton
+                    android:id="@+id/activity_create_member_radio_gender_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_create_member_radio_gender_male"
+                    android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/activity_create_member_radio_role_master"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/activity_create_member_radio_role_master"
-            android:textSize="18sp" />
+                <RadioButton
+                    android:id="@+id/activity_create_member_radio_gender_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_create_member_radio_gender_female"
+                    android:textSize="18sp" />
+            </RadioGroup>
 
-        <RadioButton
-            android:id="@+id/activity_create_member_radio_role_slave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/activity_create_member_radio_role_slave"
-            android:textSize="18sp" />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/activity_create_member_text_radio_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/activity_create_member_text_radio_role"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_role"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender" />
+
+            <RadioGroup
+                android:id="@+id/activity_create_member_radio_role"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/activity_create_member_radio_role_slave"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_radio_role"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender">
+
+                <RadioButton
+                    android:id="@+id/activity_create_member_radio_role_owner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="@string/activity_create_member_radio_role_owner"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/activity_create_member_radio_role_master"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_create_member_radio_role_master"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/activity_create_member_radio_role_slave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_create_member_radio_role_slave"
+                    android:textSize="18sp" />
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/activity_create_member_float_new_member"
