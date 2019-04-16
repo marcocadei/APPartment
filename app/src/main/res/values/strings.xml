@@ -3,4 +3,9 @@
     <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
+    <string name="activity_signin_text_title">Accedi</string>
+    <string name="activity_signin_img_title_description">Simbolo di login</string>
+    <string name="activity_signin_hint_housename">Nome casa</string>
+    <string name="activity_signin_hint_username">Username</string>
+    <string name="activity_signin_hint_password">Password</string>
 </resources>
