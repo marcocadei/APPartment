@@ -5,6 +5,18 @@
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
 
+    <string name="activity_create_member_logo_description">Aggiungi membro</string>
+    <string name="activity_create_member_input_age">Età</string>
+    <string name="activity_create_member_input_name">Nome</string>
+    <string name="activity_create_member_input_password">Password</string>
+    <string name="activity_create_member_radio_gender_male">Maschio</string>
+    <string name="activity_create_member_radio_gender_female">Femmina</string>
+    <string name="activity_create_member_radio_role_owner">Creatore</string>
+    <string name="activity_create_member_radio_role_master">Leader</string>
+    <string name="activity_create_member_radio_role_slave">Collaboratore</string>
+    <string name="activity_create_member_text_radio_gender">Genere</string>
+    <string name="activity_create_member_text_radio_role">Ruolo</string>
+    
     <string name="activity_create_home_hint_name">Nome casa</string>
     <string name="activity_create_home_hint_motto">Motto della casa (opzionale)</string>
     <string name="activity_create_home_text_title">Crea la tua casa</string>
