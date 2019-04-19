@@ -89,7 +89,7 @@
                 android:layout_marginBottom="8dp"
                 android:hint="@string/activity_create_member_input_age"
                 android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_password"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_gender"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_name">
@@ -100,31 +100,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:textColor="@color/colorPrimaryDark" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_create_member_input_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
-                android:hint="@string/activity_create_member_input_password"
-                android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_gender"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/medium_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
                     android:textColor="@color/colorPrimaryDark" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -142,7 +117,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_password" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age" />
 
             <RadioGroup
                 android:id="@+id/activity_create_member_radio_gender"
@@ -158,7 +133,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_radio_gender"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_password">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age">
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_gender_male"
