@@ -7,7 +7,7 @@
   
     <string name="activity_signin_text_title">Entra nella tua casa</string>
     <string name="activity_signin_img_title_description">Simbolo di login</string>
-    <string name="activity_signin_hint_housename">Nome casa</string>
+    <string name="activity_signin_hint_housename">Nome della casa</string>
     <string name="activity_signin_hint_username">Username</string>
     <string name="activity_signin_hint_password">Password</string>
 
@@ -23,7 +23,7 @@
     <string name="activity_create_member_text_radio_gender">Genere</string>
     <string name="activity_create_member_text_radio_role">Ruolo</string>
     
-    <string name="activity_create_home_hint_name">Nome casa</string>
+    <string name="activity_create_home_hint_name">Nome della casa</string>
     <string name="activity_create_home_hint_password">Password della casa</string>
     <string name="activity_create_home_hint_password_repeat">Ripeti password della casa</string>
     <string name="activity_create_home_text_title">Crea la tua casa</string>
