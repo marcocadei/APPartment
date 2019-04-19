@@ -60,9 +60,9 @@
                 android:layout_marginBottom="8dp"
                 android:hint="@string/activity_create_home_hint_name"
                 android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_motto"
-                app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_motto"
-                app:layout_constraintStart_toStartOf="@id/activity_create_home_input_motto"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_password"
+                app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_password"
+                app:layout_constraintStart_toStartOf="@id/activity_create_home_input_password"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +74,32 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_create_home_input_motto"
+                android:id="@+id/activity_create_home_input_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/activity_create_home_hint_password"
+                android:textColorHint="@color/colorPrimaryLight"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_repeat_password"
+                app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
+                app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="@dimen/medium_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_home_input_repeat_password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,17 +107,18 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp"
-                android:hint="@string/activity_create_home_hint_motto"
+                android:hint="@string/activity_create_home_hint_password_repeat"
                 android:textColorHint="@color/colorPrimaryLight"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_name">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPassword"
                     android:textColor="@color/colorPrimaryDark" />
 
             </com.google.android.material.textfield.TextInputLayout>
