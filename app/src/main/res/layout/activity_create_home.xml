@@ -28,7 +28,7 @@
                 android:text="@string/activity_create_home_text_title"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="50sp"
+                android:textSize="@dimen/title_text"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_name"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_home_img_title"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -66,6 +66,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark" />
@@ -89,6 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark" />
@@ -96,6 +98,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
