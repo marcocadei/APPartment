@@ -2,8 +2,11 @@ package com.unison.appartment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -12,6 +15,14 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        Button btnSignIn = findViewById(R.id.fl)
+        FloatingActionButton floatNext = findViewById(R.id.activity_sign_in_float_next);
+        floatNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 }
