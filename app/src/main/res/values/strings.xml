@@ -31,8 +31,8 @@
 
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
-    <string name="activity_main_bottom_navigation_done">Completate</string>
+    <string name="activity_main_bottom_navigation_done">Finite</string>
     <string name="activity_main_bottom_navigation_family">Famiglia</string>
-    <string name="activity_main_bottom_navigation_rewards">Ricompense</string>
+    <string name="activity_main_bottom_navigation_rewards">Premi</string>
 
 </resources>
