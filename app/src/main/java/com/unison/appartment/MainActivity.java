@@ -9,8 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.unison.appartment.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PostFragment.OnListFragmentInteractionListener {
 
     private int selectedBottomNavigationMenuItemId;
 
@@ -64,4 +65,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
 }
