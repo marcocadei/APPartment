@@ -38,24 +38,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        app:srcCompat="@drawable/ic_send_white_24dp"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toStartOf="@id/fragment_insert_post_btn_img"
         app:layout_constraintStart_toEndOf="@id/fragment_insert_post_input_post"
         app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
-        app:srcCompat="@drawable/ic_send_white_24dp" />
+        android:contentDescription="@string/fragment_insert_post_img_send_text_description"/>
 
     <ImageView
         android:id="@+id/fragment_insert_post_btn_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        app:srcCompat="@drawable/ic_image_white_24dp"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toStartOf="@id/fragment_insert_post_btn_audio"
         app:layout_constraintStart_toEndOf="@id/fragment_insert_post_btn_send"
         app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
-        app:srcCompat="@drawable/ic_image_white_24dp" />
+        android:contentDescription="@string/fragment_insert_post_img_send_img_description"/>
 
     <ImageView
         android:id="@+id/fragment_insert_post_btn_audio"
@@ -63,11 +65,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        app:srcCompat="@drawable/ic_mic_none_white_24dp"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fragment_insert_post_btn_img"
         app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
-        app:srcCompat="@drawable/ic_mic_none_white_24dp" />
+        android:contentDescription="@string/fragment_insert_post_img_send_audio_description"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
