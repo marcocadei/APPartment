@@ -12,6 +12,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int selectedBottomNavigationMenuItemId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,16 +23,24 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
-        MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(bottomNavigation.getSelectedItemId());
+        selectedBottomNavigationMenuItemId = bottomNavigation.getSelectedItemId();
+        final MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(selectedBottomNavigationMenuItemId);
         toolbar.setTitle(selectedBottomNavigationMenuItem.getTitle());
         toolbar.setLogo(selectedBottomNavigationMenuItem.getIcon());
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                // TODO Switch Fragment
-                toolbar.setTitle(menuItem.getTitle());
-                toolbar.setLogo(menuItem.getIcon());
+                /*
+                In questo modo quando si seleziona la stessa sezione in cui si è già non viene
+                ricaricato il fragment (semplicemente non viene fatto nulla).
+                 */
+                if (menuItem.getItemId() != selectedBottomNavigationMenuItemId) {
+                    // TODO Switch Fragment
+                    toolbar.setTitle(menuItem.getTitle());
+                    toolbar.setLogo(menuItem.getIcon());
+                }
+                selectedBottomNavigationMenuItemId = menuItem.getItemId();
                 return true;
             }
         });
