@@ -73,6 +73,7 @@
                     android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textCapSentences|textFilter"
                     android:textColor="@color/colorPrimaryDark" />
 
             </com.google.android.material.textfield.TextInputLayout>
