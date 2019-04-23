@@ -25,6 +25,7 @@
     <string name="activity_create_home_hint_name">Nome della casa</string>
     <string name="activity_create_home_hint_password">Password della casa</string>
     <string name="activity_create_home_hint_password_repeat">Ripeti password della casa</string>
+    <string name="activity_create_home_text_info">La password della casa sarà utilizzata al primo accesso di ogni utente. Dovrà poi essere obbligatoriamente modificata.</string>
     <string name="activity_create_home_text_title">Crea la tua casa</string>
     <string name="activity_create_home_img_title_description">Icona di una casa</string>
 
@@ -33,5 +34,11 @@
     <string name="activity_main_bottom_navigation_done">Finite</string>
     <string name="activity_main_bottom_navigation_family">Famiglia</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
+
+    <string name="activity_first_access_text_title">Cambia password</string>
+    <string name="activity_first_access_img_title_description">Icona di un lucchetto</string>
+    <string name="activity_first_access_hint_password_repeat">Ripeti password</string>
+    <string name="activity_first_access_hint_password">Nuova password</string>
+    <string name="activity_first_access_text_info">Questo è il tuo primo accesso. Scegli una nuova password per proteggere il tuo account.</string>
 
 </resources>
