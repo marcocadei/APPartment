@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +12,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unison.appartment.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements PostFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements PostFragment.OnListFragmentInteractionListener, InsertPostFragment.OnFragmentInteractionListener {
 
     private int selectedBottomNavigationMenuItemId;
 
@@ -67,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnLi
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
