@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:textColor="@color/colorPrimaryDark"
@@ -33,18 +33,41 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <ImageView
         android:id="@+id/fragment_insert_post_btn_send"
-        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:textAlignment="center"
+        android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
+        app:layout_constraintEnd_toStartOf="@id/fragment_insert_post_btn_img"
         app:layout_constraintStart_toEndOf="@id/fragment_insert_post_input_post"
+        app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
+        app:srcCompat="@drawable/ic_send_white_24dp" />
+
+    <ImageView
+        android:id="@+id/fragment_insert_post_btn_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
+        app:layout_constraintEnd_toStartOf="@id/fragment_insert_post_btn_audio"
+        app:layout_constraintStart_toEndOf="@id/fragment_insert_post_btn_send"
+        app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
+        app:srcCompat="@drawable/ic_image_white_24dp" />
+
+    <ImageView
+        android:id="@+id/fragment_insert_post_btn_audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/fragment_insert_post_btn_img"
+        app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
+        app:srcCompat="@drawable/ic_mic_none_white_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
