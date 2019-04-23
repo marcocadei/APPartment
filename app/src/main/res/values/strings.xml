@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">APPartment</string>
 
+    <string name="placeholder_text">Placeholder</string>
+
     <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
@@ -28,6 +30,8 @@
     <string name="activity_create_home_text_info">La password della casa sarà utilizzata al primo accesso di ogni utente. Dovrà poi essere obbligatoriamente modificata.</string>
     <string name="activity_create_home_text_title">Crea la tua casa</string>
     <string name="activity_create_home_img_title_description">Icona di una casa</string>
+
+    <string name="activity_main_toolbar_settings">Impostazioni</string>
 
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
