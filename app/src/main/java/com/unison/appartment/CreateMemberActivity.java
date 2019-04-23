@@ -24,5 +24,14 @@ public class CreateMemberActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        FloatingActionButton floatFinish = findViewById(R.id.activity_create_member_float_finish);
+        floatFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateMemberActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

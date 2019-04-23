@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignInActivity"></activity>
-        <activity android:name=".CreateMemberActivity"></activity>
-        <activity android:name=".CreateHomeActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".CreateMemberActivity" />
+        <activity android:name=".CreateHomeActivity" />
         <activity android:name=".EnterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

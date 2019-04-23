@@ -4,7 +4,7 @@
     <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
-  
+
     <string name="activity_signin_text_title">Entra nella tua casa</string>
     <string name="activity_signin_img_title_description">Simbolo di login</string>
     <string name="activity_signin_hint_housename">Nome della casa</string>
@@ -14,7 +14,6 @@
     <string name="activity_create_member_logo_description">Aggiungi membro</string>
     <string name="activity_create_member_input_age">Età</string>
     <string name="activity_create_member_input_name">Nome</string>
-    <string name="activity_create_member_input_password">Password</string>
     <string name="activity_create_member_radio_gender_male">Maschio</string>
     <string name="activity_create_member_radio_gender_female">Femmina</string>
     <string name="activity_create_member_radio_role_owner">Creatore</string>
@@ -22,11 +21,17 @@
     <string name="activity_create_member_radio_role_slave">Collaboratore</string>
     <string name="activity_create_member_text_radio_gender">Genere</string>
     <string name="activity_create_member_text_radio_role">Ruolo</string>
-    
+
     <string name="activity_create_home_hint_name">Nome della casa</string>
     <string name="activity_create_home_hint_password">Password della casa</string>
     <string name="activity_create_home_hint_password_repeat">Ripeti password della casa</string>
     <string name="activity_create_home_text_title">Crea la tua casa</string>
     <string name="activity_create_home_img_title_description">Icona di una casa</string>
+
+    <string name="activity_main_bottom_navigation_messages">Bacheca</string>
+    <string name="activity_main_bottom_navigation_todo">Da fare</string>
+    <string name="activity_main_bottom_navigation_done">Finite</string>
+    <string name="activity_main_bottom_navigation_family">Famiglia</string>
+    <string name="activity_main_bottom_navigation_rewards">Premi</string>
 
 </resources>
