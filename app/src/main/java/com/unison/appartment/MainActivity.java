@@ -1,11 +1,14 @@
 package com.unison.appartment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,8 +17,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Supporto per la toolbar
-        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
+        final Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
+
+        BottomNavigationView bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
+        MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(bottomNavigation.getSelectedItemId());
+        toolbar.setTitle(selectedBottomNavigationMenuItem.getTitle());
+        toolbar.setLogo(selectedBottomNavigationMenuItem.getIcon());
+
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                // TODO Switch Fragment
+                toolbar.setTitle(menuItem.getTitle());
+                toolbar.setLogo(menuItem.getIcon());
+                return true;
+            }
+        });
     }
 
     @Override

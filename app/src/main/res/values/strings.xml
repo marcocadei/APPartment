@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">APPartment</string>
 
+    <string name="placeholder_text">Placeholder</string>
+
     <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
