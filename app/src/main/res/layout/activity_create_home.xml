@@ -31,7 +31,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_name"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_home_img_title"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/activity_create_home_input_name"
+                app:layout_constraintStart_toStartOf="@+id/activity_create_home_input_password"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
@@ -45,7 +45,7 @@
                 android:contentDescription="@string/activity_create_home_img_title_description"
                 android:tint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/activity_create_home_text_title"
-                app:layout_constraintEnd_toEndOf="@+id/activity_create_home_input_name"
+                app:layout_constraintEnd_toEndOf="@+id/activity_create_home_input_password"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/activity_create_home_text_title"
                 app:layout_constraintTop_toTopOf="@+id/activity_create_home_text_title"
@@ -105,10 +105,10 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:hint="@string/activity_create_home_hint_password_repeat"
                 android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_password">
@@ -121,6 +121,21 @@
                     android:textColor="@color/colorPrimaryDark" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/activity_create_home_text_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/ic_info_outline_black_24dp"
+                android:drawableTint="@color/colorPrimary"
+                android:text="@string/activity_create_home_text_info"
+                android:textSize="@dimen/small_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
+                app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_repeat_password" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
