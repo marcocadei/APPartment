@@ -15,7 +15,7 @@ public class CreateHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_home);
 
-        FloatingActionButton floatNext = findViewById(R.id.activity_first_access_float_next);
+        FloatingActionButton floatNext = findViewById(R.id.activity_create_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
