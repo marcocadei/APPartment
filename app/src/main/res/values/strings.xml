@@ -14,7 +14,6 @@
     <string name="activity_create_member_logo_description">Aggiungi membro</string>
     <string name="activity_create_member_input_age">Età</string>
     <string name="activity_create_member_input_name">Nome</string>
-    <string name="activity_create_member_input_password">Password</string>
     <string name="activity_create_member_radio_gender_male">Maschio</string>
     <string name="activity_create_member_radio_gender_female">Femmina</string>
     <string name="activity_create_member_radio_role_owner">Creatore</string>
