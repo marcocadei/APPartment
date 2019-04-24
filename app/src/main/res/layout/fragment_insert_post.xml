@@ -33,11 +33,12 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/fragment_insert_post_btn_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/ic_send_white_24dp"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
@@ -46,11 +47,12 @@
         app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
         android:contentDescription="@string/fragment_insert_post_img_send_text_description"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/fragment_insert_post_btn_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/ic_image_white_24dp"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
@@ -59,12 +61,13 @@
         app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
         android:contentDescription="@string/fragment_insert_post_img_send_img_description"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/fragment_insert_post_btn_audio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/ic_mic_none_white_24dp"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
