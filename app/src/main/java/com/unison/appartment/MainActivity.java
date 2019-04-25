@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements InsertPostFragmen
     @Override
     public void onInsertPostFragmentSendText(String message) {
 //        Log.d("btn_send", message);
-        PostFragment pf = (PostFragment)getSupportFragmentManager()
+        ListPostFragment pf = (ListPostFragment)getSupportFragmentManager()
                             .findFragmentById(R.id.activity_main_fragment_post_list);
         pf.addTextPost(message);
     }

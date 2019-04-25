@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/activity_main_fragment_post_list"
-        android:name="com.unison.appartment.PostFragment"
+        android:name="com.unison.appartment.ListPostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/activity_main_bottom_navigation"

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,36 +11,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
 import com.unison.appartment.dummy.DummyContent;
 import com.unison.appartment.dummy.DummyContent.DummyItem;
 
-import java.util.List;
-
 /**
  * Fragment che rappresenta la lista di post
  */
-public class PostFragment extends Fragment {
+public class ListPostFragment extends Fragment {
     // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
-    // Adapter della recyclerview
-    RecyclerView.Adapter myAdapter;
-    RecyclerView myRecyclerView;
+    // Recyclerview e Adapter della recyclerview
+    private RecyclerView.Adapter myAdapter;
+    private RecyclerView myRecyclerView;
+
     // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
     // private OnListFragmentInteractionListener mListener;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
-    public PostFragment() {
+    public ListPostFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static PostFragment newInstance(int columnCount) {
-        PostFragment fragment = new PostFragment();
+    public static ListPostFragment newInstance(int columnCount) {
+        ListPostFragment fragment = new ListPostFragment();
         // Parametri del fragment
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
