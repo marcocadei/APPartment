@@ -91,8 +91,5 @@ public class MainActivity extends AppCompatActivity implements InsertPostFragmen
         ListPostFragment pf = (ListPostFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.activity_main_fragment_post_list);
         pf.addImagePost(selectedImage);
-
-        /*ImageView iw = findViewById(R.id.imageView);
-        iw.setImageURI(selectedImage);*/
     }
 }
