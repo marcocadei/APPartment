@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.unison.appartment.model.AudioPost;
 import com.unison.appartment.model.ImagePost;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.model.TextPost;
@@ -97,6 +98,11 @@ public class ListPostFragment extends Fragment {
     public void addImagePost(Uri selectedImage) {
         ImagePost imagePost = new ImagePost(selectedImage);
         addPost(imagePost);
+    }
+
+    public void addAudioPost(String fileName) {
+        AudioPost audioPost = new AudioPost(fileName);
+        addPost(audioPost);
     }
 
     private void addPost(Post post) {

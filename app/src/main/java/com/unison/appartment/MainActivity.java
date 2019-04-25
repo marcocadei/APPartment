@@ -92,4 +92,11 @@ public class MainActivity extends AppCompatActivity implements InsertPostFragmen
                 .findFragmentById(R.id.activity_main_fragment_post_list);
         pf.addImagePost(selectedImage);
     }
+
+    @Override
+    public void onInsertPostFragmentSendAudio(String fileName) {
+        ListPostFragment pf = (ListPostFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.activity_main_fragment_post_list);
+        pf.addAudioPost(fileName);
+    }
 }

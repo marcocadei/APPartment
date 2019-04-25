@@ -25,16 +25,24 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0){
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.fragment_text_post, parent, false);
-            return new ViewHolderTextPost(view);
-        }else {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.fragment_image_post, parent, false);
-            return new ViewHolderImagePost(view);
+        View view;
+        switch (viewType) {
+            case Post.TEXT_POST:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.fragment_text_post, parent, false);
+                return new ViewHolderTextPost(view);
+            case Post.IMAGE_POST:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.fragment_image_post, parent, false);
+                return new ViewHolderImagePost(view);
+            case Post.AUDIO_POST:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.fragment_audio_post, parent, false);
+                return new ViewHolderAudioPost(view);
+            default:
+                // TODO gestione errore
+                return null;
         }
-
     }
 
     @Override
@@ -49,6 +57,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
                 ImagePost imagePostItem = (ImagePost) postList.get(position);
                 holderImagePost.imagePostImg.setImageURI(imagePostItem.getImage());
+                break;
+            case Post.AUDIO_POST:
                 break;
             default:
                 break;
@@ -89,6 +99,20 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             super(view);
             mView = view;
             imagePostImg = view.findViewById(R.id.fragment_image_post_img);
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + " '" + "immagine" + "'";
+        }
+    }
+
+    public class ViewHolderAudioPost extends RecyclerView.ViewHolder {
+        public final View mView;
+
+        public ViewHolderAudioPost(View view) {
+            super(view);
+            mView = view;
         }
 
         @Override

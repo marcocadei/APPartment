@@ -50,7 +50,8 @@ public class InsertPostFragment extends Fragment {
     private MediaRecorder recorder;
     // Flag usato per monitorare se è in corso una registrazione
     private boolean isRecording = false;
-
+    // Name of the file in which i save audio (just 1 for now)
+    private String fileName;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -128,7 +129,6 @@ public class InsertPostFragment extends Fragment {
                         // Ho il permesso di registrare
                         Log.d("audio_prova", "Permesso di registrare");
                         isRecording = true;
-
                         startRecording();
                     }
                 }
@@ -141,6 +141,8 @@ public class InsertPostFragment extends Fragment {
                 if (isRecording) {
                     Log.d("audio_prova", "registrazione terminata");
                     stopRecording();
+                    // Una volta terminata la registrazione dell'audio aggiungo il post
+                    mListener.onInsertPostFragmentSendAudio(fileName);
                 }
                 isRecording = !isRecording;
             }
@@ -196,7 +198,8 @@ public class InsertPostFragment extends Fragment {
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setOutputFile(getActivity().getExternalCacheDir().getAbsolutePath() + "/audiotest.3gp");
+        fileName = getActivity().getExternalCacheDir().getAbsolutePath() + "/audiotest.3gp";
+        recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -244,5 +247,6 @@ public class InsertPostFragment extends Fragment {
     public interface OnInsertPostFragmentListener {
         void onInsertPostFragmentSendText(String message);
         void onInsertPostFragmentSendImage(Uri selectedImage);
+        void onInsertPostFragmentSendAudio(String fileName);
     }
 }
