@@ -1,10 +1,15 @@
 package com.unison.appartment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +26,9 @@ import android.widget.ImageButton;
  * create an instance of this fragment.
  */
 public class InsertPostFragment extends Fragment {
-    // Questo fragment non ha parametri
-    /*private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";*/
 
-    /*private String mParam1;
-    private String mParam2;*/
+    // Request code per aprire l'activity usata per caricare un'immagine
+    private static int RESULT_LOAD_IMAGE = 1;
 
     private OnInsertPostFragmentListener mListener;
 
@@ -42,22 +44,14 @@ public class InsertPostFragment extends Fragment {
      *
      * @return A new instance of fragment InsertPostFragment.
      */
-    public static InsertPostFragment newInstance(String param1, String param2) {
+    public static InsertPostFragment newInstance() {
         InsertPostFragment fragment = new InsertPostFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
     }
 
     @Override
@@ -74,11 +68,45 @@ public class InsertPostFragment extends Fragment {
                 if (mListener != null) {
                     EditText inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
                     mListener.onInsertPostFragmentSendText(inputText.getText().toString());
+                    // Ripulisco l'edit text dopo che il messaggio è stato inviato
+                    inputText.getText().clear();
+                }
+            }
+        });
+
+        ImageButton btnSendImg = myView.findViewById(R.id.fragment_insert_post_btn_send_img);
+        btnSendImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    Intent i = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    // I risultati di questa chiamata vengono recuperati in #onActivityResult
+                    startActivityForResult(i, RESULT_LOAD_IMAGE);
                 }
             }
         });
 
         return myView;
+    }
+
+    /**
+     * Recupero dell'immagine selezionata dall'utente
+     * @param requestCode il codice della richiesta
+     * @param resultCode il codice del risultato
+     * @param data i dati restituiti dall'activity chiamata
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            mListener.onInsertPostFragmentSendImage(selectedImage);
+        }
+
+
     }
 
     @Override
@@ -99,16 +127,12 @@ public class InsertPostFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Questa interfaccia deve essere implementata dalle activity che contengono questo
+     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
+     * che a sua volta può comunicare con altri fragment
      */
     public interface OnInsertPostFragmentListener {
         void onInsertPostFragmentSendText(String message);
+        void onInsertPostFragmentSendImage(Uri selectedImage);
     }
 }

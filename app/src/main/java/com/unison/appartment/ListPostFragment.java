@@ -1,6 +1,7 @@
 package com.unison.appartment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,8 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unison.appartment.dummy.DummyContent;
-import com.unison.appartment.dummy.DummyContent.DummyItem;
+import com.unison.appartment.model.ImagePost;
+import com.unison.appartment.model.Post;
+import com.unison.appartment.model.TextPost;
 
 /**
  * Fragment che rappresenta la lista di post
@@ -26,9 +28,6 @@ public class ListPostFragment extends Fragment {
     // Recyclerview e Adapter della recyclerview
     private RecyclerView.Adapter myAdapter;
     private RecyclerView myRecyclerView;
-
-    // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
-    // private OnListFragmentInteractionListener mListener;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -69,9 +68,8 @@ public class ListPostFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
-            // recyclerView.setAdapter(new MyPostRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-            myAdapter = new MyPostRecyclerViewAdapter(DummyContent.ITEMS/*, null*/);
+
+            myAdapter = new MyPostRecyclerViewAdapter(Post.getPostList()/*, null*/);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -81,43 +79,29 @@ public class ListPostFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
-        /*if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
-        // mListener = null;
     }
 
     /**
      * Metodi implementati da noi
      */
     public void addTextPost(String message){
-        DummyContent.ITEMS.add(0, new DummyItem("id", message, message));
+        TextPost textPost = new TextPost(message);
+        addPost(textPost);
+    }
+
+    public void addImagePost(Uri selectedImage) {
+        ImagePost imagePost = new ImagePost(selectedImage);
+        addPost(imagePost);
+    }
+
+    private void addPost(Post post) {
+        Post.addPost(0, post);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
-    /*public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DummyItem item);
-    }*/
 }
