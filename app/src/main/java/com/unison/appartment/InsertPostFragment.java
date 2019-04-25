@@ -1,20 +1,27 @@
 package com.unison.appartment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.unison.appartment.model.AudioPost;
 
 
 /**
@@ -88,6 +95,28 @@ public class InsertPostFragment extends Fragment {
             }
         });
 
+        ImageButton btnSendAudio = myView.findViewById(R.id.fragment_insert_post_btn_send_audio);
+        btnSendAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    // Controllo di avere il permesso di registrare
+                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CALENDAR)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        // Non ho il permesso di registrare, quindi lo richiedo
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.RECORD_AUDIO},
+                                AudioPost.PERMISSION_REQUEST_RECORDER);
+
+                    } else {
+                        // Ho il permesso di registrare
+
+
+                    }
+                }
+            }
+        });
+
         return myView;
     }
 
@@ -105,8 +134,29 @@ public class InsertPostFragment extends Fragment {
             Uri selectedImage = data.getData();
             mListener.onInsertPostFragmentSendImage(selectedImage);
         }
+    }
 
-
+    /**
+     * Recupero i permessi per la registrazione di audio
+     * @param requestCode il codice della richiesta
+     * @param permissions i permessi richiesti
+     * @param grantResults i risultati ottenuti
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case AudioPost.PERMISSION_REQUEST_RECORDER: {
+                // Se la richiesta è cancellata l'array dei risultati è vuoto
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Il permesso è stato fornito, posso effettuare la registrazione
+                } else {
+                    // Il permesso è stato negato, non effettuo la registrazione
+                }
+                return;
+            }
+            // Altri CASE se l'applicazione richiede anche altri permessi
+        }
     }
 
     @Override
