@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 
 import com.unison.appartment.dummy.DummyContent;
 import com.unison.appartment.dummy.DummyContent.DummyItem;
@@ -18,30 +20,29 @@ import com.unison.appartment.dummy.DummyContent.DummyItem;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * Fragment che rappresenta la lista di post
  */
 public class PostFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
+    // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+
+    // Adapter della recyclerview
+    RecyclerView.Adapter myAdapter;
+    RecyclerView myRecyclerView;
+    // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
+    // private OnListFragmentInteractionListener mListener;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
     public PostFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static PostFragment newInstance(int columnCount) {
         PostFragment fragment = new PostFragment();
+        // Parametri del fragment
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -51,7 +52,7 @@ public class PostFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // Quando il fragment è creato recupero i parametri
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -62,16 +63,19 @@ public class PostFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
-        // Set the adapter
+        // Imposto l'adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            myRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                myRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyPostRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
+            // recyclerView.setAdapter(new MyPostRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            myAdapter = new MyPostRecyclerViewAdapter(DummyContent.ITEMS/*, null*/);
+            myRecyclerView.setAdapter(myAdapter);
         }
         return view;
     }
@@ -80,18 +84,29 @@ public class PostFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
+        // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
+        /*if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
+        // mListener = null;
+    }
+
+    /**
+     * Metodi implementati da noi
+     */
+    public void addTextPost(String message){
+        DummyContent.ITEMS.add(0, new DummyItem("id", message, message));
+        myAdapter.notifyItemInserted(0);
+        myRecyclerView.scrollToPosition(0);
     }
 
     /**
@@ -104,8 +119,8 @@ public class PostFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
+    // Questo fragment non effettua alcuna comunicazione con l'activity che lo contiene
+    /*public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(DummyItem item);
-    }
+    }*/
 }

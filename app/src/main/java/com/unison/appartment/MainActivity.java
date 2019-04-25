@@ -4,15 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.unison.appartment.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements PostFragment.OnListFragmentInteractionListener, InsertPostFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements InsertPostFragment.OnInsertPostFragmentListener {
 
     private int selectedBottomNavigationMenuItemId;
 
@@ -78,12 +77,10 @@ public class MainActivity extends AppCompatActivity implements PostFragment.OnLi
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onInsertPostFragmentSendText(String message) {
+//        Log.d("btn_send", message);
+        PostFragment pf = (PostFragment)getSupportFragmentManager()
+                            .findFragmentById(R.id.activity_main_fragment_post_list);
+        pf.addTextPost(message);
     }
 }
