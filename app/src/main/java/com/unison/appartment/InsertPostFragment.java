@@ -1,11 +1,13 @@
 package com.unison.appartment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,12 +18,15 @@ import androidx.fragment.app.Fragment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.unison.appartment.model.AudioPost;
+
+import java.io.IOException;
 
 
 /**
@@ -34,10 +39,18 @@ import com.unison.appartment.model.AudioPost;
  */
 public class InsertPostFragment extends Fragment {
 
+    // Edittext contenente l'input del messaggio
+    private EditText inputText;
+
     // Request code per aprire l'activity usata per caricare un'immagine
     private static int RESULT_LOAD_IMAGE = 1;
-
+    // Listener usato per la gestione degli eventi interni al fragment
     private OnInsertPostFragmentListener mListener;
+    // Oggetto usato per la registrazione di audio
+    private MediaRecorder recorder;
+    // Flag usato per monitorare se è in corso una registrazione
+    private boolean isRecording = false;
+
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -61,12 +74,15 @@ public class InsertPostFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         final View myView =  inflater.inflate(R.layout.fragment_insert_post, container, false);
+
+        inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
 
         ImageButton btnSendText = myView.findViewById(R.id.fragment_insert_post_btn_send_text);
         btnSendText.setOnClickListener(new View.OnClickListener() {
@@ -96,24 +112,37 @@ public class InsertPostFragment extends Fragment {
         });
 
         ImageButton btnSendAudio = myView.findViewById(R.id.fragment_insert_post_btn_send_audio);
-        btnSendAudio.setOnClickListener(new View.OnClickListener() {
+        btnSendAudio.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 if (mListener != null) {
                     // Controllo di avere il permesso di registrare
-                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CALENDAR)
+                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO)
                             != PackageManager.PERMISSION_GRANTED) {
                         // Non ho il permesso di registrare, quindi lo richiedo
                         ActivityCompat.requestPermissions(getActivity(),
                                 new String[]{Manifest.permission.RECORD_AUDIO},
                                 AudioPost.PERMISSION_REQUEST_RECORDER);
-
+                        Log.d("audio_prova", "no Permesso di registrare");
                     } else {
                         // Ho il permesso di registrare
+                        Log.d("audio_prova", "Permesso di registrare");
+                        isRecording = true;
 
-
+                        startRecording();
                     }
                 }
+                return true;
+            }
+        });
+        btnSendAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isRecording) {
+                    Log.d("audio_prova", "registrazione terminata");
+                    stopRecording();
+                }
+                isRecording = !isRecording;
             }
         });
 
@@ -147,15 +176,46 @@ public class InsertPostFragment extends Fragment {
         switch (requestCode) {
             case AudioPost.PERMISSION_REQUEST_RECORDER: {
                 // Se la richiesta è cancellata l'array dei risultati è vuoto
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Il permesso è stato fornito, posso effettuare la registrazione
+                    // Non faccio nulla perché per iniziare la registrazione deve tenere premuto
                 } else {
                     // Il permesso è stato negato, non effettuo la registrazione
+                    // TODO mettere un qualche effetto grafico, es microfono barrato
                 }
                 return;
             }
             // Altri CASE se l'applicazione richiede anche altri permessi
+        }
+    }
+
+    /**
+     * Inizio la registrazione
+     */
+    private void startRecording() {
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(getActivity().getExternalCacheDir().getAbsolutePath() + "/audiotest.3gp");
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            recorder.prepare();
+        } catch (IOException e) {
+            // Qualcosa è andato storto con la registrazione
+        }
+        Log.d("audio_prova", "iniziata registrazione");
+        inputText.setText("Registrazione in corso");
+        recorder.start();
+    }
+
+    private void stopRecording() {
+        if (recorder != null) {
+            recorder.stop();
+            recorder.release();
+            recorder = null;
+
+            inputText.getText().clear();
         }
     }
 
