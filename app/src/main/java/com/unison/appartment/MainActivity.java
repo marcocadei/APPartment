@@ -3,6 +3,7 @@ package com.unison.appartment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -13,7 +14,7 @@ import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements InsertPostFragment.OnInsertPostFragmentListener {
+public class MainActivity extends AppCompatActivity {
 
     private int selectedBottomNavigationMenuItemId;
 
@@ -33,6 +34,11 @@ public class MainActivity extends AppCompatActivity implements InsertPostFragmen
         final MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(selectedBottomNavigationMenuItemId);
         toolbar.setTitle(selectedBottomNavigationMenuItem.getTitle());
         toolbar.setLogo(selectedBottomNavigationMenuItem.getIcon());
+        // Aggiungo il fragment del bottone selezionato nella bottom navigation
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.activity_main_fragment_container, new MessagesFragment());
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -69,34 +75,13 @@ public class MainActivity extends AppCompatActivity implements InsertPostFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // FIXME Da sistemare
+            // FIXME Aggiungere qui invocazione alla activity di settings
             case R.id.activity_main_toolbar_settings:
-//                Log.d(this.getLocalClassName(), "Premuto ingraggio");
+                // Log.d(this.getLocalClassName(), "Premuto ingraggio");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onInsertPostFragmentSendText(String message) {
-//        Log.d("btn_send", message);
-        ListPostFragment pf = (ListPostFragment)getSupportFragmentManager()
-                            .findFragmentById(R.id.activity_main_fragment_post_list);
-        pf.addTextPost(message);
-    }
-
-    @Override
-    public void onInsertPostFragmentSendImage(Uri selectedImage) {
-        ListPostFragment pf = (ListPostFragment)getSupportFragmentManager()
-                .findFragmentById(R.id.activity_main_fragment_post_list);
-        pf.addImagePost(selectedImage);
-    }
-
-    @Override
-    public void onInsertPostFragmentSendAudio(String fileName) {
-        ListPostFragment pf = (ListPostFragment)getSupportFragmentManager()
-                .findFragmentById(R.id.activity_main_fragment_post_list);
-        pf.addAudioPost(fileName);
-    }
 }

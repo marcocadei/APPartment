@@ -28,27 +28,6 @@
             app:menu="@menu/activity_main_toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <fragment
-        android:id="@+id/activity_main_fragment_insert_post"
-        android:name="com.unison.appartment.InsertPostFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/activity_main_fragment_post_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_appbar"
-        tools:layout="@layout/fragment_insert_post" />
-
-    <fragment
-        android:id="@+id/activity_main_fragment_post_list"
-        android:name="com.unison.appartment.ListPostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/activity_main_bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_fragment_insert_post"
-        tools:layout="@layout/fragment_post_list" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/activity_main_bottom_navigation"
@@ -62,5 +41,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/activity_main_bottom_navigation" />
+
+    <FrameLayout
+        android:id="@+id/activity_main_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_main_bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_main_appbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

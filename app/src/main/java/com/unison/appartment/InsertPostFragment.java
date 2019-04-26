@@ -225,11 +225,11 @@ public class InsertPostFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnInsertPostFragmentListener) {
-            mListener = (OnInsertPostFragmentListener) context;
+        if (getParentFragment() instanceof OnInsertPostFragmentListener) {
+            mListener = (OnInsertPostFragmentListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnInsertPostFragmentListener");
+                    + " must implement OnInsertPostFragmentListener errore in insert");
         }
     }
 
