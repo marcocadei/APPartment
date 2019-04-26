@@ -45,4 +45,12 @@
     <string name="activity_first_access_hint_password">Nuova password</string>
     <string name="activity_first_access_text_info">Questo è il tuo primo accesso. Scegli una nuova password per proteggere il tuo account.</string>
 
+    <string name="fragment_insert_post_hint_post">Testo del messaggio</string>
+    <string name="fragment_insert_post_img_send_text_description">Bottone di invio testo</string>
+    <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
+    <string name="fragment_insert_post_img_send_audio_description">Bottone di invio audio</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
