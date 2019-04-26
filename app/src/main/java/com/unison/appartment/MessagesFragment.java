@@ -15,10 +15,10 @@ import android.view.ViewGroup;
  */
 public class MessagesFragment extends Fragment implements InsertPostFragment.OnInsertPostFragmentListener{
 
-    /*private OnFragmentInteractionListener mListener;*/
-
+    /**
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
+     */
     public MessagesFragment() {
-        // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
@@ -39,28 +39,14 @@ public class MessagesFragment extends Fragment implements InsertPostFragment.OnI
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        /*if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }*/
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        /*mListener = null;*/
     }
 
     @Override
