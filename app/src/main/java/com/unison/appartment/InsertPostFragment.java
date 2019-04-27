@@ -146,15 +146,16 @@ public class InsertPostFragment extends Fragment {
             public void onClick(View v) {
                 if (isRecording) {
                     Log.d("audio_prova", "registrazione terminata");
+                    isRecording = false;
                     stopRecording();
-                    // Riabilito i campi
+                    inputText.getText().clear();
+                    // Riabilito i campi al termine della registrazione
                     inputText.setEnabled(true);
                     btnSendText.setEnabled(true);
                     btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
                     mListener.onInsertPostFragmentSendAudio(fileName);
                 }
-                isRecording = !isRecording;
             }
         });
         // Cambio il colore del bottone di invio del testo in base al fatto che il campo di input
@@ -162,25 +163,21 @@ public class InsertPostFragment extends Fragment {
         inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
         inputText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() == 0) {
                     btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray));
-                    btnSendText.setClickable(false);
+                    btnSendText.setEnabled(false);
                 } else {
                     btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-                    btnSendText.setClickable(true);
+                    btnSendText.setEnabled(true);
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-            }
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
 
         return myView;
@@ -251,8 +248,6 @@ public class InsertPostFragment extends Fragment {
             recorder.stop();
             recorder.release();
             recorder = null;
-
-            inputText.getText().clear();
         }
     }
 
