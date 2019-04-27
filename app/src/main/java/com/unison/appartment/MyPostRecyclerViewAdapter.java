@@ -57,15 +57,18 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
                 TextPost textPostItem = (TextPost) postList.get(position);
                 holderTextPost.textPostTxt.setText(textPostItem.getMessage());
+                holderTextPost.textPostSender.setText(textPostItem.getSender());
                 break;
             case Post.IMAGE_POST:
                 ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
                 ImagePost imagePostItem = (ImagePost) postList.get(position);
                 holderImagePost.imagePostImg.setImageURI(imagePostItem.getImage());
+                holderImagePost.imagePostSender.setText(imagePostItem.getSender());
                 break;
             case Post.AUDIO_POST:
                 ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final AudioPost audioPostItem = (AudioPost) postList.get(position);
+                holderAudioPost.audioPostSender.setText(audioPostItem.getSender());
                 holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -93,11 +96,13 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     public class ViewHolderTextPost extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView textPostTxt;
+        public final TextView textPostSender;
 
         public ViewHolderTextPost(View view) {
             super(view);
             mView = view;
             textPostTxt = view.findViewById(R.id.fragment_text_post_txt);
+            textPostSender = view.findViewById(R.id.fragment_text_post_sender);
         }
 
         @Override
@@ -109,11 +114,13 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     public class ViewHolderImagePost extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView imagePostImg;
+        public final TextView imagePostSender;
 
         public ViewHolderImagePost(View view) {
             super(view);
             mView = view;
             imagePostImg = view.findViewById(R.id.fragment_image_post_img);
+            imagePostSender = view.findViewById(R.id.fragment_image_post_sender);
         }
 
         @Override
@@ -125,11 +132,13 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     public class ViewHolderAudioPost extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageButton audioPostbtn;
+        public final TextView audioPostSender;
 
         public ViewHolderAudioPost(View view) {
             super(view);
             mView = view;
             audioPostbtn = view.findViewById(R.id.fragment_audio_post_btn);
+            audioPostSender = view.findViewById(R.id.fragment_audio_post_sender);
         }
 
         @Override

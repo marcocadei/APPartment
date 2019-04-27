@@ -10,13 +10,23 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:backgroundTint="@color/colorBackground">
+        <TextView
+            android:id="@+id/fragment_image_post_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
         <ImageView
             android:id="@+id/fragment_image_post_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxHeight="480dp"
             android:adjustViewBounds="true"
-            android:layout_margin="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="32dp"
             android:textAppearance="?attr/textAppearanceListItem" />
     </com.google.android.material.card.MaterialCardView>
 

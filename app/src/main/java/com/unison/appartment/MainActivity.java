@@ -18,6 +18,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // TODO da rimuovere
+    public final static String LOGGED_USER = "MARCO";
+
     private int selectedBottomNavigationMenuItemId;
     private Toolbar toolbar;
 

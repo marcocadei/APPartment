@@ -100,18 +100,19 @@ public class ListPostFragment extends Fragment {
     /**
      * Metodi implementati da noi
      */
+    // TODO sostituire costante con nome dell'utente realmente loggato
     public void addTextPost(String message){
-        TextPost textPost = new TextPost(message);
+        TextPost textPost = new TextPost(MainActivity.LOGGED_USER, message);
         addPost(textPost);
     }
 
     public void addImagePost(Uri selectedImage) {
-        ImagePost imagePost = new ImagePost(selectedImage);
+        ImagePost imagePost = new ImagePost(MainActivity.LOGGED_USER, selectedImage);
         addPost(imagePost);
     }
 
     public void addAudioPost(String fileName) {
-        AudioPost audioPost = new AudioPost(fileName);
+        AudioPost audioPost = new AudioPost(MainActivity.LOGGED_USER, fileName);
         addPost(audioPost);
     }
 
