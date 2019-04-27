@@ -5,12 +5,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.unison.appartment.model.AudioPost;
 import com.unison.appartment.model.ImagePost;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.model.TextPost;
+import com.unison.appartment.ListPostFragment.OnListPostFragmentListener;
 
 import java.util.List;
 
@@ -18,9 +21,11 @@ import java.util.List;
 public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Post> postList;
+    private final OnListPostFragmentListener listener;
 
-    public MyPostRecyclerViewAdapter(List<Post> postList) {
+    public MyPostRecyclerViewAdapter(List<Post> postList, OnListPostFragmentListener listener) {
         this.postList = postList;
+        this.listener = listener;
     }
 
     @Override
@@ -59,6 +64,16 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 holderImagePost.imagePostImg.setImageURI(imagePostItem.getImage());
                 break;
             case Post.AUDIO_POST:
+                ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
+                final AudioPost audioPostItem = (AudioPost) postList.get(position);
+                holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onListPostFragmentPlayAudio(audioPostItem.getFileName());
+                        }
+                    }
+                });
                 break;
             default:
                 break;
@@ -109,10 +124,12 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     public class ViewHolderAudioPost extends RecyclerView.ViewHolder {
         public final View mView;
+        public final ImageButton audioPostbtn;
 
         public ViewHolderAudioPost(View view) {
             super(view);
             mView = view;
+            audioPostbtn = view.findViewById(R.id.fragment_audio_post_btn);
         }
 
         @Override

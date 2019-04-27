@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,12 +14,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -48,7 +44,7 @@ public class InsertPostFragment extends Fragment {
     // Request code per aprire l'activity usata per caricare un'immagine
     private static int RESULT_LOAD_IMAGE = 1;
     // Listener usato per la gestione degli eventi interni al fragment
-    private OnInsertPostFragmentListener mListener;
+    private OnInsertPostFragmentListener listener;
     // Oggetto usato per la registrazione di audio
     private MediaRecorder recorder;
     // Flag usato per monitorare se è in corso una registrazione
@@ -90,9 +86,9 @@ public class InsertPostFragment extends Fragment {
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
+                if (listener != null) {
                     EditText inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
-                    mListener.onInsertPostFragmentSendText(inputText.getText().toString());
+                    listener.onInsertPostFragmentSendText(inputText.getText().toString());
                     // Ripulisco l'edit text dopo che il messaggio è stato inviato
                     inputText.getText().clear();
                 }
@@ -103,7 +99,7 @@ public class InsertPostFragment extends Fragment {
         btnSendImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
+                if (listener != null) {
                     Intent i = new Intent(
                             Intent.ACTION_PICK,
                             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -117,7 +113,7 @@ public class InsertPostFragment extends Fragment {
         btnSendAudio.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (mListener != null) {
+                if (listener != null) {
                     // Controllo di avere il permesso di registrare
                     if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO)
                             != PackageManager.PERMISSION_GRANTED) {
@@ -154,7 +150,7 @@ public class InsertPostFragment extends Fragment {
                     btnSendText.setEnabled(true);
                     btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
-                    mListener.onInsertPostFragmentSendAudio(fileName);
+                    listener.onInsertPostFragmentSendAudio(fileName);
                 }
             }
         });
@@ -195,7 +191,7 @@ public class InsertPostFragment extends Fragment {
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            mListener.onInsertPostFragmentSendImage(selectedImage);
+            listener.onInsertPostFragmentSendImage(selectedImage);
         }
     }
 
@@ -255,7 +251,7 @@ public class InsertPostFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof OnInsertPostFragmentListener) {
-            mListener = (OnInsertPostFragmentListener) getParentFragment();
+            listener = (OnInsertPostFragmentListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnInsertPostFragmentListener errore in insert");
@@ -265,7 +261,7 @@ public class InsertPostFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 
     /**
