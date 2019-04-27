@@ -100,11 +100,11 @@ public class InsertPostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    Intent i = new Intent(
-                            Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    // I risultati di questa chiamata vengono recuperati in #onActivityResult
-                    startActivityForResult(i, RESULT_LOAD_IMAGE);
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                            RESULT_LOAD_IMAGE);
                 }
             }
         });
