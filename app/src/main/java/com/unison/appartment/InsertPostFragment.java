@@ -99,7 +99,7 @@ public class InsertPostFragment extends Fragment {
             }
         });
 
-        ImageButton btnSendImg = myView.findViewById(R.id.fragment_insert_post_btn_send_img);
+        final ImageButton btnSendImg = myView.findViewById(R.id.fragment_insert_post_btn_send_img);
         btnSendImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +130,11 @@ public class InsertPostFragment extends Fragment {
                         // Ho il permesso di registrare
                         Log.d("audio_prova", "Permesso di registrare");
                         isRecording = true;
+                        inputText.setText("Registrazione in corso");
+                        // Disabilito tutti i campi che non siano il registratore
+                        inputText.setEnabled(false);
+                        btnSendText.setEnabled(false);
+                        btnSendImg.setEnabled(false);
                         startRecording();
                     }
                 }
@@ -142,6 +147,10 @@ public class InsertPostFragment extends Fragment {
                 if (isRecording) {
                     Log.d("audio_prova", "registrazione terminata");
                     stopRecording();
+                    // Riabilito i campi
+                    inputText.setEnabled(true);
+                    btnSendText.setEnabled(true);
+                    btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
                     mListener.onInsertPostFragmentSendAudio(fileName);
                 }
@@ -234,7 +243,6 @@ public class InsertPostFragment extends Fragment {
             // Qualcosa è andato storto con la registrazione
         }
         Log.d("audio_prova", "iniziata registrazione");
-        inputText.setText("Registrazione in corso");
         recorder.start();
     }
 
