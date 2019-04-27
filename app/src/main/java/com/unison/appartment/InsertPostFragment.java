@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -83,9 +86,7 @@ public class InsertPostFragment extends Fragment {
         // Inflate the layout for this fragment
         final View myView =  inflater.inflate(R.layout.fragment_insert_post, container, false);
 
-        inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
-
-        ImageButton btnSendText = myView.findViewById(R.id.fragment_insert_post_btn_send_text);
+        final ImageButton btnSendText = myView.findViewById(R.id.fragment_insert_post_btn_send_text);
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +113,7 @@ public class InsertPostFragment extends Fragment {
             }
         });
 
-        ImageButton btnSendAudio = myView.findViewById(R.id.fragment_insert_post_btn_send_audio);
+        final ImageButton btnSendAudio = myView.findViewById(R.id.fragment_insert_post_btn_send_audio);
         btnSendAudio.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -145,6 +146,31 @@ public class InsertPostFragment extends Fragment {
                     mListener.onInsertPostFragmentSendAudio(fileName);
                 }
                 isRecording = !isRecording;
+            }
+        });
+        // Cambio il colore del bottone di invio del testo in base al fatto che il campo di input
+        // sia riempito o meno
+        inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
+        inputText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray));
+                    btnSendText.setClickable(false);
+                } else {
+                    btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                    btnSendText.setClickable(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
