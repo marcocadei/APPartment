@@ -2,6 +2,8 @@ package com.unison.appartment;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.unison.appartment.model.Post;
 import com.unison.appartment.model.TextPost;
 import com.unison.appartment.ListPostFragment.OnListPostFragmentListener;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -66,15 +69,31 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 holderImagePost.imagePostSender.setText(imagePostItem.getSender());
                 break;
             case Post.AUDIO_POST:
-                ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
+                final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final AudioPost audioPostItem = (AudioPost) postList.get(position);
                 holderAudioPost.audioPostSender.setText(audioPostItem.getSender());
                 holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (listener != null) {
+                        /*if (listener != null) {
                             listener.onListPostFragmentPlayAudio(audioPostItem.getFileName());
+                        }*/
+                        MediaPlayer player = new MediaPlayer();
+                        try {
+                            player.setDataSource(audioPostItem.getFileName());
+                            player.prepare();
+                            player.start();
+                            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mp) {
+                                    holderAudioPost.audioPostState.setText(
+                                            holder.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
+                                    );
+                                }
+                            });
+                        } catch (IOException e) {
                         }
+                        holderAudioPost.audioPostState.setText("Rirpoduzione audio in corso");
                     }
                 });
                 break;
@@ -133,12 +152,14 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         public final View mView;
         public final ImageButton audioPostbtn;
         public final TextView audioPostSender;
+        public final TextView audioPostState;
 
         public ViewHolderAudioPost(View view) {
             super(view);
             mView = view;
             audioPostbtn = view.findViewById(R.id.fragment_audio_post_btn);
             audioPostSender = view.findViewById(R.id.fragment_audio_post_sender);
+            audioPostState = view.findViewById(R.id.fragment_audio_post_state);
         }
 
         @Override

@@ -123,13 +123,7 @@ public class ListPostFragment extends Fragment {
     }
 
     public void playAudio(String fileName) {
-        MediaPlayer player = new MediaPlayer();
-        try {
-            player.setDataSource(fileName);
-            player.prepare();
-            player.start();
-        } catch (IOException e) {
-        }
+
     }
 
     /**
