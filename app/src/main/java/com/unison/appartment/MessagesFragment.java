@@ -11,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unison.appartment.InsertPostFragment.OnInsertPostFragmentListener;
-import com.unison.appartment.ListPostFragment.OnListPostFragmentListener;
 
 /**
  * Fragment che rappresenta l'intera bacheca
  */
-public class MessagesFragment extends Fragment implements OnInsertPostFragmentListener,
-    OnListPostFragmentListener{
+public class MessagesFragment extends Fragment implements OnInsertPostFragmentListener {
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -72,12 +70,5 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         ListPostFragment pf = (ListPostFragment)getChildFragmentManager()
                 .findFragmentById(R.id.fragment_messages_fragment_list_post);
         pf.addAudioPost(fileName);
-    }
-
-    @Override
-    public void onListPostFragmentPlayAudio(String fileName) {
-        ListPostFragment pf = (ListPostFragment)getChildFragmentManager()
-                .findFragmentById(R.id.fragment_messages_fragment_list_post);
-        pf.playAudio(fileName);
     }
 }

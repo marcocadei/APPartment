@@ -28,7 +28,6 @@ public class ListPostFragment extends Fragment {
     // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
-    private OnListPostFragmentListener listener;
 
     // Recyclerview e Adapter della recyclerview
     private RecyclerView.Adapter myAdapter;
@@ -74,7 +73,7 @@ public class ListPostFragment extends Fragment {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            myAdapter = new MyPostRecyclerViewAdapter(Post.getPostList(), listener);
+            myAdapter = new MyPostRecyclerViewAdapter(Post.getPostList()/*, listener*/);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -84,12 +83,6 @@ public class ListPostFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getParentFragment() instanceof OnListPostFragmentListener) {
-            listener = (OnListPostFragmentListener) getParentFragment();
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnInsertPostFragmentListener errore in insert");
-        }
     }
 
     @Override
@@ -120,18 +113,5 @@ public class ListPostFragment extends Fragment {
         Post.addPost(0, post);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
-    }
-
-    public void playAudio(String fileName) {
-
-    }
-
-    /**
-     * Questa interfaccia deve essere implementata dalle activity che contengono questo
-     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
-     * che a sua volta può comunicare con altri fragment
-     */
-    public interface OnListPostFragmentListener {
-        void onListPostFragmentPlayAudio(String fileName);
     }
 }

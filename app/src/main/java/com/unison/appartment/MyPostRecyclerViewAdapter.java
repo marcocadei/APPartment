@@ -15,7 +15,7 @@ import com.unison.appartment.model.AudioPost;
 import com.unison.appartment.model.ImagePost;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.model.TextPost;
-import com.unison.appartment.ListPostFragment.OnListPostFragmentListener;
+// import com.unison.appartment.ListPostFragment.OnListPostFragmentListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,11 +24,11 @@ import java.util.List;
 public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Post> postList;
-    private final OnListPostFragmentListener listener;
+    // private final OnListPostFragmentListener listener;
 
-    public MyPostRecyclerViewAdapter(List<Post> postList, OnListPostFragmentListener listener) {
+    public MyPostRecyclerViewAdapter(List<Post> postList/*, OnListPostFragmentListener listener*/) {
         this.postList = postList;
-        this.listener = listener;
+        // this.listener = listener;
     }
 
     @Override
@@ -78,28 +78,32 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                         /*if (listener != null) {
                             listener.onListPostFragmentPlayAudio(audioPostItem.getFileName());
                         }*/
-                        MediaPlayer player = new MediaPlayer();
-                        try {
-                            player.setDataSource(audioPostItem.getFileName());
-                            player.prepare();
-                            player.start();
-                            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    holderAudioPost.audioPostState.setText(
-                                            holder.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
-                                    );
-                                }
-                            });
-                        } catch (IOException e) {
-                        }
-                        holderAudioPost.audioPostState.setText("Rirpoduzione audio in corso");
+                        handleAudioPlay(audioPostItem, holderAudioPost);
                     }
                 });
                 break;
             default:
                 break;
         }
+    }
+
+    public void handleAudioPlay(AudioPost audioPostItem, final ViewHolderAudioPost holderAudioPost) {
+        MediaPlayer player = new MediaPlayer();
+        try {
+            player.setDataSource(audioPostItem.getFileName());
+            player.prepare();
+            player.start();
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    holderAudioPost.audioPostState.setText(
+                            holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
+                    );
+                }
+            });
+        } catch (IOException e) {
+        }
+        holderAudioPost.audioPostState.setText("Rirpoduzione audio in corso");
     }
 
     @Override
