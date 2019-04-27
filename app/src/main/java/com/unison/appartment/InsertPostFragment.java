@@ -126,6 +126,7 @@ public class InsertPostFragment extends Fragment {
                         // Ho il permesso di registrare
                         Log.d("audio_prova", "Permesso di registrare");
                         isRecording = true;
+                        btnSendAudio.requestFocus();
                         inputText.setText("Registrazione in corso");
                         // Disabilito tutti i campi che non siano il registratore
                         inputText.setEnabled(false);
@@ -143,6 +144,7 @@ public class InsertPostFragment extends Fragment {
                 if (isRecording) {
                     Log.d("audio_prova", "registrazione terminata");
                     isRecording = false;
+                    btnSendAudio.clearFocus();
                     stopRecording();
                     inputText.getText().clear();
                     // Riabilito i campi al termine della registrazione
