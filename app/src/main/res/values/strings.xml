@@ -62,6 +62,7 @@
     <string name="activity_create_task_input_deadline_value">%1$d-%2$d-%3$d</string>
 
     <string name="activity_task_detail_title">Dettaglio attività</string>
+    <string name="activity_task_detail_deadline">Scadenza: %1$s</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
