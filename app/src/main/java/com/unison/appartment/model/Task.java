@@ -1,11 +1,21 @@
 package com.unison.appartment.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Task {
 
     private String name;
     private String description;
     private String deadline;
     private int points;
+
+    public Task(String name, String description, String deadline, int points) {
+        this.name = name;
+        this.description = description;
+        this.deadline = deadline;
+        this.points = points;
+    }
 
     public String getName() {
         return name;
@@ -38,5 +48,13 @@ public class Task {
     public void setPoints(int points) {
         this.points = points;
     }
+
+    public static final List<Task> TASKS = new ArrayList<Task>(){
+        {
+            add(new Task("Aspirapolvere", "Passare aspirapolvere per tutta casa", "2019-29-04", 100));
+            add(new Task("Piatti", "Lavare i piatti della cena", "2019-28-04", 30));
+            add(new Task("Polveri", "Fare le polveri in camera dei ragazzi", "2019-30-04", 50));
+        }
+    };
 
 }
