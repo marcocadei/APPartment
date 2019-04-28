@@ -1,9 +1,10 @@
 package com.unison.appartment.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task {
+public class Task implements Serializable {
 
     private String name;
     private String description;
@@ -57,4 +58,7 @@ public class Task {
         }
     };
 
+    public static void addTask(int position, Task task) {
+        TASKS.add(position, task);
+    }
 }

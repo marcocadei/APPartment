@@ -1,5 +1,6 @@
 package com.unison.appartment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.unison.appartment.model.Task;
 
 
 /**
@@ -60,6 +62,11 @@ public class TodoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            TodoListFragment tlf = (TodoListFragment) getChildFragmentManager()
+                    .findFragmentById(R.id.fragment_todo_todolist);
+            tlf.addTask((Task) data.getSerializableExtra("newTask"));
+        }
     }
 
     @Override

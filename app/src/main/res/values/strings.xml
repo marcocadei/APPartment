@@ -55,12 +55,14 @@
     <string name="fragment_todo_points_label">PUNTI:</string>
 
     <string name="activity_create_task_title">Aggiungi attività</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="activity_create_task_input_name">Nome</string>
     <string name="activity_create_task_input_description">Descrizione</string>
     <string name="activity_create_task_input_points">Punti</string>
     <string name="activity_create_task_input_deadline">Scadenza</string>
+    <string name="activity_create_task_input_deadline_value">%1$d-%2$d-%3$d</string>
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -4,20 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.unison.appartment.model.Task;
 
 import java.util.Calendar;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private EditText inputName;
+    private EditText inputDescription;
+    private EditText inputPoints;
     private EditText inputDeadline;
 
     @Override
@@ -35,24 +41,55 @@ public class CreateTaskActivity extends AppCompatActivity {
             }
         });
 
+        inputName = findViewById(R.id.activity_create_task_input_name_value);
+        inputDescription = findViewById(R.id.activity_create_task_input_description_value);
+        inputPoints = findViewById(R.id.activity_create_task_input_points_value);
+
+        // Mostro il date picker
         inputDeadline = findViewById(R.id.activity_create_task_input_deadline_value);
         inputDeadline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
-                Log.d("data_selezionata", "cliccato");
+            }
+        });
+
+        FloatingActionButton floatFinish = findViewById(R.id.activity_create_task_float_finish);
+        floatFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createTask();
             }
         });
     }
 
+    public void createTask() {
+        Task newTask = new Task(
+                inputName.getText().toString(),
+                inputDescription.getText().toString(),
+                inputDeadline.getText().toString(),
+                Integer.valueOf(inputPoints.getText().toString())
+        );
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("newTask", newTask);
+
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
+    }
+
     public void showDatePickerDialog() {
-        DialogFragment newFragment = new DatePickerFragment();
+        DialogFragment newFragment = new DatePickerFragment(inputDeadline);
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
+        private EditText textOutput;
+
+        public DatePickerFragment(EditText textOutput) {
+            super();
+            this.textOutput = textOutput;
+        }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -63,13 +100,14 @@ public class CreateTaskActivity extends AppCompatActivity {
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            return new DatePickerDialog(getActivity(), R.style.DialogTheme,this, year, month, day);
         }
 
-        // La data è stata impostata
+        // La data è stata impostata e la scrivo nel campo di testo
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            Log.d("data_selezionata", year+"-"+month+"-"+dayOfMonth);
+            textOutput.setText(String.format(getString(R.string.activity_create_task_input_deadline_value)
+                                        , dayOfMonth, month + 1, year));
         }
     }
 }

@@ -18,16 +18,14 @@ import com.unison.appartment.model.Task;
 
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class TodoListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
+
+    private RecyclerView.Adapter myAdapter;
+    private RecyclerView myRecyclerView;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -61,13 +59,14 @@ public class TodoListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            myRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                myRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyTodoListRecyclerViewAdapter(Task.TASKS/*, mListener*/));
+            myAdapter = new MyTodoListRecyclerViewAdapter(Task.TASKS/*, mListener*/);
+            myRecyclerView.setAdapter(myAdapter);
         }
         return view;
     }
@@ -81,5 +80,11 @@ public class TodoListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+    
+    public void addTask(Task newTask) {
+        Task.addTask(0, newTask);
+        myAdapter.notifyItemInserted(0);
+        myRecyclerView.scrollToPosition(0);
     }
 }

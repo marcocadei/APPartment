@@ -42,6 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_create_task_appbar">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/activity_create_task_input_name_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapSentences|textFilter"
@@ -65,6 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_name">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/activity_create_task_input_description_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapSentences|textFilter"
@@ -88,6 +90,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_description">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/activity_create_task_input_points_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -114,7 +117,7 @@
             android:id="@+id/activity_create_task_input_deadline_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:focusable="false"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/medium_text" />
 
