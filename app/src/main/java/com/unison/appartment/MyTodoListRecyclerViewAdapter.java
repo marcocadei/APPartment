@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unison.appartment.model.Task;
+import com.unison.appartment.TodoListFragment.OnTodoListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -15,9 +16,11 @@ import java.util.List;
 public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Task> tasks;
+    private final OnTodoListFragmentInteractionListener listener;
 
-    public MyTodoListRecyclerViewAdapter(List<Task> tasks) {
+    public MyTodoListRecyclerViewAdapter(List<Task> tasks, OnTodoListFragmentInteractionListener listener) {
         this.tasks = tasks;
+        this.listener = listener;
     }
 
     @Override
@@ -29,11 +32,24 @@ public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        ViewHolderTask holderTask = (ViewHolderTask) holder;
-        Task task = tasks.get(position);
+        final ViewHolderTask holderTask = (ViewHolderTask) holder;
+        final Task task = tasks.get(position);
         holderTask.taskName.setText(task.getName());
-        holderTask.taskDescription.setText(task.getDescription());
+        if (task.getDescription().length() > 45) {
+            holderTask.taskDescription.setText(task.getDescription().substring(0, 45)+"...");
+        } else {
+            holderTask.taskDescription.setText(task.getDescription());
+        }
         holderTask.taskPoints.setText(String.valueOf(task.getPoints()));
+
+        holderTask.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onTodoListFragmentOpenTask(task);
+                }
+            }
+        });
     }
 
     @Override

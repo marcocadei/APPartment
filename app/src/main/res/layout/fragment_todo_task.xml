@@ -9,12 +9,14 @@
 
     <TextView
         android:id="@+id/fragment_todo_task_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_todo_task_points_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,18 +36,16 @@
         android:layout_height="wrap_content"
         android:text="@string/fragment_todo_points_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_todo_task_points_value"
         app:layout_constraintEnd_toStartOf="@+id/fragment_todo_task_points_value"
-        app:layout_constraintTop_toTopOf="@+id/fragment_todo_task_points_value" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_todo_task_name" />
 
     <TextView
         android:id="@+id/fragment_todo_task_points_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_todo_task_name"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_todo_task_points_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_todo_task_name" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_todo_task_points_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

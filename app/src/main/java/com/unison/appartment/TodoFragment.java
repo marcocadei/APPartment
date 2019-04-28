@@ -20,7 +20,7 @@ import com.unison.appartment.model.Task;
 /**
  * Fragment che rappresenta la lista delle attività da svolgere
  */
-public class TodoFragment extends Fragment {
+public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
 
@@ -77,5 +77,12 @@ public class TodoFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onTodoListFragmentOpenTask(Task task) {
+        Intent i = new Intent(getActivity(), TaskDetailActivity.class);
+        i.putExtra("task", task);
+        startActivity(i);
     }
 }

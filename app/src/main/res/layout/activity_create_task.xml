@@ -69,7 +69,6 @@
             android:id="@+id/activity_create_task_input_description_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences|textFilter"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/medium_text" />
 

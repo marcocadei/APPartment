@@ -27,6 +27,8 @@ public class TodoListFragment extends Fragment {
     private RecyclerView.Adapter myAdapter;
     private RecyclerView myRecyclerView;
 
+    private OnTodoListFragmentInteractionListener listener;
+
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
@@ -65,7 +67,7 @@ public class TodoListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myAdapter = new MyTodoListRecyclerViewAdapter(Task.TASKS/*, mListener*/);
+            myAdapter = new MyTodoListRecyclerViewAdapter(Task.TASKS, listener);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -75,6 +77,12 @@ public class TodoListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (getParentFragment() instanceof OnTodoListFragmentInteractionListener) {
+            listener = (OnTodoListFragmentInteractionListener) getParentFragment();
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnInsertPostFragmentListener errore in insert");
+        }
     }
 
     @Override
@@ -86,5 +94,14 @@ public class TodoListFragment extends Fragment {
         Task.addTask(0, newTask);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
+    }
+
+    /**
+     * Questa interfaccia deve essere implementata dalle activity che contengono questo
+     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
+     * che a sua volta può comunicare con altri fragment
+     */
+    public interface OnTodoListFragmentInteractionListener {
+        void onTodoListFragmentOpenTask(Task task);
     }
 }
