@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
@@ -14,12 +16,14 @@ public class CreateTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
         // Supporto per la toolbar
-        toolbar = findViewById(R.id.activity_main_toolbar);
+        toolbar = findViewById(R.id.activity_create_task_toolbar);
         setSupportActionBar(toolbar);
-        // Aggiunge la freccia indietro alla toolbar
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        // Gestione del click della freccia indietro presente sulla toolbar
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateTaskActivity">
+    tools:context=".CreateTaskActivity"
+    android:background="@color/colorBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_create_task_appbar"
@@ -21,8 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@string/activity_create_task_title"
-            app:titleMarginStart="32dp"
-            app:titleTextColor="@color/colorPrimaryText" />
+            app:titleTextColor="@color/colorPrimaryText"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:contentInsetStartWithNavigation="0dp"/>
     </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

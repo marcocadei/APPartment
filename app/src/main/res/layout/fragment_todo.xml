@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_todo_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_todo_float_add"
+        android:id="@+id/fragment_todo_float_add_task"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
