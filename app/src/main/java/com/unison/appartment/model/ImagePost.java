@@ -6,7 +6,8 @@ public class ImagePost extends Post {
 
     private Uri image;
 
-    public ImagePost(Uri image) {
+    public ImagePost(String sender, Uri image) {
+        super(sender);
         this.image = image;
     }
 
