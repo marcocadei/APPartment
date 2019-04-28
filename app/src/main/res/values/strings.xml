@@ -50,8 +50,11 @@
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
     <string name="fragment_insert_post_img_send_audio_description">Bottone di invio audio</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
 
+    <string name="fragment_todo_points_label">PUNTI:</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
