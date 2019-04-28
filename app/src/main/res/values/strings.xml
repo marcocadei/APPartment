@@ -52,5 +52,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
 
 </resources>

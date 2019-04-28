@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.unison.appartment.InsertPostFragment.OnInsertPostFragmentListener;
+
 /**
  * Fragment che rappresenta l'intera bacheca
  */
-public class MessagesFragment extends Fragment implements InsertPostFragment.OnInsertPostFragmentListener{
+public class MessagesFragment extends Fragment implements OnInsertPostFragmentListener {
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
