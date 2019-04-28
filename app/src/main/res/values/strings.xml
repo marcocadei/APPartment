@@ -54,6 +54,8 @@
 
     <string name="fragment_todo_points_label">PUNTI:</string>
 
+    <string name="activity_create_task_title">Aggiungi attività</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
