@@ -35,11 +35,7 @@ public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         final ViewHolderTask holderTask = (ViewHolderTask) holder;
         final Task task = tasks.get(position);
         holderTask.taskName.setText(task.getName());
-        if (task.getDescription().length() > 45) {
-            holderTask.taskDescription.setText(task.getDescription().substring(0, 45)+"...");
-        } else {
-            holderTask.taskDescription.setText(task.getDescription());
-        }
+        holderTask.taskDescription.setText(task.getDescription());
         holderTask.taskPoints.setText(String.valueOf(task.getPoints()));
 
         holderTask.mView.setOnClickListener(new View.OnClickListener() {
