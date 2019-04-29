@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/medium_text" />
+            android:textSize="@dimen/text_medium" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

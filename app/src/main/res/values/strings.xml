@@ -2,6 +2,9 @@
     <string name="app_name">APPartment</string>
 
     <string name="placeholder_text">Placeholder</string>
+    <string name="placeholder_text_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <string name="general_points_name">Punti</string>
 
     <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
@@ -50,8 +53,15 @@
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
     <string name="fragment_insert_post_img_send_audio_description">Bottone di invio audio</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
+
+    <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
+    <string name="fragment_money_reward_text_description">Guadagna %d€ ogni %d punti</string>
+
+    <string name="fragment_requested_reward_text_status">Premio richiesto</string>
+    <string name="activity_create_reward_title">Crea nuovo premio</string>
+    <string name="activity_create_reward_btn_confirm">Aggiungi premio</string>
+    <string name="activity_create_reward_hint_name">Nome</string>
+    <string name="activity_create_reward_hint_points">Punti</string>
 
 </resources>

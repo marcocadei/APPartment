@@ -2,7 +2,11 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="small_text">12sp</dimen>
-    <dimen name="medium_text">14sp</dimen>
-    <dimen name="title_text">32sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_title">32sp</dimen>
+
+    <dimen name="img_med">24dp</dimen>
+    <dimen name="img_med_corners">6dp</dimen>
 </resources>
