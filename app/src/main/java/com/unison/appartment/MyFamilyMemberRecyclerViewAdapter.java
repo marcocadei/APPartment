@@ -67,7 +67,7 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
             mView = view;
             imageMember = view.findViewById(R.id.fragment_family_member_image_member);
             textMemberName = view.findViewById(R.id.fragment_family_member_text_member_name);
-            textMemberPoints = view.findViewById(R.id.fragment_family_member_text_member_points);
+            textMemberPoints = view.findViewById(R.id.fragment_family_member_points_value);
         }
 
         @Override

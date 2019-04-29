@@ -13,8 +13,6 @@ import android.widget.RadioGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.model.Member;
 
-import java.io.Serializable;
-
 public class CreateMemberActivity extends AppCompatActivity {
 
     @Override
@@ -53,15 +51,6 @@ public class CreateMemberActivity extends AppCompatActivity {
                 String role = selectedRole.getText().toString();
 
                 Member newMember = new Member(name,age, gender, role, 0);
-
-/*
-                Member newMember = new Member("Andrea", 13, "Maschio", "Leader", 0);
-*/
-
-               /* ListPostFragment pf = (ListPostFragment)getChildFragmentManager()
-                            .findFragmentById(R.id.fragment_messages_fragment_list_post);
-                    pf.addTextPost(message);
-                }*/
 
                 String origin = i.getStringExtra("origin");
                 if(origin.equals("fromFamily")){
