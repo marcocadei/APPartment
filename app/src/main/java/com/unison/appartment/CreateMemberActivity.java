@@ -25,6 +25,7 @@ public class CreateMemberActivity extends AppCompatActivity {
         final EditText inputAge = findViewById(R.id.activity_create_member_input_age_value);
         final RadioGroup inputGender = findViewById(R.id.activity_create_member_radio_gender);
         final RadioGroup inputRole = findViewById(R.id.activity_create_member_radio_role);
+        final String origin = i.getStringExtra("origin");
 
         // Gestione click sul bottone per aggiungere un nuovo membro
         FloatingActionButton floatNewMember = findViewById(R.id.activity_create_member_float_new_member);
@@ -52,7 +53,6 @@ public class CreateMemberActivity extends AppCompatActivity {
 
                 Member newMember = new Member(name,age, gender, role, 0);
 
-                String origin = i.getStringExtra("origin");
                 if(origin.equals("fromFamily")){
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("newMember", newMember);
