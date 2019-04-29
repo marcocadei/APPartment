@@ -2,11 +2,18 @@ package com.unison.appartment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.unison.appartment.model.Member;
+
+import java.io.Serializable;
 
 public class CreateMemberActivity extends AppCompatActivity {
 
@@ -15,6 +22,13 @@ public class CreateMemberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_member);
 
+        final Intent i = getIntent();
+        final EditText inputName = findViewById(R.id.activity_create_member_input_name_value);
+        final EditText inputAge = findViewById(R.id.activity_create_member_input_age_value);
+        final RadioGroup inputGender = findViewById(R.id.activity_create_member_radio_gender);
+        final RadioGroup inputRole = findViewById(R.id.activity_create_member_radio_role);
+
+        // Gestione click sul bottone per aggiungere un nuovo membro
         FloatingActionButton floatNewMember = findViewById(R.id.activity_create_member_float_new_member);
         floatNewMember.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,12 +39,40 @@ public class CreateMemberActivity extends AppCompatActivity {
             }
         });
 
+        // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatFinish = findViewById(R.id.activity_create_member_float_finish);
         floatFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CreateMemberActivity.this, MainActivity.class);
-                startActivity(i);
+
+                String name = inputName.getText().toString();
+                int age = Integer.parseInt(inputAge.getText().toString());
+                RadioButton selectedGender = (RadioButton) findViewById(inputGender.getCheckedRadioButtonId());
+                String gender = selectedGender.getText().toString();
+                RadioButton selectedRole = (RadioButton) findViewById(inputRole.getCheckedRadioButtonId());
+                String role = selectedRole.getText().toString();
+
+                Member newMember = new Member(name,age, gender, role, 0);
+
+/*
+                Member newMember = new Member("Andrea", 13, "Maschio", "Leader", 0);
+*/
+
+               /* ListPostFragment pf = (ListPostFragment)getChildFragmentManager()
+                            .findFragmentById(R.id.fragment_messages_fragment_list_post);
+                    pf.addTextPost(message);
+                }*/
+
+                String origin = i.getStringExtra("origin");
+                if(origin.equals("fromFamily")){
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("newMember", newMember);
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                } else {
+                    Intent i = new Intent(CreateMemberActivity.this, MainActivity.class);
+                    startActivity(i);
+                }
             }
         });
     }
