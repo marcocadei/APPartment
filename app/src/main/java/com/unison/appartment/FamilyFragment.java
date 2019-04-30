@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.model.Member;
@@ -19,7 +20,7 @@ import com.unison.appartment.model.Member;
 /**
  * Fragment che presenta la lista dei membri della famiglia e le relative statistiche
  */
-public class FamilyFragment extends Fragment {
+public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
 
     private static final String FROM_FAMILY = "fromFamily";
     private static final int ADD_MEMBER_REQUEST_CODE = 1;
@@ -57,6 +58,18 @@ public class FamilyFragment extends Fragment {
             }
 
         });
+
+        // TODO: da fare per implementare la cancellazione di un elemento nella lista
+        /*Button btnDeleteMember = myView.findViewById(R.id.fragment_family_member_btn_delete_member);
+        btnDeleteMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FamilyMemberListFragment fmlf = (FamilyMemberListFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.fragment_family_member_list);
+                fmlf.removeMember();
+            }
+        });*/
+
         return myView;
     }
 
@@ -80,11 +93,10 @@ public class FamilyFragment extends Fragment {
         super.onDetach();
     }
 
-    //TODO: fare il metodo che apre il "profilo" di un membro, passando con un intent alla relativa activity
-    /*@Override
-    public void onTodoListFragmentOpenTask(Task task) {
-        Intent i = new Intent(getActivity(), TaskDetailActivity.class);
-        i.putExtra("task", task);
+    @Override
+    public void onFamilyMemberListFragmentOpenMember(Member member) {
+        Intent i = new Intent(getActivity(), FamilyMemberDetailActivity.class);
+        i.putExtra("member", member);
         startActivity(i);
-    }*/
+    }
 }

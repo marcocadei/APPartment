@@ -12,28 +12,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unison.appartment.model.Member;
+import com.unison.appartment.model.Achievement;
 
-public class FamilyMemberListFragment extends Fragment {
+public class AchievementListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
-    // RecyclerView e Adapter della recyclerView
     private RecyclerView.Adapter myAdapter;
     private RecyclerView myRecyclerView;
-
-    private OnFamilyMemberListFragmentInteractionListener listener;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
-    public FamilyMemberListFragment() {
+    public AchievementListFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static FamilyMemberListFragment newInstance(int columnCount) {
-        FamilyMemberListFragment fragment = new FamilyMemberListFragment();
+    public static AchievementListFragment newInstance(int columnCount) {
+        AchievementListFragment fragment = new AchievementListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -43,7 +40,6 @@ public class FamilyMemberListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Quando il fragment è creato recupero i parametri
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -52,7 +48,7 @@ public class FamilyMemberListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_family_member_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_achievement_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -63,45 +59,21 @@ public class FamilyMemberListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myAdapter = new MyFamilyMemberRecyclerViewAdapter(Member.getMemberList(), listener);
+            myAdapter = new MyAchievementRecyclerViewAdapter(Achievement.achievementList);
             myRecyclerView.setAdapter(myAdapter);
         }
+
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getParentFragment() instanceof OnFamilyMemberListFragmentInteractionListener) {
-            listener = (OnFamilyMemberListFragmentInteractionListener) getParentFragment();
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFamilyMemberListFragmentListener errore in insert");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    public void addMember(Member newMember) {
-        Member.addMember(0, newMember);
-        myAdapter.notifyItemInserted(0);
-        myRecyclerView.scrollToPosition(0);
-    }
-
-    public void removeMember(int position){
-        Member.removeMember(position);
-        myAdapter.notifyItemRemoved(position);
-    }
-
-    /**
-     * Questa interfaccia deve essere implementata dalle activity che contengono questo
-     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
-     * che a sua volta può comunicare con altri fragment
-     */
-    public interface OnFamilyMemberListFragmentInteractionListener {
-        void onFamilyMemberListFragmentOpenMember(Member member);
     }
 }

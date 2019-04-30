@@ -52,6 +52,7 @@
 
     <string name="fragment_family_member_points_label">PUNTI:</string>
 
+    <string name="activity_family_member_detail_title">Dettaglio membro</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Fragment dei grafici</string>

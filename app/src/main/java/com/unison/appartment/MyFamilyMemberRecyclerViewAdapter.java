@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unison.appartment.model.Member;
+import com.unison.appartment.FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -16,13 +17,12 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     private final List<Member> memberList;
     // TODO: implementare listener
-/*
-    private final OnFamilyMemberListFragmentInteractionListener listener;
-*/
 
-    public MyFamilyMemberRecyclerViewAdapter(List<Member> memberList/*, OnFamilyMemberListFragmentInteractionListener listener*/) {
+    private final OnFamilyMemberListFragmentInteractionListener listener;
+
+    public MyFamilyMemberRecyclerViewAdapter(List<Member> memberList, OnFamilyMemberListFragmentInteractionListener listener) {
         this.memberList = memberList;
-        /*this.listener = listener;*/
+        this.listener = listener;
     }
 
     @Override
@@ -40,15 +40,14 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
         holderMember.textMemberPoints.setText(String.valueOf(member.getPoints()));
 //      holderMember.imageMember.setImageURI(memberItem.getImage());
 
-        // TODO: implementare il listener
-       /* holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onFamilyMemberListFragmentOpenTask(task);
+                    listener.onFamilyMemberListFragmentOpenMember(member);
                 }
             }
-        });*/
+        });
     }
 
     @Override
