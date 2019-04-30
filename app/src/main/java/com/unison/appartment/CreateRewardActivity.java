@@ -21,13 +21,13 @@ public class CreateRewardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_reward);
 
         /*
         Impostazione del comportamento della freccia presente sulla toolbar
         (alla pressione l'activity viene terminata).
          */
         Toolbar toolbar;
-        setContentView(R.layout.activity_create_reward);
         toolbar = findViewById(R.id.activity_create_reward_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

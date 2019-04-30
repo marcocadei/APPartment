@@ -125,6 +125,6 @@ public class RewardFragment extends Fragment {
      */
     public interface OnRewardListFragmentInteractionListener {
         // TODO: Update argument type and name
-//        void onListFragmentInteraction(DummyItem item);
+        void onRewardListFragmentInteraction(Reward item);
     }
 }

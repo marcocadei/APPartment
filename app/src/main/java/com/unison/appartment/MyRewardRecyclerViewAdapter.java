@@ -51,23 +51,26 @@ public class MyRewardRecyclerViewAdapter extends RecyclerView.Adapter<MyRewardRe
 
     @Override
     public void onBindViewHolder(final ViewHolderReward holder, int position) {
-        Reward rewardItem = rewardsList.get(position);
+        final Reward rewardItem = rewardsList.get(position);
         holder.textNameView.setText(rewardItem.getName());
         if (holder.getItemViewType() == AVAILABLE_REWARD_ITEM_TYPE) {
             ((ViewHolderAvailableReward) holder).textPointsView.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
         }
 
-//        FIXME Rimuovere se non serve
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
-//            }
-//        });
+        // FIXME Questo if serve a far sì che possano essere visualizzati i dettagli solo dei premi richiedibili:
+        // cambiare se non serve. Oppure modificare il liste
+//        if (!rewardItem.isRequested()) {
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        // Notify the active callbacks interface (the activity, if the
+                        // fragment is attached to one) that an item has been selected.
+                        mListener.onRewardListFragmentInteraction(rewardItem);
+                    }
+                }
+            });
+//        }
     }
 
     @Override

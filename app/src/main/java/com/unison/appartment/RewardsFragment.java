@@ -130,6 +130,14 @@ public class RewardsFragment extends Fragment implements RewardFragment.OnReward
 //        mListener = null;
     }
 
+    @Override
+    public void onRewardListFragmentInteraction(Reward item) {
+        Intent i = new Intent(getActivity(), RewardDetailActivity.class);
+        i.putExtra("rewardObject", item);
+        startActivity(i);
+    }
+
+
 //    FIXME Rimuovere se non serve
 //    /**
 //     * This interface must be implemented by activities that contain this
