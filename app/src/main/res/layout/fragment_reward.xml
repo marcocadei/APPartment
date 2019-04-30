@@ -5,7 +5,8 @@
     android:id="@+id/fragment_reward"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
-    style="@android:style/Widget.DeviceDefault.Button"
+    style="@android:style/Widget.Holo.Button"
+    android:backgroundTint="@android:color/darker_gray"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -75,7 +76,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:foregroundGravity="center"
-        android:contentDescription=""
+        android:contentDescription="@string/fragment_reward_img_arrow"
         android:src="@drawable/ic_arrow_forward_black_24dp"
         android:tint="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"

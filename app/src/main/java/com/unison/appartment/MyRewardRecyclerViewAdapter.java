@@ -87,6 +87,7 @@ public class MyRewardRecyclerViewAdapter extends RecyclerView.Adapter<MyRewardRe
         private ViewHolderReward(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
+            textNameView = (TextView) itemView.findViewById(R.id.fragment_reward_text_name);
         }
 
     }
@@ -96,7 +97,6 @@ public class MyRewardRecyclerViewAdapter extends RecyclerView.Adapter<MyRewardRe
 
         public ViewHolderAvailableReward(View view) {
             super(view);
-            textNameView = (TextView) view.findViewById(R.id.fragment_reward_text_name);
             textPointsView = (TextView) view.findViewById(R.id.fragment_reward_text_points_value);
         }
 
@@ -110,7 +110,6 @@ public class MyRewardRecyclerViewAdapter extends RecyclerView.Adapter<MyRewardRe
 
         public ViewHolderRequestedReward(View view) {
             super(view);
-            textNameView = (TextView) view.findViewById(R.id.fragment_requested_reward_text_name);
         }
 
         @Override
