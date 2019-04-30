@@ -11,9 +11,18 @@ public class Reward implements Serializable {
 
     private String name;
 
+    private String description;
+
     private int points;
 
     private boolean requested;
+
+    public Reward(String name, String description, int points) {
+        this.name = name;
+        this.description = description;
+        this.points = points;
+        this.requested = false;
+    }
 
     public Reward(String name, int points) {
         this.name = name;
@@ -35,6 +44,14 @@ public class Reward implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getPoints() {
