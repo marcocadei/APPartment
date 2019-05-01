@@ -13,6 +13,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".RewardDetailActivity"></activity>
         <activity android:name=".CreateRewardActivity" />
+        <activity android:name=".FamilyMemberDetailActivity"></activity>
+        <activity android:name=".TaskDetailActivity"></activity>
+        <activity android:name=".CreateTaskActivity" />
         <activity android:name=".FirstAccessActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignInActivity" />

@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * Fragment che rappresenta la lista di post
  */
-public class ListPostFragment extends Fragment {
+public class PostListFragment extends Fragment {
     // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
@@ -36,12 +36,12 @@ public class ListPostFragment extends Fragment {
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
-    public ListPostFragment() {
+    public PostListFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static ListPostFragment newInstance(int columnCount) {
-        ListPostFragment fragment = new ListPostFragment();
+    public static PostListFragment newInstance(int columnCount) {
+        PostListFragment fragment = new PostListFragment();
         // Parametri del fragment
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);

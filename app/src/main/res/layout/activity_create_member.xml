@@ -71,6 +71,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:textSize="@dimen/text_medium"
+                    android:id="@+id/activity_create_member_input_name_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences|textFilter"
@@ -96,6 +97,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:textSize="@dimen/text_medium"
+                    android:id="@+id/activity_create_member_input_age_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"

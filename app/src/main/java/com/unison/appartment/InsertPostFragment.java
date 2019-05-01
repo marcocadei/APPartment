@@ -83,6 +83,7 @@ public class InsertPostFragment extends Fragment {
         final View myView =  inflater.inflate(R.layout.fragment_insert_post, container, false);
 
         final ImageButton btnSendText = myView.findViewById(R.id.fragment_insert_post_btn_send_text);
+        btnSendText.setEnabled(false);
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
