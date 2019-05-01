@@ -156,10 +156,13 @@ public class InsertPostFragment extends Fragment {
                     btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
                     listener.onInsertPostFragmentSendAudio(fileName);
+                } else {
+                    // Se non si sta registrando e si preme sul bottone mostro un avviso su come
+                    // registrare un audio
+                    Toast.makeText(getActivity(), getString(R.string.fragment_insert_post_btn_audio_suggestion),
+                            Toast.LENGTH_LONG).show();
                 }
                 btnSendAudio.setFocusableInTouchMode(false);
-                Toast.makeText(getActivity(), getString(R.string.fragment_insert_post_btn_audio_suggestion),
-                        Toast.LENGTH_LONG).show();
             }
         });
         // Cambio il colore del bottone di invio del testo in base al fatto che il campo di input
