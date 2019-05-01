@@ -27,7 +27,7 @@
                 android:text="@string/activity_create_home_text_title"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/title_text"
+                android:textSize="@dimen/text_title"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_name"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_home_img_title"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -65,7 +65,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/medium_text"
+                    android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences|textFilter"
@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/medium_text"
+                    android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -115,7 +115,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_password">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/medium_text"
+                    android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -132,7 +132,7 @@
                 android:drawableStart="@drawable/ic_info_outline_black_24dp"
                 android:drawableTint="@color/colorPrimary"
                 android:text="@string/activity_create_home_text_info"
-                android:textSize="@dimen/small_text"
+                android:textSize="@dimen/text_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"

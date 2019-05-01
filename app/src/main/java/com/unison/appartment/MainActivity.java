@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 // TODO aggiungere fragment done
                 break;
             case R.id.activity_main_bottom_navigation_rewards:
-                // TODO aggiungere fragment rewards
+                switchToFragment(RewardsFragment.class);
                 break;
             default:
                 break;
