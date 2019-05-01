@@ -77,7 +77,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         // Prova DB
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ref = db.getReference("appartment-unison");
+        DatabaseReference ref = db.getReference("/task-test");
         ref.setValue(newTask);
 
         setResult(Activity.RESULT_OK,returnIntent);
