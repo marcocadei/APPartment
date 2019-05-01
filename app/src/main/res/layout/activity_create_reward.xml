@@ -23,7 +23,6 @@
             app:contentInsetStartWithNavigation="0dp"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:title="@string/activity_create_reward_title"
-            app:titleMarginStart="32dp"
             app:titleTextColor="@color/colorPrimaryText" />
     </com.google.android.material.appbar.AppBarLayout>
 
