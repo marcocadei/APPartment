@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.unison.appartment.model.AudioPost;
 
@@ -157,6 +158,8 @@ public class InsertPostFragment extends Fragment {
                     listener.onInsertPostFragmentSendAudio(fileName);
                 }
                 btnSendAudio.setFocusableInTouchMode(false);
+                Toast.makeText(getActivity(), getString(R.string.fragment_insert_post_btn_audio_suggestion),
+                        Toast.LENGTH_LONG).show();
             }
         });
         // Cambio il colore del bottone di invio del testo in base al fatto che il campo di input
