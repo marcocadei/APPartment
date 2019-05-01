@@ -103,7 +103,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             });
         } catch (IOException e) {
         }
-        holderAudioPost.audioPostState.setText("Rirpoduzione audio in corso");
+        holderAudioPost.audioPostState.setText(.getString(R.string.fragment_audio_post_state_playing));
     }
 
     @Override
