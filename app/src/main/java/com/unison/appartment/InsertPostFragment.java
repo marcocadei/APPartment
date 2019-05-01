@@ -129,7 +129,7 @@ public class InsertPostFragment extends Fragment {
                         isRecording = true;
                         btnSendAudio.setFocusableInTouchMode(true);
                         btnSendAudio.requestFocus();
-                        inputText.setText("Registrazione in corso");
+                        inputText.setText(getResources().getString(R.string.fragment_insert_post_text_recording));
                         // Disabilito tutti i campi che non siano il registratore
                         inputText.setEnabled(false);
                         btnSendText.setEnabled(false);
