@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.unison.appartment.InsertPostFragment.OnInsertPostFragmentListener;
+
 /**
  * Fragment che rappresenta l'intera bacheca
  */
-public class MessagesFragment extends Fragment implements InsertPostFragment.OnInsertPostFragmentListener{
+public class MessagesFragment extends Fragment implements OnInsertPostFragmentListener {
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -51,21 +53,21 @@ public class MessagesFragment extends Fragment implements InsertPostFragment.OnI
 
     @Override
     public void onInsertPostFragmentSendText(String message) {
-        ListPostFragment pf = (ListPostFragment)getChildFragmentManager()
+        PostListFragment pf = (PostListFragment)getChildFragmentManager()
                 .findFragmentById(R.id.fragment_messages_fragment_list_post);
         pf.addTextPost(message);
     }
 
     @Override
     public void onInsertPostFragmentSendImage(Uri selectedImage) {
-        ListPostFragment pf = (ListPostFragment)getChildFragmentManager()
+        PostListFragment pf = (PostListFragment)getChildFragmentManager()
                 .findFragmentById(R.id.fragment_messages_fragment_list_post);
         pf.addImagePost(selectedImage);
     }
 
     @Override
     public void onInsertPostFragmentSendAudio(String fileName) {
-        ListPostFragment pf = (ListPostFragment)getChildFragmentManager()
+        PostListFragment pf = (PostListFragment)getChildFragmentManager()
                 .findFragmentById(R.id.fragment_messages_fragment_list_post);
         pf.addAudioPost(fileName);
     }

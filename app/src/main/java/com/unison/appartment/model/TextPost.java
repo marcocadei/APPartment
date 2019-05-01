@@ -4,7 +4,8 @@ public class TextPost extends Post {
 
     private String message;
 
-    public TextPost(String message) {
+    public TextPost(String sender, String message) {
+        super(sender);
         this.message = message;
     }
 

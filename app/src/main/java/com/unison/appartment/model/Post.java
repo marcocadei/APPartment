@@ -10,6 +10,8 @@ public abstract class Post {
 
     private static List<Post> postList = new ArrayList<>();
 
+    private String sender;
+
     public static void addPost(int position, Post post) {
         postList.add(position, post);
     }
@@ -27,4 +29,16 @@ public abstract class Post {
     }
 
     public abstract int getType();
+
+    public Post(String sender) {
+        this.sender = sender;
+    }
+
+    public String getSender(){
+        return sender;
+    }
+
+    public void setSendet(String sender) {
+        this.sender = sender;
+    }
 }

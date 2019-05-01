@@ -27,7 +27,7 @@
                 android:text="@string/activity_first_access_text_title"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/title_text"
+                android:textSize="@dimen/text_title"
                 app:layout_constraintBottom_toTopOf="@+id/activity_first_access_text_info"
                 app:layout_constraintEnd_toStartOf="@+id/activity_first_access_img_title"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -59,7 +59,7 @@
                 android:drawableStart="@drawable/ic_info_outline_black_24dp"
                 android:drawableTint="@color/colorPrimary"
                 android:text="@string/activity_first_access_text_info"
-                android:textSize="@dimen/small_text"
+                android:textSize="@dimen/text_small"
                 app:layout_constraintBottom_toTopOf="@+id/activity_first_access_input_password"
                 app:layout_constraintEnd_toEndOf="@id/activity_first_access_input_repeat_password"
                 app:layout_constraintStart_toStartOf="@id/activity_first_access_input_repeat_password"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/text_medium" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,7 +105,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_first_access_input_password">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/medium_text"
+                    android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"

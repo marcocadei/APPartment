@@ -6,17 +6,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    // TODO da rimuovere
+    public final static String LOGGED_USER = "MARCO";
 
     private int selectedBottomNavigationMenuItemId;
     private Toolbar toolbar;
@@ -73,16 +72,16 @@ public class MainActivity extends AppCompatActivity {
                 switchToFragment(MessagesFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_family:
-                // TODO aggiungere fragment family
+                switchToFragment(FamilyFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_todo:
-                // TODO aggiungere fragment todo
+                switchToFragment(TodoFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_done:
                 // TODO aggiungere fragment done
                 break;
             case R.id.activity_main_bottom_navigation_rewards:
-                // TODO aggiungere fragment rewards
+                switchToFragment(RewardsFragment.class);
                 break;
             default:
                 break;
@@ -135,5 +134,4 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
