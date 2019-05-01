@@ -127,6 +127,7 @@ public class InsertPostFragment extends Fragment {
                         // Ho il permesso di registrare
                         Log.d("audio_prova", "Permesso di registrare");
                         isRecording = true;
+                        btnSendAudio.setFocusableInTouchMode(true);
                         btnSendAudio.requestFocus();
                         inputText.setText("Registrazione in corso");
                         // Disabilito tutti i campi che non siano il registratore
@@ -155,6 +156,7 @@ public class InsertPostFragment extends Fragment {
                     // Una volta terminata la registrazione dell'audio aggiungo il post
                     listener.onInsertPostFragmentSendAudio(fileName);
                 }
+                btnSendAudio.setFocusableInTouchMode(false);
             }
         });
         // Cambio il colore del bottone di invio del testo in base al fatto che il campo di input
