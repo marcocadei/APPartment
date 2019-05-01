@@ -70,6 +70,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_member_input_name_value"
                     android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -95,6 +96,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_member_input_age_value"
                     android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

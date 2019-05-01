@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".FamilyMemberDetailActivity"></activity>
         <activity android:name=".TaskDetailActivity"></activity>
         <activity android:name=".CreateTaskActivity" />
         <activity android:name=".FirstAccessActivity" />
