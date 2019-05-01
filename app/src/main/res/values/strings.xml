@@ -57,4 +57,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Fragment dei grafici</string>
 
+    <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
+
+    <string name="fragment_todo_points_label">PUNTI:</string>
+
+    <string name="activity_create_task_title">Aggiungi attività</string>
+    <string name="activity_create_task_input_name">Nome</string>
+    <string name="activity_create_task_input_description">Descrizione</string>
+    <string name="activity_create_task_input_points">Punti</string>
+    <string name="activity_create_task_input_deadline">Scadenza</string>
+    <string name="activity_create_task_input_deadline_value">%1$d-%2$d-%3$d</string>
+
+    <string name="activity_task_detail_title">Dettaglio attività</string>
+    <string name="activity_task_detail_deadline">Scadenza: %1$s</string>
 </resources>

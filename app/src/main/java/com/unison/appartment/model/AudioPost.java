@@ -6,7 +6,8 @@ public class AudioPost extends Post {
 
     private String fileName;
 
-    public AudioPost(String fileName) {
+    public AudioPost(String sender, String fileName) {
+        super(sender);
         this.fileName = fileName;
     }
 

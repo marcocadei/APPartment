@@ -14,6 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // TODO da rimuovere
+    public final static String LOGGED_USER = "MARCO";
+
     private int selectedBottomNavigationMenuItemId;
     private Toolbar toolbar;
 
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 switchToFragment(FamilyFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_todo:
-                // TODO aggiungere fragment todo
+                switchToFragment(TodoFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_done:
                 // TODO aggiungere fragment done
