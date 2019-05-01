@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:inputType="textCapSentences|textFilter"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/medium_text" />
+            android:textSize="@dimen/text_medium" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/medium_text" />
+            android:textSize="@dimen/text_medium" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/medium_text" />
+            android:textSize="@dimen/text_medium" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:focusable="false"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/medium_text" />
+            android:textSize="@dimen/text_medium" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
