@@ -14,6 +14,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.unison.appartment.model.Task;
 
 import java.util.Calendar;
@@ -72,6 +74,11 @@ public class CreateTaskActivity extends AppCompatActivity {
         );
         Intent returnIntent = new Intent();
         returnIntent.putExtra("newTask", newTask);
+
+        // Prova DB
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference("appartment-unison");
+        ref.setValue(newTask);
 
         setResult(Activity.RESULT_OK,returnIntent);
         finish();

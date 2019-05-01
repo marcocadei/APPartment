@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1024834532464",
+    "firebase_url": "https://appartment-unison.firebaseio.com",
+    "project_id": "appartment-unison",
+    "storage_bucket": "appartment-unison.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024834532464:android:1a8845c18a9556d3",
+        "android_client_info": {
+          "package_name": "com.unison.appartment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024834532464-349nv428fj165fgsolq25669hs6gpbgm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFM0K-FMii08XurYWdPv8G664QOGB5fo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024834532464-349nv428fj165fgsolq25669hs6gpbgm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
