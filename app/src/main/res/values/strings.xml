@@ -58,7 +58,7 @@
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
     <string name="fragment_insert_post_img_send_audio_description">Bottone di invio audio</string>
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
-    <string name="fragment_insert_post_btn_audio_suggestion">Tieni premuto il bottone e poi rilasscialo per registrare un audio</string>
+    <string name="fragment_insert_post_btn_audio_suggestion">Tieni premuto il bottone e poi rilascialo per registrare un audio</string>
 
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
     <string name="fragment_money_reward_text_description">Guadagna %d€ ogni %d punti</string>
