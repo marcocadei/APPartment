@@ -76,6 +76,9 @@ public class TodoListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+            myAdapter = new MyTodoListRecyclerViewAdapter(Task.TASKS, listener);
+            myRecyclerView.setAdapter(myAdapter);
+
             // Prova DB
             FirebaseDatabase db = FirebaseDatabase.getInstance();
             DatabaseReference ref = db.getReference("/task-test");
@@ -84,6 +87,7 @@ public class TodoListFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Task t = dataSnapshot.getValue(Task.class);
                     Task.addTask(0, t);
+                    myAdapter.notifyItemInserted(0);
                 }
 
                 @Override
@@ -91,9 +95,6 @@ public class TodoListFragment extends Fragment {
                     Log.d("Alessia", "Piercing nascosto");
                 }
             });
-
-            myAdapter = new MyTodoListRecyclerViewAdapter(Task.TASKS, listener);
-            myRecyclerView.setAdapter(myAdapter);
         }
         return view;
     }
