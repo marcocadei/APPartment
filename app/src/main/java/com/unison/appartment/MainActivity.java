@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 // TODO aggiungere fragment family
                 break;
             case R.id.activity_main_bottom_navigation_todo:
-                // TODO aggiungere fragment todo
+                switchToFragment(TodoFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_done:
                 // TODO aggiungere fragment done
