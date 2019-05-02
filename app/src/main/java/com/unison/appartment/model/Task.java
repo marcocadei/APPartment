@@ -18,6 +18,9 @@ public class Task implements Serializable {
         this.points = points;
     }
 
+    public Task() {
+    }
+
     public String getName() {
         return name;
     }

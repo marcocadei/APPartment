@@ -81,14 +81,13 @@
     <string name="activity_reward_detail_text_points">%d punti</string>
     <string name="activity_reward_detail_text_description_title">Descrizione</string>
 
-    <string name="fragment_family_member_points_label">PUNTI:</string>
-
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
 
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
-
-    <string name="fragment_todo_points_label">PUNTI:</string>
 
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_create_task_input_name">Nome</string>
@@ -100,7 +99,4 @@
     <string name="activity_task_detail_title">Dettaglio attività</string>
     <string name="activity_task_detail_deadline">Scadenza: %1$s</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Fragment dei grafici</string>
 </resources>
