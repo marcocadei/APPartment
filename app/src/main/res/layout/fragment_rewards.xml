@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_reward_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_create_reward_float_add"
+        android:id="@+id/fragments_reward_float_add"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
