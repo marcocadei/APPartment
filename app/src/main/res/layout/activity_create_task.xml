@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateTaskActivity"
-    android:background="@color/colorBackground">
+    tools:context=".CreateTaskActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_create_task_appbar"
