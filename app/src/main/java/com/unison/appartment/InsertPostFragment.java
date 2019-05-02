@@ -152,7 +152,7 @@ public class InsertPostFragment extends Fragment {
                     inputText.getText().clear();
                     // Riabilito i campi al termine della registrazione
                     inputText.setEnabled(true);
-                    btnSendText.setEnabled(true);
+                    // btnSendText.setEnabled(true);
                     btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
                     listener.onInsertPostFragmentSendAudio(fileName);
@@ -174,10 +174,10 @@ public class InsertPostFragment extends Fragment {
                 // Il campo di testo è considerato vuoto se contiene solo spazi o \n
                 if (s.toString().replaceAll("\n", "")
                                 .replaceAll("\\s+", "").length() == 0) {
-                    btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray));
+                    // btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray));
                     btnSendText.setEnabled(false);
                 } else {
-                    btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                    // btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
                     btnSendText.setEnabled(true);
                 }
             }
