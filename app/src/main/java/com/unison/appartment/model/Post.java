@@ -11,6 +11,7 @@ public abstract class Post {
     private static List<Post> postList = new ArrayList<>();
 
     private String sender;
+    private String date;
 
     public static void addPost(int position, Post post) {
         postList.add(position, post);
@@ -40,5 +41,13 @@ public abstract class Post {
 
     public void setSendet(String sender) {
         this.sender = sender;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
