@@ -12,12 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unison.appartment.dummy.DummyContent;
-import com.unison.appartment.dummy.DummyContent.DummyItem;
 import com.unison.appartment.model.Task;
-
-import java.util.List;
-
 
 public class TodoListFragment extends Fragment {
 
