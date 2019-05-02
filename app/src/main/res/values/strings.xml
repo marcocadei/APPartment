@@ -66,7 +66,6 @@
     <string name="fragment_reward_img_arrow">Icona di una freccia</string>
 
     <string name="activity_create_reward_title">Crea nuovo premio</string>
-    <string name="activity_create_reward_btn_confirm">Aggiungi premio</string>
     <string name="activity_create_reward_hint_name">Nome</string>
     <string name="activity_create_reward_hint_points">Punti</string>
     <string name="activity_create_reward_hint_description">Descrizione</string>
