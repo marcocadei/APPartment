@@ -20,6 +20,7 @@ import com.unison.appartment.model.Post;
 import com.unison.appartment.model.TextPost;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Fragment che rappresenta la lista di post
@@ -95,17 +96,17 @@ public class PostListFragment extends Fragment {
      */
     // TODO sostituire costante con nome dell'utente realmente loggato
     public void addTextPost(String message){
-        TextPost textPost = new TextPost(MainActivity.LOGGED_USER, message);
+        TextPost textPost = new TextPost(MainActivity.LOGGED_USER, new Date(), message);
         addPost(textPost);
     }
 
     public void addImagePost(Uri selectedImage) {
-        ImagePost imagePost = new ImagePost(MainActivity.LOGGED_USER, selectedImage);
+        ImagePost imagePost = new ImagePost(MainActivity.LOGGED_USER, new Date(), selectedImage);
         addPost(imagePost);
     }
 
     public void addAudioPost(String fileName) {
-        AudioPost audioPost = new AudioPost(MainActivity.LOGGED_USER, fileName);
+        AudioPost audioPost = new AudioPost(MainActivity.LOGGED_USER, new Date(), fileName);
         addPost(audioPost);
     }
 

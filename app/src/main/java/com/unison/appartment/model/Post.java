@@ -1,6 +1,7 @@
 package com.unison.appartment.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public abstract class Post {
@@ -11,7 +12,7 @@ public abstract class Post {
     private static List<Post> postList = new ArrayList<>();
 
     private String sender;
-    private String date;
+    private Date date;
 
     public static void addPost(int position, Post post) {
         postList.add(position, post);
@@ -31,8 +32,9 @@ public abstract class Post {
 
     public abstract int getType();
 
-    public Post(String sender) {
+    public Post(String sender, Date date) {
         this.sender = sender;
+        this.date = date;
     }
 
     public String getSender(){
@@ -43,11 +45,11 @@ public abstract class Post {
         this.sender = sender;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

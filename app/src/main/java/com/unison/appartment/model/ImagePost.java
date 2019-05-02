@@ -2,12 +2,14 @@ package com.unison.appartment.model;
 
 import android.net.Uri;
 
+import java.util.Date;
+
 public class ImagePost extends Post {
 
     private Uri image;
 
-    public ImagePost(String sender, Uri image) {
-        super(sender);
+    public ImagePost(String sender, Date date, Uri image) {
+        super(sender, date);
         this.image = image;
     }
 

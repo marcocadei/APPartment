@@ -1,11 +1,13 @@
 package com.unison.appartment.model;
 
+import java.util.Date;
+
 public class TextPost extends Post {
 
     private String message;
 
-    public TextPost(String sender, String message) {
-        super(sender);
+    public TextPost(String sender, Date date, String message) {
+        super(sender, date);
         this.message = message;
     }
 
