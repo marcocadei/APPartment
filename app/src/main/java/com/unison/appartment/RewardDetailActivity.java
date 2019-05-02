@@ -52,7 +52,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         textDescription.setText(shownDescription);
         TextView textPoints = findViewById(R.id.activity_reward_detail_text_points);
         textPoints.setText(res.getString(R.string.activity_reward_detail_text_points, reward.getPoints()));
-        toolbar.setTitle(res.getString(R.string.activity_reward_detail_title, reward.getName()));
+        toolbar.setTitle(res.getString(R.string.activity_reward_detail_title));
 
         /*
         Il bottone per la richiesta del premio è disabilitato se il premio è già
