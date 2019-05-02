@@ -49,7 +49,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_audio_post_sender"
-                app:srcCompat="@drawable/ic_play_arrow_black_24dp" />
+                app:srcCompat="@drawable/ic_play_arrow" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:title="@string/activity_family_member_detail_title"
             app:titleTextColor="@color/colorPrimaryText" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_appbar"
-        app:srcCompat="@drawable/ic_person_white_24dp" />
+        app:srcCompat="@drawable/ic_person" />
 
     <TextView
         android:id="@+id/activity_family_member_detail_name"

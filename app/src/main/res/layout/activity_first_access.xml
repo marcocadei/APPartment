@@ -49,14 +49,14 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/activity_first_access_text_title"
                 app:layout_constraintTop_toTopOf="@+id/activity_first_access_text_title"
-                app:srcCompat="@drawable/ic_lock_outline_black_24dp" />
+                app:srcCompat="@drawable/ic_lock_outline" />
 
             <TextView
                 android:id="@+id/activity_first_access_text_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:drawableStart="@drawable/ic_info_outline_black_24dp"
+                android:drawableStart="@drawable/ic_info_outline"
                 android:drawableTint="@color/colorPrimary"
                 android:text="@string/activity_first_access_text_info"
                 android:textSize="@dimen/text_small"
@@ -127,6 +127,6 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
+        app:srcCompat="@drawable/ic_arrow_forward" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

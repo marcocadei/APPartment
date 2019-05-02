@@ -51,7 +51,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_title"
                 app:layout_constraintTop_toTopOf="@+id/activity_create_member_text_title"
-                app:srcCompat="@drawable/ic_person_add_black_24dp" />
+                app:srcCompat="@drawable/ic_person_add" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_member_input_name"
@@ -213,7 +213,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/activity_create_member_float_finish"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_person_add_black_24dp" />
+        app:srcCompat="@drawable/ic_person_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/activity_create_member_float_finish"
@@ -224,6 +224,6 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_check_black_24dp" />
+        app:srcCompat="@drawable/ic_check" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

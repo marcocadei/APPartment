@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/activity_signin_input_password"
                 app:layout_constraintStart_toEndOf="@+id/activity_signin_text_title"
                 app:layout_constraintTop_toTopOf="@+id/activity_signin_text_title"
-                app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+                app:srcCompat="@drawable/ic_account_circle" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_signin_input_homename"
@@ -133,6 +133,6 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
+        app:srcCompat="@drawable/ic_arrow_forward" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

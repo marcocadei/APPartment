@@ -131,6 +131,6 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_check_black_24dp" />
+        app:srcCompat="@drawable/ic_check" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
