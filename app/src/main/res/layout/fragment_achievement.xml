@@ -35,7 +35,7 @@
         android:id="@+id/fragment_achievement_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_stars_black_24dp"
+        android:src="@drawable/ic_stars"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_achievement_name" />
 

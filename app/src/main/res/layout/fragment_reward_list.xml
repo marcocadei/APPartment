@@ -6,6 +6,5 @@
     android:name="com.unison.appartment.RewardFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutManager="LinearLayoutManager"
     tools:context=".RewardFragment"
     tools:listitem="@layout/fragment_reward" />

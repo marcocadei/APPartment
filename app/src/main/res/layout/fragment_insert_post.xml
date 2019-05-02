@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/fragment_insert_post"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".InsertPostFragment">
 
     <!--TODO metti hint string-->
@@ -33,11 +34,12 @@
 
     <ImageButton
         android:id="@+id/fragment_insert_post_btn_send_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/img_medium"
+        android:layout_height="@dimen/img_medium"
         android:layout_marginStart="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        app:srcCompat="@drawable/ic_send_white_30dp"
+        app:srcCompat="@drawable/ic_send"
+        android:scaleType="fitCenter"
         android:tint="@color/gray"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toStartOf="@id/fragment_insert_post_btn_send_img"
@@ -47,11 +49,12 @@
 
     <ImageButton
         android:id="@+id/fragment_insert_post_btn_send_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/img_medium"
+        android:layout_height="@dimen/img_medium"
         android:layout_marginStart="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        app:srcCompat="@drawable/ic_image_black_30dp"
+        app:srcCompat="@drawable/ic_image"
+        android:scaleType="fitCenter"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toStartOf="@id/fragment_insert_post_btn_send_audio"
@@ -61,18 +64,19 @@
 
     <ImageButton
         android:id="@+id/fragment_insert_post_btn_send_audio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/img_medium"
+        android:layout_height="@dimen/img_medium"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/fragment_insert_post_img_send_audio_description"
         android:focusableInTouchMode="true"
         android:tint="@color/colorAccent"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fragment_insert_post_btn_send_img"
         app:layout_constraintTop_toTopOf="@+id/fragment_insert_post_input_post"
-        app:srcCompat="@drawable/ic_mic_none_white_30dp" />
+        app:srcCompat="@drawable/ic_mic_none" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

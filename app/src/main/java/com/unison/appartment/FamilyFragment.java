@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.model.Member;
@@ -48,7 +47,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_family, container, false);
 
-        FloatingActionButton floatNewMember = myView.findViewById(R.id.fragment_family_member_float_new_member);
+        FloatingActionButton floatNewMember = myView.findViewById(R.id.fragment_family_float_new_member);
         floatNewMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

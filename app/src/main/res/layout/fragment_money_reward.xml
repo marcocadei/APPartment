@@ -51,13 +51,12 @@
 
         <ImageView
             android:id="@+id/fragment_money_reward_img_arrow"
-            android:layout_width="@dimen/img_med"
+            android:layout_width="@dimen/img_small"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:contentDescription=""
-            android:src="@drawable/ic_arrow_forward_black_24dp"
+            android:src="@drawable/ic_arrow_forward"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/fragment_money_reward_text_title"

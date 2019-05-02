@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FamilyMemberDetailActivity"
-    android:background="@color/colorBackground">
+    tools:context=".FamilyMemberDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_family_member_detail_appbar"
@@ -22,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:title="@string/activity_family_member_detail_title"
             app:titleTextColor="@color/colorPrimaryText" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -37,7 +36,7 @@
         app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_appbar"
-        app:srcCompat="@drawable/ic_person_white_24dp" />
+        app:srcCompat="@drawable/ic_person" />
 
     <TextView
         android:id="@+id/activity_family_member_detail_name"
@@ -54,7 +53,7 @@
         android:id="@+id/activity_family_member_detail_points_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_family_member_points_label"
+        android:text="@string/general_points_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toStartOf="@+id/activity_family_member_detail_points_value"
         app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_image"

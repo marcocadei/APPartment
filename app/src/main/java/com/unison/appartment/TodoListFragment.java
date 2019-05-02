@@ -16,10 +16,6 @@ import android.view.ViewGroup;
 
 import com.unison.appartment.model.Task;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class TodoListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
