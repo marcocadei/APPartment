@@ -14,14 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.dummy.DummyContent;
-import com.unison.appartment.dummy.DummyContent.DummyItem;
 import com.unison.appartment.model.Task;
 
 import java.util.ArrayList;
@@ -78,23 +70,6 @@ public class TodoListFragment extends Fragment {
             }
             myAdapter = new MyTodoListRecyclerViewAdapter(Task.TASKS, listener);
             myRecyclerView.setAdapter(myAdapter);
-
-            // Prova DB
-            FirebaseDatabase db = FirebaseDatabase.getInstance();
-            DatabaseReference ref = db.getReference("/task-test");
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Task t = dataSnapshot.getValue(Task.class);
-                    Task.addTask(0, t);
-                    myAdapter.notifyItemInserted(0);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.d("Alessia", "Piercing nascosto");
-                }
-            });
         }
         return view;
     }
