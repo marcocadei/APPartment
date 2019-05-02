@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.unison.appartment.model.Task;
 
 import java.util.Calendar;
@@ -72,7 +73,6 @@ public class CreateTaskActivity extends AppCompatActivity {
         );
         Intent returnIntent = new Intent();
         returnIntent.putExtra("newTask", newTask);
-
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
