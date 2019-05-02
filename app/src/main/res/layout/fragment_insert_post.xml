@@ -5,6 +5,7 @@
     android:id="@+id/fragment_insert_post"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".InsertPostFragment">
 
     <!--TODO metti hint string-->
