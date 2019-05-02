@@ -59,7 +59,7 @@
     <string name="fragment_insert_post_img_send_audio_description">Bottone di invio audio</string>
 
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
-    <string name="fragment_money_reward_text_description">Guadagna %d€ ogni %d punti</string>
+    <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
 
     <string name="fragment_reward_text_status">Premio richiesto</string>
     <string name="fragment_reward_img_hourglass">Icona di una clessidra</string>
