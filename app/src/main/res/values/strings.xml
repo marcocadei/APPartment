@@ -87,6 +87,9 @@
 
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
+    <string name="fragment_audio_post_btn">Simbolo di play</string>
+
+    <string name="fragment_image_post_img">Immagine del post</string>
 
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_create_task_input_name">Nome</string>

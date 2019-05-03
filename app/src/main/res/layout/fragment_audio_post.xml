@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -19,12 +18,12 @@
 
             <TextView
                 android:id="@+id/fragment_audio_post_sender"
+                style="@style/Component.TextView.SingleLine.ListItemTitle"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/fragment_audio_post_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +43,8 @@
 
             <ImageButton
                 android:id="@+id/fragment_audio_post_btn"
+                style="@style/Component.ImageView.ListItemIcon"
+                android:contentDescription="@string/fragment_audio_post_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
