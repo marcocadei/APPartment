@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.unison.appartment.model.AudioPost;
 import com.unison.appartment.model.ImagePost;
 import com.unison.appartment.model.Post;
@@ -73,7 +74,10 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             case Post.IMAGE_POST:
                 ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
                 ImagePost imagePostItem = (ImagePost) postList.get(position);
-                holderImagePost.imagePostImg.setImageURI(imagePostItem.getImage());
+                // Carico l'immagine con una libreria che effettua il resize dell'immagine in modo
+                // efficiente, altrimenti se caricassi l'intera immagine già con poche immagini la
+                // recyclerView andrebbe a scatti
+                Picasso.get().load(imagePostItem.getImage()).fit().centerCrop().into(holderImagePost.imagePostImg);
                 holderImagePost.imagePostSender.setText(imagePostItem.getSender());
                 holderImagePost.imagePostDate.setText(format.format(imagePostItem.getDate()));
                 break;
