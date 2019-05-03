@@ -75,7 +75,6 @@
     <string name="activity_reward_detail_btn_reserve_disabled">Premio richiesto</string>
     <string name="activity_reward_detail_btn_delete">Elimina premio</string>
     <string name="activity_reward_detail_text_name">%s</string>
-    <string name="activity_reward_detail_text_points">%d punti</string>
     <string name="activity_reward_detail_text_description_title">Descrizione</string>
 
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
