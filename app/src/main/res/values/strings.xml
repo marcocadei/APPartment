@@ -61,7 +61,8 @@
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
 
-    <string name="fragment_reward_text_status">Premio richiesto</string>
+    <string name="fragment_reward_text_status_row_1">Premio</string>
+    <string name="fragment_reward_text_status_row_2">richiesto</string>
     <string name="fragment_reward_img_hourglass">Icona di una clessidra</string>
     <string name="fragment_reward_img_arrow">Icona di una freccia</string>
 
