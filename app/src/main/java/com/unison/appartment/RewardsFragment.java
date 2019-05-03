@@ -3,7 +3,6 @@ package com.unison.appartment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -81,7 +80,7 @@ public class RewardsFragment extends Fragment implements RewardFragment.OnReward
         Impostazione dell'onClickListener per il floating action button che permette di aggiungere
         un nuovo premio.
          */
-        FloatingActionButton floatAdd = view.findViewById(R.id.activity_create_reward_float_add);
+        FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
         floatAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

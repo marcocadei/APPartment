@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.unison.appartment.model.Reward;
 
+import java.util.Locale;
+
 public class RewardDetailActivity extends AppCompatActivity {
 
     @Override
@@ -50,9 +52,9 @@ public class RewardDetailActivity extends AppCompatActivity {
             textDescription.setTypeface(null, Typeface.ITALIC);
         }
         textDescription.setText(shownDescription);
-        TextView textPoints = findViewById(R.id.activity_reward_detail_text_points);
-        textPoints.setText(res.getString(R.string.activity_reward_detail_text_points, reward.getPoints()));
-        toolbar.setTitle(res.getString(R.string.activity_reward_detail_title, reward.getName()));
+        TextView textPoints = findViewById(R.id.activity_reward_detail_text_points_value);
+        textPoints.setText(String.format(Locale.getDefault(), "%d", reward.getPoints()));
+        toolbar.setTitle(res.getString(R.string.activity_reward_detail_title));
 
         /*
         Il bottone per la richiesta del premio è disabilitato se il premio è già
