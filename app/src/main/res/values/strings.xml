@@ -59,24 +59,23 @@
     <string name="fragment_insert_post_img_send_audio_description">Bottone di invio audio</string>
 
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
-    <string name="fragment_money_reward_text_description">Guadagna %d€ ogni %d punti</string>
+    <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
 
-    <string name="fragment_reward_text_status">Premio richiesto</string>
+    <string name="fragment_reward_text_status_row_1">Premio</string>
+    <string name="fragment_reward_text_status_row_2">richiesto</string>
     <string name="fragment_reward_img_hourglass">Icona di una clessidra</string>
     <string name="fragment_reward_img_arrow">Icona di una freccia</string>
 
     <string name="activity_create_reward_title">Crea nuovo premio</string>
-    <string name="activity_create_reward_btn_confirm">Aggiungi premio</string>
     <string name="activity_create_reward_hint_name">Nome</string>
     <string name="activity_create_reward_hint_points">Punti</string>
     <string name="activity_create_reward_hint_description">Descrizione</string>
 
-    <string name="activity_reward_detail_title">Dettaglio premio: %s</string>
+    <string name="activity_reward_detail_title">Dettaglio premio</string>
     <string name="activity_reward_detail_btn_reserve_enabled">Richiedi premio</string>
     <string name="activity_reward_detail_btn_reserve_disabled">Premio richiesto</string>
     <string name="activity_reward_detail_btn_delete">Elimina premio</string>
     <string name="activity_reward_detail_text_name">%s</string>
-    <string name="activity_reward_detail_text_points">%d punti</string>
     <string name="activity_reward_detail_text_description_title">Descrizione</string>
 
     <string name="activity_family_member_detail_title">Dettaglio membro</string>

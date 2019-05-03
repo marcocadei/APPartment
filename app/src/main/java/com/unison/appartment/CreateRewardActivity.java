@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.model.Reward;
 
 public class CreateRewardActivity extends AppCompatActivity {
@@ -44,8 +44,8 @@ public class CreateRewardActivity extends AppCompatActivity {
         inputDescription = findViewById(R.id.activity_create_reward_input_description_value);
         inputPoints = findViewById(R.id.activity_create_reward_input_points_value);
 
-        MaterialButton btnConfirm = findViewById(R.id.activity_create_reward_btn_confirm);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatConfirm = findViewById(R.id.activity_create_reward_float_confirm);
+        floatConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createReward();
