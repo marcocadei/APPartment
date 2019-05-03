@@ -123,18 +123,18 @@ public class InsertPostFragment extends Fragment {
                         ActivityCompat.requestPermissions(getActivity(),
                                 new String[]{Manifest.permission.RECORD_AUDIO},
                                 AudioPost.PERMISSION_REQUEST_RECORDER);
-                        Log.d("audio_prova", "no Permesso di registrare");
                     } else {
                         // Ho il permesso di registrare
-                        Log.d("audio_prova", "Permesso di registrare");
                         isRecording = true;
+                        // Metto il focus sul bottone di registrazione
                         btnSendAudio.setFocusableInTouchMode(true);
                         btnSendAudio.requestFocus();
-                        inputText.setText(getResources().getString(R.string.fragment_insert_post_text_recording));
                         // Disabilito tutti i campi che non siano il registratore
                         inputText.setEnabled(false);
                         btnSendText.setEnabled(false);
                         btnSendImg.setEnabled(false);
+                        // Scrivo nel campo di testo che è in corso la registrazione
+                        inputText.setText(getResources().getString(R.string.fragment_insert_post_text_recording));
                         startRecording();
                     }
                 }
@@ -145,20 +145,20 @@ public class InsertPostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (isRecording) {
-                    Log.d("audio_prova", "registrazione terminata");
                     isRecording = false;
-                    btnSendAudio.clearFocus();
                     stopRecording();
+                    // Rimuovo il focus dal bottone di registrazione
+                    btnSendAudio.clearFocus();
+                    // Rimuovo dal campo di testo che è in corso la registrazione
                     inputText.getText().clear();
                     // Riabilito i campi al termine della registrazione
                     inputText.setEnabled(true);
-                    // btnSendText.setEnabled(true);
                     btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
                     listener.onInsertPostFragmentSendAudio(fileName);
                 } else {
                     // Se non si sta registrando e si preme sul bottone mostro un avviso su come
-                    // registrare un audio
+                    // registrare un audio attraverso l'uso di un toast
                     Toast.makeText(getActivity(), getString(R.string.fragment_insert_post_btn_audio_suggestion),
                             Toast.LENGTH_LONG).show();
                 }
