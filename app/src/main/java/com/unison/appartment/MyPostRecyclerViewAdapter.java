@@ -28,6 +28,9 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     private final List<Post> postList;
     // private final OnListPostFragmentListener listener;
+    // Player usato per la riproduzione dei file audio
+    private MediaPlayer player = null;
+    private ViewHolderAudioPost playingTrack = null;
 
     public MyPostRecyclerViewAdapter(List<Post> postList/*, OnListPostFragmentListener listener*/) {
         this.postList = postList;
@@ -95,7 +98,13 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void handleAudioPlay(AudioPost audioPostItem, final ViewHolderAudioPost holderAudioPost) {
-        MediaPlayer player = new MediaPlayer();
+        // Se qualcosa era già in riproduzione allora la interrompo
+        if (player != null) {
+            player.release();
+            player = null;
+            stopPlay(playingTrack);
+        }
+        player = new MediaPlayer();
         try {
             player.setDataSource(audioPostItem.getFileName());
             player.prepare();
@@ -103,14 +112,19 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-                    holderAudioPost.audioPostState.setText(
-                            holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
-                    );
+                    stopPlay(holderAudioPost);
                 }
             });
+            playingTrack = holderAudioPost;
         } catch (IOException e) {
         }
         holderAudioPost.audioPostState.setText(holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
+    }
+
+    public void stopPlay(final ViewHolderAudioPost holderAudioPost) {
+        holderAudioPost.audioPostState.setText(
+                holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
+        );
     }
 
     @Override
