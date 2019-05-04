@@ -171,9 +171,10 @@ public class InsertPostFragment extends Fragment {
         inputText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Il campo di testo è considerato vuoto se contiene solo spazi o \n
+                // Il campo di testo è considerato vuoto se contiene solo spazi o \n oppure
+                // se si sta registrando (in quel caso c'è del testo, ma non deve poter essere inviato)
                 if (s.toString().replaceAll("\n", "")
-                                .replaceAll("\\s+", "").length() == 0) {
+                                .replaceAll("\\s+", "").length() == 0 || isRecording) {
                     // btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray));
                     btnSendText.setEnabled(false);
                 } else {
