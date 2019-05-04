@@ -21,6 +21,7 @@ public class CreateMemberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_member);
 
         final Intent i = getIntent();
+        final EditText inputEmail = findViewById(R.id.activity_create_member_input_email_value);
         final EditText inputName = findViewById(R.id.activity_create_member_input_name_value);
         final EditText inputAge = findViewById(R.id.activity_create_member_input_age_value);
         final RadioGroup inputGender = findViewById(R.id.activity_create_member_radio_gender);
@@ -43,15 +44,16 @@ public class CreateMemberActivity extends AppCompatActivity {
         floatFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Recupero i valori dei campi della form
+                String email = inputEmail.getText().toString();
                 String name = inputName.getText().toString();
                 int age = Integer.parseInt(inputAge.getText().toString());
-                RadioButton selectedGender = (RadioButton) findViewById(inputGender.getCheckedRadioButtonId());
+                RadioButton selectedGender = findViewById(inputGender.getCheckedRadioButtonId());
                 String gender = selectedGender.getText().toString();
-                RadioButton selectedRole = (RadioButton) findViewById(inputRole.getCheckedRadioButtonId());
+                RadioButton selectedRole = findViewById(inputRole.getCheckedRadioButtonId());
                 String role = selectedRole.getText().toString();
 
-                Member newMember = new Member(name,age, gender, role, 0);
+                Member newMember = new Member(name, email, age, gender, role, 0);
 
                 if(origin.equals("fromFamily")){
                     Intent returnIntent = new Intent();

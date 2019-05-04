@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Member implements Serializable {
 
+    private String email;
     private String name;
     private int age;
     private String gender;
@@ -16,12 +17,21 @@ public class Member implements Serializable {
     private Uri image;
 
     // TODO: piazza anche l'immagine
-    public Member(String name, int age, String gender, String role, int points) {
+    public Member(String email, String name, int age, String gender, String role, int points) {
+        this.email = email;
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.role = role;
         this.points = points;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -77,8 +87,8 @@ public class Member implements Serializable {
      */
     private static List<Member> memberList = new ArrayList<Member>(){
         {
-            add(new Member("Gianluca", 22, "Maschio", "Leader", 10));
-            add(new Member("Marco", 24, "Maschio", "Leader", 100));
+            add(new Member("Gianluca", "g.roscigno@studenti.unibs.it", 22, "Maschio", "Leader", 10));
+            add(new Member("Marco", "marcocadei@live.com", 24, "Maschio", "Leader", 100));
         }
     };
 
