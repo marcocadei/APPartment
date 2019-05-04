@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,6 +87,8 @@ public class CreateMemberActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        // TODO rimuovere questa riga di codice
+        auth.signOut();
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             // TODO costruire l'utente leggendo i dati dal DB
@@ -95,6 +98,8 @@ public class CreateMemberActivity extends AppCompatActivity {
     }
 
     private void registerMember(Member newMember) {
+        final ProgressDialog progress = ProgressDialog.show(
+                this,"Registrazione","Per favore attendi, è in corso la registrazione", true);
         auth.createUserWithEmailAndPassword(newMember.getEmail(), homePassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -105,6 +110,7 @@ public class CreateMemberActivity extends AppCompatActivity {
                         } else {
                             Log.d("registrazione", "fallita");
                         }
+                        progress.dismiss();
                     }
                 });
     }
