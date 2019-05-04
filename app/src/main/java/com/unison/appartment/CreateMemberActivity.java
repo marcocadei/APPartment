@@ -52,9 +52,13 @@ public class CreateMemberActivity extends AppCompatActivity {
                 String gender = selectedGender.getText().toString();
                 RadioButton selectedRole = findViewById(inputRole.getCheckedRadioButtonId());
                 String role = selectedRole.getText().toString();
-
+                // Creo l'oggetto membero
                 Member newMember = new Member(name, email, age, gender, role, 0);
 
+                // Effettuo la registrazione del nuovo membro
+                registerMember(newMember);
+
+                // In base all'activity da cui provengo andrò in activity differenti
                 if(origin.equals("fromFamily")){
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("newMember", newMember);
@@ -66,5 +70,9 @@ public class CreateMemberActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void registerMember(Member newMember) {
+
     }
 }

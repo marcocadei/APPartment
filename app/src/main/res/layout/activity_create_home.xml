@@ -65,6 +65,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_home_input_name_value"
                     android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,6 +91,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_home_input_password_value"
                     android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -115,6 +117,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_password">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_home_input_repeat_password_value"
                     android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,6 +130,7 @@
                 android:id="@+id/activity_create_home_text_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:drawableStart="@drawable/ic_info_outline"
