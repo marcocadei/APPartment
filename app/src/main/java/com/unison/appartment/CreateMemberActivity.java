@@ -75,7 +75,7 @@ public class CreateMemberActivity extends AppCompatActivity {
                     homeName = i.getStringExtra("homeName");
                 }
                 // Creo l'oggetto membero
-                Member newMember = new Member(name, email, age, gender, role, 0);
+                Member newMember = new Member(email, name, age, gender, role, 0);
 
                 // Effettuo la registrazione del nuovo membro
                 registerMember(newMember);
