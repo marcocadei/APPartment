@@ -92,6 +92,8 @@
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_text_achievement_title">Achievement sbloccati</string>
 
+    <string name="activity_family_member_detail_toolbar_pencil">Modifica</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
 
