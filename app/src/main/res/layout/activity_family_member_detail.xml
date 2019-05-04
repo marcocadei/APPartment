@@ -128,30 +128,43 @@
         style="@style/Component.Button.FamilyMemberDetail"
         android:backgroundTint="@android:color/holo_red_dark"
         android:text="@string/activity_family_member_detail_btn_delete"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_achievement_list"
+        app:layout_constraintBottom_toTopOf="@+id/activity_family_member_detail_scroll_achievement"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_attributes" />
 
     <ScrollView
+        android:id="@id/activity_family_member_detail_scroll_achievement"
         style="@style/Component.ScrollView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_btn_delete">
 
-        Text
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/Component.Layout.ScrollViewChild">
 
-        <fragment
-            android:id="@+id/fragment_achievement_list"
-            android:name="com.unison.appartment.AchievementListFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_btn_delete"
-            tools:layout="@layout/fragment_achievement_list"/>
+            <TextView
+                android:id="@+id/activity_family_member_detail_text_achievement_title"
+                android:text="@string/activity_family_member_detail_text_achievement_title"
+                style="@style/Component.TextView.MultiLine.ObjectTitle"
+                app:layout_constraintBottom_toTopOf="@id/fragment_achievement_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <fragment
+                android:id="@+id/fragment_achievement_list"
+                android:name="com.unison.appartment.AchievementListFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_text_achievement_title"
+                tools:layout="@layout/fragment_achievement_list" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </ScrollView>
 
