@@ -36,11 +36,6 @@ public class RewardDetailActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
         /*
         Impostazione del contenuto delle TextView in base al premio per il quale
         è costruita l'activity.
