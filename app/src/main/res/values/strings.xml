@@ -85,7 +85,9 @@
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_family_member_detail_text_name">%s</string>
     <string name="activity_family_member_detail_text_role_title">Ruolo</string>
+    <string name="activity_family_member_detail_text_role_value">%s</string>
     <string name="activity_family_member_detail_text_gender_title">Genere</string>
+    <string name="activity_family_member_detail_text_gender_value">%s</string>
     <string name="activity_family_member_points_name">Punti:</string>
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_text_achievement_title">Achievement sbloccati</string>

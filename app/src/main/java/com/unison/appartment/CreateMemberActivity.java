@@ -38,6 +38,10 @@ public class CreateMemberActivity extends AppCompatActivity {
             }
         });
 
+        if(origin.equals("fromFamily")){
+            floatNewMember.setVisibility(View.GONE);
+        }
+
         // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatFinish = findViewById(R.id.activity_create_member_float_finish);
         floatFinish.setOnClickListener(new View.OnClickListener() {
