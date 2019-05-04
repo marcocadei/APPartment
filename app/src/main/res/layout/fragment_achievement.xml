@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_achievement"
+    style="@style/Component.Layout.ListItem"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/fragment_achievement_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_achievement_image"
+    <ImageView
+        android:id="@+id/fragment_achievement_img_logo"
+        style="@style/Component.ImageView.ListItemIcon"
+        android:contentDescription="@string/fragment_achievement_img_logo"
+        android:src="@drawable/ic_stars"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_achievement_layout_name"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/fragment_achievement_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_achievement_layout_name"
+        app:layout_constraintStart_toEndOf="@id/fragment_achievement_img_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/fragment_achievement_name"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_achievement_name" />
+        app:layout_constraintTop_toTopOf="fragment_achievement_img_logo"
+        app:layout_constraintBottom_toBottomOf="fragment_achievement_img_logo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/fragment_achievement_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_stars"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_achievement_name" />
+        <TextView
+            android:id="@+id/fragment_achievement_text_name"
+            android:text="@string/placeholder_text_long"
+            style="@style/Component.TextView.SingleLine.ListItemTitle"
+            app:layout_constraintBottom_toTopOf="@id/fragment_achievement_text_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/fragment_achievement_text_description"
+            android:text="@string/placeholder_text_long"
+            style="@style/Component.TextView.SingleLine.ListItemDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_achievement_text_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

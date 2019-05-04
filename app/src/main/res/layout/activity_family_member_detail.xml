@@ -133,15 +133,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_attributes" />
 
-    <fragment
-        android:id="@+id/fragment_achievement_list"
-        android:name="com.unison.appartment.AchievementListFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ScrollView
+        style="@style/Component.ScrollView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_btn_delete"
-        tools:layout="@layout/fragment_achievement_list"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        Text
+
+        <fragment
+            android:id="@+id/fragment_achievement_list"
+            android:name="com.unison.appartment.AchievementListFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_btn_delete"
+            tools:layout="@layout/fragment_achievement_list"/>
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
