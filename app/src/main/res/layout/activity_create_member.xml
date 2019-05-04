@@ -28,7 +28,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_title"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_name"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_email"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_member_img_title"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -54,6 +54,32 @@
                 app:srcCompat="@drawable/ic_person_add" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_member_input_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/activity_create_member_input_email"
+                android:textColorHint="@color/colorPrimaryLight"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="@dimen/text_medium"
+                    android:id="@+id/activity_create_member_input_email_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_member_input_name"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
@@ -67,7 +93,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_age"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:textSize="@dimen/text_medium"
