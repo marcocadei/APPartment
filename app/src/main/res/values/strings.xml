@@ -81,6 +81,11 @@
     <string name="activity_reward_detail_text_description_title">Descrizione</string>
 
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
+    <string name="activity_family_member_detail_text_name">%s</string>
+    <string name="activity_family_member_detail_text_role_title">Ruolo</string>
+    <string name="activity_family_member_detail_text_gender_title">Genere</string>
+    <string name="activity_family_member_points_name">Punti:</string>
+    <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
