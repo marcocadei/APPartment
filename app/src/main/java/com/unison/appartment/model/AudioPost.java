@@ -1,13 +1,15 @@
 package com.unison.appartment.model;
 
+import java.util.Date;
+
 public class AudioPost extends Post {
 
     public static final int PERMISSION_REQUEST_RECORDER = 1;
 
     private String fileName;
 
-    public AudioPost(String sender, String fileName) {
-        super(sender);
+    public AudioPost(String sender, Date date, String fileName) {
+        super(sender, date);
         this.fileName = fileName;
     }
 

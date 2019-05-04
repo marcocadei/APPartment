@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.unison.appartment.model.AudioPost;
 
@@ -122,17 +123,18 @@ public class InsertPostFragment extends Fragment {
                         ActivityCompat.requestPermissions(getActivity(),
                                 new String[]{Manifest.permission.RECORD_AUDIO},
                                 AudioPost.PERMISSION_REQUEST_RECORDER);
-                        Log.d("audio_prova", "no Permesso di registrare");
                     } else {
                         // Ho il permesso di registrare
-                        Log.d("audio_prova", "Permesso di registrare");
                         isRecording = true;
+                        // Metto il focus sul bottone di registrazione
+                        btnSendAudio.setFocusableInTouchMode(true);
                         btnSendAudio.requestFocus();
-                        inputText.setText("Registrazione in corso");
                         // Disabilito tutti i campi che non siano il registratore
                         inputText.setEnabled(false);
                         btnSendText.setEnabled(false);
                         btnSendImg.setEnabled(false);
+                        // Scrivo nel campo di testo che è in corso la registrazione
+                        inputText.setText(getResources().getString(R.string.fragment_insert_post_text_recording));
                         startRecording();
                     }
                 }
@@ -143,18 +145,24 @@ public class InsertPostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (isRecording) {
-                    Log.d("audio_prova", "registrazione terminata");
                     isRecording = false;
-                    btnSendAudio.clearFocus();
                     stopRecording();
+                    // Rimuovo il focus dal bottone di registrazione
+                    btnSendAudio.clearFocus();
+                    // Rimuovo dal campo di testo che è in corso la registrazione
                     inputText.getText().clear();
                     // Riabilito i campi al termine della registrazione
                     inputText.setEnabled(true);
-                    btnSendText.setEnabled(true);
                     btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
                     listener.onInsertPostFragmentSendAudio(fileName);
+                } else {
+                    // Se non si sta registrando e si preme sul bottone mostro un avviso su come
+                    // registrare un audio attraverso l'uso di un toast
+                    Toast.makeText(getActivity(), getString(R.string.fragment_insert_post_btn_audio_suggestion),
+                            Toast.LENGTH_LONG).show();
                 }
+                btnSendAudio.setFocusableInTouchMode(false);
             }
         });
         // Cambio il colore del bottone di invio del testo in base al fatto che il campo di input
@@ -163,13 +171,14 @@ public class InsertPostFragment extends Fragment {
         inputText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Il campo di testo è considerato vuoto se contiene solo spazi o \n
+                // Il campo di testo è considerato vuoto se contiene solo spazi o \n oppure
+                // se si sta registrando (in quel caso c'è del testo, ma non deve poter essere inviato)
                 if (s.toString().replaceAll("\n", "")
-                                .replaceAll("\\s+", "").length() == 0) {
-                    btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray));
+                                .replaceAll("\\s+", "").length() == 0 || isRecording) {
+                    // btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.gray));
                     btnSendText.setEnabled(false);
                 } else {
-                    btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                    // btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
                     btnSendText.setEnabled(true);
                 }
             }

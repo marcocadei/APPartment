@@ -7,6 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorBackground</item>
+
+        <!-- Animazione immagine -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementsUseOverlay">false</item>
     </style>
     <!--- Tema definito per cambiare colore del date picker -->
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">

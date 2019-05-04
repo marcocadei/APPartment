@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.unison.appartment.model.AudioPost;
 import com.unison.appartment.model.ImagePost;
@@ -20,6 +21,7 @@ import com.unison.appartment.model.Post;
 import com.unison.appartment.model.TextPost;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Fragment che rappresenta la lista di post
@@ -32,6 +34,8 @@ public class PostListFragment extends Fragment {
     // Recyclerview e Adapter della recyclerview
     private RecyclerView.Adapter myAdapter;
     private RecyclerView myRecyclerView;
+
+    private OnPostListFragmentInteractionListener listener;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -73,7 +77,7 @@ public class PostListFragment extends Fragment {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            myAdapter = new MyPostRecyclerViewAdapter(Post.getPostList()/*, listener*/);
+            myAdapter = new MyPostRecyclerViewAdapter(Post.getPostList(), listener);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -83,6 +87,12 @@ public class PostListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (getParentFragment() instanceof OnPostListFragmentInteractionListener) {
+            listener = (OnPostListFragmentInteractionListener) getParentFragment();
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnPostListFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -95,17 +105,17 @@ public class PostListFragment extends Fragment {
      */
     // TODO sostituire costante con nome dell'utente realmente loggato
     public void addTextPost(String message){
-        TextPost textPost = new TextPost(MainActivity.LOGGED_USER, message);
+        TextPost textPost = new TextPost(MainActivity.LOGGED_USER, new Date(), message);
         addPost(textPost);
     }
 
     public void addImagePost(Uri selectedImage) {
-        ImagePost imagePost = new ImagePost(MainActivity.LOGGED_USER, selectedImage);
+        ImagePost imagePost = new ImagePost(MainActivity.LOGGED_USER, new Date(), selectedImage);
         addPost(imagePost);
     }
 
     public void addAudioPost(String fileName) {
-        AudioPost audioPost = new AudioPost(MainActivity.LOGGED_USER, fileName);
+        AudioPost audioPost = new AudioPost(MainActivity.LOGGED_USER, new Date(), fileName);
         addPost(audioPost);
     }
 
@@ -113,5 +123,14 @@ public class PostListFragment extends Fragment {
         Post.addPost(0, post);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
+    }
+
+    /**
+     * Questa interfaccia deve essere implementata dalle activity che contengono questo
+     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
+     * che a sua volta può comunicare con altri fragment
+     */
+    public interface OnPostListFragmentInteractionListener {
+        void onPostListFragmentOpenImage(ImageView image, Uri imageUri);
     }
 }

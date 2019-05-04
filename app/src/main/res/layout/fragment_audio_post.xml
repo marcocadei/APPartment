@@ -18,11 +18,13 @@
 
             <TextView
                 android:id="@+id/fragment_audio_post_sender"
-                android:layout_width="wrap_content"
+                style="@style/Component.TextView.SingleLine.ListItemTitle"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:textColor="@color/colorPrimary"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_audio_post_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,6 +43,8 @@
 
             <ImageButton
                 android:id="@+id/fragment_audio_post_btn"
+                style="@style/Component.ImageView.ListItemIcon"
+                android:contentDescription="@string/fragment_audio_post_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -49,6 +53,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_audio_post_sender"
                 app:srcCompat="@drawable/ic_play_arrow" />
+
+            <TextView
+                android:id="@+id/fragment_audio_post_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_audio_post_sender" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
