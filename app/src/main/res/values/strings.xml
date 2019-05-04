@@ -101,4 +101,6 @@
     <string name="activity_task_detail_title">Dettaglio attività</string>
     <string name="activity_task_detail_deadline">Scadenza: %1$s</string>
 
+    <string name="activity_image_detail_img">Immagine del post aperta</string>
+
 </resources>

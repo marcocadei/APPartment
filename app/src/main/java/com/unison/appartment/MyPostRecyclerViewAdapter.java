@@ -2,6 +2,7 @@ package com.unison.appartment;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
@@ -11,12 +12,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.unison.appartment.model.AudioPost;
 import com.unison.appartment.model.ImagePost;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.model.TextPost;
-// import com.unison.appartment.ListPostFragment.OnListPostFragmentListener;
+import com.unison.appartment.PostListFragment.OnPostListFragmentInteractionListener;
 
 import org.w3c.dom.Text;
 
@@ -33,9 +34,11 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     private MediaPlayer player = null;
     private ViewHolderAudioPost playingTrack = null;
 
-    public MyPostRecyclerViewAdapter(List<Post> postList/*, OnListPostFragmentListener listener*/) {
+    private final OnPostListFragmentInteractionListener listener;
+
+    public MyPostRecyclerViewAdapter(List<Post> postList, OnPostListFragmentInteractionListener listener) {
         this.postList = postList;
-        // this.listener = listener;
+        this.listener = listener;
     }
 
     @Override
@@ -72,14 +75,22 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 holderTextPost.textPostDate.setText(format.format(textPostItem.getDate()));
                 break;
             case Post.IMAGE_POST:
-                ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
-                ImagePost imagePostItem = (ImagePost) postList.get(position);
+                final ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
+                final ImagePost imagePostItem = (ImagePost) postList.get(position);
                 // Carico l'immagine con una libreria che effettua il resize dell'immagine in modo
                 // efficiente, altrimenti se caricassi l'intera immagine già con poche immagini la
                 // recyclerView andrebbe a scatti
-                Picasso.get().load(imagePostItem.getImage()).fit().centerCrop().into(holderImagePost.imagePostImg);
+                Glide.with(holderImagePost.imagePostImg.getContext()).load(imagePostItem.getImage()).into(holderImagePost.imagePostImg);
                 holderImagePost.imagePostSender.setText(imagePostItem.getSender());
                 holderImagePost.imagePostDate.setText(format.format(imagePostItem.getDate()));
+                holderImagePost.imagePostImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onPostListFragmentOpenImage(holderImagePost.imagePostImg, imagePostItem.getImage());
+                        }
+                    }
+                });
                 break;
             case Post.AUDIO_POST:
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
@@ -101,7 +112,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-    public void handleAudioPlay(AudioPost audioPostItem, final ViewHolderAudioPost holderAudioPost) {
+    private void handleAudioPlay(AudioPost audioPostItem, final ViewHolderAudioPost holderAudioPost) {
         // Se qualcosa era già in riproduzione allora la interrompo
         if (player != null) {
             player.release();
@@ -125,7 +136,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         holderAudioPost.audioPostState.setText(holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
     }
 
-    public void stopPlay(final ViewHolderAudioPost holderAudioPost) {
+    private void stopPlay(final ViewHolderAudioPost holderAudioPost) {
         holderAudioPost.audioPostState.setText(
                 holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
         );
