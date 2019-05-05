@@ -62,6 +62,10 @@ public class Reward implements Serializable {
         this.points = points;
     }
 
+    public static void addReward(int index, Reward reward) {
+        rewardsList.add(index, reward);
+    }
+
     public static void addReward(Reward reward) {
         rewardsList.add(reward);
     }

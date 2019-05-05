@@ -80,10 +80,10 @@ public class RewardFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyRewardRecyclerViewAdapter(Reward.getRewardsList(), mListener));
             myRecyclerView = recyclerView;
         }
         myAdapter = new MyRewardRecyclerViewAdapter(Reward.getRewardsList(), mListener);
+        myRecyclerView.setAdapter(myAdapter);
         return view;
     }
 
@@ -108,8 +108,8 @@ public class RewardFragment extends Fragment {
     }
 
     public void addReward(Reward newReward) {
-        Reward.addReward(newReward);
-        myAdapter.notifyItemInserted(Reward.getRewardsList().size());
+        Reward.addReward(0, newReward);
+        myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
     }
 
