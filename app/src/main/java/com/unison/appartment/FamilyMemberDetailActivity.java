@@ -6,8 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,31 +60,4 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         textGender.setText(res.getString(R.string.activity_family_member_detail_text_gender_value, member.getGender()));
     }
 
-    /**
-     * Crea il menù presente sulla toolbar
-     * @param menu il menù da aggiungere
-     * @return true
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_family_member_detail_toolbar, menu);
-        return true;
-    }
-
-    /**
-     * Reagisce alla selezione di una voce del menù della toolbar
-     * @param item l'elemento selezionato
-     * @return true
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // FIXME Aggiungere qui invocazione alla activity di settings
-            case R.id.activity_family_member_detail_toolbar_pencil:
-                // Log.d(this.getLocalClassName(), "Premuta matita");
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
