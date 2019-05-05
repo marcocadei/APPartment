@@ -34,6 +34,20 @@
         <item name="android:layout_marginEnd">@dimen/margin_large</item>
     </style>
 
+    <style name="Component.Layout.NestedScrollViewChild">
+        <item name="android:paddingTop">@dimen/margin_large</item>
+        <item name="android:paddingBottom">@dimen/margin_large</item>
+    </style>
+
+    <style name="Component.Layout.NestedScrollViewFixedElement">
+        <item name="android:layout_marginStart">@dimen/margin_large</item>
+        <item name="android:layout_marginEnd">@dimen/margin_large</item>
+    </style>
+
+    <style name="Component.Layout.NestedScrollViewListElement">
+
+    </style>
+
     <style name="Component.Layout.Header">
         <item name="android:layout_marginBottom">@dimen/margin_large</item>
         <item name="layout_constraintVertical_chainStyle">packed</item>
@@ -47,10 +61,6 @@
 
     <style name="Component.Layout.AttributeSet">
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
-    </style>
-
-    <style name="Component.Layout.AttributeSet.FamilyMemberDetail">
-        <item name="android:layout_margin">@dimen/margin_small</item>
     </style>
 
     <style name="Component.Layout.ButtonSet">
@@ -118,9 +128,6 @@
     <style name="Component.ImageView.ProfileImage">
         <item name="android:layout_width">@dimen/img_extra_extra_large</item>
         <item name="android:layout_height">@dimen/img_extra_extra_large</item>
-        <item name="android:layout_marginEnd">@dimen/margin_small</item>
-        <item name="android:layout_marginStart">@dimen/margin_small</item>
-        <item name="android:layout_marginTop">@dimen/margin_small</item>
         <item name="android:foregroundGravity">center</item>
     </style>
 
@@ -179,13 +186,6 @@
     <style name="Component.Button">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
-    </style>
-
-    <style name="Component.Button.FamilyMemberDetail">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_marginBottom">@dimen/margin_small</item>
-        <item name="android:layout_marginStart">@dimen/margin_small</item>
-        <item name="android:layout_marginEnd">@dimen/margin_small</item>
     </style>
 
 </resources>

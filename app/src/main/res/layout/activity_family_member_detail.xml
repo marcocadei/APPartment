@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".FamilyMemberDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -19,144 +20,158 @@
             app:title="@string/activity_family_member_detail_title" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_family_member_detail_layout_header"
-        style="@style/Component.Layout.Header"
-        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_attributes"
+    <ScrollView
+        android:id="@+id/activity_family_member_detail_scroll_achievement"
+        style="@style/Component.ScrollView"
+        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_appbar">
-
-        <ImageView
-            android:id="@+id/activity_family_member_detail_img_profile"
-            style="@style/Component.ImageView.ProfileImage"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_person" />
-
-        <TextView
-            android:id="@+id/activity_family_member_detail_text_name"
-            style="@style/Component.TextView.MultiLine.ObjectTitle"
-            android:text="@string/activity_family_member_detail_text_name"
-            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_points"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_appbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/activity_family_member_detail_layout_points"
-            style="@style/Component.Layout.Points"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
-            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_name">
+            style="@style/Component.Layout.NestedScrollViewChild">
 
-            <TextView
-                android:id="@+id/activity_family_member_detail_text_points_name"
-                style="@style/Component.TextView.SingleLine.PointsName"
-                android:paddingEnd="8dp"
-                android:text="@string/activity_family_member_points_name"
-                android:textSize="@dimen/text_extra_extra_large"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_points_value"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_achievement_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent" />
-
-            <TextView
-                android:id="@+id/activity_family_member_detail_text_points_value"
-                style="@style/Component.TextView.SingleLine.PointsValue"
-                android:text="25060"
-                android:textSize="@dimen/text_extra_extra_large"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_text_points_name"
-                app:layout_constraintTop_toTopOf="parent" />
+                style="@style/Component.Layout.NestedScrollViewFixedElement">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/activity_family_member_detail_layout_header"
+                    style="@style/Component.Layout.Header"
+                    app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_attributes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/activity_family_member_detail_img_profile"
+                        style="@style/Component.ImageView.ProfileImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_name"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_person" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_family_member_detail_layout_attributes"
-        style="@style/Component.Layout.AttributeSet.FamilyMemberDetail"
-        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_btn_delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_layout_header">
+                    <TextView
+                        android:id="@+id/activity_family_member_detail_text_name"
+                        style="@style/Component.TextView.MultiLine.ObjectTitle"
+                        android:text="@string/activity_family_member_detail_text_name"
+                        android:layout_marginStart="@dimen/margin_small"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_points"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/activity_family_member_detail_text_role_title"
-            style="@style/Component.TextView.MultiLine.AttributeTitle"
-            android:text="@string/activity_family_member_detail_text_role_title"
-            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_role_value"
-            app:layout_constraintEnd_toStartOf="@+id/activity_family_member_detail_text_gender_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/activity_family_member_detail_layout_points"
+                        style="@style/Component.Layout"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
+                        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_name">
 
-        <TextView
-            android:id="@+id/activity_family_member_detail_text_role_value"
-            style="@style/Component.TextView.MultiLine.AttributeValue"
-            android:text="@string/placeholder_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/activity_family_member_detail_text_gender_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_role_title" />
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_points_name"
+                            style="@style/Component.TextView.SingleLine.PointsName"
+                            android:gravity="start"
+                            android:text="@string/activity_family_member_points_name"
+                            android:textSize="@dimen/text_extra_large"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_points_value"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent" />
 
-        <TextView
-            android:id="@+id/activity_family_member_detail_text_gender_title"
-            style="@style/Component.TextView.MultiLine.AttributeTitle"
-            android:text="@string/activity_family_member_detail_text_gender_title"
-            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_gender_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_text_role_title"
-            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_points_value"
+                            style="@style/Component.TextView.SingleLine.PointsValue"
+                            android:gravity="start"
+                            android:text="25060"
+                            android:textSize="@dimen/text_extra_large"
+                            android:layout_marginStart="@dimen/margin_small"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_text_points_name"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/activity_family_member_detail_text_gender_value"
-            style="@style/Component.TextView.MultiLine.AttributeValue"
-            android:text="@string/placeholder_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_text_role_value"
-            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_gender_title" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/activity_family_member_detail_btn_delete"
-        style="@style/Component.Button.FamilyMemberDetail"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:text="@string/activity_family_member_detail_btn_delete"
-        app:layout_constraintBottom_toTopOf="@+id/activity_family_member_detail_scroll_achievement"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_attributes" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:id="@id/activity_family_member_detail_scroll_achievement"
-        style="@style/Component.ScrollView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_btn_delete">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/activity_family_member_detail_layout_attributes"
+                    style="@style/Component.Layout.AttributeSet"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_layout_header">
 
-        <androidx.constraintlayout.widget.ConstraintLayout style="@style/Component.Layout.ScrollViewChild">
+                    <TextView
+                        android:id="@+id/activity_family_member_detail_text_role_title"
+                        style="@style/Component.TextView.MultiLine.AttributeTitle"
+                        android:text="@string/activity_family_member_detail_text_role_title"
+                        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_role_value"
+                        app:layout_constraintEnd_toStartOf="@+id/activity_family_member_detail_text_gender_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/activity_family_member_detail_text_role_value"
+                        style="@style/Component.TextView.MultiLine.AttributeValue"
+                        android:text="@string/placeholder_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/activity_family_member_detail_text_gender_value"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_role_title" />
+
+                    <TextView
+                        android:id="@+id/activity_family_member_detail_text_gender_title"
+                        style="@style/Component.TextView.MultiLine.AttributeTitle"
+                        android:text="@string/activity_family_member_detail_text_gender_title"
+                        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_gender_value"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_text_role_title"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/activity_family_member_detail_text_gender_value"
+                        style="@style/Component.TextView.MultiLine.AttributeValue"
+                        android:text="@string/placeholder_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_text_role_value"
+                        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_gender_title" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/activity_family_member_detail_text_achievement_title"
                 android:text="@string/activity_family_member_detail_text_achievement_title"
                 style="@style/Component.TextView.MultiLine.ObjectTitle"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="@dimen/text_extra_large"
                 app:layout_constraintBottom_toTopOf="@id/fragment_achievement_list"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_profile" />
 
             <fragment
                 android:id="@+id/fragment_achievement_list"
                 android:name="com.unison.appartment.AchievementListFragment"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/margin_extra_large"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -165,8 +180,38 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </ScrollView>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_family_member_detail_layout_buttons"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_large"
+        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_scroll_achievement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Component.Layout.ButtonSet">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_family_member_detail_btn_edit"
+            style="@style/Component.Button"
+            android:text="@string/activity_family_member_detail_btn_edit"
+            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_btn_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_family_member_detail_btn_delete"
+            style="@style/Component.Button"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/activity_family_member_detail_btn_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_btn_edit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
