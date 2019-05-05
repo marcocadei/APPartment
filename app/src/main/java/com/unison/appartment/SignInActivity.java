@@ -67,9 +67,13 @@ public class SignInActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     String email = dataSnapshot.getValue(String.class);
                     performSignIn(email, password, progress);
+                    // Rimuovo gli errori se li avevo impostati in precedenza
+                    layoutHomeName.setError(null);
+                    layoutUsername.setError(null);
                 } else {
                     // Se fallisco qui so che è il nome della casa o lo layoutUsername ad essere errato
-                    
+                    layoutHomeName.setError(getString(R.string.form_error_wrong_home_username));
+                    layoutUsername.setError(getString(R.string.form_error_wrong_home_username));
                     progress.dismiss();
                 }
             }
@@ -91,6 +95,8 @@ public class SignInActivity extends AppCompatActivity {
                             // TODO rimuovere questa riga di codice
                             auth.signOut();
                             moveToNextActivity();
+                            // Rimuovo l'errore se prima lo avevo impostato
+                            layoutPassword.setError(null);
                         } else {
                             // Se fallisco qui deve essere la layoutPassword sbagliata
                             layoutPassword.setError(getString(R.string.form_error_incorrect_password));
