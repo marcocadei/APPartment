@@ -63,6 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_signin_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signin_input_homename_value"
                     android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -86,6 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_signin_input_homename">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signin_input_username_value"
                     android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,6 +113,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_signin_input_username">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signin_input_password_value"
                     android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
