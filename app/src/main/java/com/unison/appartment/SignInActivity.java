@@ -69,7 +69,9 @@ public class SignInActivity extends AppCompatActivity {
                     performSignIn(email, password, progress);
                     // Rimuovo gli errori se li avevo impostati in precedenza
                     layoutHomeName.setError(null);
+                    layoutHomeName.setErrorEnabled(false);
                     layoutUsername.setError(null);
+                    layoutUsername.setErrorEnabled(false);
                 } else {
                     // Se fallisco qui so che è il nome della casa o lo layoutUsername ad essere errato
                     layoutHomeName.setError(getString(R.string.form_error_wrong_home_username));
@@ -97,6 +99,7 @@ public class SignInActivity extends AppCompatActivity {
                             moveToNextActivity();
                             // Rimuovo l'errore se prima lo avevo impostato
                             layoutPassword.setError(null);
+                            layoutPassword.setErrorEnabled(false);
                         } else {
                             // Se fallisco qui deve essere la layoutPassword sbagliata
                             layoutPassword.setError(getString(R.string.form_error_incorrect_password));
@@ -118,18 +121,21 @@ public class SignInActivity extends AppCompatActivity {
             result = false;
         } else {
             layoutHomeName.setError(null);
+            layoutHomeName.setErrorEnabled(false);
         }
         if (usernameValue.length() == 0) {
             layoutUsername.setError(getString(R.string.form_error_missing_value));
             result = false;
         } else {
             layoutUsername.setError(null);
+            layoutUsername.setErrorEnabled(false);
         }
         if (passwordValue.length() == 0) {
             layoutPassword.setError(getString(R.string.form_error_missing_value));
             result = false;
         } else {
             layoutPassword.setError(null);
+            layoutPassword.setErrorEnabled(false);
         }
 
         return result;
