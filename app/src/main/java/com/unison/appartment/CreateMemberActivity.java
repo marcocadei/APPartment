@@ -19,6 +19,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.unison.appartment.model.Member;
 
 public class CreateMemberActivity extends AppCompatActivity {
@@ -71,6 +73,7 @@ public class CreateMemberActivity extends AppCompatActivity {
                 RadioButton selectedRole = findViewById(inputRole.getCheckedRadioButtonId());
                 String role = selectedRole.getText().toString();
                 // Nel caso in cui provenga dall'actiivity di enter ho dei parametri aggiuntivi
+                // TODO questi parametri ce li devo avere anche se provengo dall'activity family
                 if (origin.equals("fromEnter")) {
                     homePassword = i.getStringExtra("homePassword");
                     homeName = i.getStringExtra("homeName");
@@ -79,7 +82,7 @@ public class CreateMemberActivity extends AppCompatActivity {
                 Member newMember = new Member(email, name, age, gender, role, 0);
 
                 // Effettuo la registrazione del nuovo membro
-                registerMember(newMember);
+                signUp(newMember);
             }
         });
     }
@@ -97,22 +100,47 @@ public class CreateMemberActivity extends AppCompatActivity {
         }
     }
 
-    private void registerMember(Member newMember) {
+    private void signUp(final Member newMember) {
         final ProgressDialog progress = ProgressDialog.show(
-                this,"Registrazione","Per favore attendi, è in corso la registrazione", true);
+                this,
+                getString(R.string.activity_create_member_signup_title),
+                getString(R.string.activity_create_member_signup_description), true);
+        /**
+         * ATTENZIONE: la password deve essere di almeno 6 caratteri, altrimenti firebase fallisce
+         */
         auth.createUserWithEmailAndPassword(newMember.getEmail(), homePassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser currentUser = auth.getCurrentUser();
-                            Log.d("registrazione", "successo");
+                            insertUser(newMember);
+                            moveToNextActivity(origin, newMember);
                         } else {
                             Log.d("registrazione", "fallita");
                         }
                         progress.dismiss();
                     }
                 });
+    }
+
+    /**
+     * Una volta registrato l'utente, associo allo stesso delle informazioni aggiuntive nel db
+     */
+    private void insertUser(Member newMember) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        database.child("users").child(homeName + "-" + newMember.getName()).child("name").setValue(newMember.getName());
+        database.child("users").child(homeName + "-" + newMember.getName()).child("age").setValue(newMember.getAge());
+        database.child("users").child(homeName + "-" + newMember.getName()).child("email").setValue(newMember.getEmail());
+        database.child("users").child(homeName + "-" + newMember.getName()).child("gender").setValue(newMember.getGender());
+        database.child("users").child(homeName + "-" + newMember.getName()).child("role").setValue(newMember.getRole());
+        database.child("users").child(homeName + "-" + newMember.getName()).child("points").setValue(newMember.getPoints());
+
+        // TODO spostare questo codice in un punto migliore
+        // Salvo anche la casa
+        database.child("homes").child(homeName).child("name").setValue(homeName);
+        database.child("homes").child(homeName).child("password").setValue(homePassword);
+        database.child("homes").child(homeName).child("members").child(homeName + "-" + newMember.getName()).setValue(true);
     }
 
     /**

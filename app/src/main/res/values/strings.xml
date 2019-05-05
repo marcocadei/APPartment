@@ -32,6 +32,8 @@
     <string name="activity_create_member_radio_role_slave">Collaboratore</string>
     <string name="activity_create_member_text_radio_gender">Genere</string>
     <string name="activity_create_member_text_radio_role">Ruolo</string>
+    <string name="activity_create_member_signup_title">Registrazione</string>
+    <string name="activity_create_member_signup_description">Per favore attendi, è in corso la registrazione</string>
 
     <string name="activity_create_home_hint_name">Nome della casa</string>
     <string name="activity_create_home_hint_password">Password della casa</string>

@@ -20,7 +20,6 @@ public class EnterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(EnterActivity.this, CreateHomeActivity.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -30,7 +29,6 @@ public class EnterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(EnterActivity.this, SignInActivity.class);
                 startActivity(i);
-                finish();
             }
         });
     }

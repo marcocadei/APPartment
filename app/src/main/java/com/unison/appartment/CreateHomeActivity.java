@@ -25,8 +25,8 @@ public class CreateHomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(CreateHomeActivity.this, CreateMemberActivity.class);
                 // Passo i parametri della casa all'activity successiva
-                i.putExtra("homeName", inputName.toString());
-                i.putExtra("homePassword", inputPassword.toString());
+                i.putExtra("homeName", inputName.getText().toString());
+                i.putExtra("homePassword", inputPassword.getText().toString());
                 i.putExtra("origin", "fromEnter");
                 startActivity(i);
             }
