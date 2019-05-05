@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,19 +24,31 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity {
 
+    EditText inputHomeName;
+    EditText inputUsername;
+    EditText inputPassword;
+    TextInputLayout layoutHomeName;
+    TextInputLayout layoutUsername;
+    TextInputLayout layoutPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        final EditText inputHomeName = findViewById(R.id.activity_signin_input_homename_value);
-        final EditText inputName = findViewById(R.id.activity_signin_input_username_value);
-        final EditText inputPassword = findViewById(R.id.activity_signin_input_password_value);
+        inputHomeName = findViewById(R.id.activity_signin_input_homename_value);
+        inputUsername = findViewById(R.id.activity_signin_input_username_value);
+        inputPassword = findViewById(R.id.activity_signin_input_password_value);
+        layoutHomeName = findViewById(R.id.activity_signin_input_homename);
+        layoutUsername = findViewById(R.id.activity_signin_input_username);
+        layoutPassword = findViewById(R.id.activity_signin_input_password);
 
         FloatingActionButton floatNext = findViewById(R.id.activity_sign_in_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(inputHomeName.getText().toString(), inputName.getText().toString(), inputPassword.getText().toString());
+                if (checkInput()) {
+                    signIn(inputHomeName.getText().toString(), inputUsername.getText().toString(), inputPassword.getText().toString());
+                }
             }
         });
 
@@ -55,7 +68,8 @@ public class SignInActivity extends AppCompatActivity {
                     String email = dataSnapshot.getValue(String.class);
                     performSignIn(email, password, progress);
                 } else {
-                    Log.d("login", "fallito");
+                    // Se fallisco qui so che è il nome della casa o lo layoutUsername ad essere errato
+                    
                     progress.dismiss();
                 }
             }
@@ -67,7 +81,7 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-    private void performSignIn(String email, String password, final ProgressDialog progress) {
+    private void performSignIn(String email, final String password, final ProgressDialog progress) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -78,11 +92,41 @@ public class SignInActivity extends AppCompatActivity {
                             auth.signOut();
                             moveToNextActivity();
                         } else {
-                            Log.d("login", "fallito");
+                            // Se fallisco qui deve essere la layoutPassword sbagliata
+                            layoutPassword.setError(getString(R.string.form_error_incorrect_password));
                         }
                         progress.dismiss();
                     }
                 });
+    }
+
+    private boolean checkInput() {
+        String homeNameValue = inputHomeName.getText().toString();
+        String usernameValue = inputUsername.getText().toString();
+        String passwordValue = inputPassword.getText().toString();
+
+        boolean result = true;
+        // Parto controllando che tutti i campi siano compilati
+        if (homeNameValue.length() == 0) {
+            layoutHomeName.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        } else {
+            layoutHomeName.setError(null);
+        }
+        if (usernameValue.length() == 0) {
+            layoutUsername.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        } else {
+            layoutUsername.setError(null);
+        }
+        if (passwordValue.length() == 0) {
+            layoutPassword.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        } else {
+            layoutPassword.setError(null);
+        }
+
+        return result;
     }
 
     private void moveToNextActivity() {

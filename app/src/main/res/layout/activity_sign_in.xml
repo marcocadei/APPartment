@@ -51,6 +51,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_signin_input_homename"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:errorEnabled="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -75,6 +76,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_signin_input_username"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:errorEnabled="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -99,6 +101,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_signin_input_password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:errorEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"

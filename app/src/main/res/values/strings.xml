@@ -108,4 +108,7 @@
 
     <string name="activity_image_detail_img">Immagine del post aperta</string>
 
+    <string name="form_error_missing_value">Specifica un valore</string>
+    <string name="form_error_incorrect_password">Password non corretta</string>
+
 </resources>
