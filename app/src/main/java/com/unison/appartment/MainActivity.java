@@ -134,4 +134,15 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * Lascia il backstack inalterato, ma mette tutte le attività in background, esattamente
+     * come se l'utente avesse premuto il bottone home
+     * 2° RISPOSTA SU:
+     * https://stackoverflow.com/questions/8631095/how-to-prevent-going-back-to-the-previous-activity
+     */
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
