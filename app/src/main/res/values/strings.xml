@@ -68,6 +68,8 @@
     <string name="fragment_reward_img_hourglass">Icona di una clessidra</string>
     <string name="fragment_reward_img_arrow">Icona di una freccia</string>
 
+    <string name="fragment_todo_img_check">Simbolo di spunta</string>
+
     <string name="activity_create_reward_title">Crea nuovo premio</string>
     <string name="activity_create_reward_hint_name">Nome</string>
     <string name="activity_create_reward_hint_points">Punti</string>
