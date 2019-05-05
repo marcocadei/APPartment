@@ -64,7 +64,7 @@
                 android:layout_marginBottom="8dp"
                 android:hint="@string/activity_create_member_input_email"
                 android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_name"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_username"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
@@ -80,7 +80,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_create_member_input_name"
+                android:id="@+id/activity_create_member_input_username"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="8dp"
-                android:hint="@string/activity_create_member_input_name"
+                android:hint="@string/activity_create_member_input_username"
                 android:textColorHint="@color/colorPrimaryLight"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_age"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +97,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:textSize="@dimen/text_medium"
-                    android:id="@+id/activity_create_member_input_name_value"
+                    android:id="@+id/activity_create_member_input_username_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences|textFilter"
@@ -119,7 +119,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_gender"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_name">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_username">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:textSize="@dimen/text_medium"
