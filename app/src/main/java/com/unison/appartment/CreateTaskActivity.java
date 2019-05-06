@@ -2,11 +2,10 @@ package com.unison.appartment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +21,12 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateTaskActivity extends AppCompatActivity {
+public class CreateTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    private final static String DATE_PICKER_FRAGMENT_TAG = "datePickerFragment";
+
+    // Date formatter utilizzato per formattare la deadline
+    private DateFormat dateFormatter;
 
     private Toolbar toolbar;
     private EditText inputName;
@@ -65,6 +69,22 @@ public class CreateTaskActivity extends AppCompatActivity {
                 createTask();
             }
         });
+
+        // Nota: dateFormatter non è static ed è inizializzato alla creazione dell'activity
+        // perché il cambio di Locale è proprio una delle modifiche che possono causare il
+        // riavvio dell'activity.
+        this.dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+
+        /*
+        Se lo schermo è stato ruotato mentre il date picker era aperto, l'activity è stata distrutta
+        e ora sta venendo ricreata. Si vuole mantenere aperto lo stesso date picker, a cui però
+        deve essere cambiato il listener dal momento che altrimenti farebbe riferimento all'activity
+        distrutta non più esistente.
+         */
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(DATE_PICKER_FRAGMENT_TAG);
+        if (fragment != null) {
+            ((DatePickerFragment) fragment).setListener(this);
+        }
     }
 
     public void createTask() {
@@ -81,60 +101,33 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
     public void showDatePickerDialog() {
-        DialogFragment newFragment = new DatePickerFragment(inputDeadline);
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        int year, month, day;
+        final Calendar cal = Calendar.getInstance();
+
+        // Se la data non è ancora stata selezionata, uso la data corrente come quella di default nel date picker
+        // (non faccio niente perché Calendar.getInstance() mi restituisce già la data corrente)
+
+        // Altrimenti, uso la data precedentemente selezionata come quella di default
+        if (inputDeadline.getText().length() != 0) {
+            try {
+                cal.setTime(dateFormatter.parse(inputDeadline.getText().toString()));
+            }
+            catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerFragment.newInstance(year, month, day, this).show(getSupportFragmentManager(), DATE_PICKER_FRAGMENT_TAG);
     }
 
-    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
-        private EditText textOutput;
-        private DateFormat dateFormatter;
-
-        public DatePickerFragment(EditText textOutput) {
-            super();
-
-            // Questo fragment sopravvive alla distruzione dell'activity in cui è inserito
-            // (questa proprietà viene utilizzata per far sì che non venga distrutto alla rotazione dello schermo)
-            setRetainInstance(true);
-
-            this.textOutput = textOutput;
-
-            // Date formatter usato per leggere e scrivere la data nel campo di testo
-            this.dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            int year, month, day;
-            final Calendar cal = Calendar.getInstance();
-
-            // Se la data non è ancora stata selezionata, uso la data corrente come quella di default nel date picker
-            // (non faccio niente perché Calendar.getInstance() mi restituisce già la data corrente)
-
-            // Altrimenti, uso la data precedentemente selezionata come quella di default
-            if (textOutput.getText().length() != 0) {
-                try {
-                    cal.setTime(dateFormatter.parse(textOutput.getText().toString()));
-                }
-                catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            year = cal.get(Calendar.YEAR);
-            month = cal.get(Calendar.MONTH);
-            day = cal.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(),this, year, month, day);
-        }
-
-        // La data è stata impostata e la scrivo nel campo di testo
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(year, month, dayOfMonth);
-            textOutput.setText(dateFormatter.format(cal.getTime()));
-        }
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, dayOfMonth);
+        inputDeadline.setText(dateFormatter.format(cal.getTime()));
     }
 }
