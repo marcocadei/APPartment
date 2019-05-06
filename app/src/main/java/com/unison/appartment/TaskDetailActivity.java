@@ -32,9 +32,8 @@ public class TaskDetailActivity extends AppCompatActivity {
         // Recupero il riferimento agli elementi dell'interfaccia
         TextView name = findViewById(R.id.activity_task_detail_name);
         TextView points = findViewById(R.id.activity_task_detail_points_value);
-        TextView description = findViewById(R.id.activity_task_detail_description);
-        TextView deadline = findViewById(R.id.activity_task_detail_deadline);
-
+        TextView description = findViewById(R.id.activity_task_detail_text_description_value);
+        TextView deadline = findViewById(R.id.activity_task_detail_text_deadline_value);
 
         Intent i = getIntent();
         Task task = (Task) i.getSerializableExtra("task");
@@ -42,7 +41,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         name.setText(task.getName());
         points.setText(String.valueOf(task.getPoints()));
         description.setText(task.getDescription());
-        deadline.setText(String.format(getString(R.string.activity_task_detail_deadline), task.getDeadline()));
-
+        deadline.setText(task.getDeadline());
     }
 }

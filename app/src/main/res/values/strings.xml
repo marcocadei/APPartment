@@ -101,8 +101,10 @@
     <string name="activity_create_task_input_deadline_value">%1$d-%2$d-%3$d</string>
 
     <string name="activity_task_detail_title">Dettaglio attività</string>
-    <string name="activity_task_detail_deadline">Scadenza: %1$s</string>
 
     <string name="activity_image_detail_img">Immagine del post aperta</string>
+    <string name="activity_task_detail_btn_delete">Elimina attività</string>
+    <string name="activity_task_detail_text_description_title">Descrizione</string>
+    <string name="activity_task_detail_text_deadline_title">Scadenza</string>
 
 </resources>
