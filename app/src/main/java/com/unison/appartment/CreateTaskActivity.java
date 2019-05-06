@@ -17,7 +17,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.unison.appartment.model.Task;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
@@ -85,29 +90,53 @@ public class CreateTaskActivity extends AppCompatActivity {
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         private EditText textOutput;
+        private DateFormat dateFormatter;
 
         public DatePickerFragment(EditText textOutput) {
             super();
+
+            // Questo fragment sopravvive alla distruzione dell'activity in cui è inserito
+            // (questa proprietà viene utilizzata per far sì che non venga distrutto alla rotazione dello schermo)
+            setRetainInstance(true);
+
             this.textOutput = textOutput;
+
+            // Date formatter usato per leggere e scrivere la data nel campo di testo
+            this.dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
         }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Uso la data corrente come quella di default nel date picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
+            int year, month, day;
+            final Calendar cal = Calendar.getInstance();
+
+            // Se la data non è ancora stata selezionata, uso la data corrente come quella di default nel date picker
+            // (non faccio niente perché Calendar.getInstance() mi restituisce già la data corrente)
+
+            // Altrimenti, uso la data precedentemente selezionata come quella di default
+            if (textOutput.getText().length() != 0) {
+                try {
+                    cal.setTime(dateFormatter.parse(textOutput.getText().toString()));
+                }
+                catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            year = cal.get(Calendar.YEAR);
+            month = cal.get(Calendar.MONTH);
+            day = cal.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), R.style.DialogTheme,this, year, month, day);
+            return new DatePickerDialog(getActivity(),this, year, month, day);
         }
 
         // La data è stata impostata e la scrivo nel campo di testo
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            textOutput.setText(String.format(getString(R.string.activity_create_task_input_deadline_value)
-                                        , dayOfMonth, month + 1, year));
+            Calendar cal = Calendar.getInstance();
+            cal.set(year, month, dayOfMonth);
+            textOutput.setText(dateFormatter.format(cal.getTime()));
         }
     }
 }

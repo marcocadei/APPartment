@@ -11,14 +11,27 @@
         <!-- Animazione immagine -->
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
+
+        <!-- Stile dei date pickers -->
+        <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialogTheme</item>
     </style>
-    <!--- Tema definito per cambiare colore del date picker -->
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
+
+    <!-- Override dello stile di default dei date pickers e relativi componenti -->
+
+    <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomDatePickerPositiveButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/CustomDatePickerNegativeButtonStyle</item>
     </style>
-    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
-        <item name="android:datePickerMode">spinner</item>
+
+    <style name="CustomDatePickerPositiveButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:layout_marginLeft">@dimen/margin_extra_small</item>
+    </style>
+
+    <style name="CustomDatePickerNegativeButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:layout_marginRight">@dimen/margin_extra_small</item>
     </style>
 
     <!-- Layout definiti da noi per i vari componenti -->
