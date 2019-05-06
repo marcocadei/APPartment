@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
+// Riferimento sulla struttura della classe --> https://stackoverflow.com/a/28349221
+
 public class DatePickerFragment extends DialogFragment {
 
     private final static int BUNDLE_CAPACITY = 3;
