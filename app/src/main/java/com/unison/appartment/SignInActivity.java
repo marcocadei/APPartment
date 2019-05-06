@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -57,8 +56,8 @@ public class SignInActivity extends AppCompatActivity {
     private void signIn(final String homeName, final String username, final String password) {
         final ProgressDialog progress = ProgressDialog.show(
                 this,
-                getString(R.string.activity_signin_signin_title),
-                getString(R.string.activity_signin_signin_description), true);
+                getString(R.string.activity_signin_progress_title),
+                getString(R.string.activity_signin_progress_description), true);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         // Prima di tutto devo recuperare l'indirizzo email dell'utente
         database.child("users").child(homeName + "-" + username).child("email").addListenerForSingleValueEvent(new ValueEventListener() {

@@ -20,8 +20,8 @@
     <string name="activity_signin_hint_housename">Nome della casa</string>
     <string name="activity_signin_hint_username">Username</string>
     <string name="activity_signin_hint_password">Password</string>
-    <string name="activity_signin_signin_title">Accesso</string>
-    <string name="activity_signin_signin_description">Per favore attendi, è in corso l\'accesso</string>
+    <string name="activity_signin_progress_title">Accesso</string>
+    <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
 
     <string name="activity_create_member_logo_description">Aggiungi membro</string>
     <string name="activity_create_member_input_email">Email</string>
@@ -43,6 +43,8 @@
     <string name="activity_create_home_text_info">La password della casa sarà utilizzata al primo accesso di ogni utente. Dovrà poi essere obbligatoriamente modificata.</string>
     <string name="activity_create_home_text_title">Crea la tua casa</string>
     <string name="activity_create_home_img_title_description">Icona di una casa</string>
+    <string name="activity_create_home_progress_title">Creazione</string>
+    <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
 
     <string name="activity_main_toolbar_settings">Impostazioni</string>
 
@@ -113,5 +115,6 @@
     <string name="form_error_wrong_home_username">Combinazione nome casa - username errata</string>
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
     <string name="form_error_short_password">Le password deve contenere almeno %1$d caratteri</string>
+    <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
 
 </resources>
