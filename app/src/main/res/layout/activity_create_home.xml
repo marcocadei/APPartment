@@ -28,7 +28,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_title"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_name"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_homename"
                 app:layout_constraintEnd_toStartOf="@+id/activity_create_home_img_title"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@+id/activity_create_home_input_password"
@@ -52,7 +52,7 @@
                 app:srcCompat="@drawable/ic_home" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_create_home_input_name"
+                android:id="@+id/activity_create_home_input_homename"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_text_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/activity_create_home_input_name_value"
+                    android:id="@+id/activity_create_home_input_homename_value"
                     android:textSize="@dimen/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_name">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_homename">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_home_input_password_value"
