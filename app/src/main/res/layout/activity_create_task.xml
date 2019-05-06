@@ -9,126 +9,98 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_create_task_appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        style="@style/Component.AppBarWithBackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:liftOnScroll="false">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_create_task_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/activity_create_task_title"
-            app:titleTextColor="@color/colorPrimaryText" />
+            style="@style/Component.ToolbarWithBackButton"
+            app:title="@string/activity_create_task_title" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_create_task_input_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/activity_create_task_input_name"
-        android:textColorHint="@color/colorPrimaryLight"
+    <ScrollView
+        style="@style/Component.ScrollView"
+        app:layout_constraintTop_toBottomOf="@id/activity_create_task_appbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_create_task_appbar">
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/activity_create_task_input_name_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences|textFilter"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_medium" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Component.Layout.ScrollViewChild">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_task_input_name"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_task_input_name"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_points"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_create_task_input_description"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/activity_create_task_input_description"
-        android:textColorHint="@color/colorPrimaryLight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_name">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_task_input_name_value"
+                    style="@style/CustomFormTextFieldInput" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/activity_create_task_input_description_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_medium" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_task_input_points"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_task_input_points"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_name">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_create_task_input_points"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/activity_create_task_input_points"
-        android:textColorHint="@color/colorPrimaryLight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_description">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_task_input_points_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="number" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/activity_create_task_input_points_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_medium" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_task_input_description"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_task_input_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_deadline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_points">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_create_task_input_deadline"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/activity_create_task_input_deadline"
-        android:textColorHint="@color/colorPrimaryLight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_points">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_task_input_description_value"
+                    android:inputType="textMultiLine|text"
+                    style="@style/CustomFormTextFieldInput" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/activity_create_task_input_deadline_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_medium" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_task_input_deadline"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_task_input_deadline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_task_input_deadline_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:focusable="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/activity_create_task_float_finish"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
+        style="@style/CustomFloatingActionButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_check" />
