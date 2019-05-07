@@ -59,6 +59,12 @@ public class CreateMemberActivity extends AppCompatActivity {
         // Recupero i parametri dell'activity
         final Intent i = getIntent();
         origin = i.getStringExtra("origin");
+        // Nel caso in cui provenga dall'actiivity di enter ho dei parametri aggiuntivi
+        // TODO questi parametri ce li devo avere anche se provengo dall'activity family
+        if (origin.equals("fromEnter")) {
+            homeName = i.getStringExtra("homeName");
+            homePassword = i.getStringExtra("homePassword");
+        }
 
         inputEmail = findViewById(R.id.activity_create_member_input_email_value);
         inputUsername = findViewById(R.id.activity_create_member_input_username_value);
@@ -81,24 +87,26 @@ public class CreateMemberActivity extends AppCompatActivity {
             radioRoleOwner.setChecked(true);
         }
 
-
         // Gestione click sul bottone per aggiungere un nuovo membro
         FloatingActionButton floatNewMember = findViewById(R.id.activity_create_member_float_new_member);
         floatNewMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent i = new Intent(CreateMemberActivity.this, CreateMemberActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra("origin", FROM_CREATE_MEMBER);
-                // La prima volta passo un array vuoto, mentre le chiamate successive alla stessa
-                // activity passo l'array di membri costruiti fino a quel momento
-                if (origin.equals(FROM_CREATE_MEMBER)) {
-                    ArrayList<Member> newMembers = (ArrayList<Member>) i.getSerializableExtra("newMembers");
-                    // TODO creare il new member
-                    // newMembers.add(newMember);
-                    i.putExtra("newMembers", newMembers);
+                if (checkInput()) {
+                    Intent i = new Intent(CreateMemberActivity.this, CreateMemberActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra("origin", FROM_CREATE_MEMBER);
+                    // La prima volta passo un array vuoto, mentre le chiamate successive alla stessa
+                    // activity passo l'array di membri costruiti fino a quel momento
+                    if (origin.equals(FROM_CREATE_MEMBER)) {
+                        ArrayList<Member> newMembers = (ArrayList<Member>) i.getSerializableExtra("newMembers");
+                        newMembers.add(createMember());
+                        i.putExtra("newMembers", newMembers);
+                    } else {
+                        i.putExtra("newMembers", new ArrayList<Member>());
+                    }
+                    startActivityForResult(i, ADD_MEMBER_REQUEST_CODE);
                 }
-                startActivityForResult(i, ADD_MEMBER_REQUEST_CODE);*/
             }
         });
 
@@ -107,27 +115,10 @@ public class CreateMemberActivity extends AppCompatActivity {
         floatFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Nel caso in cui provenga dall'actiivity di enter ho dei parametri aggiuntivi
-                // TODO questi parametri ce li devo avere anche se provengo dall'activity family
-                if (origin.equals("fromEnter")) {
-                    homeName = i.getStringExtra("homeName");
-                    homePassword = i.getStringExtra("homePassword");
-                }
-
                 if (checkInput()) {
-                    // Recupero i valori dei campi della form
-                    String email = inputEmail.getText().toString();
-                    String name = inputUsername.getText().toString();
-                    int age = Integer.parseInt(inputAge.getText().toString());
-                    RadioButton selectedGender = findViewById(inputGender.getCheckedRadioButtonId());
-                    String gender = selectedGender.getText().toString();
-                    RadioButton selectedRole = findViewById(inputRole.getCheckedRadioButtonId());
-                    String role = selectedRole.getText().toString();
                     // Creo l'oggetto membro
-                    Member newMember = new Member(email, name, age, gender, role, 0);
-                    signUp(newMember);
+                    signUp(createMember());
                 }
-
 
                 /*// Se provengo da questa activity allora torno alla precedente e restituisco il nuovo membero
                 if (origin.equals(FROM_CREATE_MEMBER)) {
@@ -141,6 +132,19 @@ public class CreateMemberActivity extends AppCompatActivity {
                 }*/
             }
         });
+    }
+
+    private Member createMember() {
+        // Recupero i valori dei campi della form
+        String email = inputEmail.getText().toString();
+        String name = inputUsername.getText().toString();
+        int age = Integer.parseInt(inputAge.getText().toString());
+        RadioButton selectedGender = findViewById(inputGender.getCheckedRadioButtonId());
+        String gender = selectedGender.getText().toString();
+        RadioButton selectedRole = findViewById(inputRole.getCheckedRadioButtonId());
+        String role = selectedRole.getText().toString();
+
+        return new Member(email, name, age, gender, role, 0);
     }
 
     private boolean checkInput() {
@@ -191,6 +195,12 @@ public class CreateMemberActivity extends AppCompatActivity {
             if (!origin.equals(FROM_CREATE_MEMBER)) {
                 // TODO registrazione di tutti gli utenti
                 ArrayList<Member> newMembers = (ArrayList<Member>) data.getSerializableExtra("newMembers");
+                Log.d("creazione", String.valueOf(newMembers.size()));
+            } else {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("newMembers", (ArrayList<Member>) data.getSerializableExtra("newMembers"));
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         }
     }
@@ -221,10 +231,9 @@ public class CreateMemberActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser currentUser = auth.getCurrentUser();
                             insertUser(newMember);
-                            moveToNextActivity(origin, newMember);
                         } else {
+                            layoutEmail.setError(getString(R.string.form_error_incorrect_email));
                             Log.d("registrazione", "fallita");
                         }
                         progress.dismiss();
@@ -249,6 +258,9 @@ public class CreateMemberActivity extends AppCompatActivity {
         database.child("homes").child(homeName).child("name").setValue(homeName);
         database.child("homes").child(homeName).child("password").setValue(homePassword);
         database.child("homes").child(homeName).child("members").child(homeName + "-" + newMember.getName()).setValue(true);
+
+        // Una volta terminata la scrittura vado alla prossima activity
+        moveToNextActivity(origin, newMember);
     }
 
     /**
