@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -26,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.unison.appartment.model.Member;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CreateMemberActivity extends AppCompatActivity {
@@ -98,14 +100,11 @@ public class CreateMemberActivity extends AppCompatActivity {
                     i.putExtra("origin", FROM_CREATE_MEMBER);
                     // La prima volta passo un array vuoto, mentre le chiamate successive alla stessa
                     // activity passo l'array di membri costruiti fino a quel momento
-                    if (origin.equals(FROM_CREATE_MEMBER)) {
-                        ArrayList<Member> newMembers = (ArrayList<Member>) i.getSerializableExtra("newMembers");
-                        newMembers.add(createMember());
-                        i.putExtra("newMembers", newMembers);
-                    } else {
-                        i.putExtra("newMembers", new ArrayList<Member>());
-                    }
-                    startActivityForResult(i, ADD_MEMBER_REQUEST_CODE);
+                    ArrayList<Member> newMembers = (ArrayList<Member>) i.getSerializableExtra("newMembers");
+                    // TODO aggiungere controllo che nuovo utente non abbia un nome o l'email uguale a quello degli utenti già inseriti
+                    newMembers.add(createMember());
+                    i.putExtra("newMembers", newMembers);
+                    startActivity(i);
                 }
             }
         });
@@ -116,20 +115,8 @@ public class CreateMemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (checkInput()) {
-                    // Creo l'oggetto membro
                     signUp(createMember());
                 }
-
-                /*// Se provengo da questa activity allora torno alla precedente e restituisco il nuovo membero
-                if (origin.equals(FROM_CREATE_MEMBER)) {
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("newMember", newMember);
-                    setResult(Activity.RESULT_OK, returnIntent);
-                    finish();
-                } else {
-                    // Effettuo la registrazione del nuovo membro
-                    signUp(newMember);
-                }*/
             }
         });
     }
@@ -183,39 +170,9 @@ public class CreateMemberActivity extends AppCompatActivity {
                 layoutEmail.setErrorEnabled(false);
             }
         }
+        findViewById(R.id.activity_create_member).requestFocus();
 
         return result;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_MEMBER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // Sono ritornato all'activity originale
-            if (!origin.equals(FROM_CREATE_MEMBER)) {
-                // TODO registrazione di tutti gli utenti
-                ArrayList<Member> newMembers = (ArrayList<Member>) data.getSerializableExtra("newMembers");
-                Log.d("creazione", String.valueOf(newMembers.size()));
-            } else {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("newMembers", (ArrayList<Member>) data.getSerializableExtra("newMembers"));
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
-            }
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // TODO rimuovere questa riga di codice
-        auth.signOut();
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            // TODO costruire l'utente leggendo i dati dal DB
-            Member newMember = null;
-            moveToNextActivity(origin, newMember);
-        }
     }
 
     private void signUp(final Member newMember) {
@@ -245,22 +202,20 @@ public class CreateMemberActivity extends AppCompatActivity {
      * Una volta registrato l'utente, associo allo stesso delle informazioni aggiuntive nel db
      */
     private void insertUser(Member newMember) {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        database.child("users").child(homeName + "-" + newMember.getName()).child("name").setValue(newMember.getName());
-        database.child("users").child(homeName + "-" + newMember.getName()).child("age").setValue(newMember.getAge());
-        database.child("users").child(homeName + "-" + newMember.getName()).child("email").setValue(newMember.getEmail());
-        database.child("users").child(homeName + "-" + newMember.getName()).child("gender").setValue(newMember.getGender());
-        database.child("users").child(homeName + "-" + newMember.getName()).child("role").setValue(newMember.getRole());
-        database.child("users").child(homeName + "-" + newMember.getName()).child("points").setValue(newMember.getPoints());
-
-        // TODO spostare questo codice in un punto migliore
-        // Salvo anche la casa
-        database.child("homes").child(homeName).child("name").setValue(homeName);
-        database.child("homes").child(homeName).child("password").setValue(homePassword);
-        database.child("homes").child(homeName).child("members").child(homeName + "-" + newMember.getName()).setValue(true);
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users/" + (homeName + "-" + newMember.getName()));
+        database.setValue(newMember);
 
         // Una volta terminata la scrittura vado alla prossima activity
         moveToNextActivity(origin, newMember);
+    }
+
+    private void insertHome(Member newMember) {
+        // TODO spostare questo codice in un punto migliore
+        // Salvo anche la casa
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("homes/" + homeName);
+        database.child("name").setValue(homeName);
+        database.child("password").setValue(homePassword);
+        database.child("members").child(homeName + "-" + newMember.getName()).setValue(true);
     }
 
     /**
@@ -279,5 +234,12 @@ public class CreateMemberActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, EnterActivity.class);
+        startActivity(i);
+        finish();
     }
 }

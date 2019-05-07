@@ -24,6 +24,7 @@ public class Member implements Serializable {
         this.gender = gender;
         this.role = role;
         this.points = points;
+        this.image = null;
     }
 
     public String getEmail() {

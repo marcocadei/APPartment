@@ -16,6 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.unison.appartment.model.Member;
+
+import java.util.ArrayList;
 
 public class CreateHomeActivity extends AppCompatActivity {
 
@@ -132,6 +135,7 @@ public class CreateHomeActivity extends AppCompatActivity {
         i.putExtra("homeName", homeNameValue);
         i.putExtra("homePassword", passwordValue);
         i.putExtra("origin", FROM_ENTER);
+        i.putExtra("newMembers", new ArrayList<Member>());
         startActivity(i);
     }
 
