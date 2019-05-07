@@ -23,6 +23,15 @@ public class EnterActivity extends AppCompatActivity {
             }
         });
 
+        Button btnJoin = findViewById(R.id.activity_enter_btn_join);
+        btnJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EnterActivity.this, JoinHomeActivity.class);
+                startActivity(i);
+            }
+        });
+
         Button btnLogin = findViewById(R.id.activity_enter_btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
