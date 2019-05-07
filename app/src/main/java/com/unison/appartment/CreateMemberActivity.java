@@ -2,6 +2,7 @@ package com.unison.appartment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.unison.appartment.model.Member;
 
 public class CreateMemberActivity extends AppCompatActivity {
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,10 @@ public class CreateMemberActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        if(origin.equals("fromFamily")){
+            floatNewMember.setVisibility(View.GONE);
+        }
 
         // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatFinish = findViewById(R.id.activity_create_member_float_finish);

@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".FamilyFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_family_float_new_member"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_person_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <fragment
+        android:id="@+id/fragment_family_member_list"
+        android:name="com.unison.appartment.FamilyMemberListFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_charts"
+        tools:layout="@layout/fragment_family_member_list" />
 
     <fragment
         android:id="@+id/fragment_charts"
@@ -25,18 +26,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_family_member_list" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_family_member_list"
+        tools:layout="@layout/fragment_charts"/>
 
-    <fragment
-        android:id="@+id/fragment_family_member_list"
-        android:name="com.unison.appartment.FamilyMemberListFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_charts"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_family_float_new_member"
+        style="@style/CustomFloatingActionButton"
+        android:src="@drawable/ic_person_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,6 +48,9 @@ public class Achievement implements Serializable {
             add(new Achievement("Re del giardino", "Tagliare l'erba 10 volte"));
             add(new Achievement("Imparatore del bucato", "Fare il bucato 20 volte"));
             add(new Achievement("Lady dei piatti", "Lavare i piatti 10 volte di fila"));
+            add(new Achievement("Re del giardino2", "Tagliare l'erba 10 volte"));
+            add(new Achievement("Imparatore del bucato2", "Fare il bucato 20 volte"));
+            add(new Achievement("Lady dei piatti2", "Lavare i piatti 10 volte di fila"));
         }
     };
 
