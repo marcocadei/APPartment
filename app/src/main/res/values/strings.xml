@@ -119,4 +119,9 @@
     <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
     <string name="form_error_incorrect_email">Email non corretta</string>
 
+    <string name="activity_join_home_text_title">Unisciti ad una casa</string>
+    <string name="activity_join_home_img_title_description">Icona di una casa</string>
+    <string name="activity_join_home_hint_password">Password della casa</string>
+    <string name="activity_join_home_hint_name">Nome della casa</string>
+
 </resources>
