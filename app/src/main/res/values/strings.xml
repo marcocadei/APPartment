@@ -116,5 +116,6 @@
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
     <string name="form_error_short_password">Le password deve contenere almeno %1$d caratteri</string>
     <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
+    <string name="form_error_incorrect_email">Email non corretta</string>
 
 </resources>

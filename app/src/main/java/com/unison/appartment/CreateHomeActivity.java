@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CreateHomeActivity extends AppCompatActivity {
 
+    public static final String FROM_ENTER = "fromEnter";
     private static final int MIN_PASSWORD_LENGTH = 6;
 
     EditText inputHomeName;
@@ -130,7 +131,7 @@ public class CreateHomeActivity extends AppCompatActivity {
         Intent i = new Intent(CreateHomeActivity.this, CreateMemberActivity.class);
         i.putExtra("homeName", homeNameValue);
         i.putExtra("homePassword", passwordValue);
-        i.putExtra("origin", "fromEnter");
+        i.putExtra("origin", FROM_ENTER);
         startActivity(i);
     }
 
