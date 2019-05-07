@@ -16,4 +16,6 @@
     <dimen name="img_small">24dp</dimen>
     <dimen name="img_medium">30dp</dimen>
     <dimen name="img_large">36dp</dimen>
+
+    <dimen name="img_extra_extra_large">108dp</dimen>
 </resources>

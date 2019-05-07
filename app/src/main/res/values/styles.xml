@@ -115,6 +115,13 @@
         <item name="android:tint">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="Component.ImageView.FancyTitleImage">
+        <item name="android:layout_width">@dimen/img_extra_extra_large</item>
+        <item name="android:layout_height">@dimen/img_extra_extra_large</item>
+        <item name="android:layout_marginStart">@dimen/margin_small</item>
+        <item name="android:tint">@color/colorPrimary</item>
+    </style>
+
     <style name="Component.TextView">
     </style>
 
@@ -150,6 +157,15 @@
 
     <style name="Component.TextView.MultiLine">
         <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="Component.TextView.MultiLine.FancyTitleWithImage">
+        <item name="android:fontFamily">@font/shadows_into_light_two</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="layout_constraintHorizontal_chainStyle">spread_inside</item>
     </style>
 
     <style name="Component.TextView.MultiLine.ObjectTitle">

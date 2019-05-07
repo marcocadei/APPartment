@@ -12,78 +12,57 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/Component.Layout.ScrollViewChild">
 
-            <TextView
-                android:id="@+id/activity_join_home_text_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:fontFamily="@font/shadows_into_light_two"
-                android:letterSpacing="0"
-                android:text="@string/activity_join_home_text_title"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_title"
-                app:layout_constraintBottom_toTopOf="@+id/activity_join_home_input_homename"
-                app:layout_constraintEnd_toStartOf="@+id/activity_join_home_img_title"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/activity_join_home_input_password"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_join_home_layout_title"
+                style="@style/Component.Layout.Header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintBottom_toTopOf="@id/activity_join_home_input_homename"
+                app:layout_constraintVertical_bias="0.5">
 
-            <ImageView
-                android:id="@+id/activity_join_home_img_title"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/activity_join_home_img_title_description"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/activity_join_home_text_title"
-                app:layout_constraintEnd_toEndOf="@+id/activity_join_home_input_password"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/activity_join_home_text_title"
-                app:layout_constraintTop_toTopOf="@+id/activity_join_home_text_title"
-                app:srcCompat="@drawable/ic_home" />
+                <TextView
+                    android:id="@+id/activity_join_home_text_title"
+                    style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
+                    android:text="@string/activity_join_home_text_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/activity_join_home_img_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/activity_join_home_img_title"
+                    style="@style/Component.ImageView.FancyTitleImage"
+                    android:contentDescription="@string/activity_join_home_img_title_description"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_join_home_text_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/activity_join_home_text_title"
+                    app:layout_constraintTop_toTopOf="@+id/activity_join_home_text_title"
+                    app:srcCompat="@drawable/ic_home" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_join_home_input_homename"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_join_home_hint_name"
-                android:textColorHint="@color/colorPrimaryLight"
                 app:layout_constraintBottom_toTopOf="@+id/activity_join_home_input_password"
-                app:layout_constraintEnd_toEndOf="@id/activity_join_home_input_password"
-                app:layout_constraintStart_toStartOf="@id/activity_join_home_input_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_join_home_text_title">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_join_home_layout_title">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_join_home_input_homename_value"
-                    android:textSize="@dimen/text_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences|textFilter"
-                    android:textColor="@color/colorPrimaryDark" />
+                    style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_join_home_input_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_join_home_hint_password"
-                android:textColorHint="@color/colorPrimaryLight"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,11 +70,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_join_home_input_password_value"
-                    android:textSize="@dimen/text_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textColor="@color/colorPrimaryDark" />
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
