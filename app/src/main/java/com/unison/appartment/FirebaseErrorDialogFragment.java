@@ -40,7 +40,8 @@ public class FirebaseErrorDialogFragment extends DialogFragment {
         builder.setMessage(R.string.dialog_firebase_error_message)
                 .setPositiveButton(R.string.general_ok_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dismiss();
+                        mListener.onDialogFragmentDismiss();
+//                        dismiss(); // Già fatto in automatico, superfluo
                     }
                 });
 
@@ -50,9 +51,4 @@ public class FirebaseErrorDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
-        mListener.onDialogFragmentDismiss();
-        super.onDismiss(dialog);
-    }
 }
