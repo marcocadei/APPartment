@@ -89,25 +89,25 @@ public class CreateMemberActivity extends AppCompatActivity {
             radioRoleOwner.setChecked(true);
         }
 
-        // Gestione click sul bottone per aggiungere un nuovo membro
-        FloatingActionButton floatNewMember = findViewById(R.id.activity_create_member_float_new_member);
-        floatNewMember.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkInput()) {
-                    Intent i = new Intent(CreateMemberActivity.this, CreateMemberActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra("origin", FROM_CREATE_MEMBER);
-                    // La prima volta passo un array vuoto, mentre le chiamate successive alla stessa
-                    // activity passo l'array di membri costruiti fino a quel momento
-                    ArrayList<Member> newMembers = (ArrayList<Member>) i.getSerializableExtra("newMembers");
-                    // TODO aggiungere controllo che nuovo utente non abbia un nome o l'email uguale a quello degli utenti già inseriti
-                    newMembers.add(createMember());
-                    i.putExtra("newMembers", newMembers);
-                    startActivity(i);
-                }
-            }
-        });
+//        // Gestione click sul bottone per aggiungere un nuovo membro
+//        FloatingActionButton floatNewMember = findViewById(R.id.activity_create_member_float_new_member);
+//        floatNewMember.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (checkInput()) {
+//                    Intent i = new Intent(CreateMemberActivity.this, CreateMemberActivity.class);
+//                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    i.putExtra("origin", FROM_CREATE_MEMBER);
+//                    // La prima volta passo un array vuoto, mentre le chiamate successive alla stessa
+//                    // activity passo l'array di membri costruiti fino a quel momento
+//                    ArrayList<Member> newMembers = (ArrayList<Member>) i.getSerializableExtra("newMembers");
+//                    // TODO aggiungere controllo che nuovo utente non abbia un nome o l'email uguale a quello degli utenti già inseriti
+//                    newMembers.add(createMember());
+//                    i.putExtra("newMembers", newMembers);
+//                    startActivity(i);
+//                }
+//            }
+//        });
 
         // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatFinish = findViewById(R.id.activity_create_member_float_finish);

@@ -14,216 +14,169 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/Component.Layout.ScrollViewChild">
 
-            <TextView
-                android:id="@+id/activity_create_member_text_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:fontFamily="@font/shadows_into_light_two"
-                android:text="@string/activity_create_member_logo_description"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_title"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_email"
-                app:layout_constraintEnd_toStartOf="@+id/activity_create_member_img_title"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_create_member_layout_title"
+                style="@style/Component.Layout.Header"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.6"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <ImageView
-                android:id="@+id/activity_create_member_img_title"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/activity_create_member_logo_description"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/activity_create_member_text_title"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_title"
-                app:layout_constraintTop_toTopOf="@+id/activity_create_member_text_title"
-                app:srcCompat="@drawable/ic_person_add" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_member_input_email"
+                app:layout_constraintVertical_bias="0.5">
+
+                <TextView
+                    android:id="@+id/activity_create_member_text_title"
+                    style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
+                    android:text="@string/activity_create_member_logo_description"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/activity_create_member_img_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/activity_create_member_img_title"
+                    style="@style/Component.ImageView.FancyTitleImage"
+                    android:contentDescription="@string/activity_create_member_logo_description"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_create_member_text_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_title"
+                    app:layout_constraintTop_toTopOf="@+id/activity_create_member_text_title"
+                    app:srcCompat="@drawable/ic_person_add" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_member_input_email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_create_member_input_email"
-                android:textColorHint="@color/colorPrimaryLight"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_username"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_text_title">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_layout_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/text_medium"
                     android:id="@+id/activity_create_member_input_email_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/colorPrimaryDark" />
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_member_input_username"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_create_member_input_username"
-                android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_age"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_email">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/text_medium"
                     android:id="@+id/activity_create_member_input_username_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences|textFilter"
-                    android:textColor="@color/colorPrimaryDark" />
+                    style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_create_member_input_age"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
-                android:hint="@string/activity_create_member_input_age"
-                android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_gender"
+                android:id="@+id/activity_create_member_input_password"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_member_input_password"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_repeat_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_username">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/text_medium"
-                    android:id="@+id/activity_create_member_input_age_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:id="@+id/activity_create_member_input_password_value"
+                    style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/activity_create_member_text_radio_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/activity_create_member_text_radio_gender"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_medium"
-                app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_gender"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_member_input_repeat_password"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_member_input_repeat_password"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_member_input_age"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_member_input_repeat_password_value"
+                    style="@style/CustomFormTextFieldInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_member_input_age"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_member_input_age"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_member_radio_gender"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_repeat_password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_member_input_age_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RadioGroup
                 android:id="@+id/activity_create_member_radio_gender"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:checkedButton="@+id/activity_create_member_radio_gender_male"
-                android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_member_radio_role"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_radio_gender"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_input_age">
+
+                <TextView
+                    android:id="@+id/activity_create_member_text_radio_gender"
+                    style="@style/Component"
+                    android:text="@string/activity_create_member_text_radio_gender" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_gender_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/Component"
                     android:text="@string/activity_create_member_radio_gender_male" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_gender_female"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/Component"
                     android:text="@string/activity_create_member_radio_gender_female" />
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/activity_create_member_text_radio_role"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/activity_create_member_text_radio_role"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_medium"
-                app:layout_constraintEnd_toStartOf="@+id/activity_create_member_radio_role"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender" />
-
             <RadioGroup
                 android:id="@+id/activity_create_member_radio_role"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="16dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:checkedButton="@+id/activity_create_member_radio_role_slave"
-                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/activity_create_member_text_radio_role"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender">
+
+                <TextView
+                    android:id="@+id/activity_create_member_text_radio_role"
+                    style="@style/Component"
+                    android:text="@string/activity_create_member_text_radio_role" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_role_owner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/Component"
                     android:enabled="false"
                     android:text="@string/activity_create_member_radio_role_owner" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_role_master"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/Component"
                     android:text="@string/activity_create_member_radio_role_master" />
 
                 <RadioButton
                     android:id="@+id/activity_create_member_radio_role_slave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/Component"
                     android:text="@string/activity_create_member_radio_role_slave" />
             </RadioGroup>
 
@@ -232,23 +185,8 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_create_member_float_new_member"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@id/activity_create_member_float_finish"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_person_add" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/activity_create_member_float_finish"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
+        style="@style/CustomFloatingActionButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_check" />

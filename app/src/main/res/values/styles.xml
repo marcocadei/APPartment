@@ -104,6 +104,12 @@
         <item name="android:layout_marginBottom">@dimen/margin_large</item>
     </style>
 
+    <style name="Component.RadioGroupLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
     <style name="Component.ImageView">
     </style>
 
