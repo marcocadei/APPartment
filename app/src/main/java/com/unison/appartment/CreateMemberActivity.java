@@ -25,7 +25,7 @@ import com.unison.appartment.model.Member;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateMemberActivity extends AppCompatActivity {
+public class CreateMemberActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     public static final String EXTRA_HOME_NAME = "homeName";
     public static final String EXTRA_HOME_PASSWORD = "homePassword";
@@ -255,14 +255,15 @@ public class CreateMemberActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        progress.dismiss();
-                        // TODO gestire errore
                         /*
-                        Se questa operazione fallisce, vuol dire necessariamente che qualcun'altro
+                        Se l'operazione fallisce, vuol dire necessariamente che qualcun'altro
                         nel frattempo ha creato una casa con lo stesso nome. Di conseguenza, l'unica
                         cosa che può essere fatta è dare informazione dell'errore all'utente e
                         tornare alla EnterActivity.
                          */
+                        progress.dismiss();
+                        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+                        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                     }
                 });
     }
@@ -287,6 +288,7 @@ public class CreateMemberActivity extends AppCompatActivity {
                         (se provasse a creare una nuova casa con gli stessi dati, gli verrebbe detto
                         che è già esistente).
                          */
+                        // TODO gestione errore
                     }
                 });
     }
@@ -299,6 +301,14 @@ public class CreateMemberActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent i = new Intent(this, EnterActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onDialogFragmentDismiss() {
         Intent i = new Intent(this, EnterActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class JoinHomeActivity extends AppCompatActivity {
+public class JoinHomeActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     EditText inputHomeName;
     EditText inputPassword;
@@ -123,7 +123,15 @@ public class JoinHomeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // TODO aggiungere gestione degli errori
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                 */
+                progress.dismiss();
+                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
             }
         });
     }
@@ -133,6 +141,14 @@ public class JoinHomeActivity extends AppCompatActivity {
         // Passo il nome della casa all'activity successiva
         i.putExtra(CreateMemberActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
         i.putExtra(Intent.EXTRA_REFERRER_NAME, JoinHomeActivity.class.toString());
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onDialogFragmentDismiss() {
+        Intent i = new Intent(this, EnterActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
     }
