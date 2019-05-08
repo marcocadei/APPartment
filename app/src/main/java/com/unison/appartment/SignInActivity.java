@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -29,6 +29,8 @@ public class SignInActivity extends AppCompatActivity {
     TextInputLayout layoutHomeName;
     TextInputLayout layoutUsername;
     TextInputLayout layoutPassword;
+
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,6 @@ public class SignInActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void resetErrorMessage(TextInputLayout inputLayout) {
@@ -86,7 +87,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void signIn(final String homeName, final String username, final String password) {
-        final ProgressDialog progress = ProgressDialog.show(
+        progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_signin_progress_title),
                 getString(R.string.activity_signin_progress_description), true);
@@ -101,34 +102,38 @@ public class SignInActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String email = dataSnapshot.getValue(String.class);
-                    performSignIn(email, password, progress);
+                    performSignIn(email, password);
                 } else {
                     // Se fallisco qui so che è il nome della casa o lo username ad essere errato
                     layoutHomeName.setError(getString(R.string.form_error_wrong_home_username));
                     layoutUsername.setError(getString(R.string.form_error_wrong_home_username));
-                    progress.dismiss();
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                progress.dismiss();
                 // TODO aggiungere gestione degli errori
             }
         });
     }
 
-    private void performSignIn(String email, final String password, final ProgressDialog progress) {
+    private void performSignIn(String email, final String password) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            moveToNextActivity();
-                        } else {
-                            // Se fallisco qui deve essere la layoutPassword sbagliata
-                            layoutPassword.setError(getString(R.string.form_error_incorrect_password));
-                        }
+                    public void onSuccess(AuthResult authResult) {
+                        moveToNextActivity();
+                        progress.dismiss();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Se fallisco qui deve essere la password sbagliata
+                        layoutPassword.setError(getString(R.string.form_error_incorrect_password));
                         progress.dismiss();
                     }
                 });

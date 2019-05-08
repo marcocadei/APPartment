@@ -24,6 +24,8 @@ public class JoinHomeActivity extends AppCompatActivity {
     TextInputLayout layoutHomeName;
     TextInputLayout layoutPassword;
 
+    ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +89,7 @@ public class JoinHomeActivity extends AppCompatActivity {
     }
 
     private void checkCredentials(final String homeName, final String password) {
-        final ProgressDialog progress = ProgressDialog.show(
+        progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_join_home_progress_check_title),
                 getString(R.string.activity_join_home_progress_check_description), true);
@@ -103,7 +105,6 @@ public class JoinHomeActivity extends AppCompatActivity {
                     // La casa specificata non esiste (viene comunque mostrato un messaggio d'errore generico)
                     layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
                     layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                    progress.dismiss();
                 }
                 else {
                     String homePassword = dataSnapshot.child(getString(R.string.db_homes_homename_password)).getValue(String.class);
@@ -111,13 +112,13 @@ public class JoinHomeActivity extends AppCompatActivity {
                         // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
                         layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
                         layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                        progress.dismiss();
                     }
                     else {
                         // Credenziali corrette, posso passare alla creazione dell'utente
                         moveToNextActivity();
                     }
                 }
+                progress.dismiss();
             }
 
             @Override

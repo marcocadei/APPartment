@@ -28,6 +28,8 @@ public class CreateHomeActivity extends AppCompatActivity {
     TextInputLayout layoutPassword;
     TextInputLayout layoutRepeatPassword;
 
+    ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +120,7 @@ public class CreateHomeActivity extends AppCompatActivity {
     }
 
     private void checkHouseExists(final String homeName) {
-        final ProgressDialog progress = ProgressDialog.show(
+        progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_create_home_progress_title),
                 getString(R.string.activity_create_home_progress_description), true);
@@ -132,11 +134,11 @@ public class CreateHomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     layoutHomeName.setError(getString(R.string.form_error_home_exists));
-                    progress.dismiss();
                 }
                 else {
                     moveToNextActivity();
                 }
+                progress.dismiss();
             }
 
             @Override

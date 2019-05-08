@@ -3,7 +3,6 @@ package com.unison.appartment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +11,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -47,6 +44,8 @@ public class CreateMemberActivity extends AppCompatActivity {
     TextInputLayout layoutAge;
     RadioGroup inputGender;
     RadioGroup inputRole;
+
+    ProgressDialog progress;
 
     // Utilizzato per la registrazione dell'utente
     private String referrer;
@@ -224,7 +223,7 @@ public class CreateMemberActivity extends AppCompatActivity {
     }
 
     private void writeNewDatabaseRecord(final Member newMember, boolean writeHomeData) {
-        final ProgressDialog progress = ProgressDialog.show(
+        progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_create_member_signup_title),
                 getString(R.string.activity_create_member_signup_description), true);
@@ -250,12 +249,13 @@ public class CreateMemberActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        writeNewAuthInfo(newMember, progress);
+                        writeNewAuthInfo(newMember);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progress.dismiss();
                         // TODO gestire errore
                         /*
                         Se questa operazione fallisce, vuol dire necessariamente che qualcun'altro
@@ -267,18 +267,20 @@ public class CreateMemberActivity extends AppCompatActivity {
                 });
     }
 
-    private void writeNewAuthInfo(final Member newMember, final ProgressDialog progress) {
+    private void writeNewAuthInfo(final Member newMember) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(newMember.getEmail(), inputPassword.getText().toString())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         moveToNextActivity();
+                        progress.dismiss();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progress.dismiss();
                         /*
                         Se si verifica un fallimento qui l'owner e la casa nel db sono GIÀ stati
                         salvati, quindi bisogna avvertire l'utente che deve semplicemente riloggarsi
@@ -298,6 +300,7 @@ public class CreateMemberActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(this, EnterActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
     }
