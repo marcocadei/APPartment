@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -34,6 +35,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
         inputHomeName = findViewById(R.id.activity_signin_input_homename_value);
         inputUsername = findViewById(R.id.activity_signin_input_username_value);
         inputPassword = findViewById(R.id.activity_signin_input_password_value);
@@ -41,10 +43,36 @@ public class SignInActivity extends AppCompatActivity {
         layoutUsername = findViewById(R.id.activity_signin_input_username);
         layoutPassword = findViewById(R.id.activity_signin_input_password);
 
-        FloatingActionButton floatNext = findViewById(R.id.activity_sign_in_float_next);
+        /*
+        I listener sono duplicati anche se fanno la stessa cosa poiché la view che prende il focus
+        è il textInput mentre la view su cui bisogna operare per rimuovere il messaggio di errore
+        è il textLayout, e per qualche motivo invocando getParent sul textInput NON viene restituito
+        il textLayout.
+         */
+        inputHomeName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutHomeName);
+            }
+        });
+        inputPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutPassword);
+            }
+        });
+        inputUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutUsername);
+            }
+        });
+
+        FloatingActionButton floatNext = findViewById(R.id.activity_signin_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtils.hideKeyboard(SignInActivity.this);
                 if (checkInput()) {
                     signIn(inputHomeName.getText().toString(), inputUsername.getText().toString(), inputPassword.getText().toString());
                 }
@@ -53,26 +81,28 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    private void resetErrorMessage(TextInputLayout inputLayout) {
+        inputLayout.setError(null);
+        inputLayout.setErrorEnabled(false);
+    }
+
     private void signIn(final String homeName, final String username, final String password) {
         final ProgressDialog progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_signin_progress_title),
                 getString(R.string.activity_signin_progress_description), true);
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        String separator = getString(R.string.db_separator);
+        String path = getString(R.string.db_users) + separator + getString(R.string.db_users_userid, homeName, username) + separator + getString(R.string.db_users_userid_email);
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
         // Prima di tutto devo recuperare l'indirizzo email dell'utente
-        database.child("users").child(homeName + "-" + username).child("email").addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String email = dataSnapshot.getValue(String.class);
                     performSignIn(email, password, progress);
-                    // Rimuovo gli errori se li avevo impostati in precedenza
-                    layoutHomeName.setError(null);
-                    layoutHomeName.setErrorEnabled(false);
-                    layoutUsername.setError(null);
-                    layoutUsername.setErrorEnabled(false);
                 } else {
-                    // Se fallisco qui so che è il nome della casa o lo layoutUsername ad essere errato
+                    // Se fallisco qui so che è il nome della casa o lo username ad essere errato
                     layoutHomeName.setError(getString(R.string.form_error_wrong_home_username));
                     layoutUsername.setError(getString(R.string.form_error_wrong_home_username));
                     progress.dismiss();
@@ -81,7 +111,7 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                // TODO aggiungere gestione degli errori
             }
         });
     }
@@ -96,9 +126,6 @@ public class SignInActivity extends AppCompatActivity {
                             // TODO rimuovere questa riga di codice
                             auth.signOut();
                             moveToNextActivity();
-                            // Rimuovo l'errore se prima lo avevo impostato
-                            layoutPassword.setError(null);
-                            layoutPassword.setErrorEnabled(false);
                         } else {
                             // Se fallisco qui deve essere la layoutPassword sbagliata
                             layoutPassword.setError(getString(R.string.form_error_incorrect_password));
@@ -115,26 +142,23 @@ public class SignInActivity extends AppCompatActivity {
 
         boolean result = true;
         // Parto controllando che tutti i campi siano compilati
-        if (homeNameValue.length() == 0) {
+        if (homeNameValue.trim().length() == 0) {
             layoutHomeName.setError(getString(R.string.form_error_missing_value));
             result = false;
         } else {
-            layoutHomeName.setError(null);
-            layoutHomeName.setErrorEnabled(false);
+            resetErrorMessage(layoutHomeName);
         }
-        if (usernameValue.length() == 0) {
+        if (usernameValue.trim().length() == 0) {
             layoutUsername.setError(getString(R.string.form_error_missing_value));
             result = false;
         } else {
-            layoutUsername.setError(null);
-            layoutUsername.setErrorEnabled(false);
+            resetErrorMessage(layoutUsername);
         }
-        if (passwordValue.length() == 0) {
+        if (passwordValue.trim().length() == 0) {
             layoutPassword.setError(getString(R.string.form_error_missing_value));
             result = false;
         } else {
-            layoutPassword.setError(null);
-            layoutPassword.setErrorEnabled(false);
+            resetErrorMessage(layoutPassword);
         }
 
         return result;
@@ -143,5 +167,6 @@ public class SignInActivity extends AppCompatActivity {
     private void moveToNextActivity() {
         Intent i = new Intent(SignInActivity.this, MainActivity.class);
         startActivity(i);
+        finish();
     }
 }
