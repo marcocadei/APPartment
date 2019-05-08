@@ -58,7 +58,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_member_input_email_value"
                     style="@style/CustomFormTextFieldInput"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textWebEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,6 +88,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_member_input_password_value"
+                    android:inputType="textPassword"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -103,6 +104,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_member_input_repeat_password_value"
+                    android:inputType="textPassword"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>

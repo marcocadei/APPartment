@@ -16,9 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.model.Member;
-
-import java.util.ArrayList;
 
 public class CreateHomeActivity extends AppCompatActivity {
 
@@ -84,6 +81,8 @@ public class CreateHomeActivity extends AppCompatActivity {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);
+
+        inputHomeName.setText(inputHomeName.getText().toString().trim());
 
         String homeNameValue = inputHomeName.getText().toString();
         String passwordValue = inputPassword.getText().toString();

@@ -10,21 +10,27 @@ public class Member implements Serializable {
 
     private String email;
     private String name;
+    private String password;
     private int age;
     private String gender;
     private String role;
-    private int points = 0;
     private Uri image;
 
-    // TODO: piazza anche l'immagine
-    public Member(String email, String name, int age, String gender, String role, int points) {
+    private int points = 0;
+
+    // FIXME rifare il costruttore quando si è arrivati ad una struttura definitiva dell'utente
+    public Member(String email, String name, String password, int age, String gender, String role) {
         this.email = email;
         this.name = name;
+        this.password = password;
         this.age = age;
         this.gender = gender;
         this.role = role;
-        this.points = points;
-        this.image = null;
+        this.image = null; // TODO: piazza anche l'immagine
+
+        // Attributi che devono essere impostati ad un valore di default alla creazione di un nuovo utente
+        this.points = 0;
+        // (per es. anche numero di task completati ecc...)
     }
 
     public String getEmail() {
@@ -33,6 +39,14 @@ public class Member implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -88,8 +102,8 @@ public class Member implements Serializable {
      */
     private static List<Member> memberList = new ArrayList<Member>(){
         {
-            add(new Member("Gianluca", "g.roscigno@studenti.unibs.it", 22, "Maschio", "Leader", 10));
-            add(new Member("Marco", "marcocadei@live.com", 24, "Maschio", "Leader", 100));
+//            add(new Member("Gianluca", "g.roscigno@studenti.unibs.it", 22, "Maschio", "Leader", 10));
+//            add(new Member("Marco", "marcocadei@live.com", 24, "Maschio", "Leader", 100));
         }
     };
 
