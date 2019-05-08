@@ -120,10 +120,7 @@ public class JoinHomeActivity extends AppCompatActivity {
                     }
                     else {
                         // Credenziali corrette, posso passare alla creazione dell'utente
-                        Intent i = new Intent(JoinHomeActivity.this, CreateMemberActivity.class);
-                        i.putExtra(CreateMemberActivity.EXTRA_SOURCE_ACTIVITY, JoinHomeActivity.class.toString());
-                        startActivity(i);
-                        finish();
+                        moveToNextActivity();
                     }
                 }
             }
@@ -133,5 +130,14 @@ public class JoinHomeActivity extends AppCompatActivity {
                 // TODO aggiungere gestione degli errori
             }
         });
+    }
+
+    private void moveToNextActivity() {
+        Intent i = new Intent(JoinHomeActivity.this, CreateMemberActivity.class);
+        // Passo il nome della casa all'activity successiva
+        i.putExtra(CreateMemberActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
+        i.putExtra(Intent.EXTRA_REFERRER_NAME, JoinHomeActivity.class.toString());
+        startActivity(i);
+        finish();
     }
 }

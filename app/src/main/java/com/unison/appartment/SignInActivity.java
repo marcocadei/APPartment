@@ -91,9 +91,11 @@ public class SignInActivity extends AppCompatActivity {
                 this,
                 getString(R.string.activity_signin_progress_title),
                 getString(R.string.activity_signin_progress_description), true);
+
         String separator = getString(R.string.db_separator);
         String path = getString(R.string.db_users) + separator + getString(R.string.db_users_userid, homeName, username) + separator + getString(R.string.db_users_userid_email);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
+
         // Prima di tutto devo recuperare l'indirizzo email dell'utente
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

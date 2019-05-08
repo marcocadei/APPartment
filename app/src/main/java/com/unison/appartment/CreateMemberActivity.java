@@ -26,16 +26,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.unison.appartment.model.Member;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class CreateMemberActivity extends AppCompatActivity {
 
-    public static final String EXTRA_SOURCE_ACTIVITY = "sourceActivity";
+    public static final String EXTRA_HOME_NAME = "homeName";
+    public static final String EXTRA_HOME_PASSWORD = "homePassword";
 
-    private static final String FROM_CREATE_MEMBER = "fromCreateMember";
+
     private static final int ADD_MEMBER_REQUEST_CODE = 1;
+
+    private static final int MIN_USER_PASSWORD_LENGTH = 6;
 
     EditText inputEmail;
     EditText inputUsername;

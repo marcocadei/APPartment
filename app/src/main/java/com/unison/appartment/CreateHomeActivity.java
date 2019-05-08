@@ -22,8 +22,7 @@ import java.util.ArrayList;
 
 public class CreateHomeActivity extends AppCompatActivity {
 
-    public static final String FROM_ENTER = "fromEnter";
-    private static final int MIN_PASSWORD_LENGTH = 6;
+    private static final int MIN_HOME_PASSWORD_LENGTH = 6;
 
     EditText inputHomeName;
     EditText inputPassword;
@@ -44,99 +43,127 @@ public class CreateHomeActivity extends AppCompatActivity {
         layoutPassword = findViewById(R.id.activity_create_home_input_password);
         layoutRepeatPassword = findViewById(R.id.activity_create_home_input_repeat_password);
 
+        inputHomeName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutHomeName);
+            }
+        });
+        inputPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutPassword);
+            }
+        });
+        inputRepeatPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutRepeatPassword);
+            }
+        });
+
         FloatingActionButton floatNext = findViewById(R.id.activity_create_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtils.hideKeyboard(CreateHomeActivity.this);
                 if (checkInput()) {
                     // Se i controlli locali vanno a buon fine controllo che la casa esista
-                    checkHouseExists();
+                    checkHouseExists(inputHomeName.getText().toString());
                 }
             }
         });
+    }
+
+    private void resetErrorMessage(TextInputLayout inputLayout) {
+        inputLayout.setError(null);
+        inputLayout.setErrorEnabled(false);
     }
 
     private boolean checkInput() {
         String homeNameValue = inputHomeName.getText().toString();
         String passwordValue = inputPassword.getText().toString();
         String repeatPasswordValue = inputRepeatPassword.getText().toString();
+
         boolean result = true;
-        // Controllo che tutti i campi siano compilati
-        if (homeNameValue.length() == 0) {
+
+        // Controllo che il campo "nome casa" non sia stato lasciato vuoto
+        if (homeNameValue.trim().length() == 0) {
             layoutHomeName.setError(getString(R.string.form_error_missing_value));
             result = false;
-        } else {
-            layoutHomeName.setError(null);
-            layoutHomeName.setErrorEnabled(false);
         }
-        if (passwordValue.length() < MIN_PASSWORD_LENGTH) {
-            layoutPassword.setError(String.format(getString(R.string.form_error_short_password), MIN_PASSWORD_LENGTH));
+        else {
+            resetErrorMessage(layoutHomeName);
+        }
+
+        // Controllo che le due password inserite coincidano
+        if (!passwordValue.equals(repeatPasswordValue)) {
+            layoutPassword.setError(getString(R.string.form_error_mismatch_password));
+            layoutRepeatPassword.setError(getString(R.string.form_error_mismatch_password));
             result = false;
-        } else {
-            layoutPassword.setError(null);
-            layoutPassword.setErrorEnabled(false);
         }
-        if (repeatPasswordValue.length() < MIN_PASSWORD_LENGTH) {
-            layoutRepeatPassword.setError(String.format(getString(R.string.form_error_short_password), MIN_PASSWORD_LENGTH));
+        else {
+            resetErrorMessage(layoutPassword);
+            resetErrorMessage(layoutRepeatPassword);
+        }
+
+        // Controllo che nei campi "password" e "ripeti password" sia stata specificata una
+        // password avente il numero minimo di caratteri richiesto
+        if (passwordValue.trim().length() < MIN_HOME_PASSWORD_LENGTH) {
+            layoutPassword.setError(String.format(getString(R.string.form_error_short_password), MIN_HOME_PASSWORD_LENGTH));
             result = false;
-        } else {
-            layoutRepeatPassword.setError(null);
-            layoutRepeatPassword.setErrorEnabled(false);
         }
-        // Controllo che le password coincidano
-        if (passwordValue.length() > MIN_PASSWORD_LENGTH && repeatPasswordValue.length() > MIN_PASSWORD_LENGTH) {
-            if (!passwordValue.equals(repeatPasswordValue)) {
-                layoutPassword.setError(getString(R.string.form_error_mismatch_password));
-                layoutRepeatPassword.setError(getString(R.string.form_error_mismatch_password));
-                result = false;
-            } else {
-                layoutPassword.setError(null);
-                layoutPassword.setErrorEnabled(false);
-                layoutRepeatPassword.setError(null);
-                layoutRepeatPassword.setErrorEnabled(false);
-            }
+        else {
+            resetErrorMessage(layoutPassword);
+        }
+        if (repeatPasswordValue.trim().length() < MIN_HOME_PASSWORD_LENGTH) {
+            layoutRepeatPassword.setError(String.format(getString(R.string.form_error_short_password), MIN_HOME_PASSWORD_LENGTH));
+            result = false;
+        }
+        else {
+            resetErrorMessage(layoutRepeatPassword);
         }
 
         return result;
     }
 
-    private void checkHouseExists() {
-        String homeNameValue = inputHomeName.getText().toString();
+    private void checkHouseExists(final String homeName) {
         final ProgressDialog progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_create_home_progress_title),
                 getString(R.string.activity_create_home_progress_description), true);
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        database.child("homes").child(homeNameValue).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        String separator = getString(R.string.db_separator);
+        String path = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName);
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     layoutHomeName.setError(getString(R.string.form_error_home_exists));
-                } else {
-                    layoutHomeName.setError(null);
-                    layoutHomeName.setErrorEnabled(false);
+                    progress.dismiss();
+                }
+                else {
                     moveToNextActivity();
                 }
-                progress.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                // TODO aggiungere gestione degli errori
             }
         });
     }
 
     private void moveToNextActivity() {
-        String homeNameValue = inputHomeName.getText().toString();
-        String passwordValue = inputPassword.getText().toString();
-        // Passo i parametri della casa all'activity successiva
         Intent i = new Intent(CreateHomeActivity.this, CreateMemberActivity.class);
-        i.putExtra("homeName", homeNameValue);
-        i.putExtra("homePassword", passwordValue);
-        i.putExtra("origin", FROM_ENTER);
-        i.putExtra("newMembers", new ArrayList<Member>());
+        // Passo nome e password della casa all'activity successiva
+        i.putExtra(CreateMemberActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
+        i.putExtra(CreateMemberActivity.EXTRA_HOME_PASSWORD, inputPassword.getText().toString());
+        i.putExtra(Intent.EXTRA_REFERRER_NAME, CreateHomeActivity.class.toString());
         startActivity(i);
+        finish();
     }
 
 }

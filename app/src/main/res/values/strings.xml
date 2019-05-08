@@ -17,7 +17,7 @@
     <string name="form_error_incorrect_password">Password non corretta</string>
     <string name="form_error_wrong_home_username">Combinazione casa-username errata</string>
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
-    <string name="form_error_short_password">Le password deve contenere almeno %1$d caratteri</string>
+    <string name="form_error_short_password">La password deve contenere almeno %1$d caratteri</string>
     <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
     <string name="form_error_incorrect_email">Email non corretta</string>
     <string name="form_error_incorrect_credentials">Credenziali non corrette</string>
