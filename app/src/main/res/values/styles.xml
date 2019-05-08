@@ -11,6 +11,14 @@
         <!-- Animazione immagine -->
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
+
+        <!-- TODO questa roba darà conflict in fase di merge, assicurarsi di lasciare sia lo stile dei
+        date picker che quello degli alerts -->
+
+        <!-- Stile degli alert dialogs -->
+        <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
+
+        <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
     </style>
     <!--- Tema definito per cambiare colore del date picker -->
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
@@ -19,6 +27,22 @@
     </style>
     <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
         <item name="android:datePickerMode">spinner</item>
+    </style>
+
+    <!-- TODO questa roba darà conflict in fase di merge, assicurarsi di lasciare sia lo stile dei
+        date picker che quello degli alerts -->
+
+    <!-- Override dello stile di default degli alert dialog e relativi componenti -->
+
+    <!-- TODO dovrebbe essere uguale a quello dei date pickers, vedere dopo il merge e in caso refactorare -->
+
+    <style name="CustomAlertDialogTheme" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomAlertPositiveButtonStyle</item>
+    </style>
+
+    <style name="CustomAlertPositiveButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
     </style>
 
     <!-- Layout definiti da noi per i vari componenti -->
