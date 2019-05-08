@@ -32,6 +32,8 @@ import java.util.List;
 
 public class CreateMemberActivity extends AppCompatActivity {
 
+    public static final String EXTRA_SOURCE_ACTIVITY = "sourceActivity";
+
     private static final String FROM_CREATE_MEMBER = "fromCreateMember";
     private static final int ADD_MEMBER_REQUEST_CODE = 1;
 
@@ -63,10 +65,10 @@ public class CreateMemberActivity extends AppCompatActivity {
         origin = i.getStringExtra("origin");
         // Nel caso in cui provenga dall'actiivity di enter ho dei parametri aggiuntivi
         // TODO questi parametri ce li devo avere anche se provengo dall'activity family
-        if (origin.equals("fromEnter")) {
-            homeName = i.getStringExtra("homeName");
-            homePassword = i.getStringExtra("homePassword");
-        }
+//        if (origin.equals("fromEnter")) {
+//            homeName = i.getStringExtra("homeName");
+//            homePassword = i.getStringExtra("homePassword");
+//        }
 
         inputEmail = findViewById(R.id.activity_create_member_input_email_value);
         inputUsername = findViewById(R.id.activity_create_member_input_username_value);
@@ -79,15 +81,15 @@ public class CreateMemberActivity extends AppCompatActivity {
 
         // Se provengo dall'activity create home allora l'unico
         // ruolo selezionabile deve essere 'Creatore'
-        if (origin.equals(CreateHomeActivity.FROM_ENTER)) {
-            RadioButton radioRoleOwner = findViewById(R.id.activity_create_member_radio_role_owner);
-            RadioButton radioRoleMaster= findViewById(R.id.activity_create_member_radio_role_master);
-            RadioButton radioRoleSlave = findViewById(R.id.activity_create_member_radio_role_slave);
-            radioRoleOwner.setEnabled(true);
-            radioRoleMaster.setEnabled(false);
-            radioRoleSlave.setEnabled(false);
-            radioRoleOwner.setChecked(true);
-        }
+//        if (origin.equals(CreateHomeActivity.FROM_ENTER)) {
+//            RadioButton radioRoleOwner = findViewById(R.id.activity_create_member_radio_role_owner);
+//            RadioButton radioRoleMaster= findViewById(R.id.activity_create_member_radio_role_master);
+//            RadioButton radioRoleSlave = findViewById(R.id.activity_create_member_radio_role_slave);
+//            radioRoleOwner.setEnabled(true);
+//            radioRoleMaster.setEnabled(false);
+//            radioRoleSlave.setEnabled(false);
+//            radioRoleOwner.setChecked(true);
+//        }
 
 //        // Gestione click sul bottone per aggiungere un nuovo membro
 //        FloatingActionButton floatNewMember = findViewById(R.id.activity_create_member_float_new_member);

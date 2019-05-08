@@ -1,4 +1,6 @@
 <resources>
+    <!-- Generali -->
+
     <string name="app_name">APPartment</string>
 
     <string name="placeholder_text">Placeholder</string>
@@ -10,6 +12,17 @@
         <item quantity="one">%d elemento selezionato</item>
         <item quantity="other">%d elementi selezionati</item>
     </plurals>
+
+    <string name="form_error_missing_value">Specifica un valore</string>
+    <string name="form_error_incorrect_password">Password non corretta</string>
+    <string name="form_error_wrong_home_username">Combinazione casa-username errata</string>
+    <string name="form_error_mismatch_password">Le password devono coincidere</string>
+    <string name="form_error_short_password">Le password deve contenere almeno %1$d caratteri</string>
+    <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
+    <string name="form_error_incorrect_email">Email non corretta</string>
+    <string name="form_error_incorrect_credentials">Credenziali non corrette</string>
+
+    <!-- Legate ad una specifica activity -->
 
     <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_join">Unisciti ad una casa</string>
@@ -107,17 +120,11 @@
 
     <string name="activity_image_detail_img">Immagine del post aperta</string>
 
-    <string name="form_error_missing_value">Specifica un valore</string>
-    <string name="form_error_incorrect_password">Password non corretta</string>
-    <string name="form_error_wrong_home_username">Combinazione casa-username errata</string>
-    <string name="form_error_mismatch_password">Le password devono coincidere</string>
-    <string name="form_error_short_password">Le password deve contenere almeno %1$d caratteri</string>
-    <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
-    <string name="form_error_incorrect_email">Email non corretta</string>
-
     <string name="activity_join_home_text_title">Unisciti ad una casa</string>
     <string name="activity_join_home_img_title_description">Icona di una casa</string>
     <string name="activity_join_home_hint_password">Password della casa</string>
     <string name="activity_join_home_hint_name">Nome della casa</string>
+    <string name="activity_join_home_progress_check_title">Verifica delle credenziali</string>
+    <string name="activity_join_home_progress_check_description">Verifica delle credenziali in corso...</string>
 
 </resources>
