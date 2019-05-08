@@ -65,27 +65,22 @@ public class JoinHomeActivity extends AppCompatActivity {
     }
 
     private boolean checkInput() {
+        resetErrorMessage(layoutHomeName);
+        resetErrorMessage(layoutPassword);
+
         String homeNameValue = inputHomeName.getText().toString();
         String passwordValue = inputPassword.getText().toString();
 
         boolean result = true;
 
         // Si controlla unicamente che i campi non siano stati lasciati vuoti
-
         if (homeNameValue.trim().length() == 0) {
             layoutHomeName.setError(getString(R.string.form_error_missing_value));
             result = false;
         }
-        else {
-            resetErrorMessage(layoutHomeName);
-        }
-
         if (passwordValue.trim().length() == 0) {
             layoutPassword.setError(getString(R.string.form_error_missing_value));
             result = false;
-        }
-        else {
-            resetErrorMessage(layoutPassword);
         }
 
         return result;

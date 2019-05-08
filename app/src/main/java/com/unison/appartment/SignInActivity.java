@@ -138,6 +138,10 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private boolean checkInput() {
+        resetErrorMessage(layoutHomeName);
+        resetErrorMessage(layoutUsername);
+        resetErrorMessage(layoutPassword);
+
         String homeNameValue = inputHomeName.getText().toString();
         String usernameValue = inputUsername.getText().toString();
         String passwordValue = inputPassword.getText().toString();
@@ -147,20 +151,14 @@ public class SignInActivity extends AppCompatActivity {
         if (homeNameValue.trim().length() == 0) {
             layoutHomeName.setError(getString(R.string.form_error_missing_value));
             result = false;
-        } else {
-            resetErrorMessage(layoutHomeName);
         }
         if (usernameValue.trim().length() == 0) {
             layoutUsername.setError(getString(R.string.form_error_missing_value));
             result = false;
-        } else {
-            resetErrorMessage(layoutUsername);
         }
         if (passwordValue.trim().length() == 0) {
             layoutPassword.setError(getString(R.string.form_error_missing_value));
             result = false;
-        } else {
-            resetErrorMessage(layoutPassword);
         }
 
         return result;

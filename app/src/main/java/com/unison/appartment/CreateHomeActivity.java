@@ -81,6 +81,10 @@ public class CreateHomeActivity extends AppCompatActivity {
     }
 
     private boolean checkInput() {
+        resetErrorMessage(layoutHomeName);
+        resetErrorMessage(layoutPassword);
+        resetErrorMessage(layoutRepeatPassword);
+
         String homeNameValue = inputHomeName.getText().toString();
         String passwordValue = inputPassword.getText().toString();
         String repeatPasswordValue = inputRepeatPassword.getText().toString();
@@ -92,19 +96,12 @@ public class CreateHomeActivity extends AppCompatActivity {
             layoutHomeName.setError(getString(R.string.form_error_missing_value));
             result = false;
         }
-        else {
-            resetErrorMessage(layoutHomeName);
-        }
 
         // Controllo che le due password inserite coincidano
         if (!passwordValue.equals(repeatPasswordValue)) {
             layoutPassword.setError(getString(R.string.form_error_mismatch_password));
             layoutRepeatPassword.setError(getString(R.string.form_error_mismatch_password));
             result = false;
-        }
-        else {
-            resetErrorMessage(layoutPassword);
-            resetErrorMessage(layoutRepeatPassword);
         }
 
         // Controllo che nei campi "password" e "ripeti password" sia stata specificata una
@@ -113,15 +110,9 @@ public class CreateHomeActivity extends AppCompatActivity {
             layoutPassword.setError(String.format(getString(R.string.form_error_short_password), MIN_HOME_PASSWORD_LENGTH));
             result = false;
         }
-        else {
-            resetErrorMessage(layoutPassword);
-        }
         if (repeatPasswordValue.trim().length() < MIN_HOME_PASSWORD_LENGTH) {
             layoutRepeatPassword.setError(String.format(getString(R.string.form_error_short_password), MIN_HOME_PASSWORD_LENGTH));
             result = false;
-        }
-        else {
-            resetErrorMessage(layoutRepeatPassword);
         }
 
         return result;
