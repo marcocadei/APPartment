@@ -6,11 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -130,6 +132,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.activity_main_toolbar_settings:
                 // Log.d(this.getLocalClassName(), "Premuto ingraggio");
                 return true;
+
+            case R.id.activity_main_toolbar_logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(this, EnterActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+
             default:
                 return super.onOptionsItemSelected(item);
         }

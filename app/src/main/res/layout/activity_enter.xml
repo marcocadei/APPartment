@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/activity_enter_btn_join"
-        app:icon="@drawable/rotated_ic_vertical_align_top"
+        app:icon="@drawable/rotated_90_ic_vertical_align_top"
         app:layout_constraintBottom_toTopOf="@id/activity_enter_btn_login"
         app:layout_constraintEnd_toEndOf="@id/activity_enter_btn_login"
         app:layout_constraintHorizontal_bias="0.5"

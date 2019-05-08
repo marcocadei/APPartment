@@ -126,5 +126,6 @@
     <string name="activity_join_home_hint_name">Nome della casa</string>
     <string name="activity_join_home_progress_check_title">Verifica delle credenziali</string>
     <string name="activity_join_home_progress_check_description">Verifica delle credenziali in corso...</string>
+    <string name="activity_main_toolbar_logout">Logout</string>
 
 </resources>

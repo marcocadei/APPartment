@@ -125,8 +125,6 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // TODO rimuovere questa riga di codice
-                            auth.signOut();
                             moveToNextActivity();
                         } else {
                             // Se fallisco qui deve essere la layoutPassword sbagliata

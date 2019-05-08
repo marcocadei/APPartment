@@ -5,4 +5,8 @@
         android:title="@string/activity_main_toolbar_settings"
         android:icon="@drawable/ic_settings"
         app:showAsAction="ifRoom" />
+    <item android:id="@+id/activity_main_toolbar_logout"
+        android:title="@string/activity_main_toolbar_logout"
+        android:icon="@drawable/rotated_270_ic_file_upload"
+        app:showAsAction="ifRoom" />
 </menu>
