@@ -109,6 +109,9 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                     layoutHomeName.setError(getString(R.string.form_error_wrong_home_username));
                     layoutUsername.setError(getString(R.string.form_error_wrong_home_username));
                 }
+                // TODO - TOGLIERE DA QUI E DA TUTTI I POSTI ANALOGHI
+                // ERRORISSIMO perché nell'if viene richiamata un'altra funzione async, quindi questo
+                // dismiss può essere chiamato prima che sia finito quella lì!
                 progress.dismiss();
             }
 
