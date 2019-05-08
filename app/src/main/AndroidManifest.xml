@@ -18,7 +18,6 @@
         <activity android:name=".FamilyMemberDetailActivity" />
         <activity android:name=".TaskDetailActivity" />
         <activity android:name=".CreateTaskActivity" />
-        <activity android:name=".FirstAccessActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".CreateMemberActivity" />
