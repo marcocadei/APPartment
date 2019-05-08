@@ -55,12 +55,6 @@
     <string name="activity_main_bottom_navigation_family">Famiglia</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
 
-    <string name="activity_first_access_text_title">Cambia password</string>
-    <string name="activity_first_access_img_title_description">Icona di un lucchetto</string>
-    <string name="activity_first_access_hint_password_repeat">Ripeti password</string>
-    <string name="activity_first_access_hint_password">Nuova password</string>
-    <string name="activity_first_access_text_info">Questo è il tuo primo accesso. Scegli una nuova password per proteggere il tuo account.</string>
-
     <string name="fragment_insert_post_hint_post">Testo del messaggio</string>
     <string name="fragment_insert_post_img_send_text_description">Bottone di invio testo</string>
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
