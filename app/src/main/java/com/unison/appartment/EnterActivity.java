@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class EnterActivity extends AppCompatActivity {
 
     @Override
@@ -40,5 +42,20 @@ public class EnterActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            // C'è già un utente loggato: vado direttamente alla MainActivity
+            Intent i = new Intent(EnterActivity.this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+
+        /*
+        Nota: Tutte le operazioni precedenti (es. impostazione dei listener sui bottoni) sono
+        eseguite a prescindere dallo stato dell'autenticazione; se infatti l'utente esegue il
+        logout dalla MainActivity, si vuole che questo ritorni alla EnterActivity (che quindi
+        deve avere l'interfaccia già pronta).
+         */
     }
 }
