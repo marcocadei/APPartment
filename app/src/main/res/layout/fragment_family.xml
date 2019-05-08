@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".FamilyFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_family_float_new_member"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_person_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <fragment
         android:id="@+id/fragment_charts"
         android:name="com.unison.appartment.ChartsFragment"

@@ -21,9 +21,6 @@ import com.unison.appartment.model.Member;
  */
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
 
-    private static final String FROM_FAMILY = "fromFamily";
-    private static final int ADD_MEMBER_REQUEST_CODE = 1;
-
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
@@ -47,17 +44,6 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_family, container, false);
 
-        FloatingActionButton floatNewMember = myView.findViewById(R.id.fragment_family_float_new_member);
-        floatNewMember.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), CreateMemberActivity.class);
-                i.putExtra("origin", FROM_FAMILY);
-                startActivityForResult(i, ADD_MEMBER_REQUEST_CODE);
-            }
-
-        });
-
         // TODO: da fare per implementare la cancellazione di un elemento nella lista
         /*Button btnDeleteMember = myView.findViewById(R.id.fragment_family_member_btn_delete_member);
         btnDeleteMember.setOnClickListener(new View.OnClickListener() {
@@ -70,16 +56,6 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         });*/
 
         return myView;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_MEMBER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            FamilyMemberListFragment fmlf = (FamilyMemberListFragment) getChildFragmentManager()
-                    .findFragmentById(R.id.fragment_family_member_list);
-            fmlf.addMember((Member) data.getSerializableExtra("newMember"));
-        }
     }
 
     @Override
