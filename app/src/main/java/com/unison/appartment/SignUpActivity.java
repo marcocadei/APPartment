@@ -224,7 +224,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
     private void writeUserInDb(final User newUser) {
         // Scrittura dei dati relativi al nuovo utente nel database
         String separator = getString(R.string.db_separator);
-        String path = getString(R.string.db_users) + separator + getString(R.string.db_users_useremail, newUser.getEmail());
+        String path = getString(R.string.db_users) + separator + getString(R.string.db_users_uid, FirebaseAuth.getInstance().getCurrentUser().getUid());
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
         dbRef.setValue(newUser)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
