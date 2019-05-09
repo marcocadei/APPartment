@@ -149,8 +149,8 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                 In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
                 la situazione non può essere risolta dall'utente.
                  */
-                progress.dismiss();
                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+                progress.dismiss();
                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
             }
         });

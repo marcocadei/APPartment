@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -76,7 +75,7 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(SignInActivity.this);
                 if (checkInput()) {
-                    signIn(inputHomeName.getText().toString(), inputUsername.getText().toString(), inputPassword.getText().toString());
+                    retrieveEmailFromDb(inputHomeName.getText().toString(), inputUsername.getText().toString(), inputPassword.getText().toString());
                 }
             }
         });
@@ -87,7 +86,7 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
         inputLayout.setErrorEnabled(false);
     }
 
-    private void signIn(final String homeName, final String username, final String password) {
+    private void retrieveEmailFromDb(final String homeName, final String username, final String password) {
         progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_signin_progress_title),
@@ -108,11 +107,14 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                     // Se fallisco qui so che è il nome della casa o lo username ad essere errato
                     layoutHomeName.setError(getString(R.string.form_error_wrong_home_username));
                     layoutUsername.setError(getString(R.string.form_error_wrong_home_username));
+                    progress.dismiss();
                 }
-                // TODO - TOGLIERE DA QUI E DA TUTTI I POSTI ANALOGHI
-                // ERRORISSIMO perché nell'if viene richiamata un'altra funzione async, quindi questo
-                // dismiss può essere chiamato prima che sia finito quella lì!
-                progress.dismiss();
+                /*
+                NOTA: Non si può mettere QUI progress.dismiss() perché nell'if viene chiamato il
+                metodo performSignIn che contiene un'operazione asincrona. Se si mettesse qui
+                progress.dismiss() il dialog potrebbe chiudersi prima che l'operazione performSignIn
+                sia stata completata, e questo NON è quello che si vuole.
+                 */
             }
 
             @Override
@@ -123,8 +125,8 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                 In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
                 la situazione non può essere risolta dall'utente.
                  */
-                progress.dismiss();
                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+                progress.dismiss();
                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
             }
         });

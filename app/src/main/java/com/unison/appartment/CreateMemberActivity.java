@@ -261,8 +261,10 @@ public class CreateMemberActivity extends AppCompatActivity implements FirebaseE
                         cosa che può essere fatta è dare informazione dell'errore all'utente e
                         tornare alla EnterActivity.
                          */
-                        progress.dismiss();
+                        // FIXME il commento qui sopra è falso finché non si settano le regole di sicurezza di firebase
+                        // (da rivedere dopo averlo fatto)
                         FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+                        progress.dismiss();
                         dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                     }
                 });
