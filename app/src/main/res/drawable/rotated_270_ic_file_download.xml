@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rotate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fromDegrees="90"
-    android:toDegrees="90"
+    android:fromDegrees="270"
+    android:toDegrees="270"
     android:pivotX="50%"
     android:pivotY="50%"
-    android:drawable="@drawable/ic_vertical_align_top">
+    android:drawable="@drawable/ic_file_download">
 </rotate>

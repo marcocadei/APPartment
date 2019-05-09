@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/activity_enter_btn_login"
-        app:icon="@drawable/rotated_90_ic_vertical_align_top"
+        app:icon="@drawable/rotated_270_ic_file_download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/activity_enter_btn_signup"
         app:layout_constraintStart_toStartOf="@id/activity_enter_btn_signup"
