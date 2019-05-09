@@ -26,11 +26,12 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
+        android:id="@+id/activity_home_list_scroll"
         style="@style/Component.ScrollView"
         app:layout_constraintTop_toBottomOf="@id/activity_home_list_appbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/activity_home_list_layout_buttons">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/Component.Layout.ScrollViewChild">
@@ -53,10 +54,41 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_home_list_layout_header" />
+                app:layout_constraintTop_toBottomOf="@id/activity_home_list_layout_header" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_home_list_layout_buttons"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_home_list_scroll"
+        style="@style/Component.Layout.ButtonSet">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_home_list_btn_join"
+            android:text="@string/activity_home_list_btn_join"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/activity_home_list_btn_create"
+            style="@style/Component.Button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_home_list_btn_create"
+            android:text="@string/activity_home_list_btn_create"
+            app:layout_constraintTop_toBottomOf="@id/activity_home_list_btn_join"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Component.Button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

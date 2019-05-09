@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.unison.appartment.model.UserHome;
 
@@ -23,6 +25,24 @@ public class HomeListActivity extends AppCompatActivity implements HomeFragment.
         // Supporto per la toolbar
         toolbar = findViewById(R.id.activity_home_list_toolbar);
         setSupportActionBar(toolbar);
+
+        MaterialButton btnJoin = findViewById(R.id.activity_home_list_btn_join);
+        btnJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeListActivity.this, JoinHomeActivity.class);
+                startActivity(i);
+            }
+        });
+
+        MaterialButton btnCreate = findViewById(R.id.activity_home_list_btn_create);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeListActivity.this, CreateHomeActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

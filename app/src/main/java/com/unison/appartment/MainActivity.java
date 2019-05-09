@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // FIXME da togliere? ora questo è il comportamento della HomeListActivity
     /**
      * Lascia il backstack inalterato, ma mette tutte le attività in background, esattamente
      * come se l'utente avesse premuto il bottone home

@@ -254,8 +254,6 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
 //        String userPath = getString(R.string.db_users);
 //        childUpdates.put(userPath, newUser);
 //
-//        // TODO manca controllo sulla mail
-//
 //        if (writeHomeData) {
 //            Home newHome = new Home(homeName, homePassword);
 //            newHome.addMember(newUser.getName());

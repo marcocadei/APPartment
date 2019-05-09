@@ -137,5 +137,7 @@
     <string name="activity_home_list_toolbar_logout">Logout</string>
     <string name="activity_main_toolbar_edit">Modifica dati utente</string>
     <string name="activity_home_list_toolbar_title">Profilo utente</string>
+    <string name="activity_home_list_btn_join">Unisciti ad una casa</string>
+    <string name="activity_home_list_btn_create">Crea una nuova casa</string>
 
 </resources>

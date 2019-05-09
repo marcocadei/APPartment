@@ -110,17 +110,6 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                         }
                     }
                 });
-
-        // Per debuggare - Verifica se all'email indicata è associato un account esistente in Auth
-        /*auth.fetchSignInMethodsForEmail(email)
-                .addOnSuccessListener(new OnSuccessListener<SignInMethodQueryResult>() {
-                    @Override
-                    public void onSuccess(SignInMethodQueryResult signInMethodQueryResult) {
-                        if (signInMethodQueryResult.getSignInMethods().isEmpty()) {
-                            Log.w(getLocalClassName(), "Email non esistente in Auth");
-                        }
-                    }
-                });*/
     }
 
     private boolean checkInput() {
