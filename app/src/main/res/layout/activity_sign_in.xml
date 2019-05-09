@@ -30,7 +30,7 @@
                     style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
                     android:text="@string/activity_signin_text_title"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/activity_signin_img_title"
+                    app:layout_constraintEnd_toStartOf="@id/activity_signin_img_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,10 +38,10 @@
                     android:id="@+id/activity_signin_img_title"
                     style="@style/Component.ImageView.FancyTitleImage"
                     android:contentDescription="@string/activity_signin_img_title_description"
-                    app:layout_constraintBottom_toBottomOf="@+id/activity_signin_text_title"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_signin_text_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/activity_signin_text_title"
-                    app:layout_constraintTop_toTopOf="@+id/activity_signin_text_title"
+                    app:layout_constraintStart_toEndOf="@id/activity_signin_text_title"
+                    app:layout_constraintTop_toTopOf="@id/activity_signin_text_title"
                     app:srcCompat="@drawable/ic_account_circle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -50,9 +50,9 @@
                 android:id="@+id/activity_signin_input_email"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_signin_hint_email"
-                app:layout_constraintBottom_toTopOf="@+id/activity_signin_input_password"
-                app:layout_constraintEnd_toEndOf="@id/activity_signin_input_password"
-                app:layout_constraintStart_toStartOf="@id/activity_signin_input_password"
+                app:layout_constraintBottom_toTopOf="@id/activity_signin_input_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_signin_layout_title">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -69,7 +69,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_signin_input_email">
+                app:layout_constraintTop_toBottomOf="@id/activity_signin_input_email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signin_input_password_value"

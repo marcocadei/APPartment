@@ -21,7 +21,8 @@
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
     <string name="form_error_short_password">La password deve contenere almeno %1$d caratteri</string>
     <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
-    <string name="form_error_incorrect_email">Email non corretta</string>
+    <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
+    <string name="form_error_nonexistent_user">Questa email non è associata ad alcun utente</string>
     <string name="form_error_incorrect_credentials">Credenziali non corrette</string>
 
     <!-- Legate ad una specifica activity -->

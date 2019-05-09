@@ -6,20 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class SignInActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
@@ -130,23 +128,33 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
 
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onSuccess(AuthResult authResult) {
-                        moveToNextActivity();
-                        progress.dismiss();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        /*
-                        Un fallimento in questo punto implica che le credenziali inserite dall'utente
-                        non sono corrette.
-                         */
-                        layoutEmail.setError(getString(R.string.form_error_incorrect_credentials));
-                        layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                        progress.dismiss();
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            moveToNextActivity();
+                            progress.dismiss();
+                        }
+                        else {
+                            try {
+                                throw task.getException();
+                            }
+                            catch (FirebaseAuthInvalidCredentialsException e) {
+                                // Password sbagliata
+                                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
+                            }
+                            catch (FirebaseAuthInvalidUserException e) {
+                                // Utente non esistente
+                                layoutEmail.setError(getString(R.string.form_error_nonexistent_user));
+                            }
+                            catch (Exception e) {
+                                // Generico
+                                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+                                progress.dismiss();
+                                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                            }
+                            progress.dismiss();
+                        }
                     }
                 });
 
@@ -171,19 +179,24 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
 
         boolean result = true;
 
+        // Controllo che la mail inserita sia valida
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailValue).matches()) {
+            layoutEmail.setError(getString(R.string.form_error_incorrect_email));
+            result = false;
+        }
+
         // Controllo che tutti i campi siano compilati
         if (emailValue.trim().length() == 0) {
+            /*
+            Bisogna prima resettare l'errore eventualmente impostato nell'if precedente, altrimenti
+            (per qualche motivo) il messaggio non è visualizzato correttamente.
+             */
+            layoutEmail.setError(null);
             layoutEmail.setError(getString(R.string.form_error_missing_value));
             result = false;
         }
         if (passwordValue.trim().length() == 0) {
             layoutPassword.setError(getString(R.string.form_error_missing_value));
-            result = false;
-        }
-
-        // Controllo che la mail inserita sia valida
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailValue).matches()) {
-            layoutEmail.setError(getString(R.string.form_error_incorrect_email));
             result = false;
         }
 
