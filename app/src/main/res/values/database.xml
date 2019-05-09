@@ -10,9 +10,10 @@
     <item name="db_homes_homename_password" type="string">password</item>
     <item name="db_homes_homename_members" type="string">members</item>
 
-
     <!-- Utenti -->
     <item name="db_users" type="string">users</item>
     <item name="db_users_uid" type="string">%1$s</item>
+
+    <!-- Case-Utenti -->
 
 </resources>

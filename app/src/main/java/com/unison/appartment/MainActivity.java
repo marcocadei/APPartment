@@ -139,12 +139,14 @@ public class MainActivity extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    // FIXME da togliere? ora questo è il comportamento della HomeListActivity
     /**
      * Lascia il backstack inalterato, ma mette tutte le attività in background, esattamente
      * come se l'utente avesse premuto il bottone home

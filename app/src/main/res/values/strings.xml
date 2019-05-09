@@ -134,5 +134,8 @@
 
     <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
     <string name="title_activity_home_list">HomeListActivity</string>
+    <string name="activity_home_list_toolbar_logout">Logout</string>
+    <string name="activity_main_toolbar_edit">Modifica dati utente</string>
+    <string name="activity_home_list_toolbar_title">Profilo utente</string>
 
 </resources>
