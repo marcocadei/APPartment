@@ -76,6 +76,37 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!--<RadioGroup-->
+            <!--android:id="@+id/activity_create_member_radio_role"-->
+            <!--style="@style/CustomFormTextFieldLayout"-->
+            <!--android:checkedButton="@+id/activity_create_member_radio_role_slave"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/activity_create_member_text_radio_role"-->
+            <!--style="@style/Component"-->
+            <!--android:text="@string/activity_create_member_text_radio_role" />-->
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/activity_create_member_radio_role_owner"-->
+            <!--style="@style/Component"-->
+            <!--android:enabled="false"-->
+            <!--android:text="@string/activity_create_member_radio_role_owner" />-->
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/activity_create_member_radio_role_master"-->
+            <!--style="@style/Component"-->
+            <!--android:text="@string/activity_create_member_radio_role_master" />-->
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/activity_create_member_radio_role_slave"-->
+            <!--style="@style/Component"-->
+            <!--android:text="@string/activity_create_member_radio_role_slave" />-->
+            <!--</RadioGroup>-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unison.appartment.model.Member;
+import com.unison.appartment.model.User;
 
 public class FamilyMemberListFragment extends Fragment {
 
@@ -63,7 +63,7 @@ public class FamilyMemberListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myAdapter = new MyFamilyMemberRecyclerViewAdapter(Member.getMemberList(), listener);
+            myAdapter = new MyFamilyMemberRecyclerViewAdapter(User.getUserList(), listener);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -85,14 +85,14 @@ public class FamilyMemberListFragment extends Fragment {
         super.onDetach();
     }
 
-    public void addMember(Member newMember) {
-        Member.addMember(0, newMember);
+    public void addMember(User newUser) {
+        User.addMember(0, newUser);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
     }
 
     public void removeMember(int position){
-        Member.removeMember(position);
+        User.removeMember(position);
         myAdapter.notifyItemRemoved(position);
     }
 
@@ -102,6 +102,6 @@ public class FamilyMemberListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnFamilyMemberListFragmentInteractionListener {
-        void onFamilyMemberListFragmentOpenMember(Member member);
+        void onFamilyMemberListFragmentOpenMember(User user);
     }
 }

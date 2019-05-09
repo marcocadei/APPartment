@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.unison.appartment.model.Member;
+import com.unison.appartment.model.User;
 
 public class FamilyMemberDetailActivity extends AppCompatActivity {
 
@@ -36,10 +36,13 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         ImageView image = findViewById(R.id.activity_family_member_detail_image);
 
         Intent i = getIntent();
-        Member member = (Member) i.getSerializableExtra("member");
+        User user = (User) i.getSerializableExtra("user");
         // Popolo l'interfaccia con i dati del task ricevuto
-        name.setText(member.getName());
-        points.setText(String.valueOf(member.getPoints()));
-        /*image.setImage(member.getDescription());*/
+        // TODO risistemare con Member e non User
+        name.setText("paolo");
+        points.setText("444");
+//        name.setText(user.getName());
+//        points.setText(String.valueOf(user.getPoints()));
+        /*image.setImage(user.getDescription());*/
     }
 }

@@ -1,19 +1,16 @@
 package com.unison.appartment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.unison.appartment.model.Member;
+import com.unison.appartment.model.User;
 
 
 /**
@@ -69,9 +66,9 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     }
 
     @Override
-    public void onFamilyMemberListFragmentOpenMember(Member member) {
+    public void onFamilyMemberListFragmentOpenMember(User user) {
         Intent i = new Intent(getActivity(), FamilyMemberDetailActivity.class);
-        i.putExtra("member", member);
+        i.putExtra("user", user);
         startActivity(i);
     }
 }

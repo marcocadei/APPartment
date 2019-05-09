@@ -186,10 +186,8 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
     }
 
     private void moveToNextActivity() {
-        Intent i = new Intent(CreateHomeActivity.this, CreateMemberActivity.class);
+        Intent i = new Intent(CreateHomeActivity.this, SignUpActivity.class);
         // Passo nome e password della casa all'activity successiva
-        i.putExtra(CreateMemberActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
-        i.putExtra(CreateMemberActivity.EXTRA_HOME_PASSWORD, inputPassword.getText().toString());
         i.putExtra(Intent.EXTRA_REFERRER_NAME, CreateHomeActivity.class.toString());
         startActivity(i);
         finish();

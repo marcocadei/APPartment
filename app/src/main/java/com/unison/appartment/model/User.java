@@ -4,32 +4,32 @@ import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Member implements Serializable {
+public class User implements Serializable {
 
     private String email;
-    private String name;
     private String password;
     private int age;
     private String gender;
-    private String role;
+    private Map<String, String> homes;
+
+    // TODO ancora da mettere le altre proprietà tipo numero di completed task
     private Uri image;
 
-    private int points = 0;
-
     // FIXME rifare il costruttore quando si è arrivati ad una struttura definitiva dell'utente
-    public Member(String email, String name, String password, int age, String gender, String role) {
+    public User(String email, String password, int age, String gender) {
         this.email = email;
-        this.name = name;
         this.password = password;
         this.age = age;
         this.gender = gender;
-        this.role = role;
+        this.homes = new HashMap<>();
+
         this.image = null; // TODO: piazza anche l'immagine
 
         // Attributi che devono essere impostati ad un valore di default alla creazione di un nuovo utente
-        this.points = 0;
         // (per es. anche numero di task completati ecc...)
     }
 
@@ -49,14 +49,6 @@ public class Member implements Serializable {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAge() {
         return age;
     }
@@ -73,22 +65,6 @@ public class Member implements Serializable {
         this.gender = gender;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     public Uri getImage() {
         return image;
     }
@@ -97,30 +73,48 @@ public class Member implements Serializable {
         this.image = image;
     }
 
+    public Map<String, String> getHomes() {
+        return homes;
+    }
+
+    public void setHomes(Map<String, String> homes) {
+        this.homes = homes;
+    }
+
+    public String addHome(String homeName, String role) {
+        return this.homes.put(homeName, role);
+    }
+
+    public String getRoleInHome(String homeName) {
+        return this.homes.get(homeName);
+    }
+
+    // TODO da togliere
+
     /**
      * Metodi statici per gestire la lista di membri
      */
-    private static List<Member> memberList = new ArrayList<Member>(){
+    private static List<User> userList = new ArrayList<User>(){
         {
-//            add(new Member("Gianluca", "g.roscigno@studenti.unibs.it", 22, "Maschio", "Leader", 10));
-//            add(new Member("Marco", "marcocadei@live.com", 24, "Maschio", "Leader", 100));
+//            add(new User("Gianluca", "g.roscigno@studenti.unibs.it", 22, "Maschio", "Leader", 10));
+//            add(new User("Marco", "marcocadei@live.com", 24, "Maschio", "Leader", 100));
         }
     };
 
-    public static void addMember(int position, Member member) {
-        memberList.add(position, member);
+    public static void addMember(int position, User user) {
+        userList.add(position, user);
     }
 
     public static void removeMember(int position) {
-        memberList.remove(position);
+        userList.remove(position);
     }
 
-    public static Member getMember(int position) {
-        return memberList.get(position);
+    public static User getMember(int position) {
+        return userList.get(position);
     }
 
-    public static List<Member> getMemberList() {
-        return memberList;
+    public static List<User> getUserList() {
+        return userList;
     }
 
 }
