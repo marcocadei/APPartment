@@ -22,7 +22,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/activity_signin_input_homename"
+                app:layout_constraintBottom_toTopOf="@id/activity_signin_input_email"
                 app:layout_constraintVertical_bias="0.5">
 
                 <TextView
@@ -47,31 +47,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_signin_input_homename"
+                android:id="@+id/activity_signin_input_email"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_signin_hint_housename"
-                app:layout_constraintBottom_toTopOf="@+id/activity_signin_input_username"
-                app:layout_constraintEnd_toEndOf="@id/activity_signin_input_password"
-                app:layout_constraintStart_toStartOf="@id/activity_signin_input_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_signin_layout_title">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/activity_signin_input_homename_value"
-                    style="@style/CustomFormTextFieldInput" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_signin_input_username"
-                style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_signin_hint_username"
+                android:hint="@string/activity_signin_hint_email"
                 app:layout_constraintBottom_toTopOf="@+id/activity_signin_input_password"
                 app:layout_constraintEnd_toEndOf="@id/activity_signin_input_password"
                 app:layout_constraintStart_toStartOf="@id/activity_signin_input_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_signin_input_homename">
+                app:layout_constraintTop_toBottomOf="@id/activity_signin_layout_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/activity_signin_input_username_value"
+                    android:id="@+id/activity_signin_input_email_value"
+                    android:inputType="textEmailAddress"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -83,7 +69,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_signin_input_username">
+                app:layout_constraintTop_toBottomOf="@+id/activity_signin_input_email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signin_input_password_value"
