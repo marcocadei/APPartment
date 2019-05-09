@@ -9,13 +9,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.unison.appartment.model.Home;
 
 public class CreateHomeActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
@@ -128,6 +133,30 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
         String separator = getString(R.string.db_separator);
         String path = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
+        dbRef.setValue(new Home(homeName, ""))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnCanceledListener(new OnCanceledListener() {
+                    @Override
+                    public void onCanceled() {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    /*
+                    L'operazione può fallire o per un errore lato server
+                     */
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        DatabaseException f = (DatabaseException)e;
+
+
+
+                    }
+                });
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

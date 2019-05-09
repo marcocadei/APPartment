@@ -48,13 +48,13 @@ public class HomeListActivity extends ListActivity {
         floatJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeListActivity.this, JoinHomeActivity.class);
+//                Intent i = new Intent(HomeListActivity.this, JoinHomeActivity.class);
+//                startActivity(i);
+
+                Intent i = new Intent(HomeListActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });
-
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
     }
 
 }
