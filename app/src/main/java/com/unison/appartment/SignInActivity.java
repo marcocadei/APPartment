@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -145,11 +147,27 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Se fallisco qui deve essere la password sbagliata
+                        /*
+                        Un fallimento in questo punto implica che l'utente ha inserito la password errata.
+                        Tener presente che questo è vero SOLO se Auth e DB su Firebase sono perfettamente
+                        allineati: in caso di discrepanze (se l'email recuperata dal DB non corrisponde
+                        a nessun account esistente su Auth) l'errore non è legato alla password.
+                         */
                         layoutPassword.setError(getString(R.string.form_error_incorrect_password));
                         progress.dismiss();
                     }
                 });
+
+        // Per debuggare - Verifica se all'email indicata è associato un account esistente in Auth
+        /*auth.fetchSignInMethodsForEmail(email)
+                .addOnSuccessListener(new OnSuccessListener<SignInMethodQueryResult>() {
+                    @Override
+                    public void onSuccess(SignInMethodQueryResult signInMethodQueryResult) {
+                        if (signInMethodQueryResult.getSignInMethods().isEmpty()) {
+                            Log.w(getLocalClassName(), "Email non esistente in Auth");
+                        }
+                    }
+                });*/
     }
 
     private boolean checkInput() {
