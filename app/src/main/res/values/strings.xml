@@ -31,10 +31,10 @@
     <string name="activity_enter_btn_login">Entra nella tua casa</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
 
-    <string name="activity_signin_text_title">Entra nella tua casa</string>
+    <string name="activity_signin_text_title">Accedi ad APPartment</string>
     <string name="activity_signin_img_title_description">Simbolo di login</string>
     <string name="activity_signin_hint_housename">Nome della casa</string>
-    <string name="activity_signin_hint_username">Username</string>
+    <string name="activity_signin_hint_email">Email</string>
     <string name="activity_signin_hint_password">Password</string>
     <string name="activity_signin_progress_title">Accesso</string>
     <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
@@ -131,5 +131,6 @@
     <string name="activity_join_home_progress_check_description">Verifica delle credenziali in corso…</string>
 
     <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
+    <string name="title_activity_home_list">HomeListActivity</string>
 
 </resources>

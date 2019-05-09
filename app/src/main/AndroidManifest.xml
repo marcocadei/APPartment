@@ -11,7 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".JoinHomeActivity"></activity>
+        <activity
+            android:name=".HomeListActivity"
+            android:label="@string/title_activity_home_list"
+            android:parentActivityName="android.app.ListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.app.ListActivity" />
+        </activity>
+        <activity android:name=".JoinHomeActivity" />
         <activity android:name=".ImageDetailActivity" />
         <activity android:name=".RewardDetailActivity" />
         <activity android:name=".CreateRewardActivity" />

@@ -25,6 +25,7 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
     </style>
+
     <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
         <item name="android:datePickerMode">spinner</item>
     </style>
@@ -38,7 +39,8 @@
 
     <style name="CustomAlertDialogTheme" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/colorPrimary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/CustomAlertPositiveButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomAlertPositiveButtonStyle
+        </item>
     </style>
 
     <style name="CustomAlertPositiveButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
@@ -52,8 +54,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Component.Layout">
-    </style>
+    <style name="Component.Layout"></style>
 
     <style name="Component.Layout.ScrollViewChild">
         <item name="android:paddingTop">@dimen/margin_large</item>
@@ -134,8 +135,7 @@
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
 
-    <style name="Component.ImageView">
-    </style>
+    <style name="Component.ImageView"></style>
 
     <style name="Component.ImageView.ListItemIcon">
         <item name="android:layout_width">@dimen/img_medium</item>
@@ -152,8 +152,7 @@
         <item name="android:tint">@color/colorPrimary</item>
     </style>
 
-    <style name="Component.TextView">
-    </style>
+    <style name="Component.TextView"></style>
 
     <style name="Component.TextView.SingleLine">
         <item name="android:layout_width">wrap_content</item>
@@ -225,5 +224,14 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
