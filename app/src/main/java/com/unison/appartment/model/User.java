@@ -14,7 +14,6 @@ public class User implements Serializable {
     private String password;
     private int age;
     private String gender;
-    private Map<String, String> homes;
 
     // TODO ancora da mettere le altre proprietà tipo numero di completed task
     private Uri image;
@@ -25,7 +24,6 @@ public class User implements Serializable {
         this.password = password;
         this.age = age;
         this.gender = gender;
-        this.homes = new HashMap<>();
 
         this.image = null; // TODO: piazza anche l'immagine
 
@@ -71,22 +69,6 @@ public class User implements Serializable {
 
     public void setImage(Uri image) {
         this.image = image;
-    }
-
-    public Map<String, String> getHomes() {
-        return homes;
-    }
-
-    public void setHomes(Map<String, String> homes) {
-        this.homes = homes;
-    }
-
-    public String addHome(String homeName, String role) {
-        return this.homes.put(homeName, role);
-    }
-
-    public String getRoleInHome(String homeName) {
-        return this.homes.get(homeName);
     }
 
     // TODO da togliere
