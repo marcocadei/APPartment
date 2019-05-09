@@ -74,52 +74,6 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
         inputLayout.setErrorEnabled(false);
     }
 
-    /*private void retrieveEmailFromDb(final String username, final String password) {
-        progress = ProgressDialog.show(
-                this,
-                getString(R.string.activity_signin_progress_title),
-                getString(R.string.activity_signin_progress_description), true);
-
-        String separator = getString(R.string.db_separator);
-        String path = getString(R.string.db_users) + separator + getString(R.string.db_users_userid, homeName, username) + separator + getString(R.string.db_users_userid_email);
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
-
-        // Prima di tutto devo recuperare l'indirizzo email dell'utente
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String email = dataSnapshot.getValue(String.class);
-                    performSignIn(email, password);
-                } else {
-                    // Se fallisco qui so che è il nome della casa o lo username ad essere errato
-                    layoutHomeName.setError(getString(R.string.form_error_wrong_home_username));
-                    layoutEmail.setError(getString(R.string.form_error_wrong_home_username));
-                    progress.dismiss();
-                }
-                *//*
-                NOTA: Non si può mettere QUI progress.dismiss() perché nell'if viene chiamato il
-                metodo performSignIn che contiene un'operazione asincrona. Se si mettesse qui
-                progress.dismiss() il dialog potrebbe chiudersi prima che l'operazione performSignIn
-                sia stata completata, e questo NON è quello che si vuole.
-                 *//*
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                *//*
-                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
-                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
-                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
-                la situazione non può essere risolta dall'utente.
-                 *//*
-                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                progress.dismiss();
-                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
-            }
-        });
-    }*/
-
     private void performSignIn(String email, final String password) {
         progress = ProgressDialog.show(
                 this,
