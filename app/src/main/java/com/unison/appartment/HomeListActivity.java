@@ -8,6 +8,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.model.Home;
 
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,6 +52,9 @@ public class HomeListActivity extends ListActivity {
                 startActivity(i);
             }
         });
+
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 }

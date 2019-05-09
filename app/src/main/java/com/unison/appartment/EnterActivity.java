@@ -16,20 +16,11 @@ public class EnterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter);
 
-        Button btnRegister = findViewById(R.id.activity_enter_btn_register);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        Button btnSignup = findViewById(R.id.activity_enter_btn_signup);
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(EnterActivity.this, CreateHomeActivity.class);
-                startActivity(i);
-            }
-        });
-
-        Button btnJoin = findViewById(R.id.activity_enter_btn_join);
-        btnJoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EnterActivity.this, JoinHomeActivity.class);
+                Intent i = new Intent(EnterActivity.this, CreateMemberActivity.class);
                 startActivity(i);
             }
         });
@@ -45,8 +36,8 @@ public class EnterActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            // C'è già un utente loggato: vado direttamente alla MainActivity
-            Intent i = new Intent(EnterActivity.this, MainActivity.class);
+            // C'è già un utente loggato: vado direttamente alla HomeListActivity
+            Intent i = new Intent(EnterActivity.this, HomeListActivity.class);
             startActivity(i);
             finish();
         }
