@@ -64,7 +64,7 @@
                 android:id="@+id/activity_join_home_input_password"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_join_home_hint_password"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_join_home_input_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_join_home_input_homename">
@@ -76,36 +76,32 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--<RadioGroup-->
-            <!--android:id="@+id/activity_create_member_radio_role"-->
-            <!--style="@style/CustomFormTextFieldLayout"-->
-            <!--android:checkedButton="@+id/activity_create_member_radio_role_slave"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/activity_create_member_radio_gender">-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_join_home_input_nickname"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_join_home_hint_nickname"
+                app:layout_constraintBottom_toTopOf="@id/activity_join_home_text_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_join_home_input_password">
 
-            <!--<TextView-->
-            <!--android:id="@+id/activity_create_member_text_radio_role"-->
-            <!--style="@style/Component"-->
-            <!--android:text="@string/activity_create_member_text_radio_role" />-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_join_home_input_nickname_value"
+                    style="@style/CustomFormTextFieldInput" />
 
-            <!--<RadioButton-->
-            <!--android:id="@+id/activity_create_member_radio_role_owner"-->
-            <!--style="@style/Component"-->
-            <!--android:enabled="false"-->
-            <!--android:text="@string/activity_create_member_radio_role_owner" />-->
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <!--<RadioButton-->
-            <!--android:id="@+id/activity_create_member_radio_role_master"-->
-            <!--style="@style/Component"-->
-            <!--android:text="@string/activity_create_member_radio_role_master" />-->
-
-            <!--<RadioButton-->
-            <!--android:id="@+id/activity_create_member_radio_role_slave"-->
-            <!--style="@style/Component"-->
-            <!--android:text="@string/activity_create_member_radio_role_slave" />-->
-            <!--</RadioGroup>-->
+            <!-- Nota: Il drawableStart è creato appositamente già colorato poiché su alcuni
+             dispositivi anche definendo l'attributo android:Tint l'immagine non viene ricolorata. -->
+            <TextView
+                android:id="@+id/activity_join_home_text_info"
+                style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
+                android:drawableStart="@drawable/ic_info_outline_color6a1b9a"
+                android:text="@string/activity_join_home_text_info"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_join_home_input_nickname" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

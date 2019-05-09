@@ -139,5 +139,7 @@
     <string name="activity_home_list_toolbar_title">Profilo utente</string>
     <string name="activity_home_list_btn_join">Unisciti ad una casa</string>
     <string name="activity_home_list_btn_create">Crea una nuova casa</string>
+    <string name="activity_join_home_hint_nickname">Nickname</string>
+    <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
 
 </resources>

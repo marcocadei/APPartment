@@ -84,7 +84,7 @@ public class HomeListActivity extends AppCompatActivity implements HomeFragment.
 
         // (righe qui sotto solo temporanee, poi rifare meglio)
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("homeName", item.getHomeName());
+        i.putExtra(MainActivity.EXTRA_HOME_NAME, item.getHomeName());
         startActivity(i);
     }
 }

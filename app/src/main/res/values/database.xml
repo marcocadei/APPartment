@@ -14,6 +14,14 @@
     <item name="db_users" type="string">users</item>
     <item name="db_users_uid" type="string">%1$s</item>
 
-    <!-- Case-Utenti -->
+    <!-- Case-Utenti (Famiglie) -->
+    <item name="db_families" type="string">families</item>
+    <item name="db_families_homename" type="string">%1$s</item>
+    <item name="db_families_homename_userid" type="string">%1$s</item>
+
+    <!-- Utenti-Case -->
+    <item name="db_userhomes" type="string">user-homes</item>
+    <item name="db_userhomes_userid" type="string">%1$s</item>
+    <item name="db_userhomes_userid_homename" type="string">%1$s</item>
 
 </resources>

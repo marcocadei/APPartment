@@ -4,6 +4,10 @@ import java.util.Map;
 
 public class UserHome {
 
+    public final static String ROLE_OWNER = "Proprietario";
+    public final static String ROLE_MASTER = "Leader";
+    public final static String ROLE_SLAVE = "Collaboratore";
+
     private String homeName;
     private String role;
 
