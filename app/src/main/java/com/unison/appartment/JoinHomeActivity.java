@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -151,7 +153,6 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // FIXME da sistemare
                 /*
                 onCancelled viene invocato solo se si verifica un errore a lato server oppure se
                 le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
@@ -191,8 +192,19 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                                 throw task.getException();
                             }
                             catch (DatabaseException e) {
-                                // L'utente ha specificato una casa di cui è già membro
-                                // TODO
+                                int errorCode = DatabaseError.fromException(e).getCode();
+                                if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
+                                    // Regole di sicurezza violate
+                                    // Implica: L'utente ha specificato una casa di cui è già membro
+                                    layoutHomeName.setError(getString(R.string.form_error_home_already_joined));
+                                    progress.dismiss();
+                                }
+                                else {
+                                    // Altro errore generico
+                                    FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+                                    progress.dismiss();
+                                    dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                }
                             }
                             catch (Exception e) {
                                 // Generico

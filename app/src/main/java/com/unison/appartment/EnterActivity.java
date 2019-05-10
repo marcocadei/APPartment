@@ -45,8 +45,8 @@ public class EnterActivity extends AppCompatActivity {
         /*
         Nota: Tutte le operazioni precedenti (es. impostazione dei listener sui bottoni) sono
         eseguite a prescindere dallo stato dell'autenticazione; se infatti l'utente esegue il
-        logout dalla MainActivity, si vuole che questo ritorni alla EnterActivity (che quindi
-        deve avere l'interfaccia già pronta).
+        logout, si vuole che questo ritorni alla EnterActivity (che quindi deve avere l'interfaccia
+        già pronta).
          */
     }
 }

@@ -249,29 +249,10 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                         }
                     }
                 });
-
-//        Map<String, Object> childUpdates = new HashMap<>();
-//        String userPath = getString(R.string.db_users);
-//        childUpdates.put(userPath, newUser);
-//
-//        if (writeHomeData) {
-//            Home newHome = new Home(homeName, homePassword);
-//            newHome.addMember(newUser.getName());
-//            String homePath = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName);
-//            childUpdates.put(homePath, newHome);
-//        }
     }
 
     private void moveToNextActivity() {
         Intent i = new Intent(this, HomeListActivity.class);
-        startActivity(i);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent i = new Intent(this, EnterActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
     }
