@@ -36,25 +36,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/Component.Layout.ScrollViewChild">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/activity_user_profile_layout_header"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/activity_user_profile_fragment_container"
-                style="@style/Component.Layout.Header">
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <fragment
                 android:id="@+id/activity_user_profile_fragment_container"
                 android:name="com.unison.appartment.HomeListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                tools:layout="@layout/fragment_home_list"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_user_profile_layout_header" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

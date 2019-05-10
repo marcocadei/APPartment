@@ -11,6 +11,9 @@ public class UserHome {
     private String homeName;
     private String role;
 
+    public UserHome() {
+    }
+
     public UserHome(String homeName, String role) {
         this.homeName = homeName;
         this.role = role;
