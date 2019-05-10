@@ -15,7 +15,7 @@
         <item quantity="other">%d elementi selezionati</item>
     </plurals>
 
-    <string name="form_error_missing_value">Specifica un valore</string>
+    <string name="form_error_missing_value">Specificare un valore</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
     <string name="form_error_wrong_home_username">Combinazione casa-username errata</string>
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
@@ -60,8 +60,8 @@
     <string name="activity_create_home_hint_name">Nome della casa</string>
     <string name="activity_create_home_hint_password">Password della casa</string>
     <string name="activity_create_home_hint_password_repeat">Ripeti password della casa</string>
-    <string name="activity_create_home_text_info">La password della casa è utilizzata per permettere ai nuovi membri di unirsi ad una casa esistente.</string>
-    <string name="activity_create_home_text_title">Crea la tua casa</string>
+    <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
+    <string name="activity_create_home_text_title">Crea una nuova casa</string>
     <string name="activity_create_home_img_title_description">Icona di una casa</string>
     <string name="activity_create_home_progress_title">Creazione</string>
     <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
@@ -143,5 +143,8 @@
     <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
     <string name="activity_main_toolbar_switch">Cambia casa</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
+    <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
+    <string name="activity_create_home_hint_nickname">Nickname</string>
+    <string name="form_error_invalid_character">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
 
 </resources>

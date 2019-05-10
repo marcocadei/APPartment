@@ -170,14 +170,14 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         String separator = getString(R.string.db_separator);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String familiesPath = getString(R.string.db_families) + separator + getString(R.string.db_families_homename, homeName) + separator + getString(R.string.db_families_homename_userid, uid);
-        String userhomesPath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
+        String familyPath = getString(R.string.db_families) + separator + getString(R.string.db_families_homename, homeName) + separator + getString(R.string.db_families_homename_userid, uid);
+        String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
         Member member = new Member(nickname);
-        childUpdates.put(familiesPath, member);
+        childUpdates.put(familyPath, member);
         UserHome userHome = new UserHome(homeName, UserHome.ROLE_SLAVE);
-        childUpdates.put(userhomesPath, userHome);
+        childUpdates.put(userhomePath, userHome);
 
         dbRef.updateChildren(childUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

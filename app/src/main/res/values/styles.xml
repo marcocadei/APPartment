@@ -215,6 +215,7 @@
     <style name="Component.TextView.MultiLine.TextWithDrawableLeft">
         <item name="android:layout_marginTop">@dimen/margin_extra_small</item>
         <item name="android:layout_marginBottom">@dimen/margin_extra_small</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:drawableTint">@color/colorPrimary</item>
         <item name="android:drawablePadding">@dimen/margin_small</item>
