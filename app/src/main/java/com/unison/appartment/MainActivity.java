@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // TODO da rimuovere, solo debug
+        Intent i = getIntent();
+        String s = i.getStringExtra(EXTRA_HOME_NAME);
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
     /**
