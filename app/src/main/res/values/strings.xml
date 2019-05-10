@@ -141,7 +141,7 @@
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_join_home_hint_nickname">Nickname</string>
     <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
-    <string name="activity_main_toolbar_switch">Cambia casa</string>
+    <string name="activity_main_toolbar_switch">Profilo utente</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
     <string name="activity_create_home_hint_nickname">Nickname</string>

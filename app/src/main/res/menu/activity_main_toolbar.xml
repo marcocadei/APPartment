@@ -7,7 +7,7 @@
         app:showAsAction="ifRoom" />
     <item android:id="@+id/activity_main_toolbar_switch"
         android:title="@string/activity_main_toolbar_switch"
-        android:icon="@drawable/ic_loop"
+        android:icon="@drawable/ic_person"
         app:showAsAction="ifRoom" />
     <item android:id="@+id/activity_main_toolbar_logout"
         android:title="@string/activity_main_toolbar_logout"
