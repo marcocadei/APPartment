@@ -10,7 +10,6 @@ public class Home {
     private String name;
     private String password;
     private int conversionFactor;
-    private Map<String, Boolean> members;
 
     public Home(String name, String password) {
         this(name, password, DEFAULT_CONVERSION_FACTOR);
@@ -20,7 +19,6 @@ public class Home {
         this.name = name;
         this.password = password;
         this.conversionFactor = conversionFactor;
-        this.members = new HashMap<>();
     }
 
     public String getName() {
@@ -45,18 +43,6 @@ public class Home {
 
     public void setConversionFactor(int conversionFactor) {
         this.conversionFactor = conversionFactor;
-    }
-
-    public Map<String, Boolean> getMembers() {
-        return members;
-    }
-
-    public void setMembers(Map<String, Boolean> members) {
-        this.members = members;
-    }
-
-    public Boolean addMember(String memberName) {
-        return this.members.put(memberName, true);
     }
 
 }
