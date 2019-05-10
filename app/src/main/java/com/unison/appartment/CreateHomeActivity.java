@@ -226,9 +226,11 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                                 int errorCode = DatabaseError.fromException(e).getCode();
                                 if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
                                     // Regole di sicurezza violate
-                                    // Implica: ??? FIXME
-
-                                    showErrorDialog();
+                                    // Implica: Esiste già una casa con il nome specificato dall'utente
+                                    // (Si può verificare solo se tra la lettura precedente e questa
+                                    // scrittura un altro utente ha registrato una casa con lo stesso nome)
+                                    layoutHomeName.setError(getString(R.string.form_error_home_exists));
+                                    dismissProgress();
                                 }
                                 else {
                                     // Altro errore generico
