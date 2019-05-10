@@ -211,9 +211,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                             }
                             catch (Exception e) {
                                 // Generico
-                                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                dismissProgress();
-                                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                showErrorDialog();
                             }
                             dismissProgress();
                         }
@@ -241,9 +239,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                             catch (Exception e) {
                                 // (DatabaseException se si verifica una violazione delle regole di sicurezza)
                                 // Generico
-                                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                dismissProgress();
-                                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                showErrorDialog();
                             }
                             dismissProgress();
                         }
@@ -255,6 +251,12 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         Intent i = new Intent(this, HomeListActivity.class);
         startActivity(i);
         finish();
+    }
+
+    private void showErrorDialog() {
+        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+        dismissProgress();
+        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
     }
 
     private void dismissProgress() {

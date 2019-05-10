@@ -189,9 +189,7 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                 In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
                 la situazione non può essere risolta dall'utente.
                  */
-                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                dismissProgress();
-                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                showErrorDialog();
             }
         });
     }
@@ -230,22 +228,16 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                                     // Regole di sicurezza violate
                                     // Implica: ??? FIXME
 
-                                    FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                    dismissProgress();
-                                    dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                    showErrorDialog();
                                 }
                                 else {
                                     // Altro errore generico
-                                    FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                    dismissProgress();
-                                    dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                    showErrorDialog();
                                 }
                             }
                             catch (Exception e) {
                                 // Generico
-                                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                dismissProgress();
-                                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                showErrorDialog();
                             }
                             dismissProgress();
                         }
@@ -259,6 +251,12 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
         i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
         startActivity(i);
         finish();
+    }
+
+    private void showErrorDialog() {
+        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+        dismissProgress();
+        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
     }
 
     private void dismissProgress() {

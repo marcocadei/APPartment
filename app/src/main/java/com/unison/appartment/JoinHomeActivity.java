@@ -159,9 +159,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                 In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
                 la situazione non può essere risolta dall'utente.
                  */
-                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                dismissProgress();
-                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                showErrorDialog();
             }
         });
     }
@@ -201,16 +199,12 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                                 }
                                 else {
                                     // Altro errore generico
-                                    FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                    dismissProgress();
-                                    dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                    showErrorDialog();
                                 }
                             }
                             catch (Exception e) {
                                 // Generico
-                                FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                dismissProgress();
-                                dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+                                showErrorDialog();
                             }
                             dismissProgress();
                         }
@@ -224,6 +218,12 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
         startActivity(i);
         finish();
+    }
+
+    private void showErrorDialog() {
+        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+        dismissProgress();
+        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
     }
 
     private void dismissProgress() {
