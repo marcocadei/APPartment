@@ -174,7 +174,7 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                 if (dataSnapshot.exists()) {
                     // Esiste già una casa con il nome specificato dall'utente
                     layoutHomeName.setError(getString(R.string.form_error_home_exists));
-                    progress.dismiss();
+                    dismissProgress();
                 }
                 else {
                     writeNewHomeInDb(homeName, password, nickname);
@@ -190,7 +190,7 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                 la situazione non può essere risolta dall'utente.
                  */
                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                progress.dismiss();
+                dismissProgress();
                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
             }
         });
@@ -218,7 +218,7 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             moveToNextActivity();
-                            progress.dismiss();
+                            dismissProgress();
                         }
                         else {
                             try {
@@ -226,32 +226,28 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                             }
                             catch (DatabaseException e) {
                                 int errorCode = DatabaseError.fromException(e).getCode();
-                                Log.w(getClass().getCanonicalName(), familyPath);
-                                Log.w(getClass().getCanonicalName(), homePath);
-                                Log.w(getClass().getCanonicalName(), userhomePath);
-                                Log.w(getClass().getCanonicalName(), DatabaseError.fromException(e).getDetails());
                                 if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
                                     // Regole di sicurezza violate
                                     // Implica: ??? FIXME
 
                                     FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                    progress.dismiss();
+                                    dismissProgress();
                                     dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                                 }
                                 else {
                                     // Altro errore generico
                                     FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                    progress.dismiss();
+                                    dismissProgress();
                                     dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                                 }
                             }
                             catch (Exception e) {
                                 // Generico
                                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                progress.dismiss();
+                                dismissProgress();
                                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                             }
-                            progress.dismiss();
+                            dismissProgress();
                         }
                     }
                 });
@@ -263,6 +259,12 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
         i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
         startActivity(i);
         finish();
+    }
+
+    private void dismissProgress() {
+        if (progress != null) {
+            progress.dismiss();
+        }
     }
 
     @Override

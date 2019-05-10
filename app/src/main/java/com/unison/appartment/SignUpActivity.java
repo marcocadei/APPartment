@@ -212,10 +212,10 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                             catch (Exception e) {
                                 // Generico
                                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                progress.dismiss();
+                                dismissProgress();
                                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                             }
-                            progress.dismiss();
+                            dismissProgress();
                         }
                     }
                 });
@@ -232,7 +232,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             moveToNextActivity();
-                            progress.dismiss();
+                            dismissProgress();
                         }
                         else {
                             try {
@@ -242,10 +242,10 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                                 // (DatabaseException se si verifica una violazione delle regole di sicurezza)
                                 // Generico
                                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                progress.dismiss();
+                                dismissProgress();
                                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                             }
-                            progress.dismiss();
+                            dismissProgress();
                         }
                     }
                 });
@@ -255,6 +255,12 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         Intent i = new Intent(this, HomeListActivity.class);
         startActivity(i);
         finish();
+    }
+
+    private void dismissProgress() {
+        if (progress != null) {
+            progress.dismiss();
+        }
     }
 
     @Override

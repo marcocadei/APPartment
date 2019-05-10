@@ -134,7 +134,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                     // La casa specificata non esiste (viene comunque mostrato un messaggio d'errore generico)
                     layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
                     layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                    progress.dismiss();
+                    dismissProgress();
                 }
                 else {
                     String homePassword = dataSnapshot.getValue(String.class);
@@ -142,7 +142,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                         // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
                         layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
                         layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                        progress.dismiss();
+                        dismissProgress();
                     }
                     else {
                         // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
@@ -160,7 +160,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                 la situazione non può essere risolta dall'utente.
                  */
                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                progress.dismiss();
+                dismissProgress();
                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
             }
         });
@@ -185,7 +185,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             moveToNextActivity();
-                            progress.dismiss();
+                            dismissProgress();
                         }
                         else {
                             try {
@@ -197,22 +197,22 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                                     // Regole di sicurezza violate
                                     // Implica: L'utente ha specificato una casa di cui è già membro
                                     layoutHomeName.setError(getString(R.string.form_error_home_already_joined));
-                                    progress.dismiss();
+                                    dismissProgress();
                                 }
                                 else {
                                     // Altro errore generico
                                     FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                    progress.dismiss();
+                                    dismissProgress();
                                     dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                                 }
                             }
                             catch (Exception e) {
                                 // Generico
                                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                progress.dismiss();
+                                dismissProgress();
                                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                             }
-                            progress.dismiss();
+                            dismissProgress();
                         }
                     }
                 });
@@ -224,6 +224,12 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
         startActivity(i);
         finish();
+    }
+
+    private void dismissProgress() {
+        if (progress != null) {
+            progress.dismiss();
+        }
     }
 
     @Override

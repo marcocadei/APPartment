@@ -86,7 +86,7 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             moveToNextActivity();
-                            progress.dismiss();
+                            dismissProgress();
                         }
                         else {
                             try {
@@ -103,10 +103,10 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                             catch (Exception e) {
                                 // Generico
                                 FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-                                progress.dismiss();
+                                dismissProgress();
                                 dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
                             }
-                            progress.dismiss();
+                            dismissProgress();
                         }
                     }
                 });
@@ -149,6 +149,12 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
         Intent i = new Intent(SignInActivity.this, HomeListActivity.class);
         startActivity(i);
         finish();
+    }
+
+    private void dismissProgress() {
+        if (progress != null) {
+            progress.dismiss();
+        }
     }
 
     @Override
