@@ -5,5 +5,5 @@
     android:name="com.unison.appartment.FamilyFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FamilyFragment"
+    tools:context=".fragments.FamilyFragment"
     tools:listitem="@layout/fragment_family_member"/>

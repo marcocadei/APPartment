@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MessagesFragment">
+    tools:context=".fragments.MessagesFragment">
 
     <fragment
         android:id="@+id/fragment_messages_fragment_insert_post"
-        android:name="com.unison.appartment.InsertPostFragment"
+        android:name="com.unison.appartment.fragments.InsertPostFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/fragment_messages_fragment_list_post"
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/fragment_messages_fragment_list_post"
-        android:name="com.unison.appartment.PostListFragment"
+        android:name="com.unison.appartment.fragments.PostListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

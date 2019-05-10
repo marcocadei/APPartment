@@ -12,14 +12,14 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
 
+        <!-- Stile degli alert dialogs -->
+        <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
+
+        <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
+
         <!-- Stile dei date pickers -->
         <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialogTheme</item>
     </style>
-
-    <!-- Stile degli alert dialogs -->
-    <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
-
-    <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
 
     <!-- Override dello stile di default dei date pickers e relativi componenti -->
 

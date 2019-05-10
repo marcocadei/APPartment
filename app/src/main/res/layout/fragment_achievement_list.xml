@@ -6,5 +6,5 @@
     android:nestedScrollingEnabled="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AchievementListFragment"
+    tools:context=".fragments.AchievementListFragment"
     tools:listitem="@layout/fragment_achievement" />

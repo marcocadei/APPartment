@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context=".CreateTaskActivity">
+    tools:context=".activities.CreateTaskActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_create_task_appbar"
