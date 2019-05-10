@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context=".FamilyMemberDetailActivity">
+    tools:context=".activities.FamilyMemberDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_family_member_detail_appbar"
@@ -168,7 +168,7 @@
 
             <fragment
                 android:id="@+id/fragment_achievement_list"
-                android:name="com.unison.appartment.AchievementListFragment"
+                android:name="com.unison.appartment.fragments.AchievementListFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/margin_extra_large"

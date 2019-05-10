@@ -6,7 +6,7 @@
     android:id="@+id/fragment_money_reward"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MoneyRewardFragment">
+    tools:context=".fragments.MoneyRewardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginTop="16dp"
@@ -17,7 +17,7 @@
         android:backgroundTint="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MoneyRewardFragment">
+        tools:context=".fragments.MoneyRewardFragment">
 
         <TextView
             android:id="@+id/fragment_money_reward_text_title"

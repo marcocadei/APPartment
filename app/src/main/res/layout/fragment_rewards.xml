@@ -5,11 +5,11 @@
     android:id="@+id/fragment_rewards"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RewardsFragment">
+    tools:context=".fragments.RewardsFragment">
 
     <fragment
         android:id="@+id/fragment_rewards_fragment_money_reward"
-        android:name="com.unison.appartment.MoneyRewardFragment"
+        android:name="com.unison.appartment.fragments.MoneyRewardFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/fragment_rewards_fragment_reward_list"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fragment_rewards_fragment_reward_list"
-        android:name="com.unison.appartment.RewardFragment"
+        android:name="com.unison.appartment.fragments.RewardFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

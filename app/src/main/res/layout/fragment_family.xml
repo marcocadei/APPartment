@@ -5,11 +5,11 @@
     android:id="@+id/fragment_family"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FamilyFragment">
+    tools:context=".fragments.FamilyFragment">
 
     <fragment
         android:id="@+id/fragment_family_member_list"
-        android:name="com.unison.appartment.FamilyMemberListFragment"
+        android:name="com.unison.appartment.fragments.FamilyMemberListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fragment_charts"
-        android:name="com.unison.appartment.ChartsFragment"
+        android:name="com.unison.appartment.fragments.ChartsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
