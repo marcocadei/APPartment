@@ -16,6 +16,11 @@
         <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialogTheme</item>
     </style>
 
+    <!-- Stile degli alert dialogs -->
+    <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
+
+    <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
+
     <!-- Override dello stile di default dei date pickers e relativi componenti -->
 
     <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
@@ -32,6 +37,23 @@
     <style name="CustomDatePickerNegativeButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
         <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="android:layout_marginRight">@dimen/margin_extra_small</item>
+    </style>
+
+    <!-- TODO questa roba darà conflict in fase di merge, assicurarsi di lasciare sia lo stile dei
+        date picker che quello degli alerts -->
+
+    <!-- Override dello stile di default degli alert dialog e relativi componenti -->
+
+    <!-- TODO dovrebbe essere uguale a quello dei date pickers, vedere dopo il merge e in caso refactorare -->
+
+    <style name="CustomAlertDialogTheme" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomAlertPositiveButtonStyle
+        </item>
+    </style>
+
+    <style name="CustomAlertPositiveButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
     </style>
 
     <!-- Layout definiti da noi per i vari componenti -->
@@ -131,8 +153,13 @@
         <item name="android:layout_marginBottom">@dimen/margin_large</item>
     </style>
 
-    <style name="Component.ImageView">
+    <style name="Component.RadioGroupLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_medium</item>
     </style>
+
+    <style name="Component.ImageView"></style>
 
     <style name="Component.ImageView.ListItemIcon">
         <item name="android:layout_width">@dimen/img_medium</item>
@@ -148,8 +175,14 @@
         <item name="android:foregroundGravity">center</item>
     </style>
 
-    <style name="Component.TextView">
+    <style name="Component.ImageView.FancyTitleImage">
+        <item name="android:layout_width">@dimen/img_extra_extra_large</item>
+        <item name="android:layout_height">@dimen/img_extra_extra_large</item>
+        <item name="android:layout_marginStart">@dimen/margin_small</item>
+        <item name="android:tint">@color/colorPrimary</item>
     </style>
+
+    <style name="Component.TextView"></style>
 
     <style name="Component.TextView.SingleLine">
         <item name="android:layout_width">wrap_content</item>
@@ -185,6 +218,15 @@
         <item name="android:layout_width">0dp</item>
     </style>
 
+    <style name="Component.TextView.MultiLine.FancyTitleWithImage">
+        <item name="android:fontFamily">@font/shadows_into_light_two</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="layout_constraintHorizontal_chainStyle">spread_inside</item>
+    </style>
+
     <style name="Component.TextView.MultiLine.ObjectTitle">
         <item name="android:textSize">@dimen/text_title</item>
         <item name="android:gravity">center_vertical</item>
@@ -198,6 +240,15 @@
     <style name="Component.TextView.MultiLine.AttributeValue">
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
         <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="Component.TextView.MultiLine.TextWithDrawableLeft">
+        <item name="android:layout_marginTop">@dimen/margin_extra_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_extra_small</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:drawableTint">@color/colorPrimary</item>
+        <item name="android:drawablePadding">@dimen/margin_small</item>
     </style>
 
     <style name="Component.Button">

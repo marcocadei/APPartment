@@ -10,10 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.unison.appartment.model.Member;
-import com.unison.appartment.model.Reward;
-
-import java.util.Locale;
+import com.unison.appartment.model.User;
 
 public class FamilyMemberDetailActivity extends AppCompatActivity {
 
@@ -29,6 +26,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         Toolbar toolbar;
         toolbar = findViewById(R.id.activity_family_member_detail_toolbar);
         setSupportActionBar(toolbar);
+        // Gestione del click della freccia indietro presente sulla toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,28 +34,19 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
             }
         });
 
-         /*
-        Impostazione del contenuto delle TextView in base al membro per il quale
-        è costruita l'activity.
-         */
-        Intent creationIntent = getIntent();
-        Resources res = getResources();
-        Member member = (Member) creationIntent.getSerializableExtra("member");
+        // Recupero il riferimento agli elementi dell'interfaccia
+//        TextView name = findViewById(R.id.activity_family_member_detail_name);
+//        TextView points = findViewById(R.id.activity_family_member_detail_points_value);
+//        ImageView image = findViewById(R.id.activity_family_member_detail_image);
 
-        TextView textName = findViewById(R.id.activity_family_member_detail_text_name);
-        textName.setText(res.getString(R.string.activity_family_member_detail_text_name, member.getName()));
-
-        TextView textPoints = findViewById(R.id.activity_family_member_detail_text_points_value);
-        textPoints.setText(String.format(Locale.getDefault(), "%d", member.getPoints()));
-
-        /*ImageView image = findViewById(R.id.activity_family_member_detail_img_profile);
-        image.setImage(member.getDescription());*/
-
-        TextView textRole = findViewById(R.id.activity_family_member_detail_text_role_value);
-        textRole.setText(res.getString(R.string.activity_family_member_detail_text_role_value, member.getRole()));
-
-        TextView textGender = findViewById(R.id.activity_family_member_detail_text_gender_value);
-        textGender.setText(res.getString(R.string.activity_family_member_detail_text_gender_value, member.getGender()));
+        Intent i = getIntent();
+        User user = (User) i.getSerializableExtra("user");
+        // Popolo l'interfaccia con i dati del task ricevuto
+        // TODO risistemare con Member e non User
+//        name.setText("paolo");
+//        points.setText("444");
+//        name.setText(user.getName());
+//        points.setText(String.valueOf(user.getPoints()));
+        /*image.setImage(user.getDescription());*/
     }
-
 }

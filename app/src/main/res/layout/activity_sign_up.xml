@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_signup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    tools:context=".SignUpActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Component.Layout.ScrollViewChild">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_signup_layout_title"
+                style="@style/Component.Layout.Header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_signup_input_email"
+                app:layout_constraintVertical_bias="0.5">
+
+                <TextView
+                    android:id="@+id/activity_signup_text_title"
+                    style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
+                    android:text="@string/activity_signup_logo_description"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/activity_signup_img_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/activity_signup_img_title"
+                    style="@style/Component.ImageView.FancyTitleImage"
+                    android:contentDescription="@string/activity_signup_logo_description"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_signup_text_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/activity_signup_text_title"
+                    app:layout_constraintTop_toTopOf="@+id/activity_signup_text_title"
+                    app:srcCompat="@drawable/ic_person_add" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_signup_input_email"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_signup_input_email"
+                app:layout_constraintBottom_toTopOf="@+id/activity_signup_input_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_signup_layout_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signup_input_email_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="textWebEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_signup_input_password"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_signup_input_password"
+                app:layout_constraintBottom_toTopOf="@+id/activity_signup_input_repeat_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signup_input_password_value"
+                    android:inputType="textPassword"
+                    style="@style/CustomFormTextFieldInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_signup_input_repeat_password"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_signup_input_repeat_password"
+                app:layout_constraintBottom_toTopOf="@+id/activity_signup_input_age"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signup_input_repeat_password_value"
+                    android:inputType="textPassword"
+                    style="@style/CustomFormTextFieldInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_signup_input_age"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_signup_input_age"
+                app:layout_constraintBottom_toTopOf="@id/activity_signup_radio_gender"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_repeat_password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signup_input_age_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:id="@+id/activity_signup_radio_gender"
+                style="@style/CustomFormTextFieldLayout"
+                android:checkedButton="@+id/activity_signup_radio_gender_male"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_age">
+
+                <TextView
+                    android:id="@+id/activity_signup_text_radio_gender"
+                    style="@style/Component"
+                    android:text="@string/activity_signup_text_radio_gender" />
+
+                <RadioButton
+                    android:id="@+id/activity_signup_radio_gender_male"
+                    style="@style/Component"
+                    android:text="@string/activity_signup_radio_gender_male" />
+
+                <RadioButton
+                    android:id="@+id/activity_signup_radio_gender_female"
+                    style="@style/Component"
+                    android:text="@string/activity_signup_radio_gender_female" />
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activity_signup_float_finish"
+        style="@style/CustomFloatingActionButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_check" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

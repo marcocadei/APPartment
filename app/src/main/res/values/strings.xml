@@ -1,4 +1,6 @@
 <resources>
+    <!-- Generali -->
+
     <string name="app_name">APPartment</string>
 
     <string name="placeholder_text">Placeholder</string>
@@ -6,52 +8,72 @@
 
     <string name="general_points_name">Punti</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
+    <string name="general_ok_button">OK</string>
+
     <plurals name="general_item_selected">
         <item quantity="one">%d elemento selezionato</item>
         <item quantity="other">%d elementi selezionati</item>
     </plurals>
 
+    <string name="form_error_missing_value">Specificare un valore</string>
+    <string name="form_error_incorrect_password">Password non corretta</string>
+    <string name="form_error_wrong_home_username">Combinazione casa-username errata</string>
+    <string name="form_error_mismatch_password">Le password devono coincidere</string>
+    <string name="form_error_short_password">La password deve contenere almeno %1$d caratteri</string>
+    <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
+    <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
+    <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
+    <string name="form_error_nonexistent_user">Questa email non è associata ad alcun utente</string>
+    <string name="form_error_incorrect_credentials">Credenziali non corrette</string>
+
+    <!-- Legate ad una specifica activity -->
+
     <string name="activity_enter_btn_register">Crea la tua casa</string>
-    <string name="activity_enter_btn_login">Entra nella tua casa</string>
+    <string name="activity_enter_btn_signup">Registrati</string>
+    <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
 
-    <string name="activity_signin_text_title">Entra nella tua casa</string>
+    <string name="activity_signin_text_title">Accedi ad APPartment</string>
     <string name="activity_signin_img_title_description">Simbolo di login</string>
     <string name="activity_signin_hint_housename">Nome della casa</string>
-    <string name="activity_signin_hint_username">Username</string>
+    <string name="activity_signin_hint_email">Email</string>
     <string name="activity_signin_hint_password">Password</string>
+    <string name="activity_signin_progress_title">Accesso</string>
+    <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
 
-    <string name="activity_create_member_logo_description">Aggiungi membro</string>
-    <string name="activity_create_member_input_age">Età</string>
-    <string name="activity_create_member_input_name">Nome</string>
-    <string name="activity_create_member_radio_gender_male">Maschio</string>
-    <string name="activity_create_member_radio_gender_female">Femmina</string>
-    <string name="activity_create_member_radio_role_owner">Creatore</string>
-    <string name="activity_create_member_radio_role_master">Leader</string>
-    <string name="activity_create_member_radio_role_slave">Collaboratore</string>
-    <string name="activity_create_member_text_radio_gender">Genere</string>
-    <string name="activity_create_member_text_radio_role">Ruolo</string>
+    <string name="activity_signup_logo_description">Registrati ad APPartment</string>
+    <string name="activity_signup_input_email">Email</string>
+    <string name="activity_signup_input_username">Username</string>
+    <string name="activity_signup_input_age">Età</string>
+    <string name="activity_signup_input_password">Password</string>
+    <string name="activity_signup_input_repeat_password">Ripeti password</string>
+    <string name="activity_signup_radio_gender_male">Maschio</string>
+    <string name="activity_signup_radio_gender_female">Femmina</string>
+    <string name="activity_signup_radio_role_owner">Creatore</string>
+    <string name="activity_signup_radio_role_master">Leader</string>
+    <string name="activity_signup_radio_role_slave">Collaboratore</string>
+    <string name="activity_signup_text_radio_gender">Genere</string>
+    <string name="activity_signup_text_radio_role">Ruolo</string>
+    <string name="activity_signup_signup_title">Registrazione</string>
+    <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
 
     <string name="activity_create_home_hint_name">Nome della casa</string>
     <string name="activity_create_home_hint_password">Password della casa</string>
     <string name="activity_create_home_hint_password_repeat">Ripeti password della casa</string>
-    <string name="activity_create_home_text_info">La password della casa sarà utilizzata al primo accesso di ogni utente. Dovrà poi essere obbligatoriamente modificata.</string>
-    <string name="activity_create_home_text_title">Crea la tua casa</string>
+    <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
+    <string name="activity_create_home_text_title">Crea una nuova casa</string>
     <string name="activity_create_home_img_title_description">Icona di una casa</string>
+    <string name="activity_create_home_progress_title">Creazione</string>
+    <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
 
     <string name="activity_main_toolbar_settings">Impostazioni</string>
+    <string name="activity_main_toolbar_logout">Logout</string>
 
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
     <string name="activity_main_bottom_navigation_done">Finite</string>
     <string name="activity_main_bottom_navigation_family">Famiglia</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
-
-    <string name="activity_first_access_text_title">Cambia password</string>
-    <string name="activity_first_access_img_title_description">Icona di un lucchetto</string>
-    <string name="activity_first_access_hint_password_repeat">Ripeti password</string>
-    <string name="activity_first_access_hint_password">Nuova password</string>
-    <string name="activity_first_access_text_info">Questo è il tuo primo accesso. Scegli una nuova password per proteggere il tuo account.</string>
 
     <string name="fragment_achievement_img_logo">Logo dell\'achievement</string>
 
@@ -118,5 +140,27 @@
     <string name="activity_task_detail_btn_delete">Elimina attività</string>
     <string name="activity_task_detail_text_description_title">Descrizione</string>
     <string name="activity_task_detail_text_deadline_title">Scadenza</string>
+
+    <string name="activity_join_home_text_title">Unisciti ad una casa</string>
+    <string name="activity_join_home_img_title_description">Icona di una casa</string>
+    <string name="activity_join_home_hint_password">Password della casa</string>
+    <string name="activity_join_home_hint_name">Nome della casa</string>
+    <string name="activity_join_home_progress_check_title">Verifica delle credenziali</string>
+    <string name="activity_join_home_progress_check_description">Verifica delle credenziali in corso…</string>
+
+    <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
+    <string name="title_activity_user_profile">HomeListActivity</string>
+    <string name="activity_user_profile_toolbar_logout">Logout</string>
+    <string name="activity_main_toolbar_edit">Modifica dati utente</string>
+    <string name="activity_user_profile_toolbar_title">Profilo utente</string>
+    <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
+    <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
+    <string name="activity_join_home_hint_nickname">Nickname</string>
+    <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
+    <string name="activity_main_toolbar_switch">Profilo utente</string>
+    <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
+    <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
+    <string name="activity_create_home_hint_nickname">Nickname</string>
+    <string name="form_error_invalid_character">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
 
 </resources>

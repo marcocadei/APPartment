@@ -11,16 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ImageDetailActivity"></activity>
+        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".JoinHomeActivity" />
+        <activity android:name=".ImageDetailActivity" />
         <activity android:name=".RewardDetailActivity" />
         <activity android:name=".CreateRewardActivity" />
         <activity android:name=".FamilyMemberDetailActivity" />
         <activity android:name=".TaskDetailActivity" />
         <activity android:name=".CreateTaskActivity" />
-        <activity android:name=".FirstAccessActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".CreateMemberActivity" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".CreateHomeActivity" />
         <activity android:name=".EnterActivity">
             <intent-filter>

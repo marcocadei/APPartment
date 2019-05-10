@@ -8,20 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.unison.appartment.model.Member;
+import com.unison.appartment.model.User;
 import com.unison.appartment.FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener;
 
 import java.util.List;
 
 public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFamilyMemberRecyclerViewAdapter.ViewHolderMember> {
 
-    private final List<Member> memberList;
+    private final List<User> userList;
     // TODO: implementare listener
 
     private final OnFamilyMemberListFragmentInteractionListener listener;
 
-    public MyFamilyMemberRecyclerViewAdapter(List<Member> memberList, OnFamilyMemberListFragmentInteractionListener listener) {
-        this.memberList = memberList;
+    public MyFamilyMemberRecyclerViewAdapter(List<User> userList, OnFamilyMemberListFragmentInteractionListener listener) {
+        this.userList = userList;
         this.listener = listener;
     }
 
@@ -35,17 +35,19 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
     @Override
     public void onBindViewHolder(final ViewHolderMember holder, int position) {
         ViewHolderMember holderMember = (ViewHolderMember) holder;
-        final Member member = (Member) memberList.get(position);
-        holderMember.textMemberName.setText(member.getName());
-        holderMember.textMemberPoints.setText(String.valueOf(member.getPoints()));
-        holderMember.textMemberRole.setText(String.valueOf(member.getRole()));
+        final User user = (User) userList.get(position);
+        // TODO risistemare con Member e non User
+        holderMember.textMemberName.setText("riccardo");
+        holderMember.textMemberPoints.setText("578");
+//        holderMember.textMemberName.setText(user.getName());
+//        holderMember.textMemberPoints.setText(String.valueOf(user.getPoints()));
 //      holderMember.imageMember.setImageURI(memberItem.getImage());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onFamilyMemberListFragmentOpenMember(member);
+                    listener.onFamilyMemberListFragmentOpenMember(user);
                 }
             }
         });
@@ -53,7 +55,7 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     @Override
     public int getItemCount() {
-        return memberList.size();
+        return userList.size();
     }
 
     public class ViewHolderMember extends RecyclerView.ViewHolder {

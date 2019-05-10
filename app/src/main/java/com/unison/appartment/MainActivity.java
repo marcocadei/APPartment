@@ -6,13 +6,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+
+    public final static String EXTRA_HOME_NAME = "homeName";
 
     // TODO da rimuovere
     public final static String LOGGED_USER = "MARCO";
@@ -48,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // TODO da rimuovere, solo debug
+        Intent i = getIntent();
+        String s = i.getStringExtra(EXTRA_HOME_NAME);
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -130,8 +141,37 @@ public class MainActivity extends AppCompatActivity {
             case R.id.activity_main_toolbar_settings:
                 // Log.d(this.getLocalClassName(), "Premuto ingraggio");
                 return true;
+
+            case R.id.activity_main_toolbar_switch: {
+                Intent i = new Intent(this, UserProfileActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+                return true;
+            }
+
+            case R.id.activity_main_toolbar_logout: {
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(this, EnterActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+                return true;
+            }
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Lascia il backstack inalterato, ma mette tutte le attività in background, esattamente
+     * come se l'utente avesse premuto il bottone home
+     * 2° RISPOSTA SU:
+     * https://stackoverflow.com/questions/8631095/how-to-prevent-going-back-to-the-previous-activity
+     */
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }

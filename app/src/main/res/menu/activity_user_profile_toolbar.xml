@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/activity_user_profile_toolbar_edit"
+        android:title="@string/activity_main_toolbar_edit"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/activity_user_profile_toolbar_logout"
+        android:title="@string/activity_user_profile_toolbar_logout"
+        android:icon="@drawable/rotated_270_ic_file_upload"
+        app:showAsAction="ifRoom" />
+</menu>

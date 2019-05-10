@@ -18,4 +18,7 @@
     <dimen name="img_large">36dp</dimen>
     <dimen name="img_extra_large">72dp</dimen>
     <dimen name="img_extra_extra_large">108dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

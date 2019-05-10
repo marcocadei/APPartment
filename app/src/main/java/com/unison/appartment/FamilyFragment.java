@@ -1,28 +1,22 @@
 package com.unison.appartment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.unison.appartment.model.Member;
+import com.unison.appartment.model.User;
 
 
 /**
  * Fragment che presenta la lista dei membri della famiglia e le relative statistiche
  */
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
-
-    private static final String FROM_FAMILY = "fromFamily";
-    private static final int ADD_MEMBER_REQUEST_CODE = 1;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -47,17 +41,6 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_family, container, false);
 
-        FloatingActionButton floatNewMember = myView.findViewById(R.id.fragment_family_float_new_member);
-        floatNewMember.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), CreateMemberActivity.class);
-                i.putExtra("origin", FROM_FAMILY);
-                startActivityForResult(i, ADD_MEMBER_REQUEST_CODE);
-            }
-
-        });
-
         // TODO: da fare per implementare la cancellazione di un elemento nella lista
         /*Button btnDeleteMember = myView.findViewById(R.id.fragment_family_member_btn_delete_member);
         btnDeleteMember.setOnClickListener(new View.OnClickListener() {
@@ -73,16 +56,6 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_MEMBER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            FamilyMemberListFragment fmlf = (FamilyMemberListFragment) getChildFragmentManager()
-                    .findFragmentById(R.id.fragment_family_member_list);
-            fmlf.addMember((Member) data.getSerializableExtra("newMember"));
-        }
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
@@ -93,9 +66,9 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     }
 
     @Override
-    public void onFamilyMemberListFragmentOpenMember(Member member) {
+    public void onFamilyMemberListFragmentOpenMember(User user) {
         Intent i = new Intent(getActivity(), FamilyMemberDetailActivity.class);
-        i.putExtra("member", member);
+        i.putExtra("user", user);
         startActivity(i);
     }
 }

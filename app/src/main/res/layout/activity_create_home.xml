@@ -13,130 +13,123 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/Component.Layout.ScrollViewChild">
 
-            <TextView
-                android:id="@+id/activity_create_home_text_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:fontFamily="@font/shadows_into_light_two"
-                android:letterSpacing="0"
-                android:text="@string/activity_create_home_text_title"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_title"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_name"
-                app:layout_constraintEnd_toStartOf="@+id/activity_create_home_img_title"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/activity_create_home_input_password"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_create_home_layout_title"
+                style="@style/Component.Layout.Header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_homename"
+                app:layout_constraintVertical_bias="0.5">
 
-            <ImageView
-                android:id="@+id/activity_create_home_img_title"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/activity_create_home_img_title_description"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/activity_create_home_text_title"
-                app:layout_constraintEnd_toEndOf="@+id/activity_create_home_input_password"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/activity_create_home_text_title"
-                app:layout_constraintTop_toTopOf="@+id/activity_create_home_text_title"
-                app:srcCompat="@drawable/ic_home" />
+                <TextView
+                    android:id="@+id/activity_create_home_text_title"
+                    style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
+                    android:text="@string/activity_create_home_text_title"
+                    app:layout_constraintEnd_toStartOf="@+id/activity_create_home_img_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/activity_create_home_img_title"
+                    style="@style/Component.ImageView.FancyTitleImage"
+                    android:contentDescription="@string/activity_create_home_img_title_description"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_create_home_text_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/activity_create_home_text_title"
+                    app:layout_constraintTop_toTopOf="@+id/activity_create_home_text_title"
+                    app:srcCompat="@drawable/ic_home" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_create_home_input_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:id="@+id/activity_create_home_input_homename"
+                style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_create_home_hint_name"
-                android:textColorHint="@color/colorPrimaryLight"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_password"
                 app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_password"
                 app:layout_constraintStart_toStartOf="@id/activity_create_home_input_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_text_title">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_layout_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/text_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences|textFilter"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:id="@+id/activity_create_home_input_homename_value"
+                    style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_create_home_hint_password"
-                android:textColorHint="@color/colorPrimaryLight"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_name">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_homename">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/text_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:id="@+id/activity_create_home_input_password_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_repeat_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/activity_create_home_hint_password_repeat"
-                android:textColorHint="@color/colorPrimaryLight"
-                app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_info"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_password">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textSize="@dimen/text_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:id="@+id/activity_create_home_input_repeat_password_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_home_input_nickname"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/activity_create_home_hint_nickname"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_password_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_repeat_password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_home_input_repeat_nickname_value"
+                    style="@style/CustomFormTextFieldInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Nota: Il drawableStart è creato appositamente già colorato poiché su alcuni
+             dispositivi anche definendo l'attributo android:Tint l'immagine non viene ricolorata. -->
             <TextView
-                android:id="@+id/activity_create_home_text_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:drawableStart="@drawable/ic_info_outline"
-                android:drawableTint="@color/colorPrimary"
-                android:text="@string/activity_create_home_text_info"
-                android:textSize="@dimen/text_small"
+                android:id="@+id/activity_create_home_text_password_info"
+                style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
+                android:drawableStart="@drawable/ic_info_outline_color6a1b9a"
+                android:text="@string/activity_create_home_text_password_info"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_role_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_create_home_input_nickname" />
+
+            <!-- Nota: Il drawableStart è creato appositamente già colorato poiché su alcuni
+             dispositivi anche definendo l'attributo android:Tint l'immagine non viene ricolorata. -->
+            <TextView
+                android:id="@+id/activity_create_home_text_role_info"
+                style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
+                android:drawableStart="@drawable/ic_info_outline_color6a1b9a"
+                android:text="@string/activity_create_home_text_role_info"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
-                app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_repeat_password" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_create_home_text_password_info" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -144,12 +137,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/activity_create_home_float_next"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        style="@style/CustomFloatingActionButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_arrow_forward" />
