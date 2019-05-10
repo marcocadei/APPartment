@@ -62,8 +62,8 @@ public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         public ViewHolderTask(View view) {
             super(view);
             mView = view;
-            taskName = view.findViewById(R.id.fragment_todo_task_name);
-            taskDescription = view.findViewById(R.id.fragment_todo_task_description);
+            taskName = view.findViewById(R.id.fragment_todo_text_task_name);
+            taskDescription = view.findViewById(R.id.fragment_todo_text_task_description);
             taskPoints = view.findViewById(R.id.fragment_todo_task_points_value);
         }
 

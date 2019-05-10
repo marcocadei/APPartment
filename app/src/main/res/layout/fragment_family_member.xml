@@ -2,69 +2,73 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_family_member"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    style="@style/Component.Layout.ListItem">
 
     <ImageView
-        android:id="@+id/fragment_family_member_image_member"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_family_member_btn_delete_member"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_family_member_text_member_name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        android:id="@+id/fragment_family_member_img_member"
+        style="@style/Component.ImageView.ListItemIcon"
+        android:contentDescription="@string/fragment_family_member_img_person"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_family_member_btn_delete_member"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_family_member_layout_name"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_person" />
 
-    <TextView
-        android:id="@+id/fragment_family_member_text_member_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_family_member_layout_name"
+        app:layout_constraintStart_toEndOf="@id/fragment_family_member_img_member"
+        app:layout_constraintEnd_toStartOf="@id/fragment_family_member_layout_points"
+        app:layout_constraintTop_toTopOf="@id/fragment_family_member_layout_points"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_family_member_layout_points"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_family_member_btn_delete_member"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_family_member_points_label"
-        app:layout_constraintStart_toEndOf="@+id/fragment_family_member_image_member"
-        app:layout_constraintTop_toTopOf="@+id/fragment_family_member_btn_delete_member" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/fragment_family_member_points_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/general_points_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_family_member_btn_delete_member"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_family_member_points_value"
-        app:layout_constraintStart_toEndOf="@+id/fragment_family_member_text_member_name"
-        app:layout_constraintTop_toTopOf="@+id/fragment_family_member_btn_delete_member" />
+        <TextView
+            android:id="@+id/fragment_family_member_text_name"
+            android:text="@string/placeholder_text_long"
+            style="@style/Component.TextView.SingleLine.ListItemTitle"
+            app:layout_constraintBottom_toTopOf="@id/fragment_family_member_text_role"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/fragment_family_member_points_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintStart_toEndOf="@id/fragment_family_member_points_label"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_family_member_btn_delete_member"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_family_member_btn_delete_member"
-        app:layout_constraintTop_toTopOf="@+id/fragment_family_member_btn_delete_member" />
+        <TextView
+            android:id="@+id/fragment_family_member_text_role"
+            android:text="@string/placeholder_text_long"
+            style="@style/Component.TextView.SingleLine.ListItemDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_family_member_text_name" />
 
-    <ImageButton
-        android:id="@+id/fragment_family_member_btn_delete_member"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_family_member_layout_points"
+        style="@style/Component.Layout.Points"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/fragment_family_member_points_value"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_delete" />
+        app:layout_constraintStart_toEndOf="@id/fragment_family_member_layout_name"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/fragment_family_member_text_points_value"
+            style="@style/Component.TextView.SingleLine.PointsValue"
+            android:text="200"
+            app:layout_constraintBottom_toTopOf="@id/fragment_family_member_text_points_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_family_member_text_points_name"
+            style="@style/Component.TextView.SingleLine.PointsName"
+            android:text="@string/general_points_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/fragment_family_member_text_points_value"
+            app:layout_constraintStart_toStartOf="@id/fragment_family_member_text_points_value"
+            app:layout_constraintTop_toBottomOf="@id/fragment_family_member_text_points_value" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

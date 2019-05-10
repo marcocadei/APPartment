@@ -12,22 +12,31 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
 
-        <!-- TODO questa roba darà conflict in fase di merge, assicurarsi di lasciare sia lo stile dei
-        date picker che quello degli alerts -->
-
-        <!-- Stile degli alert dialogs -->
-        <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
-
-        <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
-    </style>
-    <!--- Tema definito per cambiare colore del date picker -->
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
+        <!-- Stile dei date pickers -->
+        <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialogTheme</item>
     </style>
 
-    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
-        <item name="android:datePickerMode">spinner</item>
+    <!-- Stile degli alert dialogs -->
+    <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
+
+    <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
+
+    <!-- Override dello stile di default dei date pickers e relativi componenti -->
+
+    <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomDatePickerPositiveButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/CustomDatePickerNegativeButtonStyle</item>
+    </style>
+
+    <style name="CustomDatePickerPositiveButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:layout_marginLeft">@dimen/margin_extra_small</item>
+    </style>
+
+    <style name="CustomDatePickerNegativeButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:layout_marginRight">@dimen/margin_extra_small</item>
     </style>
 
     <!-- TODO questa roba darà conflict in fase di merge, assicurarsi di lasciare sia lo stile dei
@@ -54,13 +63,28 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Component.Layout"></style>
+    <style name="Component.Layout">
+    </style>
 
     <style name="Component.Layout.ScrollViewChild">
         <item name="android:paddingTop">@dimen/margin_large</item>
         <item name="android:paddingBottom">@dimen/margin_large</item>
         <item name="android:layout_marginStart">@dimen/margin_large</item>
         <item name="android:layout_marginEnd">@dimen/margin_large</item>
+    </style>
+
+    <style name="Component.Layout.NestedScrollViewChild">
+        <item name="android:paddingTop">@dimen/margin_large</item>
+        <item name="android:paddingBottom">@dimen/margin_large</item>
+    </style>
+
+    <style name="Component.Layout.NestedScrollViewFixedElement">
+        <item name="android:layout_marginStart">@dimen/margin_large</item>
+        <item name="android:layout_marginEnd">@dimen/margin_large</item>
+    </style>
+
+    <style name="Component.Layout.NestedScrollViewListElement">
+
     </style>
 
     <style name="Component.Layout.Header">
@@ -145,6 +169,12 @@
         <item name="android:tint">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="Component.ImageView.ProfileImage">
+        <item name="android:layout_width">@dimen/img_extra_extra_large</item>
+        <item name="android:layout_height">@dimen/img_extra_extra_large</item>
+        <item name="android:foregroundGravity">center</item>
+    </style>
+
     <style name="Component.ImageView.FancyTitleImage">
         <item name="android:layout_width">@dimen/img_extra_extra_large</item>
         <item name="android:layout_height">@dimen/img_extra_extra_large</item>
@@ -225,14 +255,5 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
