@@ -133,12 +133,12 @@
     <string name="activity_join_home_progress_check_description">Verifica delle credenziali in corso…</string>
 
     <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
-    <string name="title_activity_home_list">HomeListActivity</string>
-    <string name="activity_home_list_toolbar_logout">Logout</string>
+    <string name="title_activity_user_profile">HomeListActivity</string>
+    <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_main_toolbar_edit">Modifica dati utente</string>
-    <string name="activity_home_list_toolbar_title">Profilo utente</string>
-    <string name="activity_home_list_btn_join">Unisciti ad una casa</string>
-    <string name="activity_home_list_btn_create">Crea una nuova casa</string>
+    <string name="activity_user_profile_toolbar_title">Profilo utente</string>
+    <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
+    <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_join_home_hint_nickname">Nickname</string>
     <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
     <string name="activity_main_toolbar_switch">Cambia casa</string>

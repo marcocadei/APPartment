@@ -13,33 +13,33 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.unison.appartment.model.UserHome;
 
-public class HomeListActivity extends AppCompatActivity implements HomeFragment.OnHomeListFragmentInteractionListener {
+public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
 
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_list);
+        setContentView(R.layout.activity_user_profile);
 
         // Supporto per la toolbar
-        toolbar = findViewById(R.id.activity_home_list_toolbar);
+        toolbar = findViewById(R.id.activity_user_profile_toolbar);
         setSupportActionBar(toolbar);
 
-        MaterialButton btnJoin = findViewById(R.id.activity_home_list_btn_join);
+        MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeListActivity.this, JoinHomeActivity.class);
+                Intent i = new Intent(UserProfileActivity.this, JoinHomeActivity.class);
                 startActivity(i);
             }
         });
 
-        MaterialButton btnCreate = findViewById(R.id.activity_home_list_btn_create);
+        MaterialButton btnCreate = findViewById(R.id.activity_user_profile_btn_create);
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeListActivity.this, CreateHomeActivity.class);
+                Intent i = new Intent(UserProfileActivity.this, CreateHomeActivity.class);
                 startActivity(i);
             }
         });
@@ -47,7 +47,7 @@ public class HomeListActivity extends AppCompatActivity implements HomeFragment.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_home_list_toolbar, menu);
+        getMenuInflater().inflate(R.menu.activity_user_profile_toolbar, menu);
         return true;
     }
 
@@ -55,7 +55,7 @@ public class HomeListActivity extends AppCompatActivity implements HomeFragment.
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO da implementare, ora solo logout per poter fare il logout
         switch (item.getItemId()) {
-            case R.id.activity_home_list_toolbar_logout:
+            case R.id.activity_user_profile_toolbar_logout:
                 FirebaseAuth.getInstance().signOut();
                 Intent i = new Intent(this, EnterActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

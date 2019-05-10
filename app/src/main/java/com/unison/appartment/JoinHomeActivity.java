@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -234,7 +232,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
 
     @Override
     public void onDialogFragmentDismiss() {
-        Intent i = new Intent(this, HomeListActivity.class);
+        Intent i = new Intent(this, UserProfileActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();

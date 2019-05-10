@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.activity_main_toolbar_switch: {
-                Intent i = new Intent(this, HomeListActivity.class);
+                Intent i = new Intent(this, UserProfileActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();

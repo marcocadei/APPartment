@@ -248,7 +248,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
     }
 
     private void moveToNextActivity() {
-        Intent i = new Intent(this, HomeListActivity.class);
+        Intent i = new Intent(this, UserProfileActivity.class);
         startActivity(i);
         finish();
     }

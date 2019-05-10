@@ -7,20 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.unison.appartment.HomeFragment.OnHomeListFragmentInteractionListener;
+import com.unison.appartment.HomeListFragment.OnHomeListFragmentInteractionListener;
 import com.unison.appartment.model.UserHome;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link HomeFragment.OnHomeListFragmentInteractionListener}.
+ * specified {@link HomeListFragment.OnHomeListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeRecyclerViewAdapter.ViewHolderHome> {
 
     private final List<UserHome> homesList;
-    private final HomeFragment.OnHomeListFragmentInteractionListener mListener;
+    private final HomeListFragment.OnHomeListFragmentInteractionListener mListener;
 
     public MyHomeRecyclerViewAdapter(List<UserHome> items, OnHomeListFragmentInteractionListener listener) {
         homesList = items;

@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeListActivity"></activity>
+        <activity android:name=".UserProfileActivity"></activity>
         <activity android:name=".JoinHomeActivity" />
         <activity android:name=".ImageDetailActivity" />
         <activity android:name=".RewardDetailActivity" />

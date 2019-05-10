@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnHomeListFragmentInteractionListener}
  * interface.
  */
-public class HomeFragment extends Fragment {
+public class HomeListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -38,13 +38,13 @@ public class HomeFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public HomeFragment() {
+    public HomeListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static HomeFragment newInstance(int columnCount) {
-        HomeFragment fragment = new HomeFragment();
+    public static HomeListFragment newInstance(int columnCount) {
+        HomeListFragment fragment = new HomeListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);

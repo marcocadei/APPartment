@@ -36,8 +36,8 @@ public class EnterActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            // C'è già un utente loggato: vado direttamente alla HomeListActivity
-            Intent i = new Intent(EnterActivity.this, HomeListActivity.class);
+            // C'è già un utente loggato: vado direttamente alla UserProfileActivity
+            Intent i = new Intent(EnterActivity.this, UserProfileActivity.class);
             startActivity(i);
             finish();
         }
