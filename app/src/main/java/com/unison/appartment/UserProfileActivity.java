@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,5 +87,11 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra(MainActivity.EXTRA_HOME_NAME, item.getHomeName());
         startActivity(i);
+    }
+
+    @Override
+    public void onHomeListElementsLoaded() {
+        ProgressBar progressBar = findViewById(R.id.activity_user_profile_progress);
+        progressBar.setVisibility(View.GONE);
     }
 }

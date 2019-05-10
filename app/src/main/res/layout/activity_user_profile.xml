@@ -25,10 +25,21 @@
             app:menu="@menu/activity_user_profile_toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/activity_user_profile_progress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_appbar"
+        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_scroll"
+        android:indeterminate="true"
+        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ScrollView
         android:id="@+id/activity_user_profile_scroll"
         style="@style/Component.ScrollView"
-        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_appbar"
+        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_progress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/activity_user_profile_layout_buttons">

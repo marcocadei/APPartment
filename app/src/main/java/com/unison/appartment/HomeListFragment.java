@@ -123,23 +123,19 @@ public class HomeListFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Log.w(getClass().getCanonicalName(), "ciclo for");
-                    userHomes.add(0, postSnapshot.getValue(UserHome.class));
-                    myAdapter.notifyItemInserted(0);
+                    userHomes.add(postSnapshot.getValue(UserHome.class));
+                    myAdapter.notifyDataSetChanged();
+                    // FIXME vedere se si può fare l'animazione
+                    mListener.onHomeListElementsLoaded();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                showErrorDialog();
-                Log.w(getClass().getCanonicalName(), "errato");
+                mListener.onHomeListElementsLoaded();
+                // TODO visualizzare snackbar che comunica l'errore con tasto per fare il reload
             }
         });
-    }
-
-    private void showErrorDialog() {
-        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-        dialog.show(getFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
     }
 
     /**
@@ -155,5 +151,6 @@ public class HomeListFragment extends Fragment {
     public interface OnHomeListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onHomeListFragmentInteraction(UserHome item);
+        void onHomeListElementsLoaded();
     }
 }
