@@ -1,5 +1,8 @@
 package com.unison.appartment.model;
 
+/**
+ * Classe che rappresenta il membro di una casa
+ */
 public class Member {
 
     private final static int DEFAULT_POINTS = 0;
