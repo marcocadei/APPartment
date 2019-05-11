@@ -29,6 +29,9 @@ import com.unison.appartment.model.UserHome;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe che rappresenta l'Activity per unirsi ad una nuova casa
+ */
 public class JoinHomeActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     EditText inputHomeName;
@@ -71,6 +74,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
             }
         });
 
+        // Gestione click sul bottone per effettuare l'unione
         FloatingActionButton floatNext = findViewById(R.id.activity_join_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,11 +87,22 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         });
     }
 
+    /**
+     * Metodo per togliere il messaggio d'errore su un campo di input
+     *
+     * @param inputLayout Il campo di input da cui togliere il messaggio d'errore
+     */
     private void resetErrorMessage(TextInputLayout inputLayout) {
         inputLayout.setError(null);
         inputLayout.setErrorEnabled(false);
     }
 
+    /**
+     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
+     * controlli lato client
+     *
+     * @return True se i controlli sono superati, false altrimenti
+     */
     private boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
@@ -118,6 +133,15 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         return result;
     }
 
+
+    /**
+     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
+     * controlli lato server
+     *
+     * @param homeName Il nome della casa che si vuole joinare
+     * @param password La password della casa che si vuole joinare
+     * @param nickname Il nickname dello User all'interno della casa che si vuole joinare
+     */
     private void checkHomeCredentials(final String homeName, final String password, final String nickname) {
         progress = ProgressDialog.show(
                 this,
@@ -165,6 +189,13 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         });
     }
 
+    /**
+     * Metodo per effettuare la scrittura in Firebase Database del nuovo ingresso dello User nella Home
+     *
+     * @param homeName Il nome della casa che si vuole joinare
+     * @param password La password della casa che si vuole joinare
+     * @param nickname Il nickname dello User all'interno della casa che si vuole joinare
+     */
     private void writeInDb(final String homeName, final String password, final String nickname) {
         String separator = getString(R.string.db_separator);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
@@ -213,6 +244,9 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                 });
     }
 
+    /**
+     * Metodo per passare all'activity successiva (MainActivity della casa joinata)
+     */
     private void moveToNextActivity() {
         Intent i = new Intent(JoinHomeActivity.this, MainActivity.class);
         // Passo il nome della casa all'activity successiva
@@ -221,12 +255,18 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         finish();
     }
 
+    /**
+     * Metodo per mostrare una dialog con l'errore di Firebase
+     */
     private void showErrorDialog() {
         FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
         dismissProgress();
         dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
     }
 
+    /**
+     * Metodo per non mostrare più la progress dialog
+     */
     private void dismissProgress() {
         if (progress != null) {
             progress.dismiss();

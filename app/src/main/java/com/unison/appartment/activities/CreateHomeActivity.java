@@ -94,7 +94,6 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(CreateHomeActivity.this);
                 if (checkInput()) {
-                    // Se i controlli locali vanno a buon fine controllo che la casa esista
                     checkHouseExists(inputHomeName.getText().toString(), inputPassword.getText().toString(), inputNickname.getText().toString());
                 }
             }
@@ -175,7 +174,7 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
 
     /**
      * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
-     * controlli lato client
+     * controlli lato server, cioè che la casa non sia già presente
      *
      * @param homeName Il nome della casa che si vuole creare
      * @param password La password della casa che si vuole creare
