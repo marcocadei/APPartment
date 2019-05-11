@@ -27,10 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnHomeListFragmentInteractionListener}
- * interface.
+ * Fragment che rappresenta una lista di UserHome
+ * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnHomeListFragmentInteractionListener}
  */
 public class HomeListFragment extends Fragment {
 
@@ -47,8 +45,7 @@ public class HomeListFragment extends Fragment {
     private OnHomeListFragmentInteractionListener mListener;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Costruttore vuoto obbligatorio
      */
     public HomeListFragment() {
     }
@@ -116,6 +113,9 @@ public class HomeListFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Metodo per leggere da Firebase Database la lista di UserHome
+     */
     private void readUserHomes() {
         String separator = getString(R.string.db_separator);
         String path = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, FirebaseAuth.getInstance().getCurrentUser().getUid());

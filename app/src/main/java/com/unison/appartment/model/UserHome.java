@@ -1,7 +1,7 @@
 package com.unison.appartment.model;
 
 /**
- * Classe che rappresenta un utente all'interno di una casa
+ * Classe che rappresenta la relazione tra un utente e una casa a cui appartiene
  */
 public class UserHome {
 

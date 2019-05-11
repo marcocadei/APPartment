@@ -17,6 +17,10 @@ import com.unison.appartment.fragments.HomeListFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
 
+/**
+ * Classe che rappresenta l'Activity per visualizzare il profilo dell'utente e la lista di case
+ * in cui lo stesso è presente
+ */
 public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
 
     private Toolbar toolbar;
@@ -62,7 +66,7 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO da implementare, ora solo logout per poter fare il logout
+        // TODO ora è implementato soltanto il logout
         switch (item.getItemId()) {
             case R.id.activity_user_profile_toolbar_logout:
                 FirebaseAuth.getInstance().signOut();
@@ -87,6 +91,14 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         moveTaskToBack(true);
     }
 
+    // Questa Activity contiene il fragment HomeListFragment, quindi ne implementa i metodi del listener
+
+    /**
+     * Metodo che interviene al click dell'utente su una delle case della lista: l'utente deve
+     * essere rediretto alla Main Activity della casa selezionata
+     *
+     * @param item L'oggetto UserHome rappresentante la relazione tra lo User e la casa selezionata
+     */
     @Override
     public void onHomeListFragmentInteraction(UserHome item) {
         // TODO andare alla main activity della casa selezionata
@@ -97,6 +109,12 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         startActivity(i);
     }
 
+    /**
+     * Metodo che interviene al caricamento della lista di case: la progress bar deve scomparire e se
+     * non c'è alcuna casa nella lista deve apparire un apposito messaggio
+     *
+     * @param elements Il numero di elementi nella lista
+     */
     @Override
     public void onHomeListElementsLoaded(long elements) {
         // Sia che l'utente abbia delle case o meno, una volta fatta la lettura la
@@ -104,7 +122,7 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         ProgressBar progressBar = findViewById(R.id.activity_user_profile_progress);
         progressBar.setVisibility(View.GONE);
 
-        // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
+        // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
         if (elements == 0) {
             emptyHomeListTitle.setVisibility(View.VISIBLE);
             emptyHomeListText.setVisibility(View.VISIBLE);
