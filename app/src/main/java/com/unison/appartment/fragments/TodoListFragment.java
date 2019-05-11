@@ -109,9 +109,7 @@ public class TodoListFragment extends Fragment {
         taskLiveData.observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                for (Task task : tasks) {
-                    addTask(task);
-                }
+                ((MyTodoListRecyclerViewAdapter)myAdapter).setTasks(tasks);
             }
         });
     }

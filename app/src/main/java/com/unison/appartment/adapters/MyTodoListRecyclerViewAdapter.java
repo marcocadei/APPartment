@@ -16,12 +16,17 @@ import java.util.List;
 
 public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<Task> tasks;
+    private List<Task> tasks;
     private final OnTodoListFragmentInteractionListener listener;
 
     public MyTodoListRecyclerViewAdapter(List<Task> tasks, OnTodoListFragmentInteractionListener listener) {
         this.tasks = tasks;
         this.listener = listener;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+        this.notifyDataSetChanged();
     }
 
     @Override
