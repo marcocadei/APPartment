@@ -1,7 +1,8 @@
 package com.unison.appartment.model;
 
-import java.util.Map;
-
+/**
+ * Classe che rappresenta un utente all'interno di una casa
+ */
 public class UserHome {
 
     public final static String ROLE_OWNER = "Proprietario";
