@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe astratta che rappresenta un post della bacheca
+ * Un post può essere del testo, un'immagine o un audio
+ */
 public abstract class Post {
     public static final int TEXT_POST = 0;
     public static final int IMAGE_POST = 1;
