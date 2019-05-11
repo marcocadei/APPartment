@@ -106,11 +106,21 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         });
     }
 
+    /**
+     * Metodo per togliere il messaggio d'errore su un campo di input
+     *
+     * @param inputLayout Il campo di input da cui togliere il messaggio d'errore
+     */
     private void resetErrorMessage(TextInputLayout inputLayout) {
         inputLayout.setError(null);
         inputLayout.setErrorEnabled(false);
     }
 
+    /**
+     * Metodo per creare un nuovo User a partire dai dati specificati in input
+     *
+     * @return Lo User che si vuole registrare all'applicazione
+     */
     private User createUser() {
         // Recupero i valori dei campi della form
         String email = inputEmail.getText().toString();
@@ -122,6 +132,12 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         return new User(email, password, age, gender);
     }
 
+    /**
+     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
+     * controlli lato client
+     *
+     * @return True se i controlli sono superati, false altrimenti
+     */
     private boolean checkInput() {
         resetErrorMessage(layoutEmail);
         resetErrorMessage(layoutPassword);
@@ -139,8 +155,8 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
 
         // Controllo che la mail inserita sia valida
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailValue).matches()) {
-                layoutEmail.setError(getString(R.string.form_error_incorrect_email));
-                result = false;
+            layoutEmail.setError(getString(R.string.form_error_incorrect_email));
+            result = false;
         }
 
         // Controllo che le due password inserite coincidano
@@ -181,6 +197,11 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         return result;
     }
 
+    /**
+     * Metodo per creare un nuovo User in Firebase Auth, con la verifica dei controlli lato server
+     *
+     * @param newUser Lo User da creare in Firebase Auth
+     */
     private void writeAuthInfo(final User newUser) {
         progress = ProgressDialog.show(
                 this,
@@ -195,24 +216,19 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             writeUserInDb(newUser);
-                        }
-                        else {
+                        } else {
                             try {
                                 throw task.getException();
-                            }
-                            catch (FirebaseAuthUserCollisionException e) {
+                            } catch (FirebaseAuthUserCollisionException e) {
                                 // Email già in uso
                                 layoutEmail.setError(getString(R.string.form_error_duplicate_email));
-                            }
-                            catch (FirebaseAuthWeakPasswordException e) {
+                            } catch (FirebaseAuthWeakPasswordException e) {
                                 // Password non abbastanza robusta
 
-                            }
-                            catch (FirebaseAuthInvalidCredentialsException e) {
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
                                 // Email malformata
 
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 // Generico
                                 showErrorDialog();
                             }
@@ -222,6 +238,11 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                 });
     }
 
+    /**
+     * Metodo per effettuare la scrittura in Firebase Database di un nuovo User
+     *
+     * @param newUser Il nuovo User che si vuole scrivere in Firebase Database
+     */
     private void writeUserInDb(final User newUser) {
         // Scrittura dei dati relativi al nuovo utente nel database
         String separator = getString(R.string.db_separator);
@@ -234,12 +255,10 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                         if (task.isSuccessful()) {
                             moveToNextActivity();
                             dismissProgress();
-                        }
-                        else {
+                        } else {
                             try {
                                 throw task.getException();
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 // (DatabaseException se si verifica una violazione delle regole di sicurezza)
                                 // Generico
                                 showErrorDialog();
@@ -250,18 +269,27 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                 });
     }
 
+    /**
+     * Metodo per passare all'activity successiva (UserProfileActivity)
+     */
     private void moveToNextActivity() {
         Intent i = new Intent(this, UserProfileActivity.class);
         startActivity(i);
         finish();
     }
 
+    /**
+     * Metodo per mostrare una dialog con l'errore di Firebase
+     */
     private void showErrorDialog() {
         FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
         dismissProgress();
         dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
     }
 
+    /**
+     * Metodo per non mostrare più la progress dialog
+     */
     private void dismissProgress() {
         if (progress != null) {
             progress.dismiss();
