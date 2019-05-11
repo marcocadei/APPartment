@@ -27,6 +27,9 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
 
+/**
+ * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione
+ */
 public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     private static final int MIN_USER_PASSWORD_LENGTH = 6;

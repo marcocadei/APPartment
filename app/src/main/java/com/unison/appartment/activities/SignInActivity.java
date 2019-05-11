@@ -21,6 +21,9 @@ import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 
+/**
+ * Classe che rappresenta l'Activity per effettuare l'accesso all'applicazione
+ */
 public class SignInActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     EditText inputEmail;
@@ -59,6 +62,7 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
             }
         });
 
+        // Gestione click sul bottone per effettuare l'accesso
         FloatingActionButton floatNext = findViewById(R.id.activity_signin_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +75,22 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
         });
     }
 
+    /**
+     * Metodo per togliere il messaggio d'errore su un campo di input
+     *
+     * @param inputLayout Il campo di input da cui togliere il messaggio d'errore
+     */
     private void resetErrorMessage(TextInputLayout inputLayout) {
         inputLayout.setError(null);
         inputLayout.setErrorEnabled(false);
     }
 
+    /**
+     * Metodo per effettuare l'accesso di uno User all'applicazione, con la verifica dei controlli lato server
+     *
+     * @param email L'email dello User che vuole accedere
+     * @param password La password dello User che vuole accedere
+     */
     private void performSignIn(String email, final String password) {
         progress = ProgressDialog.show(
                 this,
@@ -113,6 +128,12 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
                 });
     }
 
+    /**
+     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
+     * controlli lato client
+     *
+     * @return True se i controlli sono superati, false altrimenti
+     */
     private boolean checkInput() {
         resetErrorMessage(layoutEmail);
         resetErrorMessage(layoutPassword);
@@ -146,18 +167,27 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
         return result;
     }
 
+    /**
+     * Metodo per passare all'activity successiva (UserProfileActivity)
+     */
     private void moveToNextActivity() {
         Intent i = new Intent(SignInActivity.this, UserProfileActivity.class);
         startActivity(i);
         finish();
     }
 
+    /**
+     * Metodo per mostrare una dialog con l'errore di Firebase
+     */
     private void showErrorDialog() {
         FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
         dismissProgress();
         dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
     }
 
+    /**
+     * Metodo per non mostrare più la progress dialog
+     */
     private void dismissProgress() {
         if (progress != null) {
             progress.dismiss();
