@@ -16,6 +16,9 @@ import com.bumptech.glide.request.target.Target;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.unison.appartment.R;
 
+/**
+ * Classe che rappresenta l'Activity con il dettaglio dell'immagine
+ */
 public class ImageDetailActivity extends AppCompatActivity {
 
     @Override
@@ -26,7 +29,7 @@ public class ImageDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         Uri imageUri = Uri.parse(i.getStringExtra("imageUri"));
 
-        // Aspetto che l'immagine sia caricata prima di avviare l'animazione
+        // Prima di avviare l'animazione si attende che l'immagine venga caricata
         PhotoView image = findViewById(R.id.activity_image_detail_img);
         supportPostponeEnterTransition();
         Glide
