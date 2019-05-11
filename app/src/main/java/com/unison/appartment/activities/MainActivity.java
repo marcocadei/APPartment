@@ -58,11 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        // TODO da rimuovere, solo debug
-        Intent i = getIntent();
-        String s = i.getStringExtra(EXTRA_HOME_NAME);
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
     /**
