@@ -25,6 +25,8 @@
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
     <string name="form_error_nonexistent_user">Questa email non è associata ad alcun utente</string>
     <string name="form_error_incorrect_credentials">Credenziali non corrette</string>
+    <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
+    <string name="form_error_invalid_character">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
 
     <!-- Legate ad una specifica activity -->
 
@@ -65,9 +67,13 @@
     <string name="activity_create_home_img_title_description">Icona di una casa</string>
     <string name="activity_create_home_progress_title">Creazione</string>
     <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
+    <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
+    <string name="activity_create_home_hint_nickname">Nickname</string>
 
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_logout">Logout</string>
+    <string name="activity_main_toolbar_edit">Modifica dati utente</string>
+    <string name="activity_main_toolbar_switch">Profilo utente</string>
 
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
@@ -147,20 +153,16 @@
     <string name="activity_join_home_hint_name">Nome della casa</string>
     <string name="activity_join_home_progress_check_title">Verifica delle credenziali</string>
     <string name="activity_join_home_progress_check_description">Verifica delle credenziali in corso…</string>
+    <string name="activity_join_home_hint_nickname">Nickname</string>
+    <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
 
     <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
-    <string name="title_activity_user_profile">HomeListActivity</string>
+
     <string name="activity_user_profile_toolbar_logout">Logout</string>
-    <string name="activity_main_toolbar_edit">Modifica dati utente</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
-    <string name="activity_join_home_hint_nickname">Nickname</string>
-    <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
-    <string name="activity_main_toolbar_switch">Profilo utente</string>
-    <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
-    <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
-    <string name="activity_create_home_hint_nickname">Nickname</string>
-    <string name="form_error_invalid_character">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
+    <string name="activity_user_profile_empty_homes_list">Non ti sei ancora unito o hai creato nessuna casa</string>
+    <string name="activity_user_profile_empty_homes_list_title">Non c\'è nulla qui :(</string>
 
 </resources>

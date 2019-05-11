@@ -25,27 +25,58 @@
             app:menu="@menu/activity_user_profile_toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/activity_user_profile_progress"
+    <FrameLayout
+        android:id="@+id/activity_user_profile_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_user_profile_appbar"
-        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_scroll"
-        android:indeterminate="true"
-        style="@android:style/Widget.Material.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_scroll">
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/activity_user_profile_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
     <ScrollView
         android:id="@+id/activity_user_profile_scroll"
         style="@style/Component.ScrollView"
-        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_progress"
+        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_progress_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/activity_user_profile_layout_buttons">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/Component.Layout.ScrollViewChild">
+
+            <TextView
+                android:id="@+id/activity_user_profile_empty_home_list_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_user_profile_empty_homes_list_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                style="@style/Component.TextView.MultiLine.ObjectTitle"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/activity_user_profile_empty_home_list_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_user_profile_empty_homes_list"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_user_profile_empty_home_list_title"
+                app:layout_constraintVertical_bias="0.0"
+                android:visibility="gone"/>
 
             <fragment
                 android:id="@+id/activity_user_profile_fragment_container"

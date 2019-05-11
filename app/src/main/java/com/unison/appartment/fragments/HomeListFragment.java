@@ -127,13 +127,13 @@ public class HomeListFragment extends Fragment {
                     userHomes.add(postSnapshot.getValue(UserHome.class));
                     myAdapter.notifyDataSetChanged();
                     // FIXME vedere se si può fare l'animazione
-                    mListener.onHomeListElementsLoaded();
                 }
+                mListener.onHomeListElementsLoaded(dataSnapshot.getChildrenCount());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                mListener.onHomeListElementsLoaded();
+                mListener.onHomeListElementsLoaded(0);
                 // TODO visualizzare snackbar che comunica l'errore con tasto per fare il reload
             }
         });
@@ -152,6 +152,6 @@ public class HomeListFragment extends Fragment {
     public interface OnHomeListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onHomeListFragmentInteraction(UserHome item);
-        void onHomeListElementsLoaded();
+        void onHomeListElementsLoaded(long elements);
     }
 }

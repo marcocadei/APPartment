@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,8 @@ import com.unison.appartment.model.UserHome;
 public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
 
     private Toolbar toolbar;
+    private TextView emptyHomeListTitle;
+    private TextView emptyHomeListText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,9 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         // Supporto per la toolbar
         toolbar = findViewById(R.id.activity_user_profile_toolbar);
         setSupportActionBar(toolbar);
+
+        emptyHomeListTitle = findViewById(R.id.activity_user_profile_empty_home_list_title);
+        emptyHomeListText = findViewById(R.id.activity_user_profile_empty_home_list_text);
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +98,16 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
     }
 
     @Override
-    public void onHomeListElementsLoaded() {
+    public void onHomeListElementsLoaded(long elements) {
+        // Sia che l'utente abbia delle case o meno, una volta fatta la lettura la
+        // progress bar deve interrompersi
         ProgressBar progressBar = findViewById(R.id.activity_user_profile_progress);
         progressBar.setVisibility(View.GONE);
+
+        // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
+        if (elements == 0) {
+            emptyHomeListTitle.setVisibility(View.VISIBLE);
+            emptyHomeListText.setVisibility(View.VISIBLE);
+        }
     }
 }
