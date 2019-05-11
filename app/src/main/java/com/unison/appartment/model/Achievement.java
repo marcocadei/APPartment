@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta un achievement da sbloccare
+ */
 public class Achievement implements Serializable {
     private String name;
     private String description;
@@ -43,6 +46,7 @@ public class Achievement implements Serializable {
         this.image = image;
     }
 
+    //TODO da rimouvere
     public static final List<Achievement> achievementList = new ArrayList<Achievement>(){
         {
             add(new Achievement("Re del giardino", "Tagliare l'erba 10 volte"));
