@@ -16,6 +16,9 @@ import com.unison.appartment.adapters.MyAchievementRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Achievement;
 
+/**
+ * Fragment che rappresenta una lista di Achievement
+ */
 public class AchievementListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";

@@ -16,6 +16,9 @@ import com.unison.appartment.adapters.MyTodoListRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Task;
 
+/**
+ * Fragment che rappresenta una lista di To Do
+ */
 public class TodoListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";

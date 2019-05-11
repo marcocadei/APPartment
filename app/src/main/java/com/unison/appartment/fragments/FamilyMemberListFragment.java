@@ -16,6 +16,10 @@ import com.unison.appartment.adapters.MyFamilyMemberRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
 
+/**
+ * Fragment che rappresenta una lista di Member di una famiglia
+ * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnFamilyMemberListFragmentInteractionListener}
+ */
 public class FamilyMemberListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";

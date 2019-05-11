@@ -30,8 +30,10 @@ public class MoneyRewardFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    /**
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
+     */
     public MoneyRewardFragment() {
-        // Required empty public constructor
     }
 
     /**

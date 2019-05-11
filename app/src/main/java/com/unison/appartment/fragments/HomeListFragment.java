@@ -45,7 +45,7 @@ public class HomeListFragment extends Fragment {
     private OnHomeListFragmentInteractionListener mListener;
 
     /**
-     * Costruttore vuoto obbligatorio
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
     public HomeListFragment() {
     }
@@ -140,14 +140,9 @@ public class HomeListFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Questa interfaccia deve essere implementata dalle activity che contengono questo
+     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
+     * che a sua volta può comunicare con altri fragment
      */
     public interface OnHomeListFragmentInteractionListener {
         // TODO: Update argument type and name

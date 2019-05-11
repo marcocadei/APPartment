@@ -16,7 +16,7 @@ import com.unison.appartment.model.User;
 
 
 /**
- * Fragment che presenta la lista dei membri della famiglia e le relative statistiche
+ * Fragment che rappresenta una lista di Member di una famiglia e le relative statistiche
  */
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
 

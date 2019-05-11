@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Task;
 
+/**
+ * Classe che rappresenta l'Activity con il dettaglio del Task
+ */
 public class TaskDetailActivity extends AppCompatActivity {
 
     private Toolbar toolbar;

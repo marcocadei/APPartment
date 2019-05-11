@@ -20,7 +20,7 @@ import com.unison.appartment.model.Task;
 
 
 /**
- * Fragment che rappresenta la lista delle attività da svolgere
+ * Fragment che rappresenta una lista di attività da svolgere
  */
 public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 

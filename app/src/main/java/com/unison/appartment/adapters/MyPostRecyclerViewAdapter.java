@@ -22,7 +22,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-
+/**
+ * {@link RecyclerView.Adapter} che può visualizzare una lista di  {@link Post} e che effettua una
+ * chiamata al {@link com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener} specificato
+ * TODO: Replace the implementation with code for your data type.
+ */
 public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Post> postList;

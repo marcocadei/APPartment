@@ -8,12 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.HomeListFragment;
 import com.unison.appartment.model.Task;
 import com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener;
+import com.unison.appartment.model.UserHome;
 
 import java.util.List;
 
-
+/**
+ * {@link RecyclerView.Adapter} che può visualizzare una lista di  {@link Task} e che effettua una
+ * chiamata al {@link com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener} specificato
+ * TODO: Replace the implementation with code for your data type.
+ */
 public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Task> tasks;

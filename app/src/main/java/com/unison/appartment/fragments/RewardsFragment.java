@@ -40,8 +40,10 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
 //    FIXME Rimuovere se non serve
 //    private OnFragmentInteractionListener mListener;
 
+    /**
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
+     */
     public RewardsFragment() {
-        // Required empty public constructor
     }
 
     /**

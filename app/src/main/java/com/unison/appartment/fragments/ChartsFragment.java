@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 
 import com.unison.appartment.R;
 
+/**
+ * Fragment che rappresenta un insieme di grafici
+ */
 public class ChartsFragment extends Fragment {
 
     /**
