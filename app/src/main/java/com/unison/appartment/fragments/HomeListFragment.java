@@ -88,10 +88,7 @@ public class HomeListFragment extends Fragment {
             }
             myRecyclerView = recyclerView;
         }
-
-        // TODO settare progress bar (da rimuovere poi quando arrivano i dati)
         userHomes = new ArrayList<>();
-
         readUserHomes();
 
         myAdapter = new MyHomeRecyclerViewAdapter(userHomes, mListener);

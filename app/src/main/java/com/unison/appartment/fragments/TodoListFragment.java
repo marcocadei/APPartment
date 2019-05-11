@@ -4,22 +4,34 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.annotations.Nullable;
+import com.unison.appartment.TodoTaskViewModel;
 import com.unison.appartment.adapters.MyTodoListRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Task;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TodoListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
+
+    private List<Task> uncompletedTasks;
 
     private RecyclerView.Adapter myAdapter;
     private RecyclerView myRecyclerView;
@@ -64,7 +76,10 @@ public class TodoListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myAdapter = new MyTodoListRecyclerViewAdapter(Task.TASKS, listener);
+            uncompletedTasks = new ArrayList<>();
+            readUncompletedTasks();
+
+            myAdapter = new MyTodoListRecyclerViewAdapter(/*Task.TASKS*/uncompletedTasks, listener);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -86,11 +101,27 @@ public class TodoListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+    private void readUncompletedTasks() {
+        TodoTaskViewModel viewModel = ViewModelProviders.of(this).get(TodoTaskViewModel.class);
+        LiveData<List<Task>> taskLiveData = viewModel.getTaskLiveData();
+
+        taskLiveData.observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                for (Task task : tasks) {
+                    addTask(task);
+                }
+            }
+        });
+    }
     
     public void addTask(Task newTask) {
-        Task.addTask(0, newTask);
+        /*Task.addTask(0, newTask);*/
+        uncompletedTasks.add(0, newTask);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
+        Log.d("prova", "add");
     }
 
     /**

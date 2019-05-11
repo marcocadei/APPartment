@@ -53,7 +53,7 @@ public class Task implements Serializable {
         this.points = points;
     }
 
-    public static final List<Task> TASKS = new ArrayList<Task>(){
+/*    public static final List<Task> TASKS = new ArrayList<Task>(){
         {
             add(new Task("Aspirapolvere", "Passare aspirapolvere per tutta casa", "2019-29-04", 100));
             add(new Task("Piatti", "Lavare i piatti della cena", "2019-28-04", 30));
@@ -63,5 +63,5 @@ public class Task implements Serializable {
 
     public static void addTask(int position, Task task) {
         TASKS.add(position, task);
-    }
+    }*/
 }
