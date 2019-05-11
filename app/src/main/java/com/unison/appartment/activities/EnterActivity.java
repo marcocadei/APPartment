@@ -10,6 +10,9 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.unison.appartment.R;
 
+/**
+ * Classe che rappresenta l'Activity per entrare nell'applicazione, registrandosi oppure accedendo
+ */
 public class EnterActivity extends AppCompatActivity {
 
     @Override
@@ -35,9 +38,9 @@ public class EnterActivity extends AppCompatActivity {
             }
         });
 
+        // Controllo se c'è già un utente loggato: in caso vado direttamente alla UserProfileActivity
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            // C'è già un utente loggato: vado direttamente alla UserProfileActivity
             Intent i = new Intent(EnterActivity.this, UserProfileActivity.class);
             startActivity(i);
             finish();
