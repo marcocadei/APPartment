@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta un task da completare
+ */
 public class Task implements Serializable {
 
     private String name;
@@ -53,6 +56,7 @@ public class Task implements Serializable {
         this.points = points;
     }
 
+    //TODO da rimuovere
     public static final List<Task> TASKS = new ArrayList<Task>(){
         {
             add(new Task("Aspirapolvere", "Passare aspirapolvere per tutta casa", "2019-29-04", 100));
