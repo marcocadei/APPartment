@@ -163,6 +163,6 @@
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_empty_homes_list">Non ti sei ancora unito o hai creato nessuna casa</string>
-    <string name="activity_user_profile_empty_homes_list_title">Non c\'è nulla da mostrare :(</string>
+    <string name="activity_user_profile_empty_homes_list_title">Non c\'è nulla qui :(</string>
 
 </resources>
