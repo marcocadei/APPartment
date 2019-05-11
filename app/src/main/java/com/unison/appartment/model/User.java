@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe che rappresenta un utente registrato all'applicazione, indipendente dalla/e casa/e in cui è presente
+ */
 public class User implements Serializable {
 
     private String email;
@@ -83,15 +86,15 @@ public class User implements Serializable {
         }
     };
 
-    public static void addMember(int position, User user) {
+    public static void addUser(int position, User user) {
         userList.add(position, user);
     }
 
-    public static void removeMember(int position) {
+    public static void removeUser(int position) {
         userList.remove(position);
     }
 
-    public static User getMember(int position) {
+    public static User getUser(int position) {
         return userList.get(position);
     }
 

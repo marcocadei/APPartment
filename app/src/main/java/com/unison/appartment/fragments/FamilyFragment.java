@@ -50,7 +50,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
             public void onClick(View v) {
                 FamilyMemberListFragment fmlf = (FamilyMemberListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_family_member_list);
-                fmlf.removeMember();
+                fmlf.removeUser();
             }
         });*/
 

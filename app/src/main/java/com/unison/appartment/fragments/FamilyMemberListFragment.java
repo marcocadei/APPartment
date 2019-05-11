@@ -88,13 +88,13 @@ public class FamilyMemberListFragment extends Fragment {
     }
 
     public void addMember(User newUser) {
-        User.addMember(0, newUser);
+        User.addUser(0, newUser);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
     }
 
     public void removeMember(int position){
-        User.removeMember(position);
+        User.removeUser(position);
         myAdapter.notifyItemRemoved(position);
     }
 
