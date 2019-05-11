@@ -5,7 +5,7 @@
         android:title="@string/activity_main_toolbar_settings"
         android:icon="@drawable/ic_settings"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/activity_main_toolbar_switch"
+    <item android:id="@+id/activity_main_toolbar_profile"
         android:title="@string/activity_main_toolbar_switch"
         android:icon="@drawable/ic_person"
         app:showAsAction="ifRoom" />
