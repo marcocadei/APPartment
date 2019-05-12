@@ -1,6 +1,7 @@
 package com.unison.appartment;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -17,28 +18,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TodoTaskViewModel extends ViewModel {
-    /*private static String separator = Resources.getSystem().getString(R.string.db_separator);
-    private static String uncompletedTasks = Resources.getSystem().getString(R.string.db_uncompleted_tasks);*/
-    private static final DatabaseReference UNCOMPLETED_TASKS_REF =
-            FirebaseDatabase.getInstance().getReference("/uncompleted-tasks" + "/casatest1");
+    private String separator;
+    private String uncompletedTasks;
+    // Nodo del database a cui sono interessato
+    private static DatabaseReference UNCOMPLETED_TASKS_REF;
+    // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
+    // tramite un Deserializer in ogetti di tipo Task
+    private FirebaseQueryLiveData liveData;
+    private LiveData<List<Task>> taskLiveData;
 
-    private final FirebaseQueryLiveData liveData = new FirebaseQueryLiveData(UNCOMPLETED_TASKS_REF);
+    public TodoTaskViewModel() {
+        separator = Appartment.getInstance().getContext().getString(R.string.db_separator);
+        uncompletedTasks = Appartment.getInstance().getContext().getString(R.string.db_uncompleted_tasks);
+        UNCOMPLETED_TASKS_REF =
+                FirebaseDatabase.getInstance().getReference(separator + uncompletedTasks + separator + Appartment.getInstance().getHome());
+        liveData = new FirebaseQueryLiveData(UNCOMPLETED_TASKS_REF);
+        taskLiveData = Transformations.map(liveData, new Deserializer());
+    }
 
-    private final LiveData<List<Task>> taskLiveData = Transformations.map(liveData, new Deserializer());
+    @NonNull
+    public LiveData<List<Task>> getTaskLiveData() {
+        return taskLiveData;
+    }
+
+    public void addTask(Task newTask) {
+        String key = UNCOMPLETED_TASKS_REF.push().getKey();
+        newTask.setId(key);
+        UNCOMPLETED_TASKS_REF.child(key).setValue(newTask);
+    }
 
     private class Deserializer implements Function<DataSnapshot, List<Task>> {
         @Override
         public List<Task> apply(DataSnapshot dataSnapshot) {
             List<Task> tasks = new ArrayList<>();
             for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-                tasks.add(taskSnapshot.getValue(Task.class));
+                Task newTask = taskSnapshot.getValue(Task.class);
+                newTask.setId(taskSnapshot.getKey());
+                tasks.add(newTask);
             }
             return tasks;
         }
-    }
-
-    @NonNull
-    public LiveData<List<Task>> getTaskLiveData() {
-        return taskLiveData;
     }
 }

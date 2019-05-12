@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.annotations.Nullable;
+import com.unison.appartment.Appartment;
 import com.unison.appartment.TodoTaskViewModel;
 import com.unison.appartment.adapters.MyTodoListRecyclerViewAdapter;
 import com.unison.appartment.R;
@@ -31,9 +33,9 @@ public class TodoListFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
-    private List<Task> uncompletedTasks;
+    private TodoTaskViewModel viewModel;
 
-    private RecyclerView.Adapter myAdapter;
+    private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
     private OnTodoListFragmentInteractionListener listener;
@@ -60,6 +62,7 @@ public class TodoListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        viewModel = ViewModelProviders.of(this).get(TodoTaskViewModel.class);
     }
 
     @Override
@@ -76,10 +79,9 @@ public class TodoListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            uncompletedTasks = new ArrayList<>();
             readUncompletedTasks();
 
-            myAdapter = new MyTodoListRecyclerViewAdapter(/*Task.TASKS*/uncompletedTasks, listener);
+            myAdapter = new MyTodoListRecyclerViewAdapter(/*Task.TASKS*//*uncompletedTasks,*/ listener);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -103,23 +105,23 @@ public class TodoListFragment extends Fragment {
     }
 
     private void readUncompletedTasks() {
-        TodoTaskViewModel viewModel = ViewModelProviders.of(this).get(TodoTaskViewModel.class);
         LiveData<List<Task>> taskLiveData = viewModel.getTaskLiveData();
-
         taskLiveData.observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                ((MyTodoListRecyclerViewAdapter)myAdapter).setTasks(tasks);
+                myAdapter.submitList(tasks);
+                Log.d("provaListAdapter", "aggiunto");
             }
         });
     }
     
     public void addTask(Task newTask) {
         /*Task.addTask(0, newTask);*/
-        uncompletedTasks.add(0, newTask);
+/*        uncompletedTasks.add(0, newTask);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
-        Log.d("prova", "add");
+        Log.d("prova", "add");*/
+        viewModel.addTask(newTask);
     }
 
     /**
