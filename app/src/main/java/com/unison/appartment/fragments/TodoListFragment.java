@@ -17,15 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.annotations.Nullable;
-import com.unison.appartment.Appartment;
-import com.unison.appartment.TodoTaskViewModel;
+import com.unison.appartment.viewmodel.TodoTaskViewModel;
 import com.unison.appartment.adapters.MyTodoListRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TodoListFragment extends Fragment {

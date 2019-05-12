@@ -1,7 +1,4 @@
-package com.unison.appartment;
-
-import android.content.res.Resources;
-import android.util.Log;
+package com.unison.appartment.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -12,6 +9,9 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.unison.appartment.Appartment;
+import com.unison.appartment.livedata.FirebaseQueryLiveData;
+import com.unison.appartment.R;
 import com.unison.appartment.model.Task;
 
 import java.util.ArrayList;
