@@ -106,6 +106,7 @@ public class TodoListFragment extends Fragment {
             @Override
             public void onChanged(List<Task> tasks) {
                 myAdapter.submitList(tasks);
+                listener.onTodoListElementsLoaded(tasks.size());
                 Log.d("provaListAdapter", "aggiunto");
             }
         });
@@ -127,5 +128,6 @@ public class TodoListFragment extends Fragment {
      */
     public interface OnTodoListFragmentInteractionListener {
         void onTodoListFragmentOpenTask(Task task);
+        void onTodoListElementsLoaded(long elements);
     }
 }

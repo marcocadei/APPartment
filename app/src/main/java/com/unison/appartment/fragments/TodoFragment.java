@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
@@ -25,6 +27,9 @@ import com.unison.appartment.model.Task;
 public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
+
+    private TextView emptyTodoListTitle;
+    private TextView emptyTodoListText;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -48,6 +53,9 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_todo, container, false);
+
+        emptyTodoListTitle = myView.findViewById(R.id.fragment_todo_empty_home_list_title);
+        emptyTodoListText = myView.findViewById(R.id.fragment_todo_empty_home_list_text);
 
         final FloatingActionButton floatAddTask = myView.findViewById(R.id.fragment_todo_float_add_task);
         floatAddTask.setOnClickListener(new View.OnClickListener() {
@@ -86,5 +94,19 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         Intent i = new Intent(getActivity(), TaskDetailActivity.class);
         i.putExtra("task", task);
         startActivity(i);
+    }
+
+    @Override
+    public void onTodoListElementsLoaded(long elements) {
+        // Sia che l'utente abbia delle case o meno, una volta fatta la lettura la
+        // progress bar deve interrompersi
+        ProgressBar progressBar = getView().findViewById(R.id.fragment_todo_progress);
+        progressBar.setVisibility(View.GONE);
+
+        // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
+        if (elements == 0) {
+            emptyTodoListTitle.setVisibility(View.VISIBLE);
+            emptyTodoListText.setVisibility(View.VISIBLE);
+        }
     }
 }
