@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.repository;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -8,6 +8,8 @@ import androidx.lifecycle.Transformations;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.unison.appartment.Appartment;
+import com.unison.appartment.R;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.Task;
 

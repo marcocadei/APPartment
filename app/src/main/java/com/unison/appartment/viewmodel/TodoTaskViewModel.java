@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.unison.appartment.TodoTaskRepository;
+import com.unison.appartment.repository.TodoTaskRepository;
 import com.unison.appartment.model.Task;
 
 import java.util.List;
