@@ -12,11 +12,13 @@ import androidx.fragment.app.DialogFragment;
 
 import com.unison.appartment.R;
 
+/*
+Riferimento per la struttura del codice: https://stackoverflow.com/a/13338148
+ */
 public class FirebaseErrorDialogFragment extends DialogFragment {
 
     public final static String TAG_FIREBASE_ERROR_DIALOG = "errorDialog";
 
-    // Riferimento: https://stackoverflow.com/a/13338148
     public interface FirebaseErrorDialogInterface {
         void onDialogFragmentDismiss();
     }
