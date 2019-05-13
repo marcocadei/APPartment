@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Member;
@@ -29,7 +28,7 @@ import com.unison.appartment.model.UserHome;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JoinHomeActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
+public class JoinHomeActivity extends FormActivity {
 
     EditText inputHomeName;
     EditText inputPassword;
@@ -38,12 +37,13 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
     TextInputLayout layoutPassword;
     TextInputLayout layoutNickname;
 
-    ProgressDialog progress;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_home);
+
+        // Modifica dell'activity di destinazione a cui andare quando si chiude il dialog di errore
+        this.errorDialogDestinationActivity = UserProfileActivity.class;
 
         inputHomeName = findViewById(R.id.activity_join_home_input_homename_value);
         inputPassword = findViewById(R.id.activity_join_home_input_password_value);
@@ -77,18 +77,13 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(JoinHomeActivity.this);
                 if (checkInput()) {
-                    checkHomeCredentials(inputHomeName.getText().toString(), inputPassword.getText().toString(), inputNickname.getText().toString());
+                    checkHomeCredentials(inputHomeName.getText().toString(), inputPassword.getText().toString());
                 }
             }
         });
     }
 
-    private void resetErrorMessage(TextInputLayout inputLayout) {
-        inputLayout.setError(null);
-        inputLayout.setErrorEnabled(false);
-    }
-
-    private boolean checkInput() {
+    protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutNickname);
@@ -118,7 +113,23 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         return result;
     }
 
-    private void checkHomeCredentials(final String homeName, final String password, final String nickname) {
+    private Member createMember() {
+        // Precondizione: Tutti i campi della form sono corretti
+
+        String nickname = inputNickname.getText().toString();
+
+        return new Member(nickname);
+    }
+
+    private UserHome createUserHome() {
+        // Precondizione: Tutti i campi della form sono corretti
+
+        String homeName = inputHomeName.getText().toString();
+
+        return new UserHome(homeName, UserHome.ROLE_SLAVE);
+    }
+
+    private void checkHomeCredentials(final String homeName, final String password) {
         progress = ProgressDialog.show(
                 this,
                 getString(R.string.activity_join_home_progress_check_title),
@@ -147,7 +158,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                     }
                     else {
                         // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
-                        writeInDb(homeName, password, nickname);
+                        writeInDb(homeName);
                     }
                 }
             }
@@ -165,7 +176,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         });
     }
 
-    private void writeInDb(final String homeName, final String password, final String nickname) {
+    private void writeInDb(final String homeName) {
         String separator = getString(R.string.db_separator);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -173,17 +184,15 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
-        Member member = new Member(nickname);
-        childUpdates.put(familyPath, member);
-        UserHome userHome = new UserHome(homeName, UserHome.ROLE_SLAVE);
-        childUpdates.put(userhomePath, userHome);
+        childUpdates.put(familyPath, createMember());
+        childUpdates.put(userhomePath, createUserHome());
 
         dbRef.updateChildren(childUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            moveToNextActivity();
+                            moveToNextActivity(MainActivity.class);
                             dismissProgress();
                         }
                         else {
@@ -213,31 +222,13 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
                 });
     }
 
-    private void moveToNextActivity() {
-        Intent i = new Intent(JoinHomeActivity.this, MainActivity.class);
+    @Override
+    protected void moveToNextActivity(Class destination) {
+        Intent i = new Intent(JoinHomeActivity.this, destination);
         // Passo il nome della casa all'activity successiva
         i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
         startActivity(i);
         finish();
     }
 
-    private void showErrorDialog() {
-        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-        dismissProgress();
-        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
-    }
-
-    private void dismissProgress() {
-        if (progress != null) {
-            progress.dismiss();
-        }
-    }
-
-    @Override
-    public void onDialogFragmentDismiss() {
-        Intent i = new Intent(this, UserProfileActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
-    }
 }

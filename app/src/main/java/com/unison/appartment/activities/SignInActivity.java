@@ -1,10 +1,8 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,23 +15,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 
-public class SignInActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
+public class SignInActivity extends FormActivity {
 
     EditText inputEmail;
     EditText inputPassword;
     TextInputLayout layoutEmail;
     TextInputLayout layoutPassword;
 
-    ProgressDialog progress;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        // Precondizione: Se viene acceduta questa activity, vuol dire che non c'è nessun utente loggato
 
         inputEmail = findViewById(R.id.activity_signin_input_email_value);
         inputPassword = findViewById(R.id.activity_signin_input_password_value);
@@ -71,49 +68,7 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
         });
     }
 
-    private void resetErrorMessage(TextInputLayout inputLayout) {
-        inputLayout.setError(null);
-        inputLayout.setErrorEnabled(false);
-    }
-
-    private void performSignIn(String email, final String password) {
-        progress = ProgressDialog.show(
-                this,
-                getString(R.string.activity_signin_progress_title),
-                getString(R.string.activity_signin_progress_description), true);
-
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            moveToNextActivity();
-                            dismissProgress();
-                        }
-                        else {
-                            try {
-                                throw task.getException();
-                            }
-                            catch (FirebaseAuthInvalidCredentialsException e) {
-                                // Password sbagliata
-                                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
-                            }
-                            catch (FirebaseAuthInvalidUserException e) {
-                                // Utente non esistente
-                                layoutEmail.setError(getString(R.string.form_error_nonexistent_user));
-                            }
-                            catch (Exception e) {
-                                // Generico
-                                showErrorDialog();
-                            }
-                            dismissProgress();
-                        }
-                    }
-                });
-    }
-
-    private boolean checkInput() {
+    protected boolean checkInput() {
         resetErrorMessage(layoutEmail);
         resetErrorMessage(layoutPassword);
 
@@ -146,29 +101,41 @@ public class SignInActivity extends AppCompatActivity implements FirebaseErrorDi
         return result;
     }
 
-    private void moveToNextActivity() {
-        Intent i = new Intent(SignInActivity.this, UserProfileActivity.class);
-        startActivity(i);
-        finish();
+    private void performSignIn(final String email, final String password) {
+        progress = ProgressDialog.show(
+                this,
+                getString(R.string.activity_signin_progress_title),
+                getString(R.string.activity_signin_progress_description), true);
+
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            moveToNextActivity(UserProfileActivity.class);
+                            dismissProgress();
+                        }
+                        else {
+                            try {
+                                throw task.getException();
+                            }
+                            catch (FirebaseAuthInvalidCredentialsException e) {
+                                // Password sbagliata
+                                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
+                            }
+                            catch (FirebaseAuthInvalidUserException e) {
+                                // Utente non esistente
+                                layoutEmail.setError(getString(R.string.form_error_nonexistent_user));
+                            }
+                            catch (Exception e) {
+                                // Generico
+                                showErrorDialog();
+                            }
+                            dismissProgress();
+                        }
+                    }
+                });
     }
 
-    private void showErrorDialog() {
-        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-        dismissProgress();
-        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
-    }
-
-    private void dismissProgress() {
-        if (progress != null) {
-            progress.dismiss();
-        }
-    }
-
-    @Override
-    public void onDialogFragmentDismiss() {
-        Intent i = new Intent(this, EnterActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
-    }
 }
