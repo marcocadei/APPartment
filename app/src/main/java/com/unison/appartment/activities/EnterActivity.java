@@ -49,5 +49,8 @@ public class EnterActivity extends AppCompatActivity {
         logout, si vuole che questo ritorni alla EnterActivity (che quindi deve avere l'interfaccia
         già pronta).
          */
+
+        // TODO gestire opportunamente il finish() quando si implementa anche l'accesso diretto
+        // all'ultima casa in cui ci si era loggati
     }
 }
