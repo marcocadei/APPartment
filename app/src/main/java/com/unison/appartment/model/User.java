@@ -15,7 +15,7 @@ public class User implements Serializable {
     private int age;
     private String gender;
 
-    // TODO ancora da mettere le altre proprietà tipo numero di completed task
+    // TODO ancora da mettere le altre proprietà "casa-independent"
     private Uri image;
 
     // FIXME rifare il costruttore quando si è arrivati ad una struttura definitiva dell'utente
@@ -28,7 +28,8 @@ public class User implements Serializable {
         this.image = null; // TODO: piazza anche l'immagine
 
         // Attributi che devono essere impostati ad un valore di default alla creazione di un nuovo utente
-        // (per es. anche numero di task completati ecc...)
+        // TODO ...
+
     }
 
     public String getEmail() {
