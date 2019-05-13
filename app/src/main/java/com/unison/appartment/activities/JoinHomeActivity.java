@@ -1,9 +1,7 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +18,7 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Member;
@@ -130,10 +129,10 @@ public class JoinHomeActivity extends FormActivity {
     }
 
     private void checkHomeCredentials(final String homeName, final String password) {
-        progress = ProgressDialog.show(
-                this,
+        progressDialog = FirebaseProgressDialogFragment.newInstance(
                 getString(R.string.activity_join_home_progress_check_title),
-                getString(R.string.activity_join_home_progress_check_description), true);
+                getString(R.string.activity_join_home_progress_check_description));
+        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
         String separator = getString(R.string.db_separator);
         String path = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName) + separator + getString(R.string.db_homes_homename_password);

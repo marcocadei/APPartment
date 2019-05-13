@@ -2,7 +2,6 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 
@@ -102,10 +102,10 @@ public class SignInActivity extends FormActivity {
     }
 
     private void performSignIn(final String email, final String password) {
-        progress = ProgressDialog.show(
-                this,
+        progressDialog = FirebaseProgressDialogFragment.newInstance(
                 getString(R.string.activity_signin_progress_title),
-                getString(R.string.activity_signin_progress_description), true);
+                getString(R.string.activity_signin_progress_description));
+        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, password)

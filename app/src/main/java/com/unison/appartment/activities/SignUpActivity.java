@@ -2,7 +2,6 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
@@ -172,10 +172,10 @@ public class SignUpActivity extends FormActivity {
     }
 
     private void writeAuthInfo(final User newUser) {
-        progress = ProgressDialog.show(
-                this,
+        progressDialog = FirebaseProgressDialogFragment.newInstance(
                 getString(R.string.activity_signup_signup_title),
-                getString(R.string.activity_signup_signup_description), true);
+                getString(R.string.activity_signup_signup_description));
+        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
         // Salvataggio delle informazioni in Auth
         FirebaseAuth auth = FirebaseAuth.getInstance();

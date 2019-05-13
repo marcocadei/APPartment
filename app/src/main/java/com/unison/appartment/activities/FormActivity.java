@@ -1,18 +1,26 @@
 package com.unison.appartment.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 
 public abstract class FormActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     protected Class errorDialogDestinationActivity = EnterActivity.class;
 
-    protected ProgressDialog progress;
+    protected FirebaseProgressDialogFragment progressDialog;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        progressDialog = (FirebaseProgressDialogFragment)getSupportFragmentManager()
+                .findFragmentByTag(FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+    }
 
     protected void resetErrorMessage(TextInputLayout inputLayout) {
         inputLayout.setError(null);
@@ -28,8 +36,8 @@ public abstract class FormActivity extends AppCompatActivity implements Firebase
     }
 
     protected void dismissProgress() {
-        if (progress != null) {
-            progress.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
         }
     }
 
