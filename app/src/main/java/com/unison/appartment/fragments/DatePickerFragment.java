@@ -10,6 +10,8 @@ import androidx.fragment.app.DialogFragment;
 
 public class DatePickerFragment extends DialogFragment {
 
+    public final static String TAG_DATE_PICKER = "datePicker";
+
     private final static int BUNDLE_CAPACITY = 3;
     private final static String BUNDLE_KEY_YEAR = "y";
     private final static String BUNDLE_KEY_MONTH = "m";
