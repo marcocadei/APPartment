@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 //FIXME Rimuovere se non serve
 import com.unison.appartment.R;
-import com.unison.appartment.fragments.RewardFragment.OnRewardListFragmentInteractionListener;
+import com.unison.appartment.fragments.RewardListFragment.OnRewardListFragmentInteractionListener;
 import com.unison.appartment.model.Reward;
 
 import java.util.List;

@@ -38,9 +38,6 @@ public class CreateRewardActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        Creazione di un nuovo premio alla pressione del bottone.
-         */
         inputName = findViewById(R.id.activity_create_reward_input_name_value);
         inputDescription = findViewById(R.id.activity_create_reward_input_description_value);
         inputPoints = findViewById(R.id.activity_create_reward_input_points_value);

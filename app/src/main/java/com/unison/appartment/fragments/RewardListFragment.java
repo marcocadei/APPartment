@@ -22,7 +22,7 @@ import com.unison.appartment.model.Reward;
  * Activities containing this fragment MUST implement the {@link OnRewardListFragmentInteractionListener}
  * interface.
  */
-public class RewardFragment extends Fragment {
+public class RewardListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -38,13 +38,13 @@ public class RewardFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public RewardFragment() {
+    public RewardListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static RewardFragment newInstance(int columnCount) {
-        RewardFragment fragment = new RewardFragment();
+    public static RewardListFragment newInstance(int columnCount) {
+        RewardListFragment fragment = new RewardListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
