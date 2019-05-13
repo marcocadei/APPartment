@@ -12,6 +12,7 @@
     <dimen name="margin_large">16dp</dimen>
     <dimen name="margin_extra_large">24dp</dimen>
     <dimen name="margin_extra_extra_large">32dp</dimen>
+    <dimen name="margin_title">64dp</dimen>
 
     <dimen name="img_small">24dp</dimen>
     <dimen name="img_medium">30dp</dimen>
