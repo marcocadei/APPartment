@@ -103,7 +103,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             if (resultCode == Activity.RESULT_OK) {
                 RewardListFragment fragmentRewardList = (RewardListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
-                fragmentRewardList.addReward((Reward)data.getSerializableExtra("rewardObject"));
+                fragmentRewardList.addReward((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD));
             }
         }
     }
@@ -137,7 +137,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     @Override
     public void onRewardListFragmentInteraction(Reward item) {
         Intent i = new Intent(getActivity(), RewardDetailActivity.class);
-        i.putExtra(EXTRA_NEW_REWARD, item);
+        i.putExtra(RewardDetailActivity.EXTRA_REWARD_OBJECT, item);
         startActivity(i);
     }
 

@@ -18,6 +18,9 @@ import java.util.Locale;
 
 public class RewardDetailActivity extends AppCompatActivity {
 
+    // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME
+    public final static String EXTRA_REWARD_OBJECT = "rewardObject";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class RewardDetailActivity extends AppCompatActivity {
          */
         Intent creationIntent = getIntent();
         Resources res = getResources();
-        Reward reward = (Reward) creationIntent.getSerializableExtra("rewardObject");
+        Reward reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
         textName.setText(res.getString(R.string.activity_reward_detail_text_name, reward.getName()));
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
