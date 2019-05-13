@@ -28,6 +28,8 @@ import com.unison.appartment.model.Reward;
  */
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
+    public final static String EXTRA_NEW_REWARD = "newReward";
+
     private static final int ADD_REWARD_REQUEST_CODE = 0xA1;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -135,7 +137,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     @Override
     public void onRewardListFragmentInteraction(Reward item) {
         Intent i = new Intent(getActivity(), RewardDetailActivity.class);
-        i.putExtra("rewardObject", item);
+        i.putExtra(EXTRA_NEW_REWARD, item);
         startActivity(i);
     }
 

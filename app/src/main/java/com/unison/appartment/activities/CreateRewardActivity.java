@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.model.Reward;
 
 public class CreateRewardActivity extends AppCompatActivity {
@@ -52,13 +53,15 @@ public class CreateRewardActivity extends AppCompatActivity {
     }
 
     public void createReward() {
+        // FIXME modificare la struttura del metodo in modo che sia in linea con le altre activity
+
         Reward reward = new Reward(
                 inputName.getText().toString(),
                 inputDescription.getText().toString(),
                 Integer.valueOf(inputPoints.getText().toString())
         );
         Intent i = new Intent();
-        i.putExtra("rewardObject", reward);
+        i.putExtra(RewardsFragment.EXTRA_NEW_REWARD, reward);
         setResult(Activity.RESULT_OK, i);
         finish();
     }
