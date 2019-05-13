@@ -87,14 +87,6 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
 
         // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatFinish = findViewById(R.id.activity_signup_float_finish);
-        /*
-        Se l'utente proviene dalla CreateHomeActivity, alla pressione del bottone bisogna:
-        - creare un nuovo record in FirebaseAuth
-        - inserire nel database la nuova casa
-        - inserire nel database il nuovo utente (owner della nuova casa)
-        Se l'utente invece proviene dalla JoinHomeActivity la casa è già esistente, quindi bisogna solo
-        procedere al salvataggio dei dati relativi all'utente (sia nel database che in FirebaseAuth)
-         */
         floatFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
