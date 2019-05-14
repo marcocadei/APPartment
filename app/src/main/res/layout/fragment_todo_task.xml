@@ -24,6 +24,7 @@
 
         <TextView
             android:id="@+id/fragment_todo_text_task_name"
+            android:text="@string/placeholder_text"
             style="@style/Component.TextView.SingleLine.ListItemTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +32,7 @@
 
         <TextView
             android:id="@+id/fragment_todo_text_task_description"
+            android:text="@string/placeholder_text_long"
             style="@style/Component.TextView.SingleLine.ListItemDescription"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

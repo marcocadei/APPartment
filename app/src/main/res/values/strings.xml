@@ -101,6 +101,8 @@
     <string name="fragment_reward_img_arrow">Icona di una freccia</string>
 
     <string name="fragment_todo_img_check">Simbolo di spunta</string>
+    <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
+    <string name="fragment_todo_empty_homes_list_title">Non c\'é nulla qui :(</string>
 
     <string name="activity_create_reward_title">Crea nuovo premio</string>
     <string name="activity_create_reward_hint_name">Nome</string>
@@ -163,6 +165,6 @@
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_empty_homes_list">Non ti sei ancora unito o hai creato nessuna casa</string>
-    <string name="activity_user_profile_empty_homes_list_title">Non c\'è nulla qui :(</string>
+    <string name="activity_user_profile_empty_homes_list_title">Non c\'é nulla qui :(</string>
 
 </resources>

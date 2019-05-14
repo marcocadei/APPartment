@@ -24,4 +24,7 @@
     <item name="db_userhomes_userid" type="string">%1$s</item>
     <item name="db_userhomes_userid_homename" type="string">%1$s</item>
 
+    <!-- Cose da fare -->
+    <item name="db_uncompleted_tasks" type="string">uncompleted-tasks</item>
+
 </resources>
