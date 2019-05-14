@@ -120,7 +120,7 @@
     <string name="activity_family_member_detail_text_name">%s</string>
     <string name="activity_family_member_detail_text_role_title">Ruolo</string>
     <string name="activity_family_member_detail_text_gender_title">Genere</string>
-    <string name="activity_family_member_points_name">Punti:</string>
+    <string name="activity_family_member_detail_points_name">Punti:</string>
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_text_achievement_title">Achievement sbloccati</string>
     <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
@@ -162,7 +162,9 @@
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
-    <string name="activity_user_profile_empty_homes_list">Non ti sei ancora unito o hai creato nessuna casa</string>
+    <string name="activity_user_profile_empty_homes_list">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
     <string name="activity_user_profile_empty_homes_list_title">Non c\'è nulla qui :(</string>
+    <string name="activity_user_profile_signup_date_name">Iscritto in data:</string>
+    <string name="activity_user_profile_text_homelist_title">Le mie case</string>
 
 </resources>

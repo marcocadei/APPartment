@@ -123,19 +123,17 @@
                 <TextView
                     android:id="@+id/activity_signup_text_radio_gender"
                     style="@style/Component"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimaryLight"
                     android:text="@string/activity_signup_text_radio_gender" />
 
                 <RadioButton
                     android:id="@+id/activity_signup_radio_gender_male"
                     style="@style/Component"
-                    android:textColor="@color/colorPrimaryDark"
                     android:text="@string/activity_signup_radio_gender_male" />
 
                 <RadioButton
                     android:id="@+id/activity_signup_radio_gender_female"
                     style="@style/Component"
-                    android:textColor="@color/colorPrimaryDark"
                     android:text="@string/activity_signup_radio_gender_female" />
             </RadioGroup>
 

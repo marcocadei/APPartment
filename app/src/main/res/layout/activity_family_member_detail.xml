@@ -81,7 +81,7 @@
                             android:id="@+id/activity_family_member_detail_text_points_name"
                             style="@style/Component.TextView.SingleLine.PointsName"
                             android:gravity="start"
-                            android:text="@string/activity_family_member_points_name"
+                            android:text="@string/activity_family_member_detail_points_name"
                             android:textSize="@dimen/text_extra_large"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintHorizontal_bias="0"
