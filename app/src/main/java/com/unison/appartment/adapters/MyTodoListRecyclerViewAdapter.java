@@ -1,7 +1,12 @@
 package com.unison.appartment.adapters;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +25,12 @@ import java.util.List;
  * chiamata al {@link com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener} specificato
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyTodoListRecyclerViewAdapter extends ListAdapter<Task, RecyclerView.ViewHolder> {
 
-    private final List<Task> tasks;
     private final OnTodoListFragmentInteractionListener listener;
 
-    public MyTodoListRecyclerViewAdapter(List<Task> tasks, OnTodoListFragmentInteractionListener listener) {
-        this.tasks = tasks;
+    public MyTodoListRecyclerViewAdapter(/*List<Task> tasks, */OnTodoListFragmentInteractionListener listener) {
+        super(MyTodoListRecyclerViewAdapter.DIFF_CALLBACK);
         this.listener = listener;
     }
 
@@ -40,7 +44,9 @@ public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final ViewHolderTask holderTask = (ViewHolderTask) holder;
-        final Task task = tasks.get(position);
+//        final Task task = tasks.get(position);
+        final Task task = getItem(position);
+
         holderTask.taskName.setText(task.getName());
         holderTask.taskDescription.setText(task.getDescription());
         holderTask.taskPoints.setText(String.valueOf(task.getPoints()));
@@ -53,11 +59,6 @@ public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return tasks.size();
     }
 
     public class ViewHolderTask extends RecyclerView.ViewHolder {
@@ -79,4 +80,19 @@ public class MyTodoListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             return super.toString() + " '" + taskName.getText() + "'";
         }
     }
+
+    public static final DiffUtil.ItemCallback<Task> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Task>() {
+                @Override
+                public boolean areItemsTheSame(
+                        @NonNull Task oldTask, @NonNull Task newTask) {
+                    // Le proprietà possono cambiare, ma l'id rimane lo stesso
+                    return oldTask.getId().equals(newTask.getId());
+                }
+                @Override
+                public boolean areContentsTheSame(
+                        @NonNull Task oldTask, @NonNull Task newTask) {
+                    return oldTask.equals(newTask);
+                }
+            };
 }

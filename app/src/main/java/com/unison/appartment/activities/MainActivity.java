@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     // TODO da rimuovere
     public final static String LOGGED_USER = "MARCO";
 
+    private static final String SELECTED_BOTTOM_MENU_ITEM = "selectedBottomMenuItem";
+
     private int selectedBottomNavigationMenuItemId;
     private Toolbar toolbar;
 
@@ -46,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
         // Alla creazione dell'activity vengono impostati titolo e logo della toolbar in base alla voce
         // selezionata del menù alla prima apertura
         BottomNavigationView bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
-        selectedBottomNavigationMenuItemId = bottomNavigation.getSelectedItemId();
+        if (savedInstanceState != null) {
+            selectedBottomNavigationMenuItemId = savedInstanceState.getInt(SELECTED_BOTTOM_MENU_ITEM);
+        } else {
+            selectedBottomNavigationMenuItemId = bottomNavigation.getSelectedItemId();
+        }
         final MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(selectedBottomNavigationMenuItemId);
         updateActivityContent(selectedBottomNavigationMenuItem);
 
@@ -62,11 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        // TODO da rimuovere, solo debug
-        Intent i = getIntent();
-        String s = i.getStringExtra(EXTRA_HOME_NAME);
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -175,6 +176,12 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(SELECTED_BOTTOM_MENU_ITEM, selectedBottomNavigationMenuItemId);
+        super.onSaveInstanceState(outState);
     }
 
     /**

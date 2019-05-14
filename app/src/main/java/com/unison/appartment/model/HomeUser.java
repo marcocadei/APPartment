@@ -1,20 +1,20 @@
 package com.unison.appartment.model;
 
 /**
- * Classe che rappresenta il membro di una casa
+ * Classe che rappresenta un membro di una casa
  */
-public class Member {
+public class HomeUser {
 
     private final static int DEFAULT_POINTS = 0;
 
     private String nickname;
     private int points;
 
-    public Member(String nickname) {
+    public HomeUser(String nickname) {
         this(nickname, DEFAULT_POINTS);
     }
 
-    public Member(String nickname, int points) {
+    public HomeUser(String nickname, int points) {
         this.nickname = nickname;
         this.points = points;
     }

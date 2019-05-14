@@ -21,10 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Home;
-import com.unison.appartment.model.Member;
 import com.unison.appartment.model.UserHome;
 
 import java.util.HashMap;
@@ -233,7 +233,7 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
         Map<String, Object> childUpdates = new HashMap<>();
         Home home = new Home(homeName, password);
         childUpdates.put(homePath, home);
-        Member member = new Member(nickname);
+        HomeUser member = new HomeUser(nickname);
         childUpdates.put(familyPath, member);
         UserHome userHome = new UserHome(homeName, UserHome.ROLE_OWNER);
         childUpdates.put(userhomePath, userHome);

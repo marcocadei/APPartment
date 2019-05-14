@@ -42,7 +42,7 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
     public void onBindViewHolder(final ViewHolderMember holder, int position) {
         ViewHolderMember holderMember = (ViewHolderMember) holder;
         final User user = (User) userList.get(position);
-        // TODO risistemare con Member e non User
+        // TODO risistemare con HomeUser e non User
         holderMember.textMemberName.setText("riccardo");
         holderMember.textMemberPoints.setText("578");
 //        holderMember.textMemberName.setText(user.getName());
