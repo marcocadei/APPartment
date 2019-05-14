@@ -5,6 +5,8 @@
 
     <string name="placeholder_text">Placeholder</string>
     <string name="placeholder_text_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="placeholder_number">200</string>
+    <string name="placeholder_number_long">1234567</string>
 
     <string name="general_points_name">Punti</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
@@ -14,6 +16,8 @@
         <item quantity="one">%d elemento selezionato</item>
         <item quantity="other">%d elementi selezionati</item>
     </plurals>
+
+    <!-- Errori delle form -->
 
     <string name="form_error_missing_value">Specificare un valore</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
@@ -28,16 +32,17 @@
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
     <string name="form_error_invalid_character">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
 
+    <!-- Descrizioni dei drawable -->
+    <!-- TODO -->
+
     <!-- Legate ad una specifica activity -->
 
-    <string name="activity_enter_btn_register">Crea la tua casa</string>
     <string name="activity_enter_btn_signup">Registrati</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_logo_description">Logo di APPartment</string>
 
     <string name="activity_signin_text_title">Accedi ad APPartment</string>
     <string name="activity_signin_img_title_description">Simbolo di login</string>
-    <string name="activity_signin_hint_housename">Nome della casa</string>
     <string name="activity_signin_hint_email">Email</string>
     <string name="activity_signin_hint_password">Password</string>
     <string name="activity_signin_progress_title">Accesso</string>
@@ -45,17 +50,12 @@
 
     <string name="activity_signup_logo_description">Registrati ad APPartment</string>
     <string name="activity_signup_input_email">Email</string>
-    <string name="activity_signup_input_username">Username</string>
     <string name="activity_signup_input_age">Età</string>
     <string name="activity_signup_input_password">Password</string>
     <string name="activity_signup_input_repeat_password">Ripeti password</string>
     <string name="activity_signup_radio_gender_male">Maschio</string>
     <string name="activity_signup_radio_gender_female">Femmina</string>
-    <string name="activity_signup_radio_role_owner">Creatore</string>
-    <string name="activity_signup_radio_role_master">Leader</string>
-    <string name="activity_signup_radio_role_slave">Collaboratore</string>
     <string name="activity_signup_text_radio_gender">Genere</string>
-    <string name="activity_signup_text_radio_role">Ruolo</string>
     <string name="activity_signup_signup_title">Registrazione</string>
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
 
@@ -71,7 +71,6 @@
     <string name="activity_create_home_hint_nickname">Nickname</string>
 
     <string name="activity_main_toolbar_settings">Impostazioni</string>
-    <string name="activity_main_toolbar_logout">Logout</string>
     <string name="activity_main_toolbar_edit">Modifica dati utente</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
 
@@ -85,6 +84,8 @@
 
     <string name="fragment_family_member_img_person">Immagine di profilo dell\'utente</string>
 
+    <string name="fragment_home_img_home">Icona di una casa</string>
+
     <string name="fragment_insert_post_hint_post">Testo del messaggio</string>
     <string name="fragment_insert_post_img_send_text_description">Bottone di invio testo</string>
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
@@ -94,6 +95,7 @@
 
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
+    <string name="fragment_money_reward_img_arrow">Icona di una freccia</string>
 
     <string name="fragment_reward_text_status_row_1">Premio</string>
     <string name="fragment_reward_text_status_row_2">richiesto</string>
@@ -119,10 +121,8 @@
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_family_member_detail_text_name">%s</string>
     <string name="activity_family_member_detail_text_role_title">Ruolo</string>
-    <string name="activity_family_member_detail_text_role_value">%s</string>
     <string name="activity_family_member_detail_text_gender_title">Genere</string>
-    <string name="activity_family_member_detail_text_gender_value">%s</string>
-    <string name="activity_family_member_points_name">Punti:</string>
+    <string name="activity_family_member_detail_points_name">Punti:</string>
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_text_achievement_title">Achievement sbloccati</string>
     <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
@@ -164,7 +164,9 @@
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
-    <string name="activity_user_profile_empty_homes_list">Non ti sei ancora unito o hai creato nessuna casa</string>
-    <string name="activity_user_profile_empty_homes_list_title">Non c\'é nulla qui :(</string>
+    <string name="activity_user_profile_empty_homes_list">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
+    <string name="activity_user_profile_empty_homes_list_title">Non c\'è nulla qui :(</string>
+    <string name="activity_user_profile_signup_date_name">Iscritto in data:</string>
+    <string name="activity_user_profile_text_homelist_title">Le mie case</string>
 
 </resources>

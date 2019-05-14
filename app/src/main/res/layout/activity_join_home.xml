@@ -96,7 +96,7 @@
             <TextView
                 android:id="@+id/activity_join_home_text_info"
                 style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
-                android:drawableStart="@drawable/ic_info_outline_color6a1b9a"
+                android:drawableStart="@drawable/ic_info_outline_color_6a1b9a"
                 android:text="@string/activity_join_home_text_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

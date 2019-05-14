@@ -12,6 +12,10 @@ import androidx.fragment.app.DialogFragment;
 
 import com.unison.appartment.R;
 
+/*
+Riferimento per la struttura del codice: https://stackoverflow.com/a/13338148
+ */
+
 /**
  * Fragment che rappresenta una dialog di errore di Firebase
  */
@@ -19,9 +23,8 @@ public class FirebaseErrorDialogFragment extends DialogFragment {
 
     public final static String TAG_FIREBASE_ERROR_DIALOG = "errorDialog";
 
-    // Riferimento: https://stackoverflow.com/a/13338148
     public interface FirebaseErrorDialogInterface {
-        void onDialogFragmentDismiss();
+        void onErrorDialogFragmentDismiss();
     }
 
     private FirebaseErrorDialogInterface mListener;
@@ -45,7 +48,7 @@ public class FirebaseErrorDialogFragment extends DialogFragment {
         builder.setMessage(R.string.dialog_firebase_error_message)
                 .setPositiveButton(R.string.general_ok_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogFragmentDismiss();
+                        mListener.onErrorDialogFragmentDismiss();
 //                        dismiss(); // Già fatto in automatico, superfluo
                     }
                 });

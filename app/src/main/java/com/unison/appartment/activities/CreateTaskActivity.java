@@ -28,8 +28,6 @@ import java.util.Locale;
  */
 public class CreateTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private final static String DATE_PICKER_FRAGMENT_TAG = "datePickerFragment";
-
     // Date formatter utilizzato per formattare la deadline
     private DateFormat dateFormatter;
 
@@ -86,7 +84,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         deve essere cambiato il listener dal momento che altrimenti farebbe riferimento all'activity
         distrutta non più esistente.
          */
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(DATE_PICKER_FRAGMENT_TAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(DatePickerFragment.TAG_DATE_PICKER);
         if (fragment != null) {
             ((DatePickerFragment) fragment).setListener(this);
         }
@@ -126,7 +124,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         month = cal.get(Calendar.MONTH);
         day = cal.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerFragment.newInstance(year, month, day, this).show(getSupportFragmentManager(), DATE_PICKER_FRAGMENT_TAG);
+        DatePickerFragment.newInstance(year, month, day, this).show(getSupportFragmentManager(), DatePickerFragment.TAG_DATE_PICKER);
     }
 
     @Override

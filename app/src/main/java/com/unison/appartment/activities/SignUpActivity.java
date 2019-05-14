@@ -1,11 +1,9 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -22,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
@@ -30,7 +28,7 @@ import com.unison.appartment.model.User;
 /**
  * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione
  */
-public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
+public class SignUpActivity extends FormActivity {
 
     private static final int MIN_USER_PASSWORD_LENGTH = 6;
 
@@ -43,8 +41,6 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
     TextInputLayout layoutRepeatPassword;
     TextInputLayout layoutAge;
     RadioGroup inputGender;
-
-    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +59,12 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         layoutRepeatPassword = findViewById(R.id.activity_signup_input_repeat_password);
         layoutAge = findViewById(R.id.activity_signup_input_age);
 
+        /*
+        I listener sono duplicati anche se fanno la stessa cosa poiché la view che prende il focus
+        è il textInput mentre la view su cui bisogna operare per rimuovere il messaggio di errore
+        è il textLayout, e per qualche motivo invocando getParent sul textInput NON viene restituito
+        il textLayout.
+         */
         inputEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -88,16 +90,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
             }
         });
 
-        // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatFinish = findViewById(R.id.activity_signup_float_finish);
-        /*
-        Se l'utente proviene dalla CreateHomeActivity, alla pressione del bottone bisogna:
-        - creare un nuovo record in FirebaseAuth
-        - inserire nel database la nuova casa
-        - inserire nel database il nuovo utente (owner della nuova casa)
-        Se l'utente invece proviene dalla JoinHomeActivity la casa è già esistente, quindi bisogna solo
-        procedere al salvataggio dei dati relativi all'utente (sia nel database che in FirebaseAuth)
-         */
         floatFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,39 +102,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         });
     }
 
-    /**
-     * Metodo per togliere il messaggio d'errore su un campo di input
-     *
-     * @param inputLayout Il campo di input da cui togliere il messaggio d'errore
-     */
-    private void resetErrorMessage(TextInputLayout inputLayout) {
-        inputLayout.setError(null);
-        inputLayout.setErrorEnabled(false);
-    }
-
-    /**
-     * Metodo per creare un nuovo User a partire dai dati specificati in input
-     *
-     * @return Lo User che si vuole registrare all'applicazione
-     */
-    private User createUser() {
-        // Recupero i valori dei campi della form
-        String email = inputEmail.getText().toString();
-        String password = inputPassword.getText().toString();
-        int age = Integer.parseInt(inputAge.getText().toString());
-        RadioButton selectedGender = findViewById(inputGender.getCheckedRadioButtonId());
-        String gender = selectedGender.getText().toString();
-
-        return new User(email, password, age, gender);
-    }
-
-    /**
-     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
-     * controlli lato client
-     *
-     * @return True se i controlli sono superati, false altrimenti
-     */
-    private boolean checkInput() {
+    protected boolean checkInput() {
         resetErrorMessage(layoutEmail);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);
@@ -200,16 +161,24 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
         return result;
     }
 
-    /**
-     * Metodo per creare un nuovo User in Firebase Auth, con la verifica dei controlli lato server
-     *
-     * @param newUser Lo User da creare in Firebase Auth
-     */
+    private User createUser() {
+        // Precondizione: Tutti i campi della form sono corretti
+
+        // Recupero i valori dei campi della form
+        String email = inputEmail.getText().toString();
+        String password = inputPassword.getText().toString();
+        int age = Integer.parseInt(inputAge.getText().toString());
+        RadioButton selectedGender = findViewById(inputGender.getCheckedRadioButtonId());
+        String gender = selectedGender.getText().toString();
+
+        return new User(email, password, age, gender);
+    }
+
     private void writeAuthInfo(final User newUser) {
-        progress = ProgressDialog.show(
-                this,
+        progressDialog = FirebaseProgressDialogFragment.newInstance(
                 getString(R.string.activity_signup_signup_title),
-                getString(R.string.activity_signup_signup_description), true);
+                getString(R.string.activity_signup_signup_description));
+        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
         // Salvataggio delle informazioni in Auth
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -228,10 +197,24 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                             } catch (FirebaseAuthWeakPasswordException e) {
                                 // Password non abbastanza robusta
 
-                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                /*
+                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                                eseguiti controlli lato client sulla lunghezza della password.
+                                Se si entra in questo blocco c'è qualche problema!
+                                 */
+                                Log.w(getClass().getCanonicalName(), e.getMessage());
+                            }
+                            catch (FirebaseAuthInvalidCredentialsException e) {
                                 // Email malformata
 
-                            } catch (Exception e) {
+                                /*
+                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                                eseguiti controlli lato client sulla struttura dell'indirizzo mail.
+                                Se si entra in questo blocco c'è qualche problema!
+                                 */
+                                Log.w(getClass().getCanonicalName(), e.getMessage());
+                            }
+                            catch (Exception e) {
                                 // Generico
                                 showErrorDialog();
                             }
@@ -256,7 +239,7 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            moveToNextActivity();
+                            moveToNextActivity(UserProfileActivity.class);
                             dismissProgress();
                         } else {
                             try {
@@ -272,38 +255,4 @@ public class SignUpActivity extends AppCompatActivity implements FirebaseErrorDi
                 });
     }
 
-    /**
-     * Metodo per passare all'activity successiva (UserProfileActivity)
-     */
-    private void moveToNextActivity() {
-        Intent i = new Intent(this, UserProfileActivity.class);
-        startActivity(i);
-        finish();
-    }
-
-    /**
-     * Metodo per mostrare una dialog con l'errore di Firebase
-     */
-    private void showErrorDialog() {
-        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-        dismissProgress();
-        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
-    }
-
-    /**
-     * Metodo per non mostrare più la progress dialog
-     */
-    private void dismissProgress() {
-        if (progress != null) {
-            progress.dismiss();
-        }
-    }
-
-    @Override
-    public void onDialogFragmentDismiss() {
-        Intent i = new Intent(this, EnterActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
-    }
 }

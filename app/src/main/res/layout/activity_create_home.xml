@@ -112,7 +112,7 @@
             <TextView
                 android:id="@+id/activity_create_home_text_password_info"
                 style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
-                android:drawableStart="@drawable/ic_info_outline_color6a1b9a"
+                android:drawableStart="@drawable/ic_info_outline_color_6a1b9a"
                 android:text="@string/activity_create_home_text_password_info"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_role_info"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +124,7 @@
             <TextView
                 android:id="@+id/activity_create_home_text_role_info"
                 style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
-                android:drawableStart="@drawable/ic_info_outline_color6a1b9a"
+                android:drawableStart="@drawable/ic_info_outline_color_6a1b9a"
                 android:text="@string/activity_create_home_text_role_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

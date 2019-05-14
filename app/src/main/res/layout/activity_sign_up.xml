@@ -123,6 +123,7 @@
                 <TextView
                     android:id="@+id/activity_signup_text_radio_gender"
                     style="@style/Component"
+                    android:textColor="@color/colorPrimaryLight"
                     android:text="@string/activity_signup_text_radio_gender" />
 
                 <RadioButton

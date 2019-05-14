@@ -164,15 +164,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            case R.id.activity_main_toolbar_logout: {
-                FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(this, EnterActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                finish();
-                return true;
-            }
-
             default:
                 return super.onOptionsItemSelected(item);
         }

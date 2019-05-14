@@ -26,8 +26,7 @@ import com.unison.appartment.model.UserHome;
 public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
 
     private Toolbar toolbar;
-    private TextView emptyHomeListTitle;
-    private TextView emptyHomeListText;
+    private View emptyListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +37,7 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         toolbar = findViewById(R.id.activity_user_profile_toolbar);
         setSupportActionBar(toolbar);
 
-        emptyHomeListTitle = findViewById(R.id.activity_user_profile_empty_home_list_title);
-        emptyHomeListText = findViewById(R.id.activity_user_profile_empty_home_list_text);
+        emptyListLayout = findViewById(R.id.activity_user_profile_layout_empty_list);
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -135,8 +133,7 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
 
         // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
         if (elements == 0) {
-            emptyHomeListTitle.setVisibility(View.VISIBLE);
-            emptyHomeListText.setVisibility(View.VISIBLE);
+            emptyListLayout.setVisibility(View.VISIBLE);
         }
     }
 }

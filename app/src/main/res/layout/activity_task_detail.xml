@@ -55,7 +55,7 @@
 
                     <TextView
                         android:id="@+id/activity_task_detail_points_value"
-                        android:text="25060"
+                        android:text="@string/placeholder_number"
                         style="@style/Component.TextView.SingleLine.PointsValue"
                         app:layout_constraintBottom_toTopOf="@id/activity_task_detail_points_label"
                         app:layout_constraintEnd_toEndOf="parent"

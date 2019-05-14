@@ -23,8 +23,10 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/activity_enter_btn_signup"
         style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_title"
+        android:layout_marginEnd="@dimen/margin_title"
         android:text="@string/activity_enter_btn_signup"
         app:icon="@drawable/ic_person_add"
         app:layout_constraintBottom_toTopOf="@id/activity_enter_btn_login"
@@ -35,13 +37,15 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/activity_enter_btn_login"
         style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_title"
+        android:layout_marginEnd="@dimen/margin_title"
         android:text="@string/activity_enter_btn_login"
         app:icon="@drawable/rotated_270_ic_file_download"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/activity_enter_btn_signup"
-        app:layout_constraintStart_toStartOf="@id/activity_enter_btn_signup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_enter_btn_signup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.model.Reward;
 
 /**
@@ -41,9 +42,6 @@ public class CreateRewardActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        Creazione di un nuovo premio alla pressione del bottone.
-         */
         inputName = findViewById(R.id.activity_create_reward_input_name_value);
         inputDescription = findViewById(R.id.activity_create_reward_input_description_value);
         inputPoints = findViewById(R.id.activity_create_reward_input_points_value);
@@ -61,13 +59,15 @@ public class CreateRewardActivity extends AppCompatActivity {
      * Metodo per creare un nuovo Reward
      */
     public void createReward() {
+        // FIXME modificare la struttura del metodo in modo che sia in linea con le altre activity
+
         Reward reward = new Reward(
                 inputName.getText().toString(),
                 inputDescription.getText().toString(),
                 Integer.valueOf(inputPoints.getText().toString())
         );
         Intent i = new Intent();
-        i.putExtra("rewardObject", reward);
+        i.putExtra(RewardsFragment.EXTRA_NEW_REWARD, reward);
         setResult(Activity.RESULT_OK, i);
         finish();
     }

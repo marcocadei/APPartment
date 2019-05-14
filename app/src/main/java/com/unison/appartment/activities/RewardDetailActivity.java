@@ -21,6 +21,9 @@ import java.util.Locale;
  */
 public class RewardDetailActivity extends AppCompatActivity {
 
+    // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME
+    public final static String EXTRA_REWARD_OBJECT = "rewardObject";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +33,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         Impostazione del comportamento della freccia presente sulla toolbar
         (alla pressione l'activity viene terminata).
          */
-        Toolbar toolbar;
-        toolbar = findViewById(R.id.activity_reward_detail_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_reward_detail_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,21 +47,20 @@ public class RewardDetailActivity extends AppCompatActivity {
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        Resources res = getResources();
-        Reward reward = (Reward) creationIntent.getSerializableExtra("rewardObject");
+        Reward reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
+
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
-        textName.setText(res.getString(R.string.activity_reward_detail_text_name, reward.getName()));
+        textName.setText(getString(R.string.activity_reward_detail_text_name, reward.getName()));
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
         // Viene gestito il caso in cui la descrizione sia vuota
         String shownDescription = reward.getDescription();
         if (shownDescription == null || shownDescription.isEmpty()) {
-            shownDescription = res.getString(R.string.general_no_description_available);
+            shownDescription = getString(R.string.general_no_description_available);
             textDescription.setTypeface(null, Typeface.ITALIC);
         }
         textDescription.setText(shownDescription);
         TextView textPoints = findViewById(R.id.activity_reward_detail_text_points_value);
         textPoints.setText(String.format(Locale.getDefault(), "%d", reward.getPoints()));
-        toolbar.setTitle(res.getString(R.string.activity_reward_detail_title));
 
         /*
         Il bottone per la richiesta del premio è disabilitato se il premio è già
@@ -67,7 +68,7 @@ public class RewardDetailActivity extends AppCompatActivity {
          */
         MaterialButton btnReserve = findViewById(R.id.activity_reward_detail_btn_reserve);
         if (reward.isRequested()) {
-            btnReserve.setText(res.getString(R.string.activity_reward_detail_btn_reserve_disabled));
+            btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_disabled));
             btnReserve.setEnabled(false);
         }
 

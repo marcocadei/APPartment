@@ -1,9 +1,7 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
@@ -33,7 +32,7 @@ import java.util.Map;
 /**
  * Classe che rappresenta l'Activity per creare una nuova casa
  */
-public class CreateHomeActivity extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
+public class CreateHomeActivity extends FormActivity {
 
     private static final int MIN_HOME_PASSWORD_LENGTH = 6;
 
@@ -46,12 +45,13 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
     TextInputLayout layoutRepeatPassword;
     TextInputLayout layoutNickname;
 
-    ProgressDialog progress;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_home);
+
+        // Modifica dell'activity di destinazione a cui andare quando si chiude il dialog di errore
+        this.errorDialogDestinationActivity = UserProfileActivity.class;
 
         inputHomeName = findViewById(R.id.activity_create_home_input_homename_value);
         inputPassword = findViewById(R.id.activity_create_home_input_password_value);
@@ -94,29 +94,27 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(CreateHomeActivity.this);
                 if (checkInput()) {
-                    checkHouseExists(inputHomeName.getText().toString(), inputPassword.getText().toString(), inputNickname.getText().toString());
+                    // Se i controlli locali vanno a buon fine controllo che la casa esista
+                    checkHome(inputHomeName.getText().toString(), inputPassword.getText().toString());
                 }
             }
         });
     }
 
-    /**
+  // FIXME sposta
+  /**
      * Metodo per togliere il messaggio d'errore su un campo di input
      *
      * @param inputLayout Il campo di input da cui togliere il messaggio d'errore
      */
-    private void resetErrorMessage(TextInputLayout inputLayout) {
-        inputLayout.setError(null);
-        inputLayout.setErrorEnabled(false);
-    }
-
-    /**
+  
+  /**
      * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
      * controlli lato client
      *
      * @return True se i controlli sono superati, false altrimenti
      */
-    private boolean checkInput() {
+    protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);
@@ -172,19 +170,36 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
         return result;
     }
 
-    /**
-     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
-     * controlli lato server, cioè che la casa non sia già presente
-     *
-     * @param homeName Il nome della casa che si vuole creare
-     * @param password La password della casa che si vuole creare
-     * @param nickname Il nickname dello User all'interno della casa che si vuole creare
-     */
-    private void checkHouseExists(final String homeName, final String password, final String nickname) {
-        progress = ProgressDialog.show(
-                this,
+    private Home createHome() {
+        // Precondizione: Tutti i campi della form sono corretti
+
+        String homeName = inputHomeName.getText().toString();
+        String password = inputPassword.getText().toString();
+
+        return new Home(homeName, password);
+    }
+
+    private HomeUser createHomeUser() {
+        // Precondizione: Tutti i campi della form sono corretti
+
+        String nickname = inputNickname.getText().toString();
+
+        return new HomeUser(nickname);
+    }
+
+    private UserHome createUserHome() {
+        // Precondizione: Tutti i campi della form sono corretti
+
+        String homeName = inputHomeName.getText().toString();
+
+        return new UserHome(homeName, UserHome.ROLE_OWNER);
+    }
+
+    private void checkHome(final String homeName, final String password) {
+        progressDialog = FirebaseProgressDialogFragment.newInstance(
                 getString(R.string.activity_create_home_progress_title),
-                getString(R.string.activity_create_home_progress_description), true);
+                getString(R.string.activity_create_home_progress_description));
+        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
         String separator = getString(R.string.db_separator);
         String path = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName);
@@ -198,7 +213,7 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                     dismissProgress();
                 }
                 else {
-                    writeNewHomeInDb(homeName, password, nickname);
+                    writeHomeInDb(homeName);
                 }
             }
 
@@ -215,14 +230,14 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
         });
     }
 
-    /**
+  /**
      * Metodo per effettuare la scrittura in Firebase Database di una nuova Home
      *
      * @param homeName Il nome della casa che si vuole creare
      * @param password La password della casa che si vuole creare
      * @param nickname Il nickname dello User all'interno della casa che si vuole creare
      */
-    private void writeNewHomeInDb(final String homeName, final String password, final String nickname) {
+    private void writeHomeInDb(final String homeName) {
         String separator = getString(R.string.db_separator);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -231,19 +246,16 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
         final String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
-        Home home = new Home(homeName, password);
-        childUpdates.put(homePath, home);
-        HomeUser member = new HomeUser(nickname);
-        childUpdates.put(familyPath, member);
-        UserHome userHome = new UserHome(homeName, UserHome.ROLE_OWNER);
-        childUpdates.put(userhomePath, userHome);
+        childUpdates.put(homePath, createHome());
+        childUpdates.put(familyPath, createHomeUser());
+        childUpdates.put(userhomePath, createUserHome());
 
         dbRef.updateChildren(childUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            moveToNextActivity();
+                            moveToNextActivity(MainActivity.class);
                             dismissProgress();
                         }
                         else {
@@ -275,40 +287,13 @@ public class CreateHomeActivity extends AppCompatActivity implements FirebaseErr
                 });
     }
 
-    /**
-     * Metodo per passare all'activity successiva (MainActivity della nuova casa)
-     */
-    private void moveToNextActivity() {
-        Intent i = new Intent(CreateHomeActivity.this, MainActivity.class);
+    @Override
+    protected void moveToNextActivity(Class destination) {
+        Intent i = new Intent(CreateHomeActivity.this, destination);
         // Passo il nome della casa all'activity successiva
         i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
         startActivity(i);
         finish();
     }
 
-    /**
-     * Metodo per mostrare una dialog con l'errore di Firebase
-     */
-    private void showErrorDialog() {
-        FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
-        dismissProgress();
-        dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
-    }
-
-    /**
-     * Metodo per non mostrare più la progress dialog
-     */
-    private void dismissProgress() {
-        if (progress != null) {
-            progress.dismiss();
-        }
-    }
-
-    @Override
-    public void onDialogFragmentDismiss() {
-        Intent i = new Intent(this, EnterActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
-    }
 }

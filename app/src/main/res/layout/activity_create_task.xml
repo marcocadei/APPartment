@@ -58,6 +58,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_task_input_points_value"
                     style="@style/CustomFormTextFieldInput"
+                    android:maxLength="9"
                     android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
