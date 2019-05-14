@@ -24,6 +24,9 @@ import com.unison.appartment.model.Task;
 
 import java.util.List;
 
+/**
+ * Fragment che rappresenta una lista di To Do
+ */
 public class TodoListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -111,7 +114,7 @@ public class TodoListFragment extends Fragment {
             }
         });
     }
-    
+
     public void addTask(Task newTask) {
         /*Task.addTask(0, newTask);*/
 /*        uncompletedTasks.add(0, newTask);

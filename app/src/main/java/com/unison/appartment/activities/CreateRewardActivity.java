@@ -14,6 +14,9 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.model.Reward;
 
+/**
+ * Classe che rappresenta l'Activity per creare un nuovo Reward
+ */
 public class CreateRewardActivity extends AppCompatActivity {
 
     private EditText inputName;
@@ -52,6 +55,9 @@ public class CreateRewardActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Metodo per creare un nuovo Reward
+     */
     public void createReward() {
         // FIXME modificare la struttura del metodo in modo che sia in linea con le altre activity
 

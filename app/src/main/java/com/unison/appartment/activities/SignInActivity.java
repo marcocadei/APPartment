@@ -18,6 +18,9 @@ import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 
+/**
+ * Classe che rappresenta l'Activity per effettuare l'accesso all'applicazione
+ */
 public class SignInActivity extends FormActivity {
 
     EditText inputEmail;
@@ -56,6 +59,7 @@ public class SignInActivity extends FormActivity {
             }
         });
 
+        // Gestione click sul bottone per effettuare l'accesso
         FloatingActionButton floatNext = findViewById(R.id.activity_signin_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override

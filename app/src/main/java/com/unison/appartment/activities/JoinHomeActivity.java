@@ -29,6 +29,9 @@ import com.unison.appartment.model.UserHome;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe che rappresenta l'Activity per unirsi ad una nuova casa
+ */
 public class JoinHomeActivity extends FormActivity {
 
     EditText inputHomeName;
@@ -72,6 +75,7 @@ public class JoinHomeActivity extends FormActivity {
             }
         });
 
+        // Gestione click sul bottone per effettuare l'unione
         FloatingActionButton floatNext = findViewById(R.id.activity_join_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override

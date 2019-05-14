@@ -15,6 +15,10 @@ import com.unison.appartment.R;
 /*
 Riferimento per la struttura del codice: https://stackoverflow.com/a/13338148
  */
+
+/**
+ * Fragment che rappresenta una dialog di errore di Firebase
+ */
 public class FirebaseErrorDialogFragment extends DialogFragment {
 
     public final static String TAG_FIREBASE_ERROR_DIALOG = "errorDialog";

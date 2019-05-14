@@ -14,12 +14,9 @@ import com.unison.appartment.R;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MoneyRewardFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MoneyRewardFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Una sottoclasse di {@link Fragment}
+ * Le Activity che contengono questo fragment devono implementare l'interface
+ * {@link MoneyRewardFragment.OnFragmentInteractionListener} per gestire gli eventi di interazione
  */
 public class MoneyRewardFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -33,8 +30,10 @@ public class MoneyRewardFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    /**
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
+     */
     public MoneyRewardFragment() {
-        // Required empty public constructor
     }
 
     /**

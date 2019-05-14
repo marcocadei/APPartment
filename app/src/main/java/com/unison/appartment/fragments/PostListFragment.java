@@ -25,7 +25,7 @@ import com.unison.appartment.model.TextPost;
 import java.util.Date;
 
 /**
- * Fragment che rappresenta la lista di post
+ * Fragment che rappresenta una lista di Post
  */
 public class PostListFragment extends Fragment {
     // Numero di colonne della lista

@@ -31,12 +31,9 @@ import java.io.IOException;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnInsertPostFragmentListener} interface
- * to handle interaction events.
- * Use the {@link InsertPostFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Una sottoclasse di {@link Fragment}
+ * Le Activity che contengono questo fragment devono implementare l'interface
+ * {@link OnInsertPostFragmentListener} per gestire gli eventi di interazione
  */
 public class InsertPostFragment extends Fragment {
 

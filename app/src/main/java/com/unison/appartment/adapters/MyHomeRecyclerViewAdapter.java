@@ -15,8 +15,8 @@ import com.unison.appartment.model.UserHome;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link HomeListFragment.OnHomeListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} che può visualizzare una lista di  {@link UserHome} e che effettua una
+ * chiamata al {@link HomeListFragment.OnHomeListFragmentInteractionListener} specificato
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeRecyclerViewAdapter.ViewHolderHome> {

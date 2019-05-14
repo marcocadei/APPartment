@@ -27,10 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnHomeListFragmentInteractionListener}
- * interface.
+ * Fragment che rappresenta una lista di UserHome
+ * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnHomeListFragmentInteractionListener}
  */
 public class HomeListFragment extends Fragment {
 
@@ -47,8 +45,7 @@ public class HomeListFragment extends Fragment {
     private OnHomeListFragmentInteractionListener mListener;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
     public HomeListFragment() {
     }
@@ -113,6 +110,9 @@ public class HomeListFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Metodo per leggere da Firebase Database la lista di UserHome
+     */
     private void readUserHomes() {
         String separator = getString(R.string.db_separator);
         String path = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -137,14 +137,9 @@ public class HomeListFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Questa interfaccia deve essere implementata dalle activity che contengono questo
+     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
+     * che a sua volta può comunicare con altri fragment
      */
     public interface OnHomeListFragmentInteractionListener {
         // TODO: Update argument type and name

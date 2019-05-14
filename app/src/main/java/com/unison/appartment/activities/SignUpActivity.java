@@ -25,6 +25,9 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
 
+/**
+ * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione
+ */
 public class SignUpActivity extends FormActivity {
 
     private static final int MIN_USER_PASSWORD_LENGTH = 6;
@@ -116,8 +119,8 @@ public class SignUpActivity extends FormActivity {
 
         // Controllo che la mail inserita sia valida
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailValue).matches()) {
-                layoutEmail.setError(getString(R.string.form_error_incorrect_email));
-                result = false;
+            layoutEmail.setError(getString(R.string.form_error_incorrect_email));
+            result = false;
         }
 
         // Controllo che le due password inserite coincidano
@@ -185,16 +188,13 @@ public class SignUpActivity extends FormActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             writeUserInDb(newUser);
-                        }
-                        else {
+                        } else {
                             try {
                                 throw task.getException();
-                            }
-                            catch (FirebaseAuthUserCollisionException e) {
+                            } catch (FirebaseAuthUserCollisionException e) {
                                 // Email già in uso
                                 layoutEmail.setError(getString(R.string.form_error_duplicate_email));
-                            }
-                            catch (FirebaseAuthWeakPasswordException e) {
+                            } catch (FirebaseAuthWeakPasswordException e) {
                                 // Password non abbastanza robusta
 
                                 /*
@@ -224,6 +224,11 @@ public class SignUpActivity extends FormActivity {
                 });
     }
 
+    /**
+     * Metodo per effettuare la scrittura in Firebase Database di un nuovo User
+     *
+     * @param newUser Il nuovo User che si vuole scrivere in Firebase Database
+     */
     private void writeUserInDb(final User newUser) {
         // Scrittura dei dati relativi al nuovo utente nel database
         String separator = getString(R.string.db_separator);
@@ -236,12 +241,10 @@ public class SignUpActivity extends FormActivity {
                         if (task.isSuccessful()) {
                             moveToNextActivity(UserProfileActivity.class);
                             dismissProgress();
-                        }
-                        else {
+                        } else {
                             try {
                                 throw task.getException();
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 // (DatabaseException se si verifica una violazione delle regole di sicurezza)
                                 // Generico
                                 showErrorDialog();

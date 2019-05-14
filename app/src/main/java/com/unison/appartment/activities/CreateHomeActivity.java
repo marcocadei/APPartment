@@ -29,6 +29,9 @@ import com.unison.appartment.model.UserHome;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe che rappresenta l'Activity per creare una nuova casa
+ */
 public class CreateHomeActivity extends FormActivity {
 
     private static final int MIN_HOME_PASSWORD_LENGTH = 6;
@@ -84,6 +87,7 @@ public class CreateHomeActivity extends FormActivity {
             }
         });
 
+        // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatNext = findViewById(R.id.activity_create_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +101,19 @@ public class CreateHomeActivity extends FormActivity {
         });
     }
 
+  // FIXME sposta
+  /**
+     * Metodo per togliere il messaggio d'errore su un campo di input
+     *
+     * @param inputLayout Il campo di input da cui togliere il messaggio d'errore
+     */
+  
+  /**
+     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
+     * controlli lato client
+     *
+     * @return True se i controlli sono superati, false altrimenti
+     */
     protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
@@ -213,6 +230,13 @@ public class CreateHomeActivity extends FormActivity {
         });
     }
 
+  /**
+     * Metodo per effettuare la scrittura in Firebase Database di una nuova Home
+     *
+     * @param homeName Il nome della casa che si vuole creare
+     * @param password La password della casa che si vuole creare
+     * @param nickname Il nickname dello User all'interno della casa che si vuole creare
+     */
     private void writeHomeInDb(final String homeName) {
         String separator = getString(R.string.db_separator);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
