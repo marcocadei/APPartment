@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.unison.appartment.Appartment;
 import com.unison.appartment.R;
 
 public class EnterActivity extends AppCompatActivity {
@@ -49,6 +50,9 @@ public class EnterActivity extends AppCompatActivity {
         logout, si vuole che questo ritorni alla EnterActivity (che quindi deve avere l'interfaccia
         già pronta).
          */
+
+        // Salvo il context in un singleton per poterlo usare ovunque nell'applicazione
+        Appartment.getInstance().init(getApplicationContext());
 
         // TODO gestire opportunamente il finish() quando si implementa anche l'accesso diretto
         // all'ultima casa in cui ci si era loggati

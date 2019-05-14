@@ -1,11 +1,17 @@
 package com.unison.appartment.model;
 
+import androidx.annotation.Nullable;
+
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Task implements Serializable {
-
+    @Exclude
+    private String id;
     private String name;
     private String description;
     private String deadline;
@@ -53,7 +59,31 @@ public class Task implements Serializable {
         this.points = points;
     }
 
-    public static final List<Task> TASKS = new ArrayList<Task>(){
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return points == task.points &&
+                Objects.equals(name, task.name) &&
+                Objects.equals(description, task.description) &&
+                Objects.equals(deadline, task.deadline);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, deadline, points);
+    }
+
+    /*    public static final List<Task> TASKS = new ArrayList<Task>(){
         {
             add(new Task("Aspirapolvere", "Passare aspirapolvere per tutta casa", "2019-29-04", 100));
             add(new Task("Piatti", "Lavare i piatti della cena", "2019-28-04", 30));
@@ -63,5 +93,5 @@ public class Task implements Serializable {
 
     public static void addTask(int position, Task task) {
         TASKS.add(position, task);
-    }
+    }*/
 }

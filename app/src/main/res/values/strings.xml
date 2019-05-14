@@ -103,6 +103,8 @@
     <string name="fragment_reward_img_arrow">Icona di una freccia</string>
 
     <string name="fragment_todo_img_check">Simbolo di spunta</string>
+    <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
+    <string name="fragment_todo_empty_homes_list_title">Non c\'é nulla qui :(</string>
 
     <string name="activity_create_reward_title">Crea nuovo premio</string>
     <string name="activity_create_reward_hint_name">Nome</string>

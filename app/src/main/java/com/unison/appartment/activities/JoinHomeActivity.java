@@ -18,10 +18,12 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
-import com.unison.appartment.model.Member;
 import com.unison.appartment.model.UserHome;
 
 import java.util.HashMap;
@@ -112,12 +114,12 @@ public class JoinHomeActivity extends FormActivity {
         return result;
     }
 
-    private Member createMember() {
+    private HomeUser createHomeUser() {
         // Precondizione: Tutti i campi della form sono corretti
 
         String nickname = inputNickname.getText().toString();
 
-        return new Member(nickname);
+        return new HomeUser(nickname);
     }
 
     private UserHome createUserHome() {
@@ -183,7 +185,7 @@ public class JoinHomeActivity extends FormActivity {
         String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(familyPath, createMember());
+        childUpdates.put(familyPath, createHomeUser());
         childUpdates.put(userhomePath, createUserHome());
 
         dbRef.updateChildren(childUpdates)
