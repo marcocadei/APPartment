@@ -43,7 +43,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         User user = (User) i.getSerializableExtra("user");
         // Popolo l'interfaccia con i dati del task ricevuto
-        // TODO risistemare con Member e non User
+        // TODO risistemare con HomeUser e non User
 //        name.setText("paolo");
 //        points.setText("444");
 //        name.setText(user.getName());

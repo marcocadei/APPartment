@@ -2,6 +2,9 @@ package com.unison.appartment;
 
 import android.content.Context;
 
+/**
+ * Classe che rappresenta lo stato globale dell'applicazione
+ */
 public class Appartment {
     // Singleton pattern
     private static final Appartment holder = new Appartment();

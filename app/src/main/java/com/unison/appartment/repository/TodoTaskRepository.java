@@ -21,7 +21,7 @@ public class TodoTaskRepository {
     private String separator;
     private String uncompletedTasks;
     // Nodo del database a cui sono interessato
-    private static DatabaseReference UNCOMPLETED_TASKS_REF;
+    private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
     // tramite un Deserializer in ogetti di tipo Task
     private FirebaseQueryLiveData liveData;
@@ -30,9 +30,10 @@ public class TodoTaskRepository {
     public TodoTaskRepository() {
         separator = Appartment.getInstance().getContext().getString(R.string.db_separator);
         uncompletedTasks = Appartment.getInstance().getContext().getString(R.string.db_uncompleted_tasks);
-        UNCOMPLETED_TASKS_REF =
+        // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
+        uncompletedTasksRef =
                 FirebaseDatabase.getInstance().getReference(separator + uncompletedTasks + separator + Appartment.getInstance().getHome());
-        liveData = new FirebaseQueryLiveData(UNCOMPLETED_TASKS_REF);
+        liveData = new FirebaseQueryLiveData(uncompletedTasksRef);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
     }
 
@@ -42,9 +43,9 @@ public class TodoTaskRepository {
     }
 
     public void addTask(Task newTask) {
-        String key = UNCOMPLETED_TASKS_REF.push().getKey();
+        String key = uncompletedTasksRef.push().getKey();
         newTask.setId(key);
-        UNCOMPLETED_TASKS_REF.child(key).setValue(newTask);
+        uncompletedTasksRef.child(key).setValue(newTask);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Task>> {

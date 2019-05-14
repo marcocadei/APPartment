@@ -21,9 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
-import com.unison.appartment.model.Member;
 import com.unison.appartment.model.UserHome;
 
 import java.util.HashMap;
@@ -173,7 +173,7 @@ public class JoinHomeActivity extends AppCompatActivity implements FirebaseError
         String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
-        Member member = new Member(nickname);
+        HomeUser member = new HomeUser(nickname);
         childUpdates.put(familyPath, member);
         UserHome userHome = new UserHome(homeName, UserHome.ROLE_SLAVE);
         childUpdates.put(userhomePath, userHome);
