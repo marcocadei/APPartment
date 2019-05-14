@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Classe che rappresenta un task da completare
+ */
 public class Task implements Serializable {
     @Exclude
     private String id;
@@ -83,6 +86,7 @@ public class Task implements Serializable {
         return Objects.hash(name, description, deadline, points);
     }
 
+    // TODO da rimuovere
     /*    public static final List<Task> TASKS = new ArrayList<Task>(){
         {
             add(new Task("Aspirapolvere", "Passare aspirapolvere per tutta casa", "2019-29-04", 100));

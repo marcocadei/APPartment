@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta un premio da reclamare
+ */
 // FIXME Eliminare metodi che non servono
 public class Reward implements Serializable {
 

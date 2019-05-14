@@ -16,6 +16,10 @@ import com.unison.appartment.adapters.MyFamilyMemberRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
 
+/**
+ * Fragment che rappresenta una lista di Member di una famiglia
+ * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnFamilyMemberListFragmentInteractionListener}
+ */
 public class FamilyMemberListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -88,13 +92,13 @@ public class FamilyMemberListFragment extends Fragment {
     }
 
     public void addMember(User newUser) {
-        User.addMember(0, newUser);
+        User.addUser(0, newUser);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
     }
 
     public void removeMember(int position){
-        User.removeMember(position);
+        User.removeUser(position);
         myAdapter.notifyItemRemoved(position);
     }
 

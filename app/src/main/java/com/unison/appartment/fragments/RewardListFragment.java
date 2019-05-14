@@ -17,12 +17,10 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.Reward;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnRewardListFragmentInteractionListener}
- * interface.
+ * Fragment che rappresenta una lista di Reward
+ * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link RewardListFragment.OnRewardListFragmentInteractionListener}
  */
-public class RewardFragment extends Fragment {
+public class RewardListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -35,16 +33,15 @@ public class RewardFragment extends Fragment {
     private OnRewardListFragmentInteractionListener mListener;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
-    public RewardFragment() {
+    public RewardListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static RewardFragment newInstance(int columnCount) {
-        RewardFragment fragment = new RewardFragment();
+    public static RewardListFragment newInstance(int columnCount) {
+        RewardListFragment fragment = new RewardListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -109,6 +106,11 @@ public class RewardFragment extends Fragment {
 //        mListener = null;
     }
 
+    /**
+     * Metodo per aggiungere un nuovo Reward
+     *
+     * @param newReward Il nuovo Reward da aggiungere
+     */
     public void addReward(Reward newReward) {
         Reward.addReward(0, newReward);
         myAdapter.notifyItemInserted(0);
@@ -116,14 +118,9 @@ public class RewardFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Questa interfaccia deve essere implementata dalle activity che contengono questo
+     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
+     * che a sua volta può comunicare con altri fragment
      */
     public interface OnRewardListFragmentInteractionListener {
         // TODO: Update argument type and name

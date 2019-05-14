@@ -16,6 +16,9 @@ import com.unison.appartment.model.Reward;
 
 import java.util.Locale;
 
+/**
+ * Classe che rappresenta l'Activity con il dettaglio del Reward
+ */
 public class RewardDetailActivity extends AppCompatActivity {
 
     @Override
@@ -47,6 +50,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
         textName.setText(res.getString(R.string.activity_reward_detail_text_name, reward.getName()));
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
+        // Viene gestito il caso in cui la descrizione sia vuota
         String shownDescription = reward.getDescription();
         if (shownDescription == null || shownDescription.isEmpty()) {
             shownDescription = res.getString(R.string.general_no_description_available);

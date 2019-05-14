@@ -23,6 +23,9 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Classe che rappresenta l'Activity per creare un nuovo Task
+ */
 public class CreateTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private final static String DATE_PICKER_FRAGMENT_TAG = "datePickerFragment";
@@ -40,10 +43,10 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
+
         // Supporto per la toolbar
         toolbar = findViewById(R.id.activity_create_task_toolbar);
         setSupportActionBar(toolbar);
-        // Gestione del click della freccia indietro presente sulla toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +58,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         inputDescription = findViewById(R.id.activity_create_task_input_description_value);
         inputPoints = findViewById(R.id.activity_create_task_input_points_value);
 
-        // Mostro il date picker
+        // Viene mostrato il date picker
         inputDeadline = findViewById(R.id.activity_create_task_input_deadline_value);
         inputDeadline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +77,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
         // Nota: dateFormatter non è static ed è inizializzato alla creazione dell'activity
         // perché il cambio di Locale è proprio una delle modifiche che possono causare il
-        // riavvio dell'activity.
+        // riavvio dell'activity
         this.dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
 
         /*

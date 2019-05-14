@@ -2,8 +2,8 @@
 <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_reward_list"
-    android:name="com.unison.appartment.RewardFragment"
+    android:name="com.unison.appartment.RewardListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RewardFragment"
+    tools:context=".fragments.RewardListFragment"
     tools:listitem="@layout/fragment_reward" />

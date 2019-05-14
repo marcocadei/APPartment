@@ -4,6 +4,9 @@ import android.net.Uri;
 
 import java.util.Date;
 
+/**
+ * Classe che rappresenta un post con immagine nella bacheca
+ */
 public class ImagePost extends Post {
 
     private Uri image;

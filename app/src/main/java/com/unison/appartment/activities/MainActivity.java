@@ -20,6 +20,9 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
 
+/**
+ * Classe che rappresenta l'Activity principale di una Home
+ */
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_HOME_NAME = "homeName";
@@ -36,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // Supporto per la toolbar
         toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
 
-        // Le voci della bottom navigation sono un menu
-        // Alla creazione dell'activity imposto titolo e logo della toolbar in base alla voce
+        // Le voci della bottom navigation sono un menù
+        // Alla creazione dell'activity vengono impostati titolo e logo della toolbar in base alla voce
         // selezionata del menù alla prima apertura
         BottomNavigationView bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
         if (savedInstanceState != null) {
@@ -55,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                // In questo modo quando si seleziona la stessa sezione in cui si è già non viene
-                // ricaricato il fragment (semplicemente non viene fatto nulla).
+                // Quando viene selezionata dal menù nella bottom navigation la stessa sezione in cui si è già
+                // il fragment non deve essere ricaricato (non viene fatto nulla).
                 if (menuItem.getItemId() != selectedBottomNavigationMenuItemId) {
                     updateActivityContent(menuItem);
                 }
@@ -67,9 +71,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Aggiorna il contenuto dell'activity, ovvero la toolbar e il fragment centrale,
+     * Metodo per aggiornare il contenuto dell'activity, ovvero la toolbar e il fragment centrale,
      * in base alla voce selezionata nella bottom navigation
-     * @param menuItem voce del menù selezionata nella bottom navigation
+     *
+     * @param menuItem La voce del menù selezionata nella bottom navigation
      */
     private void updateActivityContent(MenuItem menuItem) {
         toolbar.setTitle(menuItem.getTitle());
@@ -78,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Rimpiazzo il fragment corrente con quello corretto in base alla voce selezionata nella
+     * Metodo per sostituire il fragment corrente con quello corretto in base alla voce selezionata nella
      * bottom navigation
-     * @param menuItemId l'id della voce del menù selezionata nella bottom navigation
+     *
+     * @param menuItemId L'id della voce del menù selezionata nella bottom navigation
      */
     private void switchToFragment(int menuItemId){
         switch (menuItemId) {
@@ -106,9 +112,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Rimpiazzo il fragment corrente con quello corretto in base alla voce selezionata nella
+     * Metodo per sostituire il il fragment corrente con quello nuovo in base alla voce selezionata nella
      * bottom navigation
-     * @param fragment la classe del fragment che andrà a sostituire quello corrente
+     *
+     * @param fragment La classe del fragment che andrà a sostituire quello corrente
      */
     private void switchToFragment(Class fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -124,9 +131,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Crea il menù presente sulla toolbar
-     * @param menu il menù da aggiungere
-     * @return true
+     * Metodo per creare il menù presente sulla toolbar
+     *
+     * @param menu Il menù da aggiungere
+     * @return True
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,9 +143,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Reagisce alla selezione di una voce del menù della toolbar
-     * @param item l'elemento selezionato
-     * @return true
+     * Metodo per reagire alla selezione di una voce del menù della toolbar
+     *
+     * @param item L'elemento selezionato
+     * @return True
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 // Log.d(this.getLocalClassName(), "Premuto ingraggio");
                 return true;
 
-            case R.id.activity_main_toolbar_switch: {
+            case R.id.activity_main_toolbar_profile: {
                 Intent i = new Intent(this, UserProfileActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

@@ -2,6 +2,9 @@ package com.unison.appartment.model;
 
 import java.util.Date;
 
+/**
+ * Classe che rappresenta un post testuale nella bacheca
+ */
 public class TextPost extends Post {
 
     private String message;

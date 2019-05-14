@@ -20,13 +20,11 @@ import com.unison.appartment.model.Reward;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the interface
- * to handle interaction events.
- * Use the {@link RewardsFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Una sottoclasse di {@link Fragment}
+ * Le Activity che contengono questo fragment devono implementare l'interface
+ * {@link RewardListFragment.OnRewardListFragmentInteractionListener} per gestire gli eventi di interazione
  */
-public class RewardsFragment extends Fragment implements RewardFragment.OnRewardListFragmentInteractionListener {
+public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
     private static final int ADD_REWARD_REQUEST_CODE = 0xA1;
 
@@ -42,8 +40,10 @@ public class RewardsFragment extends Fragment implements RewardFragment.OnReward
 //    FIXME Rimuovere se non serve
 //    private OnFragmentInteractionListener mListener;
 
+    /**
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
+     */
     public RewardsFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -99,7 +99,7 @@ public class RewardsFragment extends Fragment implements RewardFragment.OnReward
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_REWARD_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                RewardFragment fragmentRewardList = (RewardFragment) getChildFragmentManager()
+                RewardListFragment fragmentRewardList = (RewardListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
                 fragmentRewardList.addReward((Reward)data.getSerializableExtra("rewardObject"));
             }

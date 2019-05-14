@@ -1,8 +1,8 @@
 package com.unison.appartment.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * Classe che rappresenta una casa creata nell'applicazione
+ */
 public class Home {
 
     private final static int DEFAULT_CONVERSION_FACTOR = 50;

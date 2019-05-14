@@ -2,6 +2,9 @@ package com.unison.appartment.model;
 
 import java.util.Date;
 
+/**
+ * Classe che rappresenta un post audio nella bacheca
+ */
 public class AudioPost extends Post {
 
     public static final int PERMISSION_REQUEST_RECORDER = 1;

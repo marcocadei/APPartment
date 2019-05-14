@@ -12,6 +12,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.unison.appartment.R;
 
+/**
+ * Fragment che rappresenta una dialog di errore di Firebase
+ */
 public class FirebaseErrorDialogFragment extends DialogFragment {
 
     public final static String TAG_FIREBASE_ERROR_DIALOG = "errorDialog";
