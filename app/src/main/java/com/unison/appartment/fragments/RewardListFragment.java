@@ -106,11 +106,6 @@ public class RewardListFragment extends Fragment {
 //        mListener = null;
     }
 
-    /**
-     * Metodo per aggiungere un nuovo Reward
-     *
-     * @param newReward Il nuovo Reward da aggiungere
-     */
     public void addReward(Reward newReward) {
         Reward.addReward(0, newReward);
         myAdapter.notifyItemInserted(0);

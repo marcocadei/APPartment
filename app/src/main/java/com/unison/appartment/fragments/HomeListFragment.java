@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Fragment che rappresenta una lista di UserHome
+ * Fragment che rappresenta una lista di oggetti UserHome
  * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnHomeListFragmentInteractionListener}
  */
 public class HomeListFragment extends Fragment {

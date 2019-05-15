@@ -31,7 +31,6 @@ import java.io.IOException;
 
 
 /**
- * Una sottoclasse di {@link Fragment}
  * Le Activity che contengono questo fragment devono implementare l'interface
  * {@link OnInsertPostFragmentListener} per gestire gli eventi di interazione
  */
@@ -48,7 +47,7 @@ public class InsertPostFragment extends Fragment {
     private MediaRecorder recorder;
     // Flag usato per monitorare se è in corso una registrazione
     private boolean isRecording = false;
-    // Name of the file in which i save audio (just 1 for now)
+    // Nome del file in cui viene salvato l'audio
     private String fileName;
 
     /**

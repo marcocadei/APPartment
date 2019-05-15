@@ -20,7 +20,6 @@ import com.unison.appartment.model.Reward;
 
 
 /**
- * Una sottoclasse di {@link Fragment}
  * Le Activity che contengono questo fragment devono implementare l'interface
  * {@link RewardListFragment.OnRewardListFragmentInteractionListener} per gestire gli eventi di interazione
  */

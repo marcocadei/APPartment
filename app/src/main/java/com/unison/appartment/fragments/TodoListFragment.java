@@ -25,7 +25,7 @@ import com.unison.appartment.model.Task;
 import java.util.List;
 
 /**
- * Fragment che rappresenta una lista di To Do
+ * Fragment che rappresenta una lista di task
  */
 public class TodoListFragment extends Fragment {
 

@@ -14,7 +14,6 @@ import com.unison.appartment.R;
 
 
 /**
- * Una sottoclasse di {@link Fragment}
  * Le Activity che contengono questo fragment devono implementare l'interface
  * {@link MoneyRewardFragment.OnFragmentInteractionListener} per gestire gli eventi di interazione
  */

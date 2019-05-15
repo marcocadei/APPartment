@@ -12,9 +12,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.unison.appartment.R;
 
-/*
-Riferimento per la struttura del codice: https://stackoverflow.com/a/13338148
- */
+// Riferimento per la struttura del codice: https://stackoverflow.com/a/13338148
 
 /**
  * Fragment che rappresenta una dialog di errore di Firebase
