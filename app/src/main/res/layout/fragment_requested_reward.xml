@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/fragment_reward_img_hourglass"
         style="@style/Component.ImageView.ListItemIcon"
-        android:contentDescription="@string/fragment_reward_img_hourglass"
+        android:contentDescription="@string/caption_ic_hourglass"
         android:src="@drawable/ic_hourglass_empty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/fragment_reward_layout_name"

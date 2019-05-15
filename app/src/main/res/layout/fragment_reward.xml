@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/fragment_reward_img_arrow"
         style="@style/Component.ImageView.ListItemIcon"
-        android:contentDescription="@string/fragment_reward_img_arrow"
+        android:contentDescription="@string/caption_ic_card_giftcard"
         android:src="@drawable/ic_card_giftcard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

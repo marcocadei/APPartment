@@ -33,7 +33,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_task_input_name"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_task_input_name"
+                android:hint="@string/desc_uncompletedtasks_homename_taskid_name"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_points"
@@ -49,7 +49,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_task_input_points"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_task_input_points"
+                android:hint="@string/desc_uncompletedtasks_homename_taskid_points"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_description"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_task_input_description"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_task_input_description"
+                android:hint="@string/desc_uncompletedtasks_homename_taskid_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_deadline"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_task_input_deadline"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_task_input_deadline"
+                android:hint="@string/desc_uncompletedtasks_homename_taskid_deadline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

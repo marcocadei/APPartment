@@ -67,7 +67,7 @@
                 <ImageView
                     android:id="@+id/activity_user_profile_img_profile"
                     style="@style/Component.ImageView.ProfileImage"
-                    android:contentDescription="@string/activity_user_profile_img_profile"
+                    android:contentDescription="@string/caption_profile_pic"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_email"
                     app:layout_constraintStart_toStartOf="parent"
@@ -82,49 +82,12 @@
                     android:ellipsize="end"
                     android:text="@string/placeholder_text_long"
                     android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginBottom="0dp"
                     app:layout_constraintVertical_chainStyle="packed"
-                    app:layout_constraintBottom_toTopOf="@id/activity_user_profile_layout_signup_date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/activity_user_profile_img_profile"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/activity_user_profile_layout_signup_date"
-                    style="@style/Component.Layout"
-                    android:layout_width="0dp"
-                    android:layout_marginStart="@dimen/margin_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/activity_user_profile_img_profile"
-                    app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_email">
-
-                    <TextView
-                        android:id="@+id/activity_user_profile_text_signup_date_name"
-                        style="@style/Component.TextView.SingleLine.PointsName"
-                        android:gravity="start"
-                        android:text="@string/activity_user_profile_signup_date_name"
-                        android:textSize="@dimen/text_extra_large"
-                        android:textStyle="bold"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_signup_date_value"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="parent" />
-
-                    <TextView
-                        android:id="@+id/activity_user_profile_signup_date_value"
-                        style="@style/Component.TextView.SingleLine.PointsValue"
-                        android:gravity="start"
-                        android:text="@string/placeholder_number"
-                        android:textSize="@dimen/text_extra_large"
-                        android:layout_marginStart="@dimen/margin_small"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/activity_user_profile_text_signup_date_name"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

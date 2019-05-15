@@ -33,141 +33,108 @@
     <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
 
+    <!-- Descrizioni dei campi del database -->
+
+    <string name="desc_homes_homename_name">Nome della casa</string>
+    <string name="desc_homes_homename_password">Password della casa</string>
+    <string name="desc_homes_homename_password_repeat">Ripeti password della casa</string>
+    <string name="desc_homeusers_homename_uid_nickname">Nickname</string>
+    <string name="desc_rewards_homename_rewardid_description">Descrizione</string>
+    <string name="desc_rewards_homename_rewardid_name">Nome</string>
+    <string name="desc_rewards_homename_rewardid_points">Punti</string>
+    <string name="desc_uncompletedtasks_homename_taskid_deadline">Scadenza</string>
+    <string name="desc_uncompletedtasks_homename_taskid_description">Descrizione</string>
+    <string name="desc_uncompletedtasks_homename_taskid_name">Nome</string>
+    <string name="desc_uncompletedtasks_homename_taskid_points">Punti</string>
+    <string name="desc_userhomes_uid_homename_role">Ruolo</string>
+    <string name="desc_users_uid_age">Età</string>
+    <string name="desc_users_uid_email">Email</string>
+    <string name="desc_users_uid_gender">Genere</string>
+    <string name="desc_users_uid_gender_value_female">Femmina</string>
+    <string name="desc_users_uid_gender_value_male">Maschio</string>
+    <string name="desc_users_uid_password">Password</string>
+    <string name="desc_users_uid_password_repeat">Ripeti password</string>
+
     <!-- Descrizioni dei drawable -->
-    <!-- TODO -->
+
+    <string name="caption_achievement_logo">Simbolo dell\'achievement</string>
+    <string name="caption_app_logo">Logo di APPartment</string>
+    <string name="caption_ic_account_circle">Icona di un utente generico</string>
+    <string name="caption_ic_arrow">Icona di una freccia</string>
+    <string name="caption_ic_card_giftcard">Icona di un premio</string>
+    <string name="caption_ic_home">Icona di una casa</string>
+    <string name="caption_ic_hourglass">Icona di una clessidra</string>
+    <string name="caption_ic_person_add">Icona di nuovo utente</string>
+    <string name="caption_ic_play_arrow">Simbolo di play</string>
+    <string name="caption_profile_pic">Foto profilo dell\'utente</string>
 
     <!-- Legate ad una specifica activity -->
 
-    <string name="activity_create_home_hint_name">Nome della casa</string>
-    <string name="activity_create_home_hint_nickname">Nickname</string>
-    <string name="activity_create_home_hint_password">Password della casa</string>
-    <string name="activity_create_home_hint_password_repeat">Ripeti password della casa</string>
-    <string name="activity_create_home_img_title_description">Icona di una casa</string>
     <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
-    <string name="activity_create_home_progress_title">Creazione</string>
+    <string name="activity_create_home_progress_title">Creazione casa</string>
     <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
     <string name="activity_create_home_text_title">Crea una nuova casa</string>
-
-    <string name="activity_create_reward_hint_description">Descrizione</string>
-    <string name="activity_create_reward_hint_name">Nome</string>
-    <string name="activity_create_reward_hint_points">Punti</string>
     <string name="activity_create_reward_title">Crea nuovo premio</string>
-
-    <string name="activity_create_task_input_deadline">Scadenza</string>
-    <string name="activity_create_task_input_description">Descrizione</string>
-    <string name="activity_create_task_input_name">Nome</string>
-    <string name="activity_create_task_input_points">Punti</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
-
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
-    <string name="activity_enter_logo_description">Logo di APPartment</string>
-
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
     <string name="activity_family_member_detail_points_name">Punti:</string>
     <string name="activity_family_member_detail_text_achievement_title">Achievement sbloccati</string>
-    <string name="activity_family_member_detail_text_gender_title">Genere</string>
-    <string name="activity_family_member_detail_text_name">%s</string>
-    <string name="activity_family_member_detail_text_role_title">Ruolo</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
-
     <string name="activity_image_detail_img">Immagine del post aperta</string>
-
-    <string name="activity_join_home_hint_name">Nome della casa</string>
-    <string name="activity_join_home_hint_nickname">Nickname</string>
-    <string name="activity_join_home_hint_password">Password della casa</string>
-    <string name="activity_join_home_img_title_description">Icona di una casa</string>
-    <string name="activity_join_home_progress_check_description">Verifica delle credenziali in corso…</string>
-    <string name="activity_join_home_progress_check_title">Verifica delle credenziali</string>
+    <string name="activity_join_home_progress_check_description">Per favore attendi, è in corso la verifica delle credenziali</string>
+    <string name="activity_join_home_progress_check_title">Verifica credenziali</string>
     <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
     <string name="activity_join_home_text_title">Unisciti ad una casa</string>
-
     <string name="activity_main_bottom_navigation_done">Finite</string>
     <string name="activity_main_bottom_navigation_family">Famiglia</string>
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
-
-    <string name="activity_main_toolbar_edit">Modifica dati utente</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
-
     <string name="activity_reward_detail_btn_delete">Elimina premio</string>
     <string name="activity_reward_detail_btn_reserve_disabled">Premio richiesto</string>
     <string name="activity_reward_detail_btn_reserve_enabled">Richiedi premio</string>
-    <string name="activity_reward_detail_text_description_title">Descrizione</string>
-    <string name="activity_reward_detail_text_name">%s</string>
     <string name="activity_reward_detail_title">Dettaglio premio</string>
-
-    <string name="activity_signin_hint_email">Email</string>
-    <string name="activity_signin_hint_password">Password</string>
-    <string name="activity_signin_img_title_description">Simbolo di login</string>
     <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
     <string name="activity_signin_progress_title">Accesso</string>
     <string name="activity_signin_text_title">Accedi ad APPartment</string>
-
-    <string name="activity_signup_input_age">Età</string>
-    <string name="activity_signup_input_email">Email</string>
-    <string name="activity_signup_input_password">Password</string>
-    <string name="activity_signup_input_repeat_password">Ripeti password</string>
-    <string name="activity_signup_logo_description">Registrati ad APPartment</string>
-    <string name="activity_signup_radio_gender_female">Femmina</string>
-    <string name="activity_signup_radio_gender_male">Maschio</string>
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
     <string name="activity_signup_signup_title">Registrazione</string>
-    <string name="activity_signup_text_radio_gender">Genere</string>
-
     <string name="activity_task_detail_btn_delete">Elimina attività</string>
-    <string name="activity_task_detail_text_deadline_title">Scadenza</string>
-    <string name="activity_task_detail_text_description_title">Descrizione</string>
     <string name="activity_task_detail_title">Dettaglio attività</string>
-
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_empty_homes_list">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
-    <string name="activity_user_profile_img_profile">Foto profilo dell\'utente</string>
-    <string name="activity_user_profile_signup_date_name">Iscritto in data:</string>
     <string name="activity_user_profile_text_homelist_title">Le mie case</string>
+    <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
-
     <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
-
-    <string name="fragment_achievement_img_logo">Logo dell\'achievement</string>
-
-    <string name="fragment_audio_post_btn">Simbolo di play</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
-
-    <!-- TODO rimuovere -->
-    <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
-
-    <string name="fragment_family_member_img_person">Immagine di profilo dell\'utente</string>
-
-    <string name="fragment_home_img_home">Icona di una casa</string>
-
     <string name="fragment_image_post_img">Immagine del post</string>
-
     <string name="fragment_insert_post_btn_audio_suggestion">Tieni premuto il bottone e poi rilascialo per registrare un audio</string>
     <string name="fragment_insert_post_hint_post">Testo del messaggio</string>
     <string name="fragment_insert_post_img_send_audio_description">Bottone di invio audio</string>
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
     <string name="fragment_insert_post_img_send_text_description">Bottone di invio testo</string>
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
-
-    <string name="fragment_money_reward_img_arrow">Icona di una freccia</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
-
-    <string name="fragment_reward_img_arrow">Icona di una freccia</string>
-    <string name="fragment_reward_img_hourglass">Icona di una clessidra</string>
     <string name="fragment_reward_text_status_row_1">Premio</string>
     <string name="fragment_reward_text_status_row_2">richiesto</string>
 
+    <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
     <string name="fragment_todo_empty_homes_list_title">Non c\'é nulla qui :(</string>
     <string name="fragment_todo_img_check">Simbolo di spunta</string>
+
+    <!-- TODO rimuovere -->
+    <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
 
 </resources>

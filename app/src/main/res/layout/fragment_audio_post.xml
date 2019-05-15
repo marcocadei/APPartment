@@ -44,7 +44,7 @@
             <ImageButton
                 android:id="@+id/fragment_audio_post_btn"
                 style="@style/Component.ImageView.ListItemIcon"
-                android:contentDescription="@string/fragment_audio_post_btn"
+                android:contentDescription="@string/caption_ic_play_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"

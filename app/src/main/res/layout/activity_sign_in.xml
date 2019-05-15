@@ -37,7 +37,7 @@
                 <ImageView
                     android:id="@+id/activity_signin_img_title"
                     style="@style/Component.ImageView.FancyTitleImage"
-                    android:contentDescription="@string/activity_signin_img_title_description"
+                    android:contentDescription="@string/caption_ic_account_circle"
                     app:layout_constraintBottom_toBottomOf="@id/activity_signin_text_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/activity_signin_text_title"
@@ -49,7 +49,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_signin_input_email"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_signin_hint_email"
+                android:hint="@string/desc_users_uid_email"
                 app:layout_constraintBottom_toTopOf="@id/activity_signin_input_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_signin_input_password"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_signin_hint_password"
+                android:hint="@string/desc_users_uid_password"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

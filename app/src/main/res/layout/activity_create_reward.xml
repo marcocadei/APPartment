@@ -33,7 +33,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_reward_input_name"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_reward_hint_name"
+                android:hint="@string/desc_rewards_homename_rewardid_name"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_reward_input_points"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_reward_input_points"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_reward_hint_points"
+                android:hint="@string/desc_rewards_homename_rewardid_points"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_reward_input_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_reward_input_description"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_reward_hint_description"
+                android:hint="@string/desc_rewards_homename_rewardid_description"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
