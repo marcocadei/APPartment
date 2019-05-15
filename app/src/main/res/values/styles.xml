@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -12,13 +11,12 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
 
-        <!-- Stile degli alert dialogs -->
-        <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
-
-        <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
-
         <!-- Stile dei date pickers -->
         <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialogTheme</item>
+
+        <!-- Stile dei dialogs -->
+        <item name="android:alertDialogTheme">@style/CustomAlertDialogTheme</item>
+        <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
     </style>
 
     <!-- Override dello stile di default dei date pickers e relativi componenti -->
@@ -39,12 +37,7 @@
         <item name="android:layout_marginRight">@dimen/margin_extra_small</item>
     </style>
 
-    <!-- TODO questa roba darà conflict in fase di merge, assicurarsi di lasciare sia lo stile dei
-        date picker che quello degli alerts -->
-
     <!-- Override dello stile di default degli alert dialog e relativi componenti -->
-
-    <!-- TODO dovrebbe essere uguale a quello dei date pickers, vedere dopo il merge e in caso refactorare -->
 
     <style name="CustomAlertDialogTheme" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/colorPrimary</item>
