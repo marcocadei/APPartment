@@ -142,8 +142,16 @@ public class HomeListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnHomeListFragmentInteractionListener {
-        // TODO: Update argument type and name
+        /**
+         * Callback invocato quando si seleziona una voce della lista delle case.
+         * @param item Oggetto della lista selezionato.
+         */
         void onHomeListFragmentInteraction(UserHome item);
+
+        /**
+         * Callback invocato quando viene completato il caricamento della lista delle case.
+         * @param elements Numero di elementi della lista.
+         */
         void onHomeListElementsLoaded(long elements);
     }
 }

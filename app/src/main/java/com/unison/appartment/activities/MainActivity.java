@@ -130,24 +130,12 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    /**
-     * Metodo per creare il menù presente sulla toolbar
-     *
-     * @param menu Il menù da aggiungere
-     * @return True
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main_toolbar, menu);
         return true;
     }
 
-    /**
-     * Metodo per reagire alla selezione di una voce del menù della toolbar
-     *
-     * @param item L'elemento selezionato
-     * @return True
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

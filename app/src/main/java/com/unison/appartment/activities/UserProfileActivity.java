@@ -58,24 +58,12 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         });
     }
 
-    /**
-     * Metodo per creare il menù presente sulla toolbar
-     *
-     * @param menu Il menù da aggiungere
-     * @return True
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_user_profile_toolbar, menu);
         return true;
     }
 
-    /**
-     * Metodo per reagire alla selezione di una voce del menù della toolbar
-     *
-     * @param item L'elemento selezionato
-     * @return True
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO ora è implementato soltanto il logout
@@ -105,27 +93,25 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
 
     // Questa Activity contiene il fragment HomeListFragment, quindi ne implementa i metodi del listener
 
-    /**
-     * Metodo che interviene al click dell'utente su una delle case della lista: l'utente deve
-     * essere rediretto alla Main Activity della casa selezionata
-     *
-     * @param item L'oggetto UserHome rappresentante la relazione tra lo User e la casa selezionata
-     */
     @Override
     public void onHomeListFragmentInteraction(UserHome item) {
+        /*
+        Quando l'utente seleziona una voce dalla lista delle case, deve essere portato alla
+        MainActivity della casa selezionata.
+         */
+
         Appartment.getInstance().setHome(item.getHomeName());
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 
-    /**
-     * Metodo che interviene al caricamento della lista di case: la progress bar deve scomparire e se
-     * non c'è alcuna casa nella lista deve apparire un apposito messaggio
-     *
-     * @param elements Il numero di elementi nella lista
-     */
     @Override
     public void onHomeListElementsLoaded(long elements) {
+        /*
+        Quando viene completato il caricamento, la progress bar viene nascosta e se la lista ha
+        0 elementi viene mostrato un apposito messaggio.
+         */
+
         // Sia che l'utente abbia delle case o meno, una volta fatta la lettura la
         // progress bar deve interrompersi
         ProgressBar progressBar = findViewById(R.id.activity_user_profile_progress);
