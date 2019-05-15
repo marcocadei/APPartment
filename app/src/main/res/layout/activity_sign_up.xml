@@ -28,7 +28,7 @@
                 <TextView
                     android:id="@+id/activity_signup_text_title"
                     style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
-                    android:text="@string/activity_signup_logo_description"
+                    android:text="@string/activity_signup_text_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/activity_signup_img_title"
                     app:layout_constraintStart_toStartOf="parent"

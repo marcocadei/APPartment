@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Placeholders -->
 
     <string name="placeholder_text">Placeholder</string>
@@ -105,6 +105,7 @@
     <string name="activity_signin_text_title">Accedi ad APPartment</string>
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
     <string name="activity_signup_signup_title">Registrazione</string>
+    <string name="activity_signup_text_title">Registrati ad APPartment</string>
     <string name="activity_task_detail_btn_delete">Elimina attività</string>
     <string name="activity_task_detail_title">Dettaglio attività</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
@@ -114,7 +115,7 @@
     <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
-    <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
+    <string name="dialog_firebase_error_message" tools:ignore="Typos">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
     <string name="fragment_image_post_img">Immagine del post</string>
