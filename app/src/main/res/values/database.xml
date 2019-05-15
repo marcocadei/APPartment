@@ -9,21 +9,21 @@
     <item name="db_homes_homename" type="string">%1$s</item>
     <item name="db_homes_homename_password" type="string">password</item>
 
-    <!-- Utenti -->
-    <item name="db_users" type="string">users</item>
-    <item name="db_users_uid" type="string">%1$s</item>
+    <!-- Case-Utenti -->
+    <item name="db_homeusers" type="string">home-users</item>
+    <item name="db_homeusers_homename" type="string">%1$s</item>
+    <item name="db_homeusers_homename_userid" type="string">%1$s</item>
 
-    <!-- Case-Utenti (Famiglie) -->
-    <item name="db_families" type="string">families</item>
-    <item name="db_families_homename" type="string">%1$s</item>
-    <item name="db_families_homename_userid" type="string">%1$s</item>
+    <!-- Task da fare -->
+    <item name="db_uncompleted_tasks" type="string">uncompleted-tasks</item>
 
     <!-- Utenti-Case -->
     <item name="db_userhomes" type="string">user-homes</item>
     <item name="db_userhomes_userid" type="string">%1$s</item>
     <item name="db_userhomes_userid_homename" type="string">%1$s</item>
 
-    <!-- Cose da fare -->
-    <item name="db_uncompleted_tasks" type="string">uncompleted-tasks</item>
+    <!-- Utenti -->
+    <item name="db_users" type="string">users</item>
+    <item name="db_users_uid" type="string">%1$s</item>
 
 </resources>

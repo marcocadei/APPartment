@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.utils.KeyboardUtils;
@@ -242,12 +241,12 @@ public class CreateHomeActivity extends FormActivity {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String homePath = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName);
-        final String familyPath = getString(R.string.db_families) + separator + getString(R.string.db_families_homename, homeName) + separator + getString(R.string.db_families_homename_userid, uid);
+        final String homeuserPath = getString(R.string.db_homeusers) + separator + getString(R.string.db_homeusers_homename, homeName) + separator + getString(R.string.db_homeusers_homename_userid, uid);
         final String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(homePath, createHome());
-        childUpdates.put(familyPath, createHomeUser());
+        childUpdates.put(homeuserPath, createHomeUser());
         childUpdates.put(userhomePath, createUserHome());
 
         dbRef.updateChildren(childUpdates)

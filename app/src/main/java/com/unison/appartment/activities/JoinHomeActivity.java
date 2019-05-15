@@ -18,10 +18,8 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.HomeUser;
-import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
@@ -185,7 +183,7 @@ public class JoinHomeActivity extends FormActivity {
         String separator = getString(R.string.db_separator);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String familyPath = getString(R.string.db_families) + separator + getString(R.string.db_families_homename, homeName) + separator + getString(R.string.db_families_homename_userid, uid);
+        String familyPath = getString(R.string.db_homeusers) + separator + getString(R.string.db_homeusers_homename, homeName) + separator + getString(R.string.db_homeusers_homename_userid, uid);
         String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
