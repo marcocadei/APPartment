@@ -18,8 +18,6 @@ import java.util.List;
 
 public class TodoTaskRepository {
 
-    private String separator;
-    private String uncompletedTasks;
     // Nodo del database a cui sono interessato
     private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
@@ -28,8 +26,8 @@ public class TodoTaskRepository {
     private LiveData<List<Task>> taskLiveData;
 
     public TodoTaskRepository() {
-        separator = Appartment.getInstance().getContext().getString(R.string.db_separator);
-        uncompletedTasks = Appartment.getInstance().getContext().getString(R.string.db_uncompleted_tasks);
+        String separator = Appartment.getInstance().getContext().getString(R.string.db_separator);
+        String uncompletedTasks = Appartment.getInstance().getContext().getString(R.string.db_uncompleted_tasks);
         // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
         uncompletedTasksRef =
                 FirebaseDatabase.getInstance().getReference(separator + uncompletedTasks + separator + Appartment.getInstance().getHome());

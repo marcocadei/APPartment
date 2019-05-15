@@ -10,6 +10,7 @@ import com.unison.appartment.model.Task;
 import java.util.List;
 
 public class TodoTaskViewModel extends ViewModel {
+
     private TodoTaskRepository repository;
 
     public TodoTaskViewModel() {
