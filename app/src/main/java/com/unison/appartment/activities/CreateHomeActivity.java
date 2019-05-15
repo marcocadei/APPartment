@@ -241,8 +241,8 @@ public class CreateHomeActivity extends FormActivity {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String homePath = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName);
-        final String homeuserPath = getString(R.string.db_homeusers) + separator + getString(R.string.db_homeusers_homename, homeName) + separator + getString(R.string.db_homeusers_homename_userid, uid);
-        final String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
+        final String homeuserPath = getString(R.string.db_homeusers) + separator + getString(R.string.db_homeusers_homename, homeName) + separator + getString(R.string.db_homeusers_homename_uid, uid);
+        final String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_uid, uid) + separator + getString(R.string.db_userhomes_uid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(homePath, createHome());

@@ -115,7 +115,7 @@ public class HomeListFragment extends Fragment {
      */
     private void readUserHomes() {
         String separator = getString(R.string.db_separator);
-        String path = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        String path = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_uid, FirebaseAuth.getInstance().getCurrentUser().getUid());
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
