@@ -75,7 +75,7 @@
     <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
     <string name="activity_create_home_text_title">Crea una nuova casa</string>
-    <string name="activity_create_reward_title">Crea nuovo premio</string>
+    <string name="activity_create_reward_title">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
