@@ -22,17 +22,16 @@
     <!-- Errori delle form -->
 
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
+    <string name="form_error_duplicate_homename">Esiste già una casa con questo nome</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
-    <string name="form_error_home_exists">Esiste già una casa con questo nome</string>
     <string name="form_error_incorrect_credentials">Credenziali non corrette</string>
     <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
-    <string name="form_error_invalid_character">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
+    <string name="form_error_invalid_characters">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
     <string name="form_error_missing_value">Specificare un valore</string>
-    <string name="form_error_nonexistent_user">Questa email non è associata ad alcun utente</string>
-    <string name="form_error_short_password">La password deve contenere almeno %1$d ca1ratteri</string>
-    <string name="form_error_wrong_home_username">Combinazione casa-username errata</string>
+    <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
+    <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
 
     <!-- Descrizioni dei drawable -->
     <!-- TODO -->
@@ -128,7 +127,7 @@
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_empty_homes_list">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
-    <string name="activity_user_profile_empty_homes_list_title">Non c\'è nulla qui :(</string>
+    <string name="activity_user_profile_img_profile">Foto profilo dell\'utente</string>
     <string name="activity_user_profile_signup_date_name">Iscritto in data:</string>
     <string name="activity_user_profile_text_homelist_title">Le mie case</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>

@@ -142,7 +142,7 @@ public class CreateHomeActivity extends FormActivity {
         // Controllo che il nome della casa non contenga un carattere non ammesso
         // (Il nome della casa è usato come nome di un nodo in Firebase e lì alcuni caratteri non sono ammessi)
         if (homeNameValue.matches(".*[.$\\[\\]#/].*")) {
-            layoutHomeName.setError(getString(R.string.form_error_invalid_character));
+            layoutHomeName.setError(getString(R.string.form_error_invalid_characters));
             result = false;
         }
 
@@ -208,7 +208,7 @@ public class CreateHomeActivity extends FormActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     // Esiste già una casa con il nome specificato dall'utente
-                    layoutHomeName.setError(getString(R.string.form_error_home_exists));
+                    layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
                     dismissProgress();
                 }
                 else {
@@ -268,7 +268,7 @@ public class CreateHomeActivity extends FormActivity {
                                     // Implica: Esiste già una casa con il nome specificato dall'utente
                                     // (Si può verificare solo se tra la lettura precedente e questa
                                     // scrittura un altro utente ha registrato una casa con lo stesso nome)
-                                    layoutHomeName.setError(getString(R.string.form_error_home_exists));
+                                    layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
                                     dismissProgress();
                                 }
                                 else {

@@ -67,6 +67,7 @@
                 <ImageView
                     android:id="@+id/activity_user_profile_img_profile"
                     style="@style/Component.ImageView.ProfileImage"
+                    android:contentDescription="@string/activity_user_profile_img_profile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_email"
                     app:layout_constraintStart_toStartOf="parent"
