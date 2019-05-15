@@ -25,7 +25,6 @@ import com.unison.appartment.model.UserHome;
  */
 public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
 
-    private Toolbar toolbar;
     private View emptyListLayout;
 
     @Override
@@ -34,10 +33,12 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         setContentView(R.layout.activity_user_profile);
 
         // Supporto per la toolbar
-        toolbar = findViewById(R.id.activity_user_profile_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_user_profile_toolbar);
         setSupportActionBar(toolbar);
 
         emptyListLayout = findViewById(R.id.activity_user_profile_layout_empty_list);
+
+        // TODO riempire i campi di testo con i dati dell'utente loggato
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {

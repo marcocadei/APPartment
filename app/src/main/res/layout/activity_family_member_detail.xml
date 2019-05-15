@@ -98,7 +98,7 @@
                             android:layout_marginStart="@dimen/margin_small"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_text_points_name"
+                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_points_name"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -111,7 +111,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_layout_header">
+                    app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_header">
 
                     <TextView
                         android:id="@+id/activity_family_member_detail_text_role_title"

@@ -33,7 +33,6 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
     private final static String BUNDLE_KEY_DATE_STRING = "dateString";
 
-    private Toolbar toolbar;
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -46,7 +45,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         setContentView(R.layout.activity_create_task);
 
         // Supporto per la toolbar
-        toolbar = findViewById(R.id.activity_create_task_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_create_task_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
