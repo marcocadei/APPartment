@@ -82,13 +82,14 @@ public class FamilyMemberListFragment extends Fragment {
             listener = (OnFamilyMemberListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFamilyMemberListFragmentListener errore in insert");
+                    + " must implement OnFamilyMemberListFragmentListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        listener = null;
     }
 
     public void addMember(User newUser) {

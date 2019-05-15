@@ -94,13 +94,14 @@ public class TodoListFragment extends Fragment {
             listener = (OnTodoListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnInsertPostFragmentListener errore in insert");
+                    + " must implement OnTodoListFragmentInteractionListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        listener = null;
     }
 
     private void readUncompletedTasks() {

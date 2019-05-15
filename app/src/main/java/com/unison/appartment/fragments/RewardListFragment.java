@@ -102,8 +102,7 @@ public class RewardListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-//        FIXME Rimuovere se non serve
-//        mListener = null;
+        mListener = null;
     }
 
     public void addReward(Reward newReward) {

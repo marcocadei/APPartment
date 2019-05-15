@@ -265,7 +265,7 @@ public class InsertPostFragment extends Fragment {
             listener = (OnInsertPostFragmentListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnInsertPostFragmentListener errore in insert");
+                    + " must implement OnInsertPostFragmentListener");
         }
     }
 
