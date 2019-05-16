@@ -42,7 +42,7 @@
     <string name="desc_rewards_homename_rewardid_description">Descrizione</string>
     <string name="desc_rewards_homename_rewardid_name">Nome</string>
     <string name="desc_rewards_homename_rewardid_points">Punti</string>
-    <string name="desc_uncompletedtasks_homename_taskid_deadline">Scadenza</string>
+    <string name="desc_uncompletedtasks_homename_taskid_creation_date">Data di creazione</string>
     <string name="desc_uncompletedtasks_homename_taskid_description">Descrizione</string>
     <string name="desc_uncompletedtasks_homename_taskid_name">Nome</string>
     <string name="desc_uncompletedtasks_homename_taskid_points">Punti</string>
