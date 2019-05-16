@@ -46,7 +46,7 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
         holderMember.textMemberName.setText("riccardo");
         holderMember.textMemberPoints.setText("578");
 //        holderMember.textMemberName.setText(user.getName());
-//        holderMember.textMemberPoints.setText(String.valueOf(user.getPoints()));
+//        holderMember.textMemberPoints.setText(String.valueOf(user.getLastPoints()));
 //      holderMember.imageMember.setImageURI(memberItem.getImage());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

@@ -12,10 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.unison.appartment.R;
-import com.unison.appartment.model.AudioPost;
-import com.unison.appartment.model.ImagePost;
 import com.unison.appartment.model.Post;
-import com.unison.appartment.model.TextPost;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 
 import java.io.IOException;
@@ -70,32 +67,32 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
                 ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
-                TextPost textPostItem = (TextPost) postList.get(position);
-                holderTextPost.textPostTxt.setText(textPostItem.getMessage());
+                Post textPostItem = postList.get(position);
+                holderTextPost.textPostTxt.setText(textPostItem.getContent());
                 holderTextPost.textPostSender.setText(textPostItem.getAuthor());
                 holderTextPost.textPostDate.setText(format.format(textPostItem.getTimestamp()));
                 break;
             case Post.IMAGE_POST:
                 final ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
-                final ImagePost imagePostItem = (ImagePost) postList.get(position);
+                final Post imagePostItem = postList.get(position);
                 // Carico l'immagine con una libreria che effettua il resize dell'immagine in modo
                 // efficiente, altrimenti se caricassi l'intera immagine già con poche immagini la
                 // recyclerView andrebbe a scatti
-                Glide.with(holderImagePost.imagePostImg.getContext()).load(imagePostItem.getImage()).into(holderImagePost.imagePostImg);
+                Glide.with(holderImagePost.imagePostImg.getContext()).load(imagePostItem.getContent()).into(holderImagePost.imagePostImg);
                 holderImagePost.imagePostSender.setText(imagePostItem.getAuthor());
                 holderImagePost.imagePostDate.setText(format.format(imagePostItem.getTimestamp()));
                 holderImagePost.imagePostImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (listener != null) {
-                            listener.onPostListFragmentOpenImage(holderImagePost.imagePostImg, imagePostItem.getImage());
+                            listener.onPostListFragmentOpenImage(holderImagePost.imagePostImg, imagePostItem.getContent());
                         }
                     }
                 });
                 break;
             case Post.AUDIO_POST:
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
-                final AudioPost audioPostItem = (AudioPost) postList.get(position);
+                final Post audioPostItem = postList.get(position);
                 holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
                 holderAudioPost.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
                 holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +110,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-    private void handleAudioPlay(AudioPost audioPostItem, final ViewHolderAudioPost holderAudioPost) {
+    private void handleAudioPlay(Post audioPostItem, final ViewHolderAudioPost holderAudioPost) {
         // Se qualcosa era già in riproduzione allora la interrompo
         if (player != null) {
             player.release();
@@ -122,7 +119,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         }
         player = new MediaPlayer();
         try {
-            player.setDataSource(audioPostItem.getFileName());
+            player.setDataSource(audioPostItem.getContent());
             player.prepare();
             player.start();
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

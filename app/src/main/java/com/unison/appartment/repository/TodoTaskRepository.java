@@ -1,6 +1,7 @@
 package com.unison.appartment.repository;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -14,7 +15,7 @@ import com.google.firebase.database.Query;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.R;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
-import com.unison.appartment.model.Task;
+import com.unison.appartment.model.UncompletedTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,9 @@ public class TodoTaskRepository {
     // Nodo del database a cui sono interessato
     private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
-    // tramite un Deserializer in ogetti di tipo Task
+    // tramite un Deserializer in ogetti di tipo UncompletedTask
     private FirebaseQueryLiveData liveData;
-    private LiveData<List<Task>> taskLiveData;
+    private LiveData<List<UncompletedTask>> taskLiveData;
 
     public TodoTaskRepository() {
         Resources res = Appartment.getInstance().getContext().getResources();
@@ -41,26 +42,27 @@ public class TodoTaskRepository {
     }
 
     @NonNull
-    public LiveData<List<Task>> getTaskLiveData() {
+    public LiveData<List<UncompletedTask>> getTaskLiveData() {
         return taskLiveData;
     }
 
-    public void addTask(Task newTask) {
+    public void addTask(UncompletedTask newUncompletedTask) {
         String key = uncompletedTasksRef.push().getKey();
-        newTask.setId(key);
-        uncompletedTasksRef.child(key).setValue(newTask);
+        newUncompletedTask.setId(key);
+        uncompletedTasksRef.child(key).setValue(newUncompletedTask);
     }
 
-    private class Deserializer implements Function<DataSnapshot, List<Task>> {
+    private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
         @Override
-        public List<Task> apply(DataSnapshot dataSnapshot) {
-            List<Task> tasks = new ArrayList<>();
+        public List<UncompletedTask> apply(DataSnapshot dataSnapshot) {
+            List<UncompletedTask> uncompletedTasks = new ArrayList<>();
             for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-                Task newTask = taskSnapshot.getValue(Task.class);
-                newTask.setId(taskSnapshot.getKey());
-                tasks.add(newTask);
+                UncompletedTask newUncompletedTask = taskSnapshot.getValue(UncompletedTask.class);
+                Log.w(getClass().getCanonicalName(), newUncompletedTask.getId());
+                newUncompletedTask.setId(taskSnapshot.getKey());
+                uncompletedTasks.add(newUncompletedTask);
             }
-            return tasks;
+            return uncompletedTasks;
         }
     }
 }

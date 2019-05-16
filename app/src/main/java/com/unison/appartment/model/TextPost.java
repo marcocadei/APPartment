@@ -7,12 +7,8 @@ import java.util.Date;
  */
 public class TextPost extends Post {
 
-    public TextPost(String message, String author, Date timestamp) {
-        super(message, author, timestamp);
+    public TextPost(String message, String author, long timestamp) {
+        super(Post.TEXT_POST, message, author, timestamp);
     }
 
-    @Override
-    public int getType() {
-        return Post.TEXT_POST;
-    }
 }

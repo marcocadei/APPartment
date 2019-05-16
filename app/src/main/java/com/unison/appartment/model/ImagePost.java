@@ -7,12 +7,7 @@ import java.util.Date;
  */
 public class ImagePost extends Post {
 
-    public ImagePost(String filename, String author, Date timestamp) {
-        super(filename, author, timestamp);
-    }
-
-    @Override
-    public int getType() {
-        return Post.IMAGE_POST;
+    public ImagePost(String filename, String author, long timestamp) {
+        super(Post.IMAGE_POST, filename, author, timestamp);
     }
 }

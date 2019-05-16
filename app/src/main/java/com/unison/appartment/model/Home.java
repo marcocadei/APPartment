@@ -5,6 +5,10 @@ package com.unison.appartment.model;
  */
 public class Home {
 
+    public final static int ROLE_OWNER = 0;
+    public final static int ROLE_MASTER = 1;
+    public final static int ROLE_SLAVE = 2;
+
     private final static int DEFAULT_CONVERSION_FACTOR = 50;
 
     private String name;

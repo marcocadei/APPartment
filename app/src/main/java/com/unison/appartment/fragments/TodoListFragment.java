@@ -17,10 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.viewmodel.TodoTaskViewModel;
 import com.unison.appartment.adapters.MyTodoListRecyclerViewAdapter;
 import com.unison.appartment.R;
-import com.unison.appartment.model.Task;
 
 import java.util.List;
 
@@ -80,7 +80,7 @@ public class TodoListFragment extends Fragment {
             }
             readUncompletedTasks();
 
-            myAdapter = new MyTodoListRecyclerViewAdapter(/*Task.TASKS*//*uncompletedTasks,*/ listener);
+            myAdapter = new MyTodoListRecyclerViewAdapter(/*UncompletedTask.TASKS*//*uncompletedTasks,*/ listener);
             myRecyclerView.setAdapter(myAdapter);
         }
         return view;
@@ -105,24 +105,24 @@ public class TodoListFragment extends Fragment {
     }
 
     private void readUncompletedTasks() {
-        LiveData<List<Task>> taskLiveData = viewModel.getTaskLiveData();
-        taskLiveData.observe(this, new Observer<List<Task>>() {
+        LiveData<List<UncompletedTask>> taskLiveData = viewModel.getTaskLiveData();
+        taskLiveData.observe(this, new Observer<List<UncompletedTask>>() {
             @Override
-            public void onChanged(List<Task> tasks) {
-                myAdapter.submitList(tasks);
-                listener.onTodoListElementsLoaded(tasks.size());
+            public void onChanged(List<UncompletedTask> uncompletedTasks) {
+                myAdapter.submitList(uncompletedTasks);
+                listener.onTodoListElementsLoaded(uncompletedTasks.size());
                 Log.d("provaListAdapter", "aggiunto");
             }
         });
     }
 
-    public void addTask(Task newTask) {
-        /*Task.addTask(0, newTask);*/
-/*        uncompletedTasks.add(0, newTask);
+    public void addTask(UncompletedTask newUncompletedTask) {
+        /*UncompletedTask.addTask(0, newUncompletedTask);*/
+/*        uncompletedTasks.add(0, newUncompletedTask);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);
         Log.d("prova", "add");*/
-        viewModel.addTask(newTask);
+        viewModel.addTask(newUncompletedTask);
     }
 
     /**
@@ -131,7 +131,7 @@ public class TodoListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnTodoListFragmentInteractionListener {
-        void onTodoListFragmentOpenTask(Task task);
+        void onTodoListFragmentOpenTask(UncompletedTask uncompletedTask);
         void onTodoListElementsLoaded(long elements);
     }
 }

@@ -81,11 +81,11 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     }
 
     @Override
-    public void onPostListFragmentOpenImage(ImageView image, Uri imageUri) {
+    public void onPostListFragmentOpenImage(ImageView image, String imageUri) {
         Intent i = new Intent(getActivity(), ImageDetailActivity.class);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(), image, ViewCompat.getTransitionName(image));
-        i.putExtra("imageUri", imageUri.toString());
+        i.putExtra("imageUri", imageUri);
         startActivity(i, options.toBundle());
     }
 }

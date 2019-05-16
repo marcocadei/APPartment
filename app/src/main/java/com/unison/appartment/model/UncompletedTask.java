@@ -1,23 +1,46 @@
 package com.unison.appartment.model;
 
-import java.util.Date;
+import androidx.annotation.Nullable;
 
-public class UncompletedTask {
+import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+/**
+ * Classe che rappresenta un task da completare
+ */
+public class UncompletedTask implements Serializable {
+
+    @Exclude
+    private String id;
     private String name;
+    @Nullable
     private String description;
     private int points;
-    private Date creationDate;
+    private long creationDate;
+    @Nullable
     private String assignedUser;
-    private boolean markedAsCompleted;
+    private boolean marked;
 
+    public UncompletedTask() {
+    }
 
-    public UncompletedTask(String name, String description, int points, Date creationDate, String assignedUser, boolean markedAsCompleted) {
+    public UncompletedTask(String name, String description, int points) {
+        this(name, description, points, System.currentTimeMillis());
+    }
+
+    public UncompletedTask(String name, String description, int points, long creationDate) {
         this.name = name;
         this.description = description;
         this.points = points;
         this.creationDate = creationDate;
+    }
+
+    public UncompletedTask(String name, String description, int points, long creationDate, String assignedUser, boolean marked) {
+        this(name, description, points, creationDate);
         this.assignedUser = assignedUser;
-        this.markedAsCompleted = markedAsCompleted;
+        this.marked = marked;
     }
 
     public String getName() {
@@ -44,27 +67,54 @@ public class UncompletedTask {
         this.points = points;
     }
 
-    public Date getCreationDate() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 
+    @Nullable
     public String getAssignedUser() {
         return assignedUser;
     }
 
-    public void setAssignedUser(String assignedUser) {
+    public void setAssignedUser(@Nullable String assignedUser) {
         this.assignedUser = assignedUser;
     }
 
-    public boolean isMarkedAsCompleted() {
-        return markedAsCompleted;
+    public boolean isMarked() {
+        return marked;
     }
 
-    public void setMarkedAsCompleted(boolean markedAsCompleted) {
-        this.markedAsCompleted = markedAsCompleted;
+    public void setMarked(boolean marked) {
+        this.marked = marked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UncompletedTask that = (UncompletedTask) o;
+        return points == that.points &&
+                creationDate == that.creationDate &&
+                marked == that.marked &&
+                name.equals(that.name) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(assignedUser, that.assignedUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, points, creationDate, assignedUser, marked);
     }
 }

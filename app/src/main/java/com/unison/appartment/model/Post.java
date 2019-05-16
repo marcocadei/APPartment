@@ -8,18 +8,20 @@ import java.util.List;
  * Classe astratta che rappresenta un post della bacheca
  * Un post può essere del testo, un'immagine o un audio
  */
-public abstract class Post {
+public class Post {
     public static final int TEXT_POST = 0;
     public static final int IMAGE_POST = 1;
     public static final int AUDIO_POST = 2;
 
     private static List<Post> postList = new ArrayList<>();
 
+    private int type;
     private String content;
     private String author;
-    private Date timestamp;
+    private long timestamp;
 
-    public Post(String content, String author, Date timestamp) {
+    public Post(int type, String content, String author, long timestamp) {
+        this.type = type;
         this.content = content;
         this.author = author;
         this.timestamp = timestamp;
@@ -41,7 +43,13 @@ public abstract class Post {
         return postList;
     }
 
-    public abstract int getType();
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getContent() {
         return content;
@@ -59,11 +67,11 @@ public abstract class Post {
         this.author = author;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 }

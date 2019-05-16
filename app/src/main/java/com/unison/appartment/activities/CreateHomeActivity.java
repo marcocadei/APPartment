@@ -171,7 +171,7 @@ public class CreateHomeActivity extends FormActivity {
 
         String nickname = inputNickname.getText().toString();
 
-        return new HomeUser(nickname);
+        return new HomeUser(nickname, Home.ROLE_OWNER);
     }
 
     private UserHome createUserHome() {
@@ -179,7 +179,7 @@ public class CreateHomeActivity extends FormActivity {
 
         String homeName = inputHomeName.getText().toString();
 
-        return new UserHome(homeName, UserHome.ROLE_OWNER);
+        return new UserHome(homeName, Home.ROLE_OWNER);
     }
 
     private void checkHome(final String homeName, final String password) {

@@ -169,9 +169,18 @@ public class SignUpActivity extends FormActivity {
         String password = inputPassword.getText().toString();
         int age = Integer.parseInt(inputAge.getText().toString());
         RadioButton selectedGender = findViewById(inputGender.getCheckedRadioButtonId());
-        String gender = selectedGender.getText().toString();
+        int gender;
+        switch (inputGender.getCheckedRadioButtonId()) {
+            default:
+            case R.id.activity_signup_radio_gender_male:
+                gender = User.GENDER_MALE;
+                break;
+            case R.id.activity_signup_radio_gender_female:
+                gender = User.GENDER_FEMALE;
+                break;
+        }
 
-        return new User(email, password, age, gender);
+        return new User(email, password, "", "", gender);
     }
 
     private void writeAuthInfo(final User newUser) {

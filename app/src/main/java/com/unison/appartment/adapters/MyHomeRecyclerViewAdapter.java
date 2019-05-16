@@ -2,6 +2,7 @@ package com.unison.appartment.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,9 @@ public class MyHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeRecycl
     @Override
     public void onBindViewHolder(final ViewHolderHome holder, int position) {
         final UserHome item = homesList.get(position);
+        String[] roles = holder.mView.getContext().getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
         holder.mNameView.setText(homesList.get(position).getHomeName());
-        holder.mRoleView.setText(homesList.get(position).getRole());
+        holder.mRoleView.setText(roles[homesList.get(position).getRole()]);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

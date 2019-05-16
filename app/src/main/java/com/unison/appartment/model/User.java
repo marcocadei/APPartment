@@ -14,14 +14,17 @@ import java.util.Map;
  */
 public class User implements Serializable {
 
+    public final static int GENDER_MALE = 0;
+    public final static int GENDER_FEMALE = 1;
+
     private String email;
     private String password;
     private String name;
-    private Date birthdate;
-    private String gender;
+    private String birthdate;
+    private int gender;
     private Uri image;
 
-    public User(String email, String password, String name, Date birthdate, String gender) {
+    public User(String email, String password, String name, String birthdate, int gender) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -54,19 +57,19 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

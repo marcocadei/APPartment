@@ -1,5 +1,7 @@
 package com.unison.appartment.model;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +15,20 @@ public class Reward implements Serializable {
     private static List<Reward> rewardsList = new ArrayList<>();
 
     private String name;
+    @Nullable
     private String description;
     private int points;
+    @Nullable
     private String reservation;
 
-    public Reward(String name, String description, int points, String reservation) {
+    public Reward(String name, String description, int points) {
         this.name = name;
         this.description = description;
         this.points = points;
-        this.reservation = reservation;
     }
 
-    public Reward(String name, int points, String reservation) {
-        this.name = name;
-        this.points = points;
+    public Reward(String name, String description, int points, String reservation) {
+        this(name, description, points);
         this.reservation = reservation;
     }
 
@@ -82,4 +84,7 @@ public class Reward implements Serializable {
         return rewardsList;
     }
 
+    public boolean isRequested() {
+        return this.reservation != null;
+    }
 }

@@ -5,19 +5,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
-import com.unison.appartment.model.Task;
+import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.utils.DateUtils;
 
-import java.text.ParseException;
 import java.util.Calendar;
 
 /**
- * Classe che rappresenta l'Activity con il dettaglio del Task
+ * Classe che rappresenta l'Activity con il dettaglio del UncompletedTask
  */
 public class TaskDetailActivity extends AppCompatActivity {
 
@@ -45,14 +43,14 @@ public class TaskDetailActivity extends AppCompatActivity {
         TextView creationDate = findViewById(R.id.activity_task_detail_text_creation_date_value);
 
         Intent i = getIntent();
-        Task task = (Task) i.getSerializableExtra("task");
-        // Popolo l'interfaccia con i dati del task ricevuto
-        name.setText(task.getName());
-        points.setText(String.valueOf(task.getPoints()));
-        description.setText(task.getDescription());
+        UncompletedTask uncompletedTask = (UncompletedTask) i.getSerializableExtra("uncompletedTask");
+        // Popolo l'interfaccia con i dati del uncompletedTask ricevuto
+        name.setText(uncompletedTask.getName());
+        points.setText(String.valueOf(uncompletedTask.getPoints()));
+        description.setText(uncompletedTask.getDescription());
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis((-1) * task.getCreationDate());
+        calendar.setTimeInMillis((-1) * uncompletedTask.getCreationDate());
         creationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(calendar.getTime()));
     }
 }

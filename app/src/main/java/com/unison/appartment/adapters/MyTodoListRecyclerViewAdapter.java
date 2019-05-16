@@ -1,34 +1,28 @@
 package com.unison.appartment.adapters;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
-import com.unison.appartment.fragments.HomeListFragment;
-import com.unison.appartment.model.Task;
+import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener;
-import com.unison.appartment.model.UserHome;
-
-import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Task} e che effettua una
+ * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link UncompletedTask} e che effettua una
  * chiamata al {@link com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener listener} specificato.
  */
-public class MyTodoListRecyclerViewAdapter extends ListAdapter<Task, RecyclerView.ViewHolder> {
+public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, RecyclerView.ViewHolder> {
 
     private final OnTodoListFragmentInteractionListener listener;
 
-    public MyTodoListRecyclerViewAdapter(/*List<Task> tasks, */OnTodoListFragmentInteractionListener listener) {
+    public MyTodoListRecyclerViewAdapter(/*List<UncompletedTask> tasks, */OnTodoListFragmentInteractionListener listener) {
         super(MyTodoListRecyclerViewAdapter.DIFF_CALLBACK);
         this.listener = listener;
     }
@@ -43,18 +37,18 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<Task, RecyclerVie
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final ViewHolderTask holderTask = (ViewHolderTask) holder;
-//        final Task task = tasks.get(position);
-        final Task task = getItem(position);
+//        final UncompletedTask uncompletedTask = tasks.get(position);
+        final UncompletedTask uncompletedTask = getItem(position);
 
-        holderTask.taskName.setText(task.getName());
-        holderTask.taskDescription.setText(task.getDescription());
-        holderTask.taskPoints.setText(String.valueOf(task.getPoints()));
+        holderTask.taskName.setText(uncompletedTask.getName());
+        holderTask.taskDescription.setText(uncompletedTask.getDescription());
+        holderTask.taskPoints.setText(String.valueOf(uncompletedTask.getPoints()));
 
         holderTask.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onTodoListFragmentOpenTask(task);
+                    listener.onTodoListFragmentOpenTask(uncompletedTask);
                 }
             }
         });
@@ -80,18 +74,18 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<Task, RecyclerVie
         }
     }
 
-    public static final DiffUtil.ItemCallback<Task> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<Task>() {
+    public static final DiffUtil.ItemCallback<UncompletedTask> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<UncompletedTask>() {
                 @Override
                 public boolean areItemsTheSame(
-                        @NonNull Task oldTask, @NonNull Task newTask) {
+                        @NonNull UncompletedTask oldUncompletedTask, @NonNull UncompletedTask newUncompletedTask) {
                     // Le proprietà possono cambiare, ma l'id rimane lo stesso
-                    return oldTask.getId().equals(newTask.getId());
+                    return oldUncompletedTask.getId().equals(newUncompletedTask.getId());
                 }
                 @Override
                 public boolean areContentsTheSame(
-                        @NonNull Task oldTask, @NonNull Task newTask) {
-                    return oldTask.equals(newTask);
+                        @NonNull UncompletedTask oldUncompletedTask, @NonNull UncompletedTask newUncompletedTask) {
+                    return oldUncompletedTask.equals(newUncompletedTask);
                 }
             };
 }

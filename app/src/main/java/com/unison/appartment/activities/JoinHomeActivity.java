@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
@@ -122,7 +123,7 @@ public class JoinHomeActivity extends FormActivity {
 
         String nickname = inputNickname.getText().toString();
 
-        return new HomeUser(nickname);
+        return new HomeUser(nickname, Home.ROLE_SLAVE);
     }
 
     private UserHome createUserHome() {
@@ -130,7 +131,7 @@ public class JoinHomeActivity extends FormActivity {
 
         String homeName = inputHomeName.getText().toString();
 
-        return new UserHome(homeName, UserHome.ROLE_SLAVE);
+        return new UserHome(homeName, Home.ROLE_SLAVE);
     }
 
     private void checkHomeCredentials(final String homeName, final String password) {

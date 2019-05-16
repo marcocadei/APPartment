@@ -5,21 +5,20 @@ package com.unison.appartment.model;
  */
 public class UserHome {
 
-    public final static String ROLE_OWNER = "Proprietario";
-    public final static String ROLE_MASTER = "Leader";
-    public final static String ROLE_SLAVE = "Collaboratore";
-
     private String homeName;
-    private String role;
-
+    private int role;
     private int members;
 
     public UserHome() {
     }
 
-    public UserHome(String homeName, String role, int members) {
+    public UserHome(String homeName, int role) {
         this.homeName = homeName;
         this.role = role;
+    }
+
+    public UserHome(String homeName, int role, int members) {
+        this(homeName, role);
         this.members = members;
     }
 
@@ -31,11 +30,11 @@ public class UserHome {
         this.homeName = homeName;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
