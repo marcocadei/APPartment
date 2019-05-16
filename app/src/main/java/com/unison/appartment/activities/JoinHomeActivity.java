@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.unison.appartment.Appartment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.utils.KeyboardUtils;
@@ -195,6 +196,7 @@ public class JoinHomeActivity extends FormActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            Appartment.getInstance().setHome(homeName);
                             moveToNextActivity(MainActivity.class);
                             dismissProgress();
                         }
