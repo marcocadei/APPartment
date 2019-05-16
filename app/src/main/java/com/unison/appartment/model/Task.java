@@ -1,12 +1,8 @@
 package com.unison.appartment.model;
 
-import androidx.annotation.Nullable;
-
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,13 +13,13 @@ public class Task implements Serializable {
     private String id;
     private String name;
     private String description;
-    private String deadline;
+    private String creationDate;
     private int points;
 
-    public Task(String name, String description, String deadline, int points) {
+    public Task(String name, String description, String creationDate, int points) {
         this.name = name;
         this.description = description;
-        this.deadline = deadline;
+        this.creationDate = creationDate;
         this.points = points;
     }
 
@@ -46,12 +42,12 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public String getDeadline() {
-        return deadline;
+    public String getCreationDate() {
+        return creationDate;
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 
     public int getPoints() {
@@ -78,12 +74,12 @@ public class Task implements Serializable {
         return points == task.points &&
                 Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
-                Objects.equals(deadline, task.deadline);
+                Objects.equals(creationDate, task.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, deadline, points);
+        return Objects.hash(name, description, creationDate, points);
     }
 
     // TODO da rimuovere

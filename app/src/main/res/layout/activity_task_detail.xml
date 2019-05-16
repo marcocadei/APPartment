@@ -96,27 +96,27 @@
                     android:id="@+id/activity_task_detail_text_description_value"
                     style="@style/Component.TextView.MultiLine.AttributeValue"
                     android:text="@string/placeholder_text_long"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_deadline_title"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_creation_date_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/activity_task_detail_text_description_title" />
 
                 <TextView
-                    android:id="@+id/activity_task_detail_text_deadline_title"
+                    android:id="@+id/activity_task_detail_text_creation_date_title"
                     style="@style/Component.TextView.MultiLine.AttributeTitle"
-                    android:text="@string/desc_uncompletedtasks_homename_taskid_deadline"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_deadline_value"
+                    android:text="@string/desc_uncompletedtasks_homename_taskid_creation_date"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_creation_date_value"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/activity_task_detail_text_description_value" />
 
                 <TextView
-                    android:id="@+id/activity_task_detail_text_deadline_value"
+                    android:id="@+id/activity_task_detail_text_creation_date_value"
                     style="@style/Component.TextView.MultiLine.AttributeValue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_text_deadline_title" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_text_creation_date_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -41,7 +41,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         TextView name = findViewById(R.id.activity_task_detail_name);
         TextView points = findViewById(R.id.activity_task_detail_points_value);
         TextView description = findViewById(R.id.activity_task_detail_text_description_value);
-        TextView deadline = findViewById(R.id.activity_task_detail_text_deadline_value);
+        TextView creationDate = findViewById(R.id.activity_task_detail_text_creation_date_value);
 
         Intent i = getIntent();
         Task task = (Task) i.getSerializableExtra("task");
@@ -50,7 +50,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         points.setText(String.valueOf(task.getPoints()));
         description.setText(task.getDescription());
         try {
-            deadline.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(task.getDeadline())));
+            creationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(task.getCreationDate())));
         }
         catch (ParseException e) {
             /*
@@ -58,7 +58,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             sempre salvata facendo uso dello standard locale.
              */
             Log.e(getClass().getCanonicalName(), e.getMessage());
-            deadline.setText(task.getDeadline());
+            creationDate.setText(task.getCreationDate());
         }
     }
 }
