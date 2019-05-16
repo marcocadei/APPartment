@@ -1,5 +1,7 @@
 package com.unison.appartment.repository;
 
+import android.content.res.Resources;
+
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -8,6 +10,7 @@ import androidx.lifecycle.Transformations;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.R;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
@@ -26,12 +29,14 @@ public class TodoTaskRepository {
     private LiveData<List<Task>> taskLiveData;
 
     public TodoTaskRepository() {
-        String separator = Appartment.getInstance().getContext().getString(R.string.db_separator);
-        String uncompletedTasks = Appartment.getInstance().getContext().getString(R.string.db_uncompleted_tasks);
+        Resources res = Appartment.getInstance().getContext().getResources();
+        String separator = res.getString(R.string.db_separator);
+        String uncompletedTasks = res.getString(R.string.db_uncompleted_tasks);
         // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
         uncompletedTasksRef =
                 FirebaseDatabase.getInstance().getReference(separator + uncompletedTasks + separator + Appartment.getInstance().getHome());
-        liveData = new FirebaseQueryLiveData(uncompletedTasksRef);
+        Query orderedTasks = uncompletedTasksRef.orderByChild(res.getString(R.string.db_uncompleted_tasks_homename_taskid_creationdate));
+        liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
     }
 

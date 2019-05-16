@@ -13,10 +13,10 @@ public class Task implements Serializable {
     private String id;
     private String name;
     private String description;
-    private String creationDate;
+    private long creationDate;
     private int points;
 
-    public Task(String name, String description, String creationDate, int points) {
+    public Task(String name, String description, long creationDate, int points) {
         this.name = name;
         this.description = description;
         this.creationDate = creationDate;
@@ -42,11 +42,11 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public String getCreationDate() {
+    public long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 

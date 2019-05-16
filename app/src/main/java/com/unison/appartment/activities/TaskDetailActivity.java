@@ -14,6 +14,7 @@ import com.unison.appartment.model.Task;
 import com.unison.appartment.utils.DateUtils;
 
 import java.text.ParseException;
+import java.util.Calendar;
 
 /**
  * Classe che rappresenta l'Activity con il dettaglio del Task
@@ -49,16 +50,9 @@ public class TaskDetailActivity extends AppCompatActivity {
         name.setText(task.getName());
         points.setText(String.valueOf(task.getPoints()));
         description.setText(task.getDescription());
-        try {
-            creationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(task.getCreationDate())));
-        }
-        catch (ParseException e) {
-            /*
-            Questa eccezione non dovrebbe mai verificarsi assumendo che nel database la data sia
-            sempre salvata facendo uso dello standard locale.
-             */
-            Log.e(getClass().getCanonicalName(), e.getMessage());
-            creationDate.setText(task.getCreationDate());
-        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis((-1) * task.getCreationDate());
+        creationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(calendar.getTime()));
     }
 }

@@ -15,7 +15,9 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.Task;
 import com.unison.appartment.utils.DateUtils;
 
+import java.security.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Classe che rappresenta l'Activity per creare un nuovo Task
@@ -71,7 +73,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         Task newTask = new Task(
                 inputName.getText().toString(),
                 inputDescription.getText().toString(),
-                DateUtils.formatDateWithStandardLocale(calendar.getTime()), // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
+                (-1) * calendar.getTimeInMillis(), // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
                 Integer.valueOf(inputPoints.getText().toString())
         );
         Intent returnIntent = new Intent();
