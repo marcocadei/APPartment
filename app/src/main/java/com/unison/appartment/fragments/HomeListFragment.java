@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Fragment che rappresenta una lista di UserHome
+ * Fragment che rappresenta una lista di oggetti UserHome
  * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnHomeListFragmentInteractionListener}
  */
 public class HomeListFragment extends Fragment {
@@ -115,7 +115,7 @@ public class HomeListFragment extends Fragment {
      */
     private void readUserHomes() {
         String separator = getString(R.string.db_separator);
-        String path = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        String path = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_uid, FirebaseAuth.getInstance().getCurrentUser().getUid());
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -142,8 +142,16 @@ public class HomeListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnHomeListFragmentInteractionListener {
-        // TODO: Update argument type and name
+        /**
+         * Callback invocato quando si seleziona una voce della lista delle case.
+         * @param item Oggetto della lista selezionato.
+         */
         void onHomeListFragmentInteraction(UserHome item);
+
+        /**
+         * Callback invocato quando viene completato il caricamento della lista delle case.
+         * @param elements Numero di elementi della lista.
+         */
         void onHomeListElementsLoaded(long elements);
     }
 }

@@ -1,7 +1,7 @@
 package com.unison.appartment.model;
 
 /**
- * Classe che rappresenta una casa creata nell'applicazione
+ * Classe che rappresenta una casa
  */
 public class Home {
 

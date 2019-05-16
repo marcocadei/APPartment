@@ -15,9 +15,9 @@ import com.unison.appartment.fragments.FamilyMemberListFragment.OnFamilyMemberLi
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} che può visualizzare una lista di  {@link com.unison.appartment.model.Member} e che effettua una
- * chiamata al {@link OnFamilyMemberListFragmentInteractionListener} specificato
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di
+ * {@link com.unison.appartment.model.HomeUser HomeUser} e che effettua una
+ * chiamata al {@link OnFamilyMemberListFragmentInteractionListener listener} specificato.
  */
 public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFamilyMemberRecyclerViewAdapter.ViewHolderMember> {
 

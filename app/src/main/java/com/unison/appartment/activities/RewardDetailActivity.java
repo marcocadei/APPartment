@@ -50,7 +50,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         Reward reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
 
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
-        textName.setText(getString(R.string.activity_reward_detail_text_name, reward.getName()));
+        textName.setText(reward.getName());
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
         // Viene gestito il caso in cui la descrizione sia vuota
         String shownDescription = reward.getDescription();

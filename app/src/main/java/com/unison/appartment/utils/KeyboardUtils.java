@@ -6,11 +6,10 @@ import android.view.inputmethod.InputMethodManager;
 
 public class KeyboardUtils {
 
+    // Riferimento per questo metodo: https://stackoverflow.com/a/17789187
     /**
-     * Metodo per far sì che la keyboard scompaia al click del bottone
-     * Source: https://stackoverflow.com/a/17789187
-     *
-     * @param activity L'activity corrente
+     * Nasconde la tastiera virtuale mostrata su schermo.
+     * @param activity Activity in cui è visualizzata la tastiera.
      */
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

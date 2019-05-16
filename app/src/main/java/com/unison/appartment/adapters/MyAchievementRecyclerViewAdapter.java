@@ -14,9 +14,8 @@ import com.unison.appartment.model.Achievement;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} che può visualizzare una lista di  {@link Achievement} e che effettua una
- * chiamata al {@link com.unison.appartment.fragments.AchievementListFragment} specificato
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Achievement} e che effettua una
+ * chiamata al {@link com.unison.appartment.fragments.AchievementListFragment fragment} specificato.
  */
 public class MyAchievementRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

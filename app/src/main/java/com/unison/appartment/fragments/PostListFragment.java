@@ -99,6 +99,7 @@ public class PostListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        listener = null;
     }
 
     /**

@@ -23,14 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} che può visualizzare una lista di  {@link Post} e che effettua una
- * chiamata al {@link com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener} specificato
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Post} e che effettua una
+ * chiamata al {@link com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener listener} specificato.
  */
 public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Post> postList;
     // private final OnListPostFragmentListener listener;
+
     // Player usato per la riproduzione dei file audio
     private MediaPlayer player = null;
     private ViewHolderAudioPost playingTrack = null;

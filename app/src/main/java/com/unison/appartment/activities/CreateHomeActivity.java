@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.utils.KeyboardUtils;
@@ -101,19 +100,6 @@ public class CreateHomeActivity extends FormActivity {
         });
     }
 
-  // FIXME sposta
-  /**
-     * Metodo per togliere il messaggio d'errore su un campo di input
-     *
-     * @param inputLayout Il campo di input da cui togliere il messaggio d'errore
-     */
-  
-  /**
-     * Metodo per controllare che gli input immessi dall'utente nei diversi campi rispettino tutti i
-     * controlli lato client
-     *
-     * @return True se i controlli sono superati, false altrimenti
-     */
     protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
@@ -143,7 +129,7 @@ public class CreateHomeActivity extends FormActivity {
         // Controllo che il nome della casa non contenga un carattere non ammesso
         // (Il nome della casa è usato come nome di un nodo in Firebase e lì alcuni caratteri non sono ammessi)
         if (homeNameValue.matches(".*[.$\\[\\]#/].*")) {
-            layoutHomeName.setError(getString(R.string.form_error_invalid_character));
+            layoutHomeName.setError(getString(R.string.form_error_invalid_characters));
             result = false;
         }
 
@@ -209,7 +195,7 @@ public class CreateHomeActivity extends FormActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     // Esiste già una casa con il nome specificato dall'utente
-                    layoutHomeName.setError(getString(R.string.form_error_home_exists));
+                    layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
                     dismissProgress();
                 }
                 else {
@@ -230,24 +216,23 @@ public class CreateHomeActivity extends FormActivity {
         });
     }
 
-  /**
-     * Metodo per effettuare la scrittura in Firebase Database di una nuova Home
-     *
-     * @param homeName Il nome della casa che si vuole creare
-     * @param password La password della casa che si vuole creare
-     * @param nickname Il nickname dello User all'interno della casa che si vuole creare
+    /**
+     * Effettua la scrittura nel database di diversi nodi in modo da creare i dati corrispondenti
+     * ad una nuova casa.
+     * @param homeName Nome della nuova casa (utilizzato per determinare il path dei nodi in cui
+     *                 scrivere).
      */
     private void writeHomeInDb(final String homeName) {
         String separator = getString(R.string.db_separator);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String homePath = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName);
-        final String familyPath = getString(R.string.db_families) + separator + getString(R.string.db_families_homename, homeName) + separator + getString(R.string.db_families_homename_userid, uid);
-        final String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_userid, uid) + separator + getString(R.string.db_userhomes_userid_homename, homeName);
+        final String homeuserPath = getString(R.string.db_homeusers) + separator + getString(R.string.db_homeusers_homename, homeName) + separator + getString(R.string.db_homeusers_homename_uid, uid);
+        final String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_uid, uid) + separator + getString(R.string.db_userhomes_uid_homename, homeName);
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(homePath, createHome());
-        childUpdates.put(familyPath, createHomeUser());
+        childUpdates.put(homeuserPath, createHomeUser());
         childUpdates.put(userhomePath, createUserHome());
 
         dbRef.updateChildren(childUpdates)
@@ -269,7 +254,7 @@ public class CreateHomeActivity extends FormActivity {
                                     // Implica: Esiste già una casa con il nome specificato dall'utente
                                     // (Si può verificare solo se tra la lettura precedente e questa
                                     // scrittura un altro utente ha registrato una casa con lo stesso nome)
-                                    layoutHomeName.setError(getString(R.string.form_error_home_exists));
+                                    layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
                                     dismissProgress();
                                 }
                                 else {

@@ -25,7 +25,7 @@ import com.unison.appartment.model.Task;
 import java.util.List;
 
 /**
- * Fragment che rappresenta una lista di To Do
+ * Fragment che rappresenta una lista di task
  */
 public class TodoListFragment extends Fragment {
 
@@ -94,13 +94,14 @@ public class TodoListFragment extends Fragment {
             listener = (OnTodoListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnInsertPostFragmentListener errore in insert");
+                    + " must implement OnTodoListFragmentInteractionListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        listener = null;
     }
 
     private void readUncompletedTasks() {

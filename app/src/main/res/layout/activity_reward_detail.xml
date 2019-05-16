@@ -39,7 +39,6 @@
 
                 <TextView
                     android:id="@+id/activity_reward_detail_text_name"
-                    android:text="@string/activity_reward_detail_text_name"
                     style="@style/Component.TextView.MultiLine.ObjectTitle"
                     app:layout_constraintBottom_toBottomOf="@id/activity_reward_detail_layout_points"
                     app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_layout_points"
@@ -87,7 +86,7 @@
                 <TextView
                     android:id="@+id/activity_reward_detail_text_description_title"
                     style="@style/Component.TextView.MultiLine.AttributeTitle"
-                    android:text="@string/activity_reward_detail_text_description_title"
+                    android:text="@string/desc_rewards_homename_rewardid_description"
                     app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_description_value"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

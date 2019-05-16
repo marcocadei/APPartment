@@ -130,7 +130,7 @@ public class SignInActivity extends FormActivity {
                             }
                             catch (FirebaseAuthInvalidUserException e) {
                                 // Utente non esistente
-                                layoutEmail.setError(getString(R.string.form_error_nonexistent_user));
+                                layoutEmail.setError(getString(R.string.form_error_nonexistent_email));
                             }
                             catch (Exception e) {
                                 // Generico

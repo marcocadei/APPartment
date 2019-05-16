@@ -14,7 +14,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.User;
 
 /**
- * Classe che rappresenta l'Activity con il dettaglio del Member della famiglia
+ * Classe che rappresenta l'Activity con il dettaglio di un membro della famiglia
  */
 public class FamilyMemberDetailActivity extends AppCompatActivity {
 

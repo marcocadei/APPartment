@@ -86,7 +86,7 @@
                 <TextView
                     android:id="@+id/activity_task_detail_text_description_title"
                     style="@style/Component.TextView.MultiLine.AttributeTitle"
-                    android:text="@string/activity_task_detail_text_description_title"
+                    android:text="@string/desc_uncompletedtasks_homename_taskid_description"
                     app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_description_value"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +104,7 @@
                 <TextView
                     android:id="@+id/activity_task_detail_text_deadline_title"
                     style="@style/Component.TextView.MultiLine.AttributeTitle"
-                    android:text="@string/activity_task_detail_text_deadline_title"
+                    android:text="@string/desc_uncompletedtasks_homename_taskid_deadline"
                     app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_deadline_value"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

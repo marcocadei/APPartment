@@ -102,15 +102,9 @@ public class RewardListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-//        FIXME Rimuovere se non serve
-//        mListener = null;
+        mListener = null;
     }
 
-    /**
-     * Metodo per aggiungere un nuovo Reward
-     *
-     * @param newReward Il nuovo Reward da aggiungere
-     */
     public void addReward(Reward newReward) {
         Reward.addReward(0, newReward);
         myAdapter.notifyItemInserted(0);

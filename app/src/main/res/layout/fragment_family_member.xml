@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/fragment_family_member_img_member"
         style="@style/Component.ImageView.ListItemIcon"
-        android:contentDescription="@string/fragment_family_member_img_person"
+        android:contentDescription="@string/caption_profile_pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fragment_family_member_layout_name"

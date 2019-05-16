@@ -17,7 +17,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.User;
 
 /**
- * Fragment che rappresenta una lista di Member di una famiglia
+ * Fragment che rappresenta la lista dei membri di una famiglia
  * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnFamilyMemberListFragmentInteractionListener}
  */
 public class FamilyMemberListFragment extends Fragment {
@@ -82,13 +82,14 @@ public class FamilyMemberListFragment extends Fragment {
             listener = (OnFamilyMemberListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFamilyMemberListFragmentListener errore in insert");
+                    + " must implement OnFamilyMemberListFragmentListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        listener = null;
     }
 
     public void addMember(User newUser) {

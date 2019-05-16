@@ -21,9 +21,8 @@ import com.unison.appartment.model.UserHome;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} che può visualizzare una lista di  {@link Task} e che effettua una
- * chiamata al {@link com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener} specificato
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Task} e che effettua una
+ * chiamata al {@link com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener listener} specificato.
  */
 public class MyTodoListRecyclerViewAdapter extends ListAdapter<Task, RecyclerView.ViewHolder> {
 

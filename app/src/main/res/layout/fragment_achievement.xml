@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/fragment_achievement_img_logo"
         style="@style/Component.ImageView.ListItemIcon"
-        android:contentDescription="@string/fragment_achievement_img_logo"
+        android:contentDescription="@string/caption_achievement_logo"
         android:src="@drawable/ic_stars"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/fragment_achievement_layout_name"

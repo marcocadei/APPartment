@@ -36,7 +36,7 @@
                 <ImageView
                     android:id="@+id/activity_create_home_img_title"
                     style="@style/Component.ImageView.FancyTitleImage"
-                    android:contentDescription="@string/activity_create_home_img_title_description"
+                    android:contentDescription="@string/caption_ic_home"
                     app:layout_constraintBottom_toBottomOf="@+id/activity_create_home_text_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/activity_create_home_text_title"
@@ -48,7 +48,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_homename"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_home_hint_name"
+                android:hint="@string/desc_homes_homename_name"
                 app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_password"
                 app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_password"
                 app:layout_constraintStart_toStartOf="@id/activity_create_home_input_password"
@@ -63,7 +63,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_password"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_home_hint_password"
+                android:hint="@string/desc_homes_homename_password"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"
@@ -79,7 +79,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_repeat_password"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_home_hint_password_repeat"
+                android:hint="@string/desc_homes_homename_password_repeat"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_nickname"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/activity_create_home_hint_nickname"
+                android:hint="@string/desc_homeusers_homename_uid_nickname"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_password_info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

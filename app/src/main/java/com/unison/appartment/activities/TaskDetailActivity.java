@@ -5,11 +5,15 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
 import com.unison.appartment.model.Task;
+import com.unison.appartment.utils.DateUtils;
+
+import java.text.ParseException;
 
 /**
  * Classe che rappresenta l'Activity con il dettaglio del Task
@@ -45,6 +49,16 @@ public class TaskDetailActivity extends AppCompatActivity {
         name.setText(task.getName());
         points.setText(String.valueOf(task.getPoints()));
         description.setText(task.getDescription());
-        deadline.setText(task.getDeadline());
+        try {
+            deadline.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(task.getDeadline())));
+        }
+        catch (ParseException e) {
+            /*
+            Questa eccezione non dovrebbe mai verificarsi assumendo che nel database la data sia
+            sempre salvata facendo uso dello standard locale.
+             */
+            Log.e(getClass().getCanonicalName(), e.getMessage());
+            deadline.setText(task.getDeadline());
+        }
     }
 }
