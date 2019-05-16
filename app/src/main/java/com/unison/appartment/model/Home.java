@@ -10,15 +10,17 @@ public class Home {
     private String name;
     private String password;
     private int conversionFactor;
+    private int members;
 
     public Home(String name, String password) {
-        this(name, password, DEFAULT_CONVERSION_FACTOR);
+        this(name, password, DEFAULT_CONVERSION_FACTOR, 0);
     }
 
-    public Home(String name, String password, int conversionFactor) {
+    public Home(String name, String password, int conversionFactor, int members) {
         this.name = name;
         this.password = password;
         this.conversionFactor = conversionFactor;
+        this.members = members;
     }
 
     public String getName() {
@@ -45,4 +47,11 @@ public class Home {
         this.conversionFactor = conversionFactor;
     }
 
+    public int getMembers() {
+        return members;
+    }
+
+    public void setMembers(int members) {
+        this.members = members;
+    }
 }

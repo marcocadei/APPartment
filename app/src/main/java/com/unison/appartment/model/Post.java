@@ -15,8 +15,15 @@ public abstract class Post {
 
     private static List<Post> postList = new ArrayList<>();
 
-    private String sender;
-    private Date date;
+    private String content;
+    private String author;
+    private Date timestamp;
+
+    public Post(String content, String author, Date timestamp) {
+        this.content = content;
+        this.author = author;
+        this.timestamp = timestamp;
+    }
 
     public static void addPost(int position, Post post) {
         postList.add(position, post);
@@ -36,24 +43,27 @@ public abstract class Post {
 
     public abstract int getType();
 
-    public Post(String sender, Date date) {
-        this.sender = sender;
-        this.date = date;
+    public String getContent() {
+        return content;
     }
 
-    public String getSender(){
-        return sender;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public void setSendet(String sender) {
-        this.sender = sender;
+    public String getAuthor(){
+        return author;
     }
 
-    public Date getDate() {
-        return date;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

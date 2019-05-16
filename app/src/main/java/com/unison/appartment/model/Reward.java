@@ -13,32 +13,29 @@ public class Reward implements Serializable {
     private static List<Reward> rewardsList = new ArrayList<>();
 
     private String name;
-
     private String description;
-
     private int points;
+    private String reservation;
 
-    private boolean requested;
-
-    public Reward(String name, String description, int points) {
+    public Reward(String name, String description, int points, String reservation) {
         this.name = name;
         this.description = description;
         this.points = points;
-        this.requested = false;
+        this.reservation = reservation;
     }
 
-    public Reward(String name, int points) {
+    public Reward(String name, int points, String reservation) {
         this.name = name;
         this.points = points;
-        this.requested = false;
+        this.reservation = reservation;
     }
 
-    public boolean isRequested() {
-        return requested;
+    public String getReservation() {
+        return reservation;
     }
 
-    public void setRequested(boolean requested) {
-        this.requested = requested;
+    public void setReservation(String reservation) {
+        this.reservation = reservation;
     }
 
     public String getName() {

@@ -7,19 +7,8 @@ import java.util.Date;
  */
 public class TextPost extends Post {
 
-    private String message;
-
-    public TextPost(String sender, Date date, String message) {
-        super(sender, date);
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public TextPost(String message, String author, Date timestamp) {
+        super(message, author, timestamp);
     }
 
     @Override

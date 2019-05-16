@@ -12,12 +12,15 @@ public class UserHome {
     private String homeName;
     private String role;
 
+    private int members;
+
     public UserHome() {
     }
 
-    public UserHome(String homeName, String role) {
+    public UserHome(String homeName, String role, int members) {
         this.homeName = homeName;
         this.role = role;
+        this.members = members;
     }
 
     public String getHomeName() {
@@ -35,4 +38,13 @@ public class UserHome {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public int getMembers() {
+        return members;
+    }
+
+    public void setMembers(int members) {
+        this.members = members;
+    }
+
 }

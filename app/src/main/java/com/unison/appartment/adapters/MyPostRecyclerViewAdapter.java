@@ -72,8 +72,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
                 TextPost textPostItem = (TextPost) postList.get(position);
                 holderTextPost.textPostTxt.setText(textPostItem.getMessage());
-                holderTextPost.textPostSender.setText(textPostItem.getSender());
-                holderTextPost.textPostDate.setText(format.format(textPostItem.getDate()));
+                holderTextPost.textPostSender.setText(textPostItem.getAuthor());
+                holderTextPost.textPostDate.setText(format.format(textPostItem.getTimestamp()));
                 break;
             case Post.IMAGE_POST:
                 final ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
@@ -82,8 +82,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 // efficiente, altrimenti se caricassi l'intera immagine già con poche immagini la
                 // recyclerView andrebbe a scatti
                 Glide.with(holderImagePost.imagePostImg.getContext()).load(imagePostItem.getImage()).into(holderImagePost.imagePostImg);
-                holderImagePost.imagePostSender.setText(imagePostItem.getSender());
-                holderImagePost.imagePostDate.setText(format.format(imagePostItem.getDate()));
+                holderImagePost.imagePostSender.setText(imagePostItem.getAuthor());
+                holderImagePost.imagePostDate.setText(format.format(imagePostItem.getTimestamp()));
                 holderImagePost.imagePostImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -96,8 +96,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             case Post.AUDIO_POST:
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final AudioPost audioPostItem = (AudioPost) postList.get(position);
-                holderAudioPost.audioPostSender.setText(audioPostItem.getSender());
-                holderAudioPost.audioPostDate.setText(format.format(audioPostItem.getDate()));
+                holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
+                holderAudioPost.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
                 holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

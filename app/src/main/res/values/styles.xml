@@ -11,7 +11,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
 
-        <!-- Stile dei date pickers -->
+        <!-- Stile dei timestamp pickers -->
         <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialogTheme</item>
 
         <!-- Stile dei dialogs -->
@@ -19,7 +19,7 @@
         <item name="android:dialogTheme">@style/CustomAlertDialogTheme</item>
     </style>
 
-    <!-- Override dello stile di default dei date pickers e relativi componenti -->
+    <!-- Override dello stile di default dei timestamp pickers e relativi componenti -->
 
     <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">@color/colorPrimary</item>
