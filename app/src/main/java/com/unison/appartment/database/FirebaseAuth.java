@@ -14,9 +14,25 @@ import com.unison.appartment.model.User;
 public class FirebaseAuth implements Auth {
 
     @Override
-    public void writeAuthInfo(final User newUser, final AuthListener listener) {
+    public void signUp(final User newUser, final AuthListener listener) {
         com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(newUser.getEmail(), newUser.getPassword())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess();
+                        } else {
+                            listener.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void signIn(final String email, final String password, final AuthListener listener) {
+        final com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
+        auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -35,21 +51,5 @@ public class FirebaseAuth implements Auth {
         } catch (NullPointerException e) {
             return null;
         }
-    }
-
-    @Override
-    public void performSignIn(String email, String password, final AuthListener listener) {
-        final com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            listener.onSuccess();
-                        } else {
-                            listener.onFail(task.getException());
-                        }
-                    }
-                });
     }
 }
