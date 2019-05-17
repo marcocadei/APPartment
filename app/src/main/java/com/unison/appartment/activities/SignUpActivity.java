@@ -21,10 +21,10 @@ import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.AuthListener;
-import com.unison.appartment.database.Database;
-import com.unison.appartment.database.DatabaseListener;
+import com.unison.appartment.database.DatabaseWriter;
+import com.unison.appartment.database.DatabaseWriterListener;
 import com.unison.appartment.database.FirebaseAuth;
-import com.unison.appartment.database.FirebaseDatabase;
+import com.unison.appartment.database.FirebaseDatabaseWriter;
 import com.unison.appartment.fragments.DatePickerFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.DateUtils;
@@ -44,7 +44,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private final static String BUNDLE_KEY_DATE_OBJECT = "dateObject";
 
     private Auth auth;
-    private Database database;
+    private DatabaseWriter databaseWriter;
 
     EditText inputEmail;
     EditText inputPassword;
@@ -68,7 +68,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         // Precondizione: Se viene acceduta questa activity, vuol dire che non c'è nessun utente loggato
 
         auth = new FirebaseAuth();
-        database = new FirebaseDatabase();
+        databaseWriter = new FirebaseDatabaseWriter();
 
         inputEmail = findViewById(R.id.activity_signup_input_email_value);
         inputPassword = findViewById(R.id.activity_signup_input_password_value);
@@ -134,25 +134,11 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
 
                     final User newUser = createUser();
                     // Salvataggio delle informazioni in Auth
-                    auth.writeAuthInfo(newUser, new AuthListener() {
+                    auth.signUp(newUser, new AuthListener() {
                         @Override
                         public void onSuccess() {
-                            database.writeUser(newUser, new DatabaseListener() {
-                                @Override
-                                public void onReadSuccess(Object object) {
-
-                                }
-
-                                @Override
-                                public void onReadEmpty() {
-
-                                }
-
-                                @Override
-                                public void onReadCancelled(DatabaseError databaseError) {
-
-                                }
-
+                            databaseWriter.writeUser(newUser, auth.getCurrentUserUid(),
+                            new DatabaseWriterListener() {
                                 @Override
                                 public void onWriteSuccess() {
                                     Appartment.getInstance().setUser(newUser);
@@ -171,7 +157,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                                     }
                                     dismissProgress();
                                 }
-                            }, auth.getCurrentUserUid());
+                            });
                         }
 
                         @Override
