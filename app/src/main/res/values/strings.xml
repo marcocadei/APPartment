@@ -28,6 +28,7 @@
     <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
     <string name="form_error_invalid_characters">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
+    <string name="form_error_invalid_date">Specificare una data antecedente a quella odierna</string>
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
     <string name="form_error_missing_value">Specificare un valore</string>
     <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
@@ -47,7 +48,7 @@
     <string name="desc_uncompletedtasks_homename_taskid_name">Nome</string>
     <string name="desc_uncompletedtasks_homename_taskid_points">Punti</string>
     <string name="desc_userhomes_uid_homename_role">Ruolo</string>
-    <string name="desc_users_uid_age">Età</string>
+    <string name="desc_users_uid_birthdate">Data di nascita</string>
     <string name="desc_users_uid_email">Email</string>
     <string name="desc_users_uid_gender">Genere</string>
     <string name="desc_users_uid_gender_value_female">Femmina</string>

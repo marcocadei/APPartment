@@ -110,7 +110,7 @@
                     <TextView
                         android:id="@+id/activity_user_profile_text_age_title"
                         style="@style/Component.TextView.MultiLine.AttributeTitle"
-                        android:text="@string/desc_users_uid_age"
+                        android:text="@string/placeholder_text"
                         android:layout_marginEnd="@dimen/margin_extra_small"
                         app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_age_value"
                         app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_gender_title"

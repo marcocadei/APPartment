@@ -26,5 +26,7 @@
     <!-- Utenti -->
     <item name="db_users" type="string">users</item>
     <item name="db_users_uid" type="string">%1$s</item>
+    <item name="db_users_uid_name" type="string">name</item>
+
 
 </resources>

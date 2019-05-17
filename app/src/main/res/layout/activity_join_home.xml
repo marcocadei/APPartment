@@ -94,7 +94,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_join_home_input_nickname"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/desc_homes_homename_password_repeat"
+                android:hint="@string/desc_homeusers_homename_uid_nickname"
                 app:layout_constraintBottom_toTopOf="@id/activity_join_home_text_info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
