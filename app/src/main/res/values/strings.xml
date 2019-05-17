@@ -20,7 +20,7 @@
     </plurals>
 
     <string name="preferences_file_key">com.unison.appartment.preferences</string>
-
+    <string name="preferences_user">User</string>
 
     <!-- Errori delle form -->
 

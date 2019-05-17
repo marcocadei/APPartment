@@ -27,15 +27,21 @@ public class Appartment {
     }
 
     public User getUser() {
-        return user;
+        if(user != null) {
+            return user;
+        }
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(
+                MyApplication.getAppContext().getResources().getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
+        String json = sp.getString(MyApplication.getAppContext().getResources().getString(R.string.preferences_user), null);
+        Gson gson = new Gson();
+        return gson.fromJson(json, User.class);
     }
 
     public void setUser(User user) {
         SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(
                 MyApplication.getAppContext().getResources().getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        Gson gson = new Gson();
-        editor.putString("User", gson.toJson(user));
+        editor.putString(MyApplication.getAppContext().getResources().getString(R.string.preferences_user), new Gson().toJson(user));
         editor.apply();
         this.user = user;
     }
