@@ -61,7 +61,7 @@ public class TodoListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-        viewModel = ViewModelProviders.of(this).get(TodoTaskViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(TodoTaskViewModel.class);
     }
 
     @Override
@@ -78,14 +78,20 @@ public class TodoListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            readUncompletedTasks();
 
             myAdapter = new MyTodoListRecyclerViewAdapter(/*UncompletedTask.TASKS*//*uncompletedTasks,*/ listener);
+            myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    myRecyclerView.smoothScrollToPosition(0);
+                }
+            });
             myRecyclerView.setAdapter(myAdapter);
+
+            readUncompletedTasks();
         }
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
