@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Classe che rappresenta un achievement da sbloccare
  */
+// TODO da togliere se decidiamo di non fare più gli achievements
 public class Achievement implements Serializable {
 
     private String name;

@@ -3,6 +3,8 @@ package com.unison.appartment.model;
 import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.PropertyName;
+import com.unison.appartment.Appartment;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,14 +14,19 @@ import java.util.Objects;
  */
 public class UncompletedTask implements Serializable {
 
+    private final static String ATTRIBUTE_CREATION_DATE = "creation-date";
+    private final static String ATTRIBUTE_ASSIGNED_USER = "assigned-user";
+
     @Exclude
     private String id;
     private String name;
     @Nullable
     private String description;
     private int points;
+    @PropertyName(ATTRIBUTE_CREATION_DATE)
     private long creationDate;
     @Nullable
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER)
     private String assignedUser;
     private boolean marked;
 
@@ -67,27 +74,33 @@ public class UncompletedTask implements Serializable {
         this.points = points;
     }
 
+    @Exclude
     public String getId() {
         return id;
     }
 
+    @Exclude
     public void setId(String id) {
         this.id = id;
     }
 
+    @PropertyName(ATTRIBUTE_CREATION_DATE)
     public long getCreationDate() {
         return creationDate;
     }
 
+    @PropertyName(ATTRIBUTE_CREATION_DATE)
     public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 
     @Nullable
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER)
     public String getAssignedUser() {
         return assignedUser;
     }
 
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER)
     public void setAssignedUser(@Nullable String assignedUser) {
         this.assignedUser = assignedUser;
     }

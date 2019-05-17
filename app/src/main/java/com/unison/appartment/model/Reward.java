@@ -32,11 +32,12 @@ public class Reward implements Serializable {
         this.reservation = reservation;
     }
 
+    @Nullable
     public String getReservation() {
         return reservation;
     }
 
-    public void setReservation(String reservation) {
+    public void setReservation(@Nullable String reservation) {
         this.reservation = reservation;
     }
 
@@ -48,11 +49,12 @@ public class Reward implements Serializable {
         this.name = name;
     }
 
+    @Nullable
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@Nullable String description) {
         this.description = description;
     }
 

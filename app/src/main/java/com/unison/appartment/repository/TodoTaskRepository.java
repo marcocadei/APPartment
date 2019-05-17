@@ -58,7 +58,6 @@ public class TodoTaskRepository {
             List<UncompletedTask> uncompletedTasks = new ArrayList<>();
             for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
                 UncompletedTask newUncompletedTask = taskSnapshot.getValue(UncompletedTask.class);
-                Log.w(getClass().getCanonicalName(), newUncompletedTask.getId());
                 newUncompletedTask.setId(taskSnapshot.getKey());
                 uncompletedTasks.add(newUncompletedTask);
             }

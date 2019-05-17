@@ -1,5 +1,7 @@
 package com.unison.appartment.model;
 
+import com.google.firebase.database.PropertyName;
+
 import java.util.Objects;
 
 /**
@@ -7,19 +9,38 @@ import java.util.Objects;
  */
 public class HomeUser {
 
+    private final static String ATTRIBUTE_TOTAL_EARNED_POINTS = "total-earned-points";
+    private final static String ATTRIBUTE_COMPLETED_TASKS = "completed-tasks";
+    private final static String ATTRIBUTE_CLAIMED_REWARDS = "claimed-rewards";
+    private final static String ATTRIBUTE_EARNED_MONEY = "earned-money";
+    private final static String ATTRIBUTE_TEXT_POSTS = "text-posts";
+    private final static String ATTRIBUTE_AUDIO_POSTS = "audio-posts";
+    private final static String ATTRIBUTE_IMAGE_POSTS = "image-posts";
+    private final static String ATTRIBUTE_REJECTED_TASKS = "rejected-tasks";
+    private final static String ATTRIBUTE_UNLOCKED_ACHIEVEMENTS = "unlocked-achievements";
+
     private final static int DEFAULT_POINTS = 0;
 
     private String nickname;
     private int points;
+    @PropertyName(ATTRIBUTE_TOTAL_EARNED_POINTS)
     private long totalEarnedPoints;
     private int role;
+    @PropertyName(ATTRIBUTE_COMPLETED_TASKS)
     private int completedTasks;
+    @PropertyName(ATTRIBUTE_CLAIMED_REWARDS)
     private int claimedRewards;
+    @PropertyName(ATTRIBUTE_EARNED_MONEY)
     private int earnedMoney;
+    @PropertyName(ATTRIBUTE_TEXT_POSTS)
     private int textPosts;
+    @PropertyName(ATTRIBUTE_AUDIO_POSTS)
     private int audioPosts;
+    @PropertyName(ATTRIBUTE_IMAGE_POSTS)
     private int imagePosts;
+    @PropertyName(ATTRIBUTE_REJECTED_TASKS)
     private int rejectedTasks;
+    @PropertyName(ATTRIBUTE_UNLOCKED_ACHIEVEMENTS)
     private int unlockedAchievements;
 
     public HomeUser() {
@@ -67,10 +88,12 @@ public class HomeUser {
         this.points = points;
     }
 
+    @PropertyName(ATTRIBUTE_TOTAL_EARNED_POINTS)
     public long getTotalEarnedPoints() {
         return totalEarnedPoints;
     }
 
+    @PropertyName(ATTRIBUTE_TOTAL_EARNED_POINTS)
     public void setTotalEarnedPoints(long totalEarnedPoints) {
         this.totalEarnedPoints = totalEarnedPoints;
     }
@@ -83,66 +106,82 @@ public class HomeUser {
         this.role = role;
     }
 
+    @PropertyName(ATTRIBUTE_COMPLETED_TASKS)
     public int getCompletedTasks() {
         return completedTasks;
     }
 
+    @PropertyName(ATTRIBUTE_COMPLETED_TASKS)
     public void setCompletedTasks(int completedTasks) {
         this.completedTasks = completedTasks;
     }
 
+    @PropertyName(ATTRIBUTE_CLAIMED_REWARDS)
     public int getClaimedRewards() {
         return claimedRewards;
     }
 
+    @PropertyName(ATTRIBUTE_CLAIMED_REWARDS)
     public void setClaimedRewards(int claimedRewards) {
         this.claimedRewards = claimedRewards;
     }
 
+    @PropertyName(ATTRIBUTE_EARNED_MONEY)
     public int getEarnedMoney() {
         return earnedMoney;
     }
 
+    @PropertyName(ATTRIBUTE_EARNED_MONEY)
     public void setEarnedMoney(int earnedMoney) {
         this.earnedMoney = earnedMoney;
     }
 
+    @PropertyName(ATTRIBUTE_TEXT_POSTS)
     public int getTextPosts() {
         return textPosts;
     }
 
+    @PropertyName(ATTRIBUTE_TEXT_POSTS)
     public void setTextPosts(int textPosts) {
         this.textPosts = textPosts;
     }
 
+    @PropertyName(ATTRIBUTE_AUDIO_POSTS)
     public int getAudioPosts() {
         return audioPosts;
     }
 
+    @PropertyName(ATTRIBUTE_AUDIO_POSTS)
     public void setAudioPosts(int audioPosts) {
         this.audioPosts = audioPosts;
     }
 
+    @PropertyName(ATTRIBUTE_IMAGE_POSTS)
     public int getImagePosts() {
         return imagePosts;
     }
 
+    @PropertyName(ATTRIBUTE_IMAGE_POSTS)
     public void setImagePosts(int imagePosts) {
         this.imagePosts = imagePosts;
     }
 
+    @PropertyName(ATTRIBUTE_REJECTED_TASKS)
     public int getRejectedTasks() {
         return rejectedTasks;
     }
 
+    @PropertyName(ATTRIBUTE_REJECTED_TASKS)
     public void setRejectedTasks(int rejectedTasks) {
         this.rejectedTasks = rejectedTasks;
     }
 
+    @PropertyName(ATTRIBUTE_UNLOCKED_ACHIEVEMENTS)
     public int getUnlockedAchievements() {
         return unlockedAchievements;
     }
 
+    @PropertyName(ATTRIBUTE_UNLOCKED_ACHIEVEMENTS)
     public void setUnlockedAchievements(int unlockedAchievements) {
         this.unlockedAchievements = unlockedAchievements;
     }
