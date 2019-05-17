@@ -15,8 +15,7 @@ import com.unison.appartment.model.User;
 public class FirebaseDatabaseWriter implements DatabaseWriter {
     public void writeUser(final User newUser, final String uid, final DatabaseWriterListener listener) {
         // Scrittura dei dati relativi al nuovo utente nel database
-        String separator = MyApplication.getAppContext().getResources().getString(R.string.db_separator);
-        String path = MyApplication.getAppContext().getResources().getString(R.string.db_users) + separator + MyApplication.getAppContext().getResources().getString(R.string.db_users_uid, uid);
+        String path = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
         DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(path);
         dbRef.setValue(newUser)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
