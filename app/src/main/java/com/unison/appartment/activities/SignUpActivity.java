@@ -12,14 +12,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.database.DatabaseReference;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.AuthListener;
@@ -34,14 +31,13 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione
  */
-public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener, AuthListener, DatabaseListener {
+public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final int MIN_USER_PASSWORD_LENGTH = 6;
     private final static String BUNDLE_KEY_DATE_OBJECT = "dateObject";
@@ -134,8 +130,66 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                             getString(R.string.activity_signup_signup_title),
                             getString(R.string.activity_signup_signup_description));
                     progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+
+                    final User newUser = createUser();
                     // Salvataggio delle informazioni in Auth
-                    auth.writeAuthInfo(createUser(), SignUpActivity.this);
+                    auth.writeAuthInfo(newUser, new AuthListener() {
+                        @Override
+                        public void onSuccess() {
+                            database.writeUser(newUser, new DatabaseListener() {
+                                @Override
+                                public void onWriteSuccess() {
+                                    Appartment.getInstance().setUser(newUser);
+                                    moveToNextActivity(UserProfileActivity.class);
+                                    dismissProgress();
+                                }
+
+                                @Override
+                                public void onWriteFail(Exception exception) {
+                                    try {
+                                        throw exception;
+                                    } catch (Exception e) {
+                                        // (DatabaseException se si verifica una violazione delle regole di sicurezza)
+                                        // Generico
+                                        showErrorDialog();
+                                    }
+                                    dismissProgress();
+                                }
+                            }, auth.getCurrentUserUid());
+                        }
+
+                        @Override
+                        public void onFail(Exception exception) {
+                            try {
+                                throw exception;
+                            } catch (FirebaseAuthUserCollisionException e) {
+                                // Email già in uso
+                                layoutEmail.setError(getString(R.string.form_error_duplicate_email));
+                            } catch (FirebaseAuthWeakPasswordException e) {
+                                // Password non abbastanza robusta
+
+                                /*
+                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                                eseguiti controlli lato client sulla lunghezza della password.
+                                Se si entra in questo blocco c'è qualche problema!
+                                 */
+                                Log.w(getClass().getCanonicalName(), e.getMessage());
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                // Email malformata
+
+                                /*
+                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                                eseguiti controlli lato client sulla struttura dell'indirizzo mail.
+                                Se si entra in questo blocco c'è qualche problema!
+                                 */
+                                Log.w(getClass().getCanonicalName(), e.getMessage());
+                            } catch (Exception e) {
+                                // Generico
+                                showErrorDialog();
+                            }
+                            dismissProgress();
+                        }
+                    });
                 }
             }
         });
@@ -289,62 +343,5 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         day = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerFragment.newInstance(year, month, day, this).show(getSupportFragmentManager(), DatePickerFragment.TAG_DATE_PICKER);
-    }
-
-
-    @Override
-    public void onSignUpSuccess(User user) {
-        database.writeUser(user, this, auth.getCurrentUserUid());
-    }
-
-    @Override
-    public void onSignUpFail(Exception exception) {
-        try {
-            throw exception;
-        } catch (FirebaseAuthUserCollisionException e) {
-            // Email già in uso
-            layoutEmail.setError(getString(R.string.form_error_duplicate_email));
-        } catch (FirebaseAuthWeakPasswordException e) {
-            // Password non abbastanza robusta
-
-            /*
-            Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-            eseguiti controlli lato client sulla lunghezza della password.
-            Se si entra in questo blocco c'è qualche problema!
-             */
-            Log.w(getClass().getCanonicalName(), e.getMessage());
-        } catch (FirebaseAuthInvalidCredentialsException e) {
-            // Email malformata
-
-            /*
-            Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-            eseguiti controlli lato client sulla struttura dell'indirizzo mail.
-            Se si entra in questo blocco c'è qualche problema!
-             */
-            Log.w(getClass().getCanonicalName(), e.getMessage());
-        } catch (Exception e) {
-            // Generico
-            showErrorDialog();
-        }
-        dismissProgress();
-    }
-
-    @Override
-    public void onWriteSuccess(Object object) {
-        Appartment.getInstance().setUser((User) object);
-        moveToNextActivity(UserProfileActivity.class);
-        dismissProgress();
-    }
-
-    @Override
-    public void onWriteFail(Exception exception) {
-        try {
-            throw exception;
-        } catch (Exception e) {
-            // (DatabaseException se si verifica una violazione delle regole di sicurezza)
-            // Generico
-            showErrorDialog();
-        }
-        dismissProgress();
     }
 }
