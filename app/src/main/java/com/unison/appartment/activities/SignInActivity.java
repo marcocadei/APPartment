@@ -14,7 +14,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.unison.appartment.Appartment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
+import com.unison.appartment.model.User;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 
@@ -117,22 +124,20 @@ public class SignInActivity extends FormActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            retrieveUser(uid);
                             moveToNextActivity(UserProfileActivity.class);
                             dismissProgress();
-                        }
-                        else {
+                        } else {
                             try {
                                 throw task.getException();
-                            }
-                            catch (FirebaseAuthInvalidCredentialsException e) {
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
                                 // Password sbagliata
                                 layoutPassword.setError(getString(R.string.form_error_incorrect_password));
-                            }
-                            catch (FirebaseAuthInvalidUserException e) {
+                            } catch (FirebaseAuthInvalidUserException e) {
                                 // Utente non esistente
                                 layoutEmail.setError(getString(R.string.form_error_nonexistent_email));
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 // Generico
                                 showErrorDialog();
                             }
@@ -140,6 +145,34 @@ public class SignInActivity extends FormActivity {
                         }
                     }
                 });
+    }
+
+    private void retrieveUser(String uid) {
+        String separator = getString(R.string.db_separator);
+        String path = getString(R.string.db_users) + separator + getString(R.string.db_users_uid, uid);
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Appartment.getInstance().setUser(dataSnapshot.getValue(User.class));
+                }
+                else {
+                    // TODO Gestire l'errore
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                 */
+                showErrorDialog();
+            }
+        });
     }
 
 }
