@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.Appartment;
+import com.unison.appartment.database.DatabaseReader;
+import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
@@ -34,6 +36,8 @@ import java.util.Map;
  * Classe che rappresenta l'Activity per unirsi ad una nuova casa
  */
 public class JoinHomeActivity extends FormActivity {
+
+    private DatabaseReader databaseReader;
 
     private EditText inputHomeName;
     private EditText inputPassword;
@@ -88,6 +92,44 @@ public class JoinHomeActivity extends FormActivity {
             }
         });
 
+        // Listener processo di lettura dal database della casa in cui si vuole entrare
+        final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+            @Override
+            public void onReadSuccess(Object object) {
+                String insertedPassword = inputPassword.getText().toString();
+                String homePassword = (String)object;
+                if (!insertedPassword.equals(homePassword)) {
+                    // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
+                    layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
+                    layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
+                    dismissProgress();
+                }
+                else {
+                    // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
+                    writeInDb(inputHomeName.getText().toString());
+                }
+            }
+
+            @Override
+            public void onReadEmpty() {
+                // La casa specificata non esiste (viene comunque mostrato un messaggio d'errore generico)
+                layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
+                layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
+                dismissProgress();
+            }
+
+            @Override
+            public void onReadCancelled(DatabaseError databaseError) {
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                 */
+                showErrorDialog();
+            }
+        };
+
         // Gestione click sul bottone per effettuare l'unione
         FloatingActionButton floatNext = findViewById(R.id.activity_join_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +137,11 @@ public class JoinHomeActivity extends FormActivity {
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(JoinHomeActivity.this);
                 if (checkInput()) {
-                    checkHomeCredentials(inputHomeName.getText().toString(), inputPassword.getText().toString());
+                    progressDialog = FirebaseProgressDialogFragment.newInstance(
+                            getString(R.string.activity_join_home_progress_check_title),
+                            getString(R.string.activity_join_home_progress_check_description));
+                    progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+                    databaseReader.retrieveHomePassword(inputHomeName.getText().toString(), databaseReaderListener);
                 }
             }
         });
@@ -145,53 +191,6 @@ public class JoinHomeActivity extends FormActivity {
         String homeName = inputHomeName.getText().toString();
 
         return new UserHome(homeName, Home.ROLE_SLAVE);
-    }
-
-    private void checkHomeCredentials(final String homeName, final String password) {
-        progressDialog = FirebaseProgressDialogFragment.newInstance(
-                getString(R.string.activity_join_home_progress_check_title),
-                getString(R.string.activity_join_home_progress_check_description));
-        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
-
-        String separator = getString(R.string.db_separator);
-        String path = getString(R.string.db_homes) + separator + getString(R.string.db_homes_homename, homeName) + separator + getString(R.string.db_homes_homename_password);
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
-
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()) {
-                    // La casa specificata non esiste (viene comunque mostrato un messaggio d'errore generico)
-                    layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
-                    layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                    dismissProgress();
-                }
-                else {
-                    String homePassword = dataSnapshot.getValue(String.class);
-                    if (!password.equals(homePassword)) {
-                        // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
-                        layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
-                        layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                        dismissProgress();
-                    }
-                    else {
-                        // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
-                        writeInDb(homeName);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                /*
-                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
-                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
-                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
-                la situazione non può essere risolta dall'utente.
-                 */
-                showErrorDialog();
-            }
-        });
     }
 
     private void writeInDb(final String homeName) {
