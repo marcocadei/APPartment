@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.AuthListener;
@@ -137,6 +138,21 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                         @Override
                         public void onSuccess() {
                             database.writeUser(newUser, new DatabaseListener() {
+                                @Override
+                                public void onReadSuccess(Object object) {
+
+                                }
+
+                                @Override
+                                public void onReadEmpty() {
+
+                                }
+
+                                @Override
+                                public void onReadCancelled(DatabaseError databaseError) {
+
+                                }
+
                                 @Override
                                 public void onWriteSuccess() {
                                     Appartment.getInstance().setUser(newUser);
