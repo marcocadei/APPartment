@@ -10,14 +10,13 @@ import com.unison.appartment.model.User;
 
 public class FirebaseDatabaseReader implements DatabaseReader {
     @Override
-    public void retrieveUser(final String uid, final DatabaseReaderListener listener) {
-        String path = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
+    public void read(final String path, final DatabaseReaderListener listener, final Class type) {
         DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(path);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    listener.onReadSuccess(dataSnapshot.getValue(User.class));
+                    listener.onReadSuccess(dataSnapshot.getValue(type));
                 }
                 else {
                     listener.onReadEmpty();
@@ -35,5 +34,11 @@ public class FirebaseDatabaseReader implements DatabaseReader {
                 listener.onReadCancelled(databaseError);
             }
         });
+    }
+
+    @Override
+    public void retrieveUser(final String uid, final DatabaseReaderListener listener) {
+        String path = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
+        read(path, listener, User.class);
     }
 }
