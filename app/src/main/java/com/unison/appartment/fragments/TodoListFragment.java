@@ -112,7 +112,7 @@ public class TodoListFragment extends Fragment {
 
     private void readUncompletedTasks() {
         LiveData<List<UncompletedTask>> taskLiveData = viewModel.getTaskLiveData();
-        taskLiveData.observe(this, new Observer<List<UncompletedTask>>() {
+        taskLiveData.observe(getViewLifecycleOwner(), new Observer<List<UncompletedTask>>() {
             @Override
             public void onChanged(List<UncompletedTask> uncompletedTasks) {
                 myAdapter.submitList(uncompletedTasks);
