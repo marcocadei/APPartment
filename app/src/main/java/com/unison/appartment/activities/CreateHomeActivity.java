@@ -1,6 +1,7 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +50,16 @@ public class CreateHomeActivity extends FormActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_home);
+
+        // Supporto per la toolbar
+        Toolbar toolbar = findViewById(R.id.activity_create_home_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Modifica dell'activity di destinazione a cui andare quando si chiude il dialog di errore
         this.errorDialogDestinationActivity = UserProfileActivity.class;
