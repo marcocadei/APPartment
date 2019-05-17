@@ -11,7 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.MyApplication;
 import com.unison.appartment.R;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
+import com.unison.appartment.model.UserHome;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,4 +43,19 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
         childUpdates.put(path, newUser);
         write(childUpdates, listener);
     }
+
+    @Override
+    public void writeJoinHome(final String homeName, final String uid,
+                              final HomeUser homeUser, final UserHome userHome, final DatabaseWriterListener listener) {
+        String familyPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR + uid;
+        String userhomePath = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + uid +
+                DatabaseConstants.SEPARATOR + homeName;
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(familyPath, homeUser);
+        childUpdates.put(userhomePath, userHome);
+
+        write(childUpdates, listener);
+    }
+
 }

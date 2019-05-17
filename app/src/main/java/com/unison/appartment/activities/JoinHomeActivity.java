@@ -22,6 +22,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
+import com.unison.appartment.database.DatabaseWriter;
+import com.unison.appartment.database.DatabaseWriterListener;
+import com.unison.appartment.database.FirebaseDatabaseReader;
+import com.unison.appartment.database.FirebaseDatabaseWriter;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
@@ -38,6 +42,7 @@ import java.util.Map;
 public class JoinHomeActivity extends FormActivity {
 
     private DatabaseReader databaseReader;
+    private DatabaseWriter databaseWriter;
 
     private EditText inputHomeName;
     private EditText inputPassword;
@@ -50,6 +55,9 @@ public class JoinHomeActivity extends FormActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_home);
+
+        databaseReader = new FirebaseDatabaseReader();
+        databaseWriter = new FirebaseDatabaseWriter();
 
         // Supporto per la toolbar
         Toolbar toolbar = findViewById(R.id.activity_join_home_toolbar);
@@ -92,7 +100,41 @@ public class JoinHomeActivity extends FormActivity {
             }
         });
 
-        // Listener processo di lettura dal database della casa in cui si vuole entrare
+        // Listener processo di scrittura nel database dei record necessari per registrare l'unione ad una casa
+        final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
+            @Override
+            public void onWriteSuccess() {
+                Appartment.getInstance().setHome(inputHomeName.getText().toString());
+                moveToNextActivity(MainActivity.class);
+                dismissProgress();
+            }
+
+            @Override
+            public void onWriteFail(Exception exception) {
+                try {
+                    throw exception;
+                }
+                catch (DatabaseException e) {
+                    int errorCode = DatabaseError.fromException(e).getCode();
+                    if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
+                        // Regole di sicurezza violate
+                        // Implica: L'utente ha specificato una casa di cui è già membro
+                        layoutHomeName.setError(getString(R.string.form_error_home_already_joined));
+                        dismissProgress();
+                    }
+                    else {
+                        // Altro errore generico
+                        showErrorDialog();
+                    }
+                }
+                catch (Exception e) {
+                    // Generico
+                    showErrorDialog();
+                }
+                dismissProgress();
+            }
+        };
+        // Listener processo di lettura nel database della casa in cui si vuole entrare
         final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
             @Override
             public void onReadSuccess(Object object) {
@@ -106,7 +148,8 @@ public class JoinHomeActivity extends FormActivity {
                 }
                 else {
                     // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
-                    writeInDb(inputHomeName.getText().toString());
+                    databaseWriter.writeJoinHome(inputHomeName.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                        createHomeUser(), createUserHome(), databaseWriterListener);
                 }
             }
 
