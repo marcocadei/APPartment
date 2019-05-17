@@ -16,14 +16,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.unison.appartment.Appartment;
+import com.unison.appartment.database.Auth;
+import com.unison.appartment.database.AuthListener;
+import com.unison.appartment.database.Database;
+import com.unison.appartment.database.DatabaseListener;
+import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.database.FirebaseDatabase;
 import com.unison.appartment.fragments.DatePickerFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.DateUtils;
@@ -38,10 +41,13 @@ import java.util.Date;
 /**
  * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione
  */
-public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener {
+public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener, AuthListener, DatabaseListener {
 
     private static final int MIN_USER_PASSWORD_LENGTH = 6;
     private final static String BUNDLE_KEY_DATE_OBJECT = "dateObject";
+
+    private Auth auth;
+    private Database database;
 
     EditText inputEmail;
     EditText inputPassword;
@@ -63,6 +69,9 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         setContentView(R.layout.activity_sign_up);
 
         // Precondizione: Se viene acceduta questa activity, vuol dire che non c'è nessun utente loggato
+
+        auth = new FirebaseAuth();
+        database = new FirebaseDatabase();
 
         inputEmail = findViewById(R.id.activity_signup_input_email_value);
         inputPassword = findViewById(R.id.activity_signup_input_password_value);
@@ -121,7 +130,12 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(SignUpActivity.this);
                 if (checkInput()) {
-                    writeAuthInfo(createUser());
+                    progressDialog = FirebaseProgressDialogFragment.newInstance(
+                            getString(R.string.activity_signup_signup_title),
+                            getString(R.string.activity_signup_signup_description));
+                    progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+                    // Salvataggio delle informazioni in Auth
+                    auth.writeAuthInfo(createUser(), SignUpActivity.this);
                 }
             }
         });
@@ -250,86 +264,6 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender);
     }
 
-    private void writeAuthInfo(final User newUser) {
-        progressDialog = FirebaseProgressDialogFragment.newInstance(
-                getString(R.string.activity_signup_signup_title),
-                getString(R.string.activity_signup_signup_description));
-        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
-
-        // Salvataggio delle informazioni in Auth
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(newUser.getEmail(), newUser.getPassword())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            writeUserInDb(newUser);
-                        } else {
-                            try {
-                                throw task.getException();
-                            } catch (FirebaseAuthUserCollisionException e) {
-                                // Email già in uso
-                                layoutEmail.setError(getString(R.string.form_error_duplicate_email));
-                            } catch (FirebaseAuthWeakPasswordException e) {
-                                // Password non abbastanza robusta
-
-                                /*
-                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-                                eseguiti controlli lato client sulla lunghezza della password.
-                                Se si entra in questo blocco c'è qualche problema!
-                                 */
-                                Log.w(getClass().getCanonicalName(), e.getMessage());
-                            } catch (FirebaseAuthInvalidCredentialsException e) {
-                                // Email malformata
-
-                                /*
-                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-                                eseguiti controlli lato client sulla struttura dell'indirizzo mail.
-                                Se si entra in questo blocco c'è qualche problema!
-                                 */
-                                Log.w(getClass().getCanonicalName(), e.getMessage());
-                            } catch (Exception e) {
-                                // Generico
-                                showErrorDialog();
-                            }
-                            dismissProgress();
-                        }
-                    }
-                });
-    }
-
-    /**
-     * Metodo per effettuare la scrittura in Firebase Database di un nuovo User
-     *
-     * @param newUser Il nuovo User che si vuole scrivere in Firebase Database
-     */
-    private void writeUserInDb(final User newUser) {
-        // Scrittura dei dati relativi al nuovo utente nel database
-        String separator = getString(R.string.db_separator);
-        String path = getString(R.string.db_users) + separator + getString(R.string.db_users_uid, FirebaseAuth.getInstance().getCurrentUser().getUid());
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
-        dbRef.setValue(newUser)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Appartment.getInstance().setUser(newUser);
-                            moveToNextActivity(UserProfileActivity.class);
-                            dismissProgress();
-                        } else {
-                            try {
-                                throw task.getException();
-                            } catch (Exception e) {
-                                // (DatabaseException se si verifica una violazione delle regole di sicurezza)
-                                // Generico
-                                showErrorDialog();
-                            }
-                            dismissProgress();
-                        }
-                    }
-                });
-    }
-
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
@@ -357,4 +291,60 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         DatePickerFragment.newInstance(year, month, day, this).show(getSupportFragmentManager(), DatePickerFragment.TAG_DATE_PICKER);
     }
 
+
+    @Override
+    public void onSignUpSuccess(User user) {
+        database.writeUser(user, this, auth.getCurrentUserUid());
+    }
+
+    @Override
+    public void onSignUpFail(Exception exception) {
+        try {
+            throw exception;
+        } catch (FirebaseAuthUserCollisionException e) {
+            // Email già in uso
+            layoutEmail.setError(getString(R.string.form_error_duplicate_email));
+        } catch (FirebaseAuthWeakPasswordException e) {
+            // Password non abbastanza robusta
+
+            /*
+            Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+            eseguiti controlli lato client sulla lunghezza della password.
+            Se si entra in questo blocco c'è qualche problema!
+             */
+            Log.w(getClass().getCanonicalName(), e.getMessage());
+        } catch (FirebaseAuthInvalidCredentialsException e) {
+            // Email malformata
+
+            /*
+            Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+            eseguiti controlli lato client sulla struttura dell'indirizzo mail.
+            Se si entra in questo blocco c'è qualche problema!
+             */
+            Log.w(getClass().getCanonicalName(), e.getMessage());
+        } catch (Exception e) {
+            // Generico
+            showErrorDialog();
+        }
+        dismissProgress();
+    }
+
+    @Override
+    public void onWriteSuccess(Object object) {
+        Appartment.getInstance().setUser((User) object);
+        moveToNextActivity(UserProfileActivity.class);
+        dismissProgress();
+    }
+
+    @Override
+    public void onWriteFail(Exception exception) {
+        try {
+            throw exception;
+        } catch (Exception e) {
+            // (DatabaseException se si verifica una violazione delle regole di sicurezza)
+            // Generico
+            showErrorDialog();
+        }
+        dismissProgress();
+    }
 }
