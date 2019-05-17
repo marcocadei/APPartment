@@ -75,7 +75,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             TodoListFragment tlf = (TodoListFragment) getChildFragmentManager()
                     .findFragmentById(R.id.fragment_todo_todolist);
-            tlf.addTask((UncompletedTask) data.getSerializableExtra("newTask"));
+            tlf.addTask((UncompletedTask) data.getSerializableExtra(CreateTaskActivity.EXTRA_NEW_TASK));
         }
     }
 
