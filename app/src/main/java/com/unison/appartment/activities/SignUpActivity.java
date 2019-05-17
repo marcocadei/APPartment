@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.unison.appartment.Appartment;
 import com.unison.appartment.fragments.DatePickerFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.utils.DateUtils;
@@ -312,6 +313,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            Appartment.getInstance().setUser(newUser);
                             moveToNextActivity(UserProfileActivity.class);
                             dismissProgress();
                         } else {

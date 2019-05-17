@@ -56,6 +56,8 @@ public class JoinHomeActivity extends FormActivity {
         layoutPassword = findViewById(R.id.activity_join_home_input_password);
         layoutNickname = findViewById(R.id.activity_join_home_input_nickname);
 
+        inputNickname.setText(Appartment.getInstance().getUser().getName());
+
         inputHomeName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

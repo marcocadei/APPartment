@@ -62,6 +62,8 @@ public class CreateHomeActivity extends FormActivity {
         layoutRepeatPassword = findViewById(R.id.activity_create_home_input_repeat_password);
         layoutNickname = findViewById(R.id.activity_create_home_input_nickname);
 
+        inputNickname.setText(Appartment.getInstance().getUser().getName());
+
         inputHomeName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
