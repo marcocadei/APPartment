@@ -54,9 +54,6 @@ public class EnterActivity extends AppCompatActivity {
         già pronta).
          */
 
-        // Salvo il context in un singleton per poterlo usare ovunque nell'applicazione
-        Appartment.getInstance().init(getApplicationContext());
-
         // TODO gestire opportunamente il finish() quando si implementa anche l'accesso diretto
         // all'ultima casa in cui ci si era loggati
     }

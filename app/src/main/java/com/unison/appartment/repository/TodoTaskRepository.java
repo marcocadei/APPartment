@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.unison.appartment.Appartment;
+import com.unison.appartment.MyApplication;
 import com.unison.appartment.R;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.UncompletedTask;
@@ -30,7 +31,7 @@ public class TodoTaskRepository {
     private LiveData<List<UncompletedTask>> taskLiveData;
 
     public TodoTaskRepository() {
-        Resources res = Appartment.getInstance().getContext().getResources();
+        Resources res = MyApplication.getAppContext().getResources();
         String separator = res.getString(R.string.db_separator);
         String uncompletedTasks = res.getString(R.string.db_uncompleted_tasks);
         // Riferimento al nodo del Database interessato (i task non completati della casa corrente)

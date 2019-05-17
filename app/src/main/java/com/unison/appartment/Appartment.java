@@ -1,7 +1,9 @@
 package com.unison.appartment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
 import com.unison.appartment.model.User;
 
 /**
@@ -12,17 +14,6 @@ public class Appartment {
     private static final Appartment holder = new Appartment();
     private Appartment() {}
     public static Appartment getInstance() {return holder;}
-
-    // Salvataggio del contesto, per accedere alle resources
-    private Context context;
-    public void init(Context context) {
-        if (this.context == null) {
-            this.context = context;
-        }
-    }
-    public Context getContext() {
-        return this.context;
-    }
 
     private String home;
     private User user;
@@ -40,6 +31,12 @@ public class Appartment {
     }
 
     public void setUser(User user) {
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(
+                MyApplication.getAppContext().getResources().getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        Gson gson = new Gson();
+        editor.putString("User", gson.toJson(user));
+        editor.apply();
         this.user = user;
     }
 }
