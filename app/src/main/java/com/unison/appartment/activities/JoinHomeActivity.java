@@ -35,12 +35,12 @@ import java.util.Map;
  */
 public class JoinHomeActivity extends FormActivity {
 
-    EditText inputHomeName;
-    EditText inputPassword;
-    EditText inputNickname;
-    TextInputLayout layoutHomeName;
-    TextInputLayout layoutPassword;
-    TextInputLayout layoutNickname;
+    private EditText inputHomeName;
+    private EditText inputPassword;
+    private EditText inputNickname;
+    private TextInputLayout layoutHomeName;
+    private TextInputLayout layoutPassword;
+    private TextInputLayout layoutNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
