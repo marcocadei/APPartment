@@ -46,19 +46,19 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private Auth auth;
     private DatabaseWriter databaseWriter;
 
-    EditText inputEmail;
-    EditText inputPassword;
-    EditText inputRepeatPassword;
-    EditText inputBirthdate;
-    EditText inputNickname;
-    TextInputLayout layoutEmail;
-    TextInputLayout layoutPassword;
-    TextInputLayout layoutRepeatPassword;
-    TextInputLayout layoutBirthdate;
-    TextInputLayout layoutNickname;
-    RadioGroup inputGender;
+    private EditText inputEmail;
+    private EditText inputPassword;
+    private EditText inputRepeatPassword;
+    private EditText inputBirthdate;
+    private EditText inputNickname;
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
+    private TextInputLayout layoutRepeatPassword;
+    private TextInputLayout layoutBirthdate;
+    private TextInputLayout layoutNickname;
+    private RadioGroup inputGender;
 
-    Date birthdate;
+    private Date birthdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

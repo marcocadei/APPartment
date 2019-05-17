@@ -32,10 +32,10 @@ public class SignInActivity extends FormActivity {
     private Auth auth;
     private DatabaseReader databaseReader;
 
-    EditText inputEmail;
-    EditText inputPassword;
-    TextInputLayout layoutEmail;
-    TextInputLayout layoutPassword;
+    private EditText inputEmail;
+    private EditText inputPassword;
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
