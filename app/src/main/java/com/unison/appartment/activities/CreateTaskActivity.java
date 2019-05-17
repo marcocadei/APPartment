@@ -21,6 +21,8 @@ import java.util.Calendar;
  */
 public class CreateTaskActivity extends AppCompatActivity {
 
+    public final static String EXTRA_NEW_TASK = "newTask";
+
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -74,7 +76,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                 (-1) * calendar.getTimeInMillis() // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
         );
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("newUncompletedTask", newUncompletedTask);
+        returnIntent.putExtra(EXTRA_NEW_TASK, newUncompletedTask);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
