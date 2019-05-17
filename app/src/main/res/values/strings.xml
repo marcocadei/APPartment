@@ -76,6 +76,7 @@
     <string name="caption_ic_hourglass">Icona di una clessidra</string>
     <string name="caption_ic_person_add">Icona di nuovo utente</string>
     <string name="caption_ic_play_arrow">Simbolo di play</string>
+    <string name="caption_ic_check">Icona di un segno di spunta</string>
     <string name="caption_profile_pic">Foto profilo dell\'utente</string>
 
     <!-- Legate ad una specifica activity -->

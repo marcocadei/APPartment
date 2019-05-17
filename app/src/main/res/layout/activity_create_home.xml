@@ -7,10 +7,25 @@
     android:focusableInTouchMode="true"
     tools:context=".activities.CreateHomeActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/activity_create_home_appbar"
+        style="@style/Component.AppBarWithBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activity_create_home_toolbar"
+            style="@style/Component.ToolbarWithBackButton"
+            app:title="@string/activity_create_home_text_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        style="@style/Component.ScrollView"
+        app:layout_constraintTop_toBottomOf="@id/activity_create_home_appbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/Component.Layout.ScrollViewChild">

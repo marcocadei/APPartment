@@ -30,6 +30,36 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/Component.Layout.ScrollViewChild">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_create_task_layout_title"
+                style="@style/Component.Layout.Header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_name"
+                app:layout_constraintVertical_bias="0.5">
+
+                <TextView
+                    android:id="@+id/activity_create_task_text_title"
+                    style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
+                    android:text="@string/activity_create_task_title"
+                    app:layout_constraintEnd_toStartOf="@+id/activity_create_task_img_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/activity_create_task_img_title"
+                    style="@style/Component.ImageView.FancyTitleImage"
+                    android:contentDescription="@string/caption_ic_check"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_create_task_text_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/activity_create_task_text_title"
+                    app:layout_constraintTop_toTopOf="@+id/activity_create_task_text_title"
+                    app:srcCompat="@drawable/ic_check" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_task_input_name"
                 style="@style/CustomFormTextFieldLayout"
@@ -38,7 +68,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_points"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/activity_create_task_layout_title">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_task_input_name_value"
