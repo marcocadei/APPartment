@@ -8,7 +8,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.database.DatabaseError;
-import com.unison.appartment.Appartment;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.AuthListener;
 import com.unison.appartment.database.DatabaseReader;

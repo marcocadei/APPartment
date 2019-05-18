@@ -19,9 +19,6 @@
         <item quantity="other">%d elementi selezionati</item>
     </plurals>
 
-    <string name="preferences_file_key">com.unison.appartment.preferences</string>
-    <string name="preferences_user">User</string>
-
     <!-- Errori delle form -->
 
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>

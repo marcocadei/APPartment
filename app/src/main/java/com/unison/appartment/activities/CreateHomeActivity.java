@@ -1,6 +1,5 @@
 package com.unison.appartment.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -12,7 +11,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
-import com.unison.appartment.Appartment;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.DatabaseWriter;

@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.state;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,18 +30,16 @@ public class Appartment {
         if(user != null) {
             return user;
         }
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(
-                MyApplication.getAppContext().getResources().getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
-        String json = sp.getString(MyApplication.getAppContext().getResources().getString(R.string.preferences_user), null);
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+        String json = sp.getString(SharedPreferencesConstants.USER_KEY, null);
         Gson gson = new Gson();
         return gson.fromJson(json, User.class);
     }
 
     public void setUser(User user) {
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(
-                MyApplication.getAppContext().getResources().getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(MyApplication.getAppContext().getResources().getString(R.string.preferences_user), new Gson().toJson(user));
+        editor.putString(SharedPreferencesConstants.USER_KEY, new Gson().toJson(user));
         editor.apply();
         this.user = user;
     }

@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
-import com.unison.appartment.Appartment;
 
 import java.io.Serializable;
 import java.util.Objects;

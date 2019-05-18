@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.unison.appartment.Appartment;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.fragments.HomeListFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;

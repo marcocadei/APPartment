@@ -8,7 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.unison.appartment.Appartment;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.UncompletedTask;

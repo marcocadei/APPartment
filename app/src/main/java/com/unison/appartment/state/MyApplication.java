@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.state;
 
 import android.app.Application;
 import android.content.Context;

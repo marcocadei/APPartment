@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.unison.appartment.Appartment;
 import com.unison.appartment.R;
 
 /**
