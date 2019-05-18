@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.adapters.MyHomeRecyclerViewAdapter;
+import com.unison.appartment.adapters.MyUserHomeRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.UserHome;
@@ -31,7 +31,7 @@ import java.util.List;
  * Fragment che rappresenta una lista di oggetti UserHome
  * Le Activity che contengono questo fragment devono implementare l'interfaccia {@link OnHomeListFragmentInteractionListener}
  */
-public class HomeListFragment extends Fragment {
+public class UserHomeListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -48,13 +48,13 @@ public class HomeListFragment extends Fragment {
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
-    public HomeListFragment() {
+    public UserHomeListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static HomeListFragment newInstance(int columnCount) {
-        HomeListFragment fragment = new HomeListFragment();
+    public static UserHomeListFragment newInstance(int columnCount) {
+        UserHomeListFragment fragment = new UserHomeListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -73,7 +73,7 @@ public class HomeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_userhome_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -89,7 +89,7 @@ public class HomeListFragment extends Fragment {
         userHomes = new ArrayList<>();
         readUserHomes();
 
-        myAdapter = new MyHomeRecyclerViewAdapter(userHomes, mListener);
+        myAdapter = new MyUserHomeRecyclerViewAdapter(userHomes, mListener);
         myRecyclerView.setAdapter(myAdapter);
         return view;
     }

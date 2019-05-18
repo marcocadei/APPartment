@@ -8,22 +8,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
-import com.unison.appartment.fragments.HomeListFragment;
-import com.unison.appartment.fragments.HomeListFragment.OnHomeListFragmentInteractionListener;
+import com.unison.appartment.fragments.UserHomeListFragment;
+import com.unison.appartment.fragments.UserHomeListFragment.OnHomeListFragmentInteractionListener;
 import com.unison.appartment.model.UserHome;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link UserHome} e che effettua una
- * chiamata al {@link HomeListFragment.OnHomeListFragmentInteractionListener listener} specificato.
+ * chiamata al {@link UserHomeListFragment.OnHomeListFragmentInteractionListener listener} specificato.
  */
-public class MyHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeRecyclerViewAdapter.ViewHolderHome> {
+public class MyUserHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyUserHomeRecyclerViewAdapter.ViewHolderHome> {
 
     private final List<UserHome> homesList;
-    private final HomeListFragment.OnHomeListFragmentInteractionListener mListener;
+    private final UserHomeListFragment.OnHomeListFragmentInteractionListener mListener;
 
-    public MyHomeRecyclerViewAdapter(List<UserHome> items, OnHomeListFragmentInteractionListener listener) {
+    public MyUserHomeRecyclerViewAdapter(List<UserHome> items, OnHomeListFragmentInteractionListener listener) {
         homesList = items;
         mListener = listener;
     }
@@ -31,7 +31,7 @@ public class MyHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeRecycl
     @Override
     public ViewHolderHome onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_home, parent, false);
+                .inflate(R.layout.fragment_userhome, parent, false);
         return new ViewHolderHome(view);
     }
 

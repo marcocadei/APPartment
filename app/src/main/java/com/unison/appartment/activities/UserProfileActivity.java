@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,7 +21,7 @@ import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.User;
 import com.unison.appartment.state.Appartment;
-import com.unison.appartment.fragments.HomeListFragment;
+import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
 
@@ -30,7 +29,7 @@ import com.unison.appartment.model.UserHome;
  * Classe che rappresenta l'Activity per visualizzare il profilo dell'utente e la lista di case
  * in cui lo stesso è presente
  */
-public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
+public class UserProfileActivity extends AppCompatActivity implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
     private DatabaseReader databaseReader;
 
@@ -120,7 +119,7 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         moveTaskToBack(true);
     }
 
-    // Questa Activity contiene il fragment HomeListFragment, quindi ne implementa i metodi del listener
+    // Questa Activity contiene il fragment UserHomeListFragment, quindi ne implementa i metodi del listener
 
     @Override
     public void onHomeListFragmentInteraction(UserHome item) {

@@ -243,10 +243,10 @@
 
             <fragment
                 android:id="@+id/activity_user_profile_fragment_container"
-                android:name="com.unison.appartment.fragments.HomeListFragment"
+                android:name="com.unison.appartment.fragments.UserHomeListFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_home_list"
+                tools:layout="@layout/fragment_userhome_list"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
