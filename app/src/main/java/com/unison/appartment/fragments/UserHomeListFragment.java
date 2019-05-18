@@ -2,30 +2,23 @@ package com.unison.appartment.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.adapters.MyUserHomeRecyclerViewAdapter;
 import com.unison.appartment.R;
-import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.UserHome;
-
-import java.util.ArrayList;
+import com.unison.appartment.viewmodel.UserHomeViewModel;
 import java.util.List;
+
 
 /**
  * Fragment che rappresenta una lista di oggetti UserHome
@@ -33,14 +26,14 @@ import java.util.List;
  */
 public class UserHomeListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
+
+    private UserHomeViewModel viewModel;
 
     private List<UserHome> userHomes;
 
-    private RecyclerView.Adapter myAdapter;
+    private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
     private OnHomeListFragmentInteractionListener mListener;
@@ -68,6 +61,7 @@ public class UserHomeListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        viewModel = ViewModelProviders.of(getActivity()).get(UserHomeViewModel.class);
     }
 
     @Override
@@ -78,19 +72,24 @@ public class UserHomeListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            myRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                myRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myRecyclerView = recyclerView;
-        }
-        userHomes = new ArrayList<>();
-        readUserHomes();
 
-        myAdapter = new MyUserHomeRecyclerViewAdapter(userHomes, mListener);
-        myRecyclerView.setAdapter(myAdapter);
+            myAdapter = new MyUserHomeRecyclerViewAdapter(mListener);
+            /*myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    myRecyclerView.smoothScrollToPosition(0);
+                }
+            });*/
+            myRecyclerView.setAdapter(myAdapter);
+
+            readUserHomes();
+        }
         return view;
     }
 
@@ -115,23 +114,12 @@ public class UserHomeListFragment extends Fragment {
      * Metodo per leggere da Firebase Database la lista di UserHome
      */
     private void readUserHomes() {
-        String path = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        LiveData<List<UserHome>> taskLiveData = viewModel.getUserHomeLiveData();
+        taskLiveData.observe(getViewLifecycleOwner(), new Observer<List<UserHome>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    userHomes.add(postSnapshot.getValue(UserHome.class));
-                    myAdapter.notifyDataSetChanged();
-                    // FIXME vedere se si può fare l'animazione
-                }
-                mListener.onHomeListElementsLoaded(dataSnapshot.getChildrenCount());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                mListener.onHomeListElementsLoaded(0);
-                // TODO visualizzare snackbar che comunica l'errore con tasto per fare il reload
+            public void onChanged(List<UserHome> userHomes) {
+                myAdapter.submitList(userHomes);
+                mListener.onHomeListElementsLoaded(userHomes.size());
             }
         });
     }
