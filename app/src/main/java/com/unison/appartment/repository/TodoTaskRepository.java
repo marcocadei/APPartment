@@ -30,7 +30,7 @@ public class TodoTaskRepository {
         uncompletedTasksRef =
                 FirebaseDatabase.getInstance().getReference(
                         DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETED_TASKS +
-                              DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome());
+                              DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETED_TASKS_HOMENAME_TASKID_CREATIONDATE);
         liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
