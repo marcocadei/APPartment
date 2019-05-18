@@ -50,6 +50,7 @@
     <string name="desc_userhomes_uid_homename_role">Ruolo</string>
     <string name="desc_users_uid_birthdate">Data di nascita</string>
     <string name="desc_users_uid_email">Email</string>
+    <string name="desc_users_uid_name">Nickname</string>
     <string name="desc_users_uid_gender">Genere</string>
     <string name="desc_users_uid_gender_value_female">Femmina</string>
     <string name="desc_users_uid_gender_value_male">Maschio</string>
