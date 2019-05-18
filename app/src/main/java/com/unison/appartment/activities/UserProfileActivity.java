@@ -68,8 +68,6 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         textGender.setText(currentUser.getGenderString());
         textBirthdate.setText(currentUser.getBirthdate());
 
-        // TODO riempire i campi di testo con i dati dell'utente loggato
-
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
