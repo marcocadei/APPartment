@@ -71,56 +71,6 @@ public class SignInActivity extends FormActivity {
             }
         });
 
-        // Listener processo di lettura dal database del nuovo utente
-        final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
-            @Override
-            public void onReadSuccess(Object object) {
-                Appartment.getInstance().setUser((User) object);
-            }
-
-            @Override
-            public void onReadEmpty() {
-                // TODO gestire l'errore
-            }
-
-            @Override
-            public void onReadCancelled(DatabaseError databaseError) {
-                /*
-                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
-                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
-                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
-                la situazione non può essere risolta dall'utente.
-                */
-                showErrorDialog();
-            }
-        };
-        // Listener processo di autenticazione
-        final AuthListener authListener = new AuthListener() {
-            @Override
-            public void onSuccess() {
-                databaseReader.retrieveUser(auth.getCurrentUserUid(), databaseReaderListener);
-                moveToNextActivity(UserProfileActivity.class);
-                dismissProgress();
-            }
-
-            @Override
-            public void onFail(Exception exception) {
-                try {
-                    throw exception;
-                } catch (FirebaseAuthInvalidCredentialsException e) {
-                    // Password sbagliata
-                    layoutPassword.setError(getString(R.string.form_error_incorrect_password));
-                } catch (FirebaseAuthInvalidUserException e) {
-                    // Utente non esistente
-                    layoutEmail.setError(getString(R.string.form_error_nonexistent_email));
-                } catch (Exception e) {
-                    // Generico
-                    showErrorDialog();
-                }
-                dismissProgress();
-            }
-        };
-
         // Gestione click sul bottone per effettuare l'accesso
         FloatingActionButton floatNext = findViewById(R.id.activity_signin_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
@@ -171,4 +121,54 @@ public class SignInActivity extends FormActivity {
         return result;
     }
 
+    // Listener processo di lettura dal database del nuovo utente
+    final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(Object object) {
+            Appartment.getInstance().setUser((User) object);
+        }
+
+        @Override
+        public void onReadEmpty() {
+            // TODO gestire l'errore
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                */
+            showErrorDialog();
+        }
+    };
+
+    // Listener processo di autenticazione
+    final AuthListener authListener = new AuthListener() {
+        @Override
+        public void onSuccess() {
+            databaseReader.retrieveUser(auth.getCurrentUserUid(), databaseReaderListener);
+            moveToNextActivity(UserProfileActivity.class);
+            dismissProgress();
+        }
+
+        @Override
+        public void onFail(Exception exception) {
+            try {
+                throw exception;
+            } catch (FirebaseAuthInvalidCredentialsException e) {
+                // Password sbagliata
+                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
+            } catch (FirebaseAuthInvalidUserException e) {
+                // Utente non esistente
+                layoutEmail.setError(getString(R.string.form_error_nonexistent_email));
+            } catch (Exception e) {
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
 }

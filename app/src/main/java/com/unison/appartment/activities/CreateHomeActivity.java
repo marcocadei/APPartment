@@ -112,69 +112,6 @@ public class CreateHomeActivity extends FormActivity {
             }
         });
 
-        // Listener processo di scrittura nel database dei record necessari per registrare la creazione di una casa
-        final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
-            @Override
-            public void onWriteSuccess() {
-                Appartment.getInstance().setHome(inputHomeName.getText().toString());
-                moveToNextActivity(MainActivity.class);
-                dismissProgress();
-            }
-
-            @Override
-            public void onWriteFail(Exception exception) {
-                try {
-                    throw exception;
-                }
-                catch (DatabaseException e) {
-                    int errorCode = DatabaseError.fromException(e).getCode();
-                    if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
-                        // Regole di sicurezza violate
-                        // Implica: Esiste già una casa con il nome specificato dall'utente
-                        // (Si può verificare solo se tra la lettura precedente e questa
-                        // scrittura un altro utente ha registrato una casa con lo stesso nome)
-                        layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
-                        dismissProgress();
-                    }
-                    else {
-                        // Altro errore generico
-                        showErrorDialog();
-                    }
-                }
-                catch (Exception e) {
-                    // Generico
-                    showErrorDialog();
-                }
-                dismissProgress();
-            }
-        };
-        // Listener processo di lettura nel database della casa che si vuole creare
-        final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
-            @Override
-            public void onReadSuccess(Object object) {
-                // Esiste già una casa con il nome specificato dall'utente
-                layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
-                dismissProgress();
-            }
-
-            @Override
-            public void onReadEmpty() {
-                databaseWriter.writeCreateHome(inputHomeName.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                        createHome(), createHomeUser(), createUserHome(), databaseWriterListener);
-            }
-
-            @Override
-            public void onReadCancelled(DatabaseError databaseError) {
-                /*
-                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
-                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
-                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
-                la situazione non può essere risolta dall'utente.
-                 */
-                showErrorDialog();
-            }
-        };
-
         // Gestione click sul bottone per completare l'inserimento
         FloatingActionButton floatNext = findViewById(R.id.activity_create_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
@@ -283,4 +220,67 @@ public class CreateHomeActivity extends FormActivity {
         finish();
     }
 
+    // Listener processo di scrittura nel database dei record necessari per registrare la creazione di una casa
+    final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
+        @Override
+        public void onWriteSuccess() {
+            Appartment.getInstance().setHome(inputHomeName.getText().toString());
+            moveToNextActivity(MainActivity.class);
+            dismissProgress();
+        }
+
+        @Override
+        public void onWriteFail(Exception exception) {
+            try {
+                throw exception;
+            }
+            catch (DatabaseException e) {
+                int errorCode = DatabaseError.fromException(e).getCode();
+                if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
+                    // Regole di sicurezza violate
+                    // Implica: Esiste già una casa con il nome specificato dall'utente
+                    // (Si può verificare solo se tra la lettura precedente e questa
+                    // scrittura un altro utente ha registrato una casa con lo stesso nome)
+                    layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
+                    dismissProgress();
+                }
+                else {
+                    // Altro errore generico
+                    showErrorDialog();
+                }
+            }
+            catch (Exception e) {
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
+
+    // Listener processo di lettura nel database della casa che si vuole creare
+    final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(Object object) {
+            // Esiste già una casa con il nome specificato dall'utente
+            layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
+            dismissProgress();
+        }
+
+        @Override
+        public void onReadEmpty() {
+            databaseWriter.writeCreateHome(inputHomeName.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                    createHome(), createHomeUser(), createUserHome(), databaseWriterListener);
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                 */
+            showErrorDialog();
+        }
+    };
 }

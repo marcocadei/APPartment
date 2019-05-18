@@ -100,79 +100,6 @@ public class JoinHomeActivity extends FormActivity {
             }
         });
 
-        // Listener processo di scrittura nel database dei record necessari per registrare l'unione ad una casa
-        final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
-            @Override
-            public void onWriteSuccess() {
-                Appartment.getInstance().setHome(inputHomeName.getText().toString());
-                moveToNextActivity(MainActivity.class);
-                dismissProgress();
-            }
-
-            @Override
-            public void onWriteFail(Exception exception) {
-                try {
-                    throw exception;
-                }
-                catch (DatabaseException e) {
-                    int errorCode = DatabaseError.fromException(e).getCode();
-                    if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
-                        // Regole di sicurezza violate
-                        // Implica: L'utente ha specificato una casa di cui è già membro
-                        layoutHomeName.setError(getString(R.string.form_error_home_already_joined));
-                        dismissProgress();
-                    }
-                    else {
-                        // Altro errore generico
-                        showErrorDialog();
-                    }
-                }
-                catch (Exception e) {
-                    // Generico
-                    showErrorDialog();
-                }
-                dismissProgress();
-            }
-        };
-        // Listener processo di lettura nel database della casa in cui si vuole entrare
-        final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
-            @Override
-            public void onReadSuccess(Object object) {
-                String insertedPassword = inputPassword.getText().toString();
-                String homePassword = (String)object;
-                if (!insertedPassword.equals(homePassword)) {
-                    // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
-                    layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
-                    layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                    dismissProgress();
-                }
-                else {
-                    // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
-                    databaseWriter.writeJoinHome(inputHomeName.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                        createHomeUser(), createUserHome(), databaseWriterListener);
-                }
-            }
-
-            @Override
-            public void onReadEmpty() {
-                // La casa specificata non esiste (viene comunque mostrato un messaggio d'errore generico)
-                layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
-                layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
-                dismissProgress();
-            }
-
-            @Override
-            public void onReadCancelled(DatabaseError databaseError) {
-                /*
-                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
-                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
-                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
-                la situazione non può essere risolta dall'utente.
-                 */
-                showErrorDialog();
-            }
-        };
-
         // Gestione click sul bottone per effettuare l'unione
         FloatingActionButton floatNext = findViewById(R.id.activity_join_home_float_next);
         floatNext.setOnClickListener(new View.OnClickListener() {
@@ -236,53 +163,6 @@ public class JoinHomeActivity extends FormActivity {
         return new UserHome(homeName, Home.ROLE_SLAVE);
     }
 
-    private void writeInDb(final String homeName) {
-        String separator = getString(R.string.db_separator);
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String familyPath = getString(R.string.db_homeusers) + separator + getString(R.string.db_homeusers_homename, homeName) + separator + getString(R.string.db_homeusers_homename_uid, uid);
-        String userhomePath = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_uid, uid) + separator + getString(R.string.db_userhomes_uid_homename, homeName);
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(familyPath, createHomeUser());
-        childUpdates.put(userhomePath, createUserHome());
-
-        dbRef.updateChildren(childUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Appartment.getInstance().setHome(homeName);
-                            moveToNextActivity(MainActivity.class);
-                            dismissProgress();
-                        }
-                        else {
-                            try {
-                                throw task.getException();
-                            }
-                            catch (DatabaseException e) {
-                                int errorCode = DatabaseError.fromException(e).getCode();
-                                if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
-                                    // Regole di sicurezza violate
-                                    // Implica: L'utente ha specificato una casa di cui è già membro
-                                    layoutHomeName.setError(getString(R.string.form_error_home_already_joined));
-                                    dismissProgress();
-                                }
-                                else {
-                                    // Altro errore generico
-                                    showErrorDialog();
-                                }
-                            }
-                            catch (Exception e) {
-                                // Generico
-                                showErrorDialog();
-                            }
-                            dismissProgress();
-                        }
-                    }
-                });
-    }
-
     @Override
     protected void moveToNextActivity(Class destination) {
         Intent i = new Intent(JoinHomeActivity.this, destination);
@@ -292,4 +172,77 @@ public class JoinHomeActivity extends FormActivity {
         finish();
     }
 
+    // Listener processo di scrittura nel database dei record necessari per registrare l'unione ad una casa
+    final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
+        @Override
+        public void onWriteSuccess() {
+            Appartment.getInstance().setHome(inputHomeName.getText().toString());
+            moveToNextActivity(MainActivity.class);
+            dismissProgress();
+        }
+
+        @Override
+        public void onWriteFail(Exception exception) {
+            try {
+                throw exception;
+            }
+            catch (DatabaseException e) {
+                int errorCode = DatabaseError.fromException(e).getCode();
+                if (errorCode == DatabaseError.PERMISSION_DENIED || errorCode == DatabaseError.USER_CODE_EXCEPTION) {
+                    // Regole di sicurezza violate
+                    // Implica: L'utente ha specificato una casa di cui è già membro
+                    layoutHomeName.setError(getString(R.string.form_error_home_already_joined));
+                    dismissProgress();
+                }
+                else {
+                    // Altro errore generico
+                    showErrorDialog();
+                }
+            }
+            catch (Exception e) {
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
+
+    // Listener processo di lettura nel database della casa in cui si vuole entrare
+    final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(Object object) {
+            String insertedPassword = inputPassword.getText().toString();
+            String homePassword = (String)object;
+            if (!insertedPassword.equals(homePassword)) {
+                // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
+                layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
+                layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
+                dismissProgress();
+            }
+            else {
+                // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
+                databaseWriter.writeJoinHome(inputHomeName.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                        createHomeUser(), createUserHome(), databaseWriterListener);
+            }
+        }
+
+        @Override
+        public void onReadEmpty() {
+            // La casa specificata non esiste (viene comunque mostrato un messaggio d'errore generico)
+            layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
+            layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
+            dismissProgress();
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                 */
+            showErrorDialog();
+        }
+    };
 }
