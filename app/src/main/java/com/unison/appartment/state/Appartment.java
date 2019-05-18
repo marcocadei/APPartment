@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.User;
 
 /**
@@ -15,15 +16,25 @@ public class Appartment {
     private Appartment() {}
     public static Appartment getInstance() {return holder;}
 
-    private String home;
+    private Home home;
     private User user;
 
-    public void setHome(String home) {
+    public void setHome(Home home) {
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(SharedPreferencesConstants.HOME_KEY, new Gson().toJson(home));
+        editor.apply();
         this.home = home;
     }
 
-    public String getHome() {
-        return this.home;
+    public Home getHome() {
+        if (home != null) {
+            return home;
+        }
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+        String json = sp.getString(SharedPreferencesConstants.HOME_KEY, null);
+        Gson gson = new Gson();
+        return gson.fromJson(json, Home.class);
     }
 
     public User getUser() {

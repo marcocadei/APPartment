@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.unison.appartment.R;
+import com.unison.appartment.state.Appartment;
 
 /**
  * Classe che rappresenta l'Activity per entrare nell'applicazione, registrandosi oppure accedendo
@@ -38,14 +39,6 @@ public class EnterActivity extends AppCompatActivity {
             }
         });
 
-        // Controllo se c'è già un utente loggato: in caso vado direttamente alla UserProfileActivity
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-            Intent i = new Intent(EnterActivity.this, UserProfileActivity.class);
-            startActivity(i);
-            finish();
-        }
-
         /*
         Nota: Tutte le operazioni precedenti (es. impostazione dei listener sui bottoni) sono
         eseguite a prescindere dallo stato dell'autenticazione; se infatti l'utente esegue il
@@ -53,7 +46,19 @@ public class EnterActivity extends AppCompatActivity {
         già pronta).
          */
 
-        // TODO gestire opportunamente il finish() quando si implementa anche l'accesso diretto
-        // all'ultima casa in cui ci si era loggati
+        // Controllo se c'è già un utente loggato: in caso vado direttamente alla UserProfileActivity
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            // Controllo se l'utente è uscito dall'app mentre era in una casa: in caso vado direttamente
+            // alla MainActivity
+            Intent i;
+            if (Appartment.getInstance().getHome() != null) {
+                i = new Intent(EnterActivity.this, MainActivity.class);
+            } else {
+                i = new Intent(EnterActivity.this, UserProfileActivity.class);
+            }
+            startActivity(i);
+            finish();
+        }
     }
 }

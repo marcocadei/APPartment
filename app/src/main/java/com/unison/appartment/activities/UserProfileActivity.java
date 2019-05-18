@@ -12,6 +12,12 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.unison.appartment.database.DatabaseReader;
+import com.unison.appartment.database.DatabaseReaderListener;
+import com.unison.appartment.database.FirebaseDatabaseReader;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.fragments.HomeListFragment;
 import com.unison.appartment.R;
@@ -23,12 +29,21 @@ import com.unison.appartment.model.UserHome;
  */
 public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
 
+    private DatabaseReader databaseReader;
+
+    FirebaseProgressDialogFragment progressDialog;
+
     private View emptyListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        databaseReader = new FirebaseDatabaseReader();
+
+        // Quando entro in quest activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
+        Appartment.getInstance().setHome(null);
 
         // Supporto per la toolbar
         Toolbar toolbar = findViewById(R.id.activity_user_profile_toolbar);
@@ -95,13 +110,14 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
     @Override
     public void onHomeListFragmentInteraction(UserHome item) {
         /*
-        Quando l'utente seleziona una voce dalla lista delle case, deve essere portato alla
-        MainActivity della casa selezionata.
+        Quando l'utente selezione una voce dalla lista delle case, leggo l'oggetto Home corrispondente
+        alla casa selezionata e vado nella MainActivity
          */
-
-        Appartment.getInstance().setHome(item.getHomename());
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        progressDialog = FirebaseProgressDialogFragment.newInstance(
+                getString(R.string.activity_user_profile_progress_title),
+                getString(R.string.activity_user_profile_progress_description));
+        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+        databaseReader.retrieveHome(item.getHomename(), databaseReaderListener);
     }
 
     @Override
@@ -121,4 +137,33 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
             emptyListLayout.setVisibility(View.VISIBLE);
         }
     }
+
+    private void moveToNextActivity(Home home) {
+        Appartment.getInstance().setHome(home);
+        Intent i = new Intent(UserProfileActivity.this, MainActivity.class);
+        startActivity(i);
+    }
+
+    // Listener processo di lettura nel database della casa in cui si vuole entrare
+    final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(Object object) {
+            /*
+            Quando l'utente seleziona una voce dalla lista delle case, deve essere portato alla
+            MainActivity della casa selezionata.
+            */
+            moveToNextActivity((Home) object);
+            progressDialog.dismiss();
+        }
+
+        @Override
+        public void onReadEmpty() {
+            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+        }
+    };
 }

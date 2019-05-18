@@ -124,6 +124,8 @@
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_empty_homes_list">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
     <string name="activity_user_profile_text_homelist_title">Le mie case</string>
+    <string name="activity_user_profile_progress_description">Recupero dati casa in corso</string>
+    <string name="activity_user_profile_progress_title">Accesso</string>
     <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
