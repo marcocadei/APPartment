@@ -21,6 +21,9 @@ public class Home {
     private int conversionFactor;
     private int members;
 
+    // Costruttore vuoto richiesto da firebase
+    public Home() {}
+
     public Home(String name, String password) {
         this(name, password, DEFAULT_CONVERSION_FACTOR, 0);
     }

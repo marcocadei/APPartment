@@ -29,8 +29,8 @@ public class UncompletedTask implements Serializable {
     private String assignedUser;
     private boolean marked;
 
-    public UncompletedTask() {
-    }
+    // Costruttore vuoto richiesto da firebase
+    public UncompletedTask() {}
 
     public UncompletedTask(String name, String description, int points) {
         this(name, description, points, System.currentTimeMillis());
