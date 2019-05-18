@@ -1,26 +1,20 @@
 package com.unison.appartment.repository;
 
-import android.content.res.Resources;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.unison.appartment.Appartment;
-import com.unison.appartment.MyApplication;
-import com.unison.appartment.R;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.UncompletedTask;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TodoTaskRepository {
 
