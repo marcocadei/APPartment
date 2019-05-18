@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_userhome_layout_name"
         app:layout_constraintStart_toEndOf="@id/fragment_userhome_img_home"
-        app:layout_constraintEnd_toStartOf="@id/fragment_userhome_layout_points"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="0dp"
@@ -40,34 +40,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_userhome_text_name" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_userhome_layout_points"
-        style="@style/Component.Layout.Points"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fragment_userhome_layout_name"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/fragment_userhome_text_points_value"
-            style="@style/Component.TextView.SingleLine.PointsValue"
-            android:text="@string/placeholder_number"
-            app:layout_constraintBottom_toTopOf="@id/fragment_userhome_text_points_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/fragment_userhome_text_points_name"
-            style="@style/Component.TextView.SingleLine.PointsName"
-            android:text="@string/general_members_name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/fragment_userhome_text_points_value"
-            app:layout_constraintStart_toStartOf="@id/fragment_userhome_text_points_value"
-            app:layout_constraintTop_toBottomOf="@id/fragment_userhome_text_points_value" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     
