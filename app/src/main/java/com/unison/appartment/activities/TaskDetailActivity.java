@@ -5,18 +5,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
-import com.unison.appartment.model.Task;
+import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.utils.DateUtils;
 
-import java.text.ParseException;
+import java.util.Calendar;
 
 /**
- * Classe che rappresenta l'Activity con il dettaglio del Task
+ * Classe che rappresenta l'Activity con il dettaglio del UncompletedTask
  */
 public class TaskDetailActivity extends AppCompatActivity {
 
@@ -41,24 +40,17 @@ public class TaskDetailActivity extends AppCompatActivity {
         TextView name = findViewById(R.id.activity_task_detail_name);
         TextView points = findViewById(R.id.activity_task_detail_points_value);
         TextView description = findViewById(R.id.activity_task_detail_text_description_value);
-        TextView deadline = findViewById(R.id.activity_task_detail_text_deadline_value);
+        TextView creationDate = findViewById(R.id.activity_task_detail_text_creation_date_value);
 
         Intent i = getIntent();
-        Task task = (Task) i.getSerializableExtra("task");
-        // Popolo l'interfaccia con i dati del task ricevuto
-        name.setText(task.getName());
-        points.setText(String.valueOf(task.getPoints()));
-        description.setText(task.getDescription());
-        try {
-            deadline.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(task.getDeadline())));
-        }
-        catch (ParseException e) {
-            /*
-            Questa eccezione non dovrebbe mai verificarsi assumendo che nel database la data sia
-            sempre salvata facendo uso dello standard locale.
-             */
-            Log.e(getClass().getCanonicalName(), e.getMessage());
-            deadline.setText(task.getDeadline());
-        }
+        UncompletedTask uncompletedTask = (UncompletedTask) i.getSerializableExtra("uncompletedTask");
+        // Popolo l'interfaccia con i dati del uncompletedTask ricevuto
+        name.setText(uncompletedTask.getName());
+        points.setText(String.valueOf(uncompletedTask.getPoints()));
+        description.setText(uncompletedTask.getDescription());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis((-1) * uncompletedTask.getCreationDate());
+        creationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(calendar.getTime()));
     }
 }

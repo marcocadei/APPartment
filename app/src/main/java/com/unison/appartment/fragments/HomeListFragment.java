@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.adapters.MyHomeRecyclerViewAdapter;
 import com.unison.appartment.R;
+import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.UserHome;
 
 import java.util.ArrayList;
@@ -114,8 +115,7 @@ public class HomeListFragment extends Fragment {
      * Metodo per leggere da Firebase Database la lista di UserHome
      */
     private void readUserHomes() {
-        String separator = getString(R.string.db_separator);
-        String path = getString(R.string.db_userhomes) + separator + getString(R.string.db_userhomes_uid, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        String path = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(path);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

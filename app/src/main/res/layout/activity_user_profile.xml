@@ -56,6 +56,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_user_profile_layout_profile"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintVertical_bias="0"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_homelist_title"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,10 +71,6 @@
                     app:layout_constraintBottom_toTopOf="@id/activity_user_profile_layout_attributes"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-
-
-                    <!--app:layout_constraintVertical_chainStyle="packed"-->
-                    <!--app:layout_constraintVertical_bias="0"-->
 
                     <ImageView
                         android:id="@+id/activity_user_profile_img_profile"
@@ -112,7 +110,7 @@
                     <TextView
                         android:id="@+id/activity_user_profile_text_age_title"
                         style="@style/Component.TextView.MultiLine.AttributeTitle"
-                        android:text="@string/desc_users_uid_age"
+                        android:text="@string/placeholder_text"
                         android:layout_marginEnd="@dimen/margin_extra_small"
                         app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_age_value"
                         app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_gender_title"

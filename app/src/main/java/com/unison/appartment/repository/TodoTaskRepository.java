@@ -4,58 +4,59 @@ import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.unison.appartment.Appartment;
-import com.unison.appartment.R;
+import com.google.firebase.database.Query;
+import com.unison.appartment.state.Appartment;
+import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
-import com.unison.appartment.model.Task;
-
+import com.unison.appartment.model.UncompletedTask;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TodoTaskRepository {
 
     // Nodo del database a cui sono interessato
     private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
-    // tramite un Deserializer in ogetti di tipo Task
+    // tramite un Deserializer in ogetti di tipo UncompletedTask
     private FirebaseQueryLiveData liveData;
-    private LiveData<List<Task>> taskLiveData;
+    private LiveData<List<UncompletedTask>> taskLiveData;
 
     public TodoTaskRepository() {
-        String separator = Appartment.getInstance().getContext().getString(R.string.db_separator);
-        String uncompletedTasks = Appartment.getInstance().getContext().getString(R.string.db_uncompleted_tasks);
         // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
         uncompletedTasksRef =
-                FirebaseDatabase.getInstance().getReference(separator + uncompletedTasks + separator + Appartment.getInstance().getHome());
-        liveData = new FirebaseQueryLiveData(uncompletedTasksRef);
+                FirebaseDatabase.getInstance().getReference(
+                        DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETED_TASKS +
+                              DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome());
+        Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETED_TASKS_HOMENAME_TASKID_CREATIONDATE);
+        liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
     }
 
     @NonNull
-    public LiveData<List<Task>> getTaskLiveData() {
+    public LiveData<List<UncompletedTask>> getTaskLiveData() {
         return taskLiveData;
     }
 
-    public void addTask(Task newTask) {
+    public void addTask(UncompletedTask newUncompletedTask) {
         String key = uncompletedTasksRef.push().getKey();
-        newTask.setId(key);
-        uncompletedTasksRef.child(key).setValue(newTask);
+        newUncompletedTask.setId(key);
+        uncompletedTasksRef.child(key).setValue(newUncompletedTask);
     }
 
-    private class Deserializer implements Function<DataSnapshot, List<Task>> {
+    private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
         @Override
-        public List<Task> apply(DataSnapshot dataSnapshot) {
-            List<Task> tasks = new ArrayList<>();
+        public List<UncompletedTask> apply(DataSnapshot dataSnapshot) {
+            List<UncompletedTask> uncompletedTasks = new ArrayList<>();
             for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-                Task newTask = taskSnapshot.getValue(Task.class);
-                newTask.setId(taskSnapshot.getKey());
-                tasks.add(newTask);
+                UncompletedTask newUncompletedTask = taskSnapshot.getValue(UncompletedTask.class);
+                newUncompletedTask.setId(taskSnapshot.getKey());
+                uncompletedTasks.add(newUncompletedTask);
             }
-            return tasks;
+            return uncompletedTasks;
         }
     }
 }

@@ -18,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateTaskActivity;
 import com.unison.appartment.activities.TaskDetailActivity;
-import com.unison.appartment.model.Task;
+import com.unison.appartment.model.UncompletedTask;
 
 
 /**
@@ -75,7 +75,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             TodoListFragment tlf = (TodoListFragment) getChildFragmentManager()
                     .findFragmentById(R.id.fragment_todo_todolist);
-            tlf.addTask((Task) data.getSerializableExtra("newTask"));
+            tlf.addTask((UncompletedTask) data.getSerializableExtra(CreateTaskActivity.EXTRA_NEW_TASK));
         }
     }
 
@@ -90,9 +90,9 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     }
 
     @Override
-    public void onTodoListFragmentOpenTask(Task task) {
+    public void onTodoListFragmentOpenTask(UncompletedTask uncompletedTask) {
         Intent i = new Intent(getActivity(), TaskDetailActivity.class);
-        i.putExtra("task", task);
+        i.putExtra("uncompletedTask", uncompletedTask);
         startActivity(i);
     }
 

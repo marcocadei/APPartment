@@ -25,7 +25,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.unison.appartment.R;
-import com.unison.appartment.model.AudioPost;
 
 import java.io.IOException;
 
@@ -35,6 +34,8 @@ import java.io.IOException;
  * {@link OnInsertPostFragmentListener} per gestire gli eventi di interazione
  */
 public class InsertPostFragment extends Fragment {
+
+    public static final int PERMISSION_REQUEST_RECORDER = 1;
 
     // Edittext contenente l'input del messaggio
     private EditText inputText;
@@ -119,7 +120,7 @@ public class InsertPostFragment extends Fragment {
                         // Non ho il permesso di registrare, quindi lo richiedo
                         ActivityCompat.requestPermissions(getActivity(),
                                 new String[]{Manifest.permission.RECORD_AUDIO},
-                                AudioPost.PERMISSION_REQUEST_RECORDER);
+                                PERMISSION_REQUEST_RECORDER);
                     } else {
                         // Ho il permesso di registrare
                         isRecording = true;
@@ -215,7 +216,7 @@ public class InsertPostFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case AudioPost.PERMISSION_REQUEST_RECORDER: {
+            case PERMISSION_REQUEST_RECORDER: {
                 // Se la richiesta è cancellata l'array dei risultati è vuoto
                 if (grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Il permesso è stato fornito, posso effettuare la registrazione

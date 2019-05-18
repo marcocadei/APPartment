@@ -1,37 +1,46 @@
 package com.unison.appartment.activities;
 
-import androidx.annotation.NonNull;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DatabaseError;
+import com.unison.appartment.state.Appartment;
+import com.unison.appartment.database.Auth;
+import com.unison.appartment.database.AuthListener;
+import com.unison.appartment.database.DatabaseReader;
+import com.unison.appartment.database.DatabaseReaderListener;
+import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.database.FirebaseDatabaseReader;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
+import com.unison.appartment.model.User;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
+
 
 /**
  * Classe che rappresenta l'Activity per effettuare l'accesso all'applicazione
  */
 public class SignInActivity extends FormActivity {
 
-    EditText inputEmail;
-    EditText inputPassword;
-    TextInputLayout layoutEmail;
-    TextInputLayout layoutPassword;
+    private Auth auth;
+    private DatabaseReader databaseReader;
+
+    private EditText inputEmail;
+    private EditText inputPassword;
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        auth = new FirebaseAuth();
+        databaseReader = new FirebaseDatabaseReader();
 
         // Precondizione: Se viene acceduta questa activity, vuol dire che non c'è nessun utente loggato
 
@@ -66,7 +75,11 @@ public class SignInActivity extends FormActivity {
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(SignInActivity.this);
                 if (checkInput()) {
-                    performSignIn(inputEmail.getText().toString(), inputPassword.getText().toString());
+                    progressDialog = FirebaseProgressDialogFragment.newInstance(
+                            getString(R.string.activity_signin_progress_title),
+                            getString(R.string.activity_signin_progress_description));
+                    progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+                    auth.signIn(inputEmail.getText().toString(), inputPassword.getText().toString(), authListener);
                 }
             }
         });
@@ -105,41 +118,54 @@ public class SignInActivity extends FormActivity {
         return result;
     }
 
-    private void performSignIn(final String email, final String password) {
-        progressDialog = FirebaseProgressDialogFragment.newInstance(
-                getString(R.string.activity_signin_progress_title),
-                getString(R.string.activity_signin_progress_description));
-        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+    // Listener processo di lettura dal database del nuovo utente
+    final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(Object object) {
+            Appartment.getInstance().setUser((User) object);
+        }
 
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            moveToNextActivity(UserProfileActivity.class);
-                            dismissProgress();
-                        }
-                        else {
-                            try {
-                                throw task.getException();
-                            }
-                            catch (FirebaseAuthInvalidCredentialsException e) {
-                                // Password sbagliata
-                                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
-                            }
-                            catch (FirebaseAuthInvalidUserException e) {
-                                // Utente non esistente
-                                layoutEmail.setError(getString(R.string.form_error_nonexistent_email));
-                            }
-                            catch (Exception e) {
-                                // Generico
-                                showErrorDialog();
-                            }
-                            dismissProgress();
-                        }
-                    }
-                });
-    }
+        @Override
+        public void onReadEmpty() {
+            // TODO gestire l'errore
+        }
 
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                */
+            showErrorDialog();
+        }
+    };
+
+    // Listener processo di autenticazione
+    final AuthListener authListener = new AuthListener() {
+        @Override
+        public void onSuccess() {
+            databaseReader.retrieveUser(auth.getCurrentUserUid(), databaseReaderListener);
+            moveToNextActivity(UserProfileActivity.class);
+            dismissProgress();
+        }
+
+        @Override
+        public void onFail(Exception exception) {
+            try {
+                throw exception;
+            } catch (FirebaseAuthInvalidCredentialsException e) {
+                // Password sbagliata
+                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
+            } catch (FirebaseAuthInvalidUserException e) {
+                // Utente non esistente
+                layoutEmail.setError(getString(R.string.form_error_nonexistent_email));
+            } catch (Exception e) {
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
 }

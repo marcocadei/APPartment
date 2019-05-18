@@ -50,7 +50,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
 //        name.setText("paolo");
 //        points.setText("444");
 //        name.setText(user.getName());
-//        points.setText(String.valueOf(user.getPoints()));
-        /*image.setImage(user.getDescription());*/
+//        points.setText(String.valueOf(user.getLastPoints()));
+        /*image.setImage(user.getLastDescription());*/
     }
 }

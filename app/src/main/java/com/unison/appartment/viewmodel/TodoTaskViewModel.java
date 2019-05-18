@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.repository.TodoTaskRepository;
-import com.unison.appartment.model.Task;
 
 import java.util.List;
 
@@ -18,12 +18,12 @@ public class TodoTaskViewModel extends ViewModel {
     }
 
     @NonNull
-    public LiveData<List<Task>> getTaskLiveData() {
+    public LiveData<List<UncompletedTask>> getTaskLiveData() {
         return repository.getTaskLiveData();
     }
 
-    public void addTask(Task newTask) {
-        repository.addTask(newTask);
+    public void addTask(UncompletedTask newUncompletedTask) {
+        repository.addTask(newUncompletedTask);
     }
 
 }

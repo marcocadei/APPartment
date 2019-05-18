@@ -59,9 +59,9 @@ public class RewardListFragment extends Fragment {
         // FIXME da rimuovere
         // Elemento di prova iniziale
         if (Reward.getRewardsList().isEmpty()) {
-            Reward.addReward(new Reward("ABC", 127));
-            Reward.addReward(new Reward("Prenotato", 500));
-            Reward.getReward(1).setRequested(true);
+//            Reward.addReward(new Reward("ABC", 127));
+//            Reward.addReward(new Reward("Prenotato", 500));
+//            Reward.getReward(1).setRequested(true);
         }
     }
 

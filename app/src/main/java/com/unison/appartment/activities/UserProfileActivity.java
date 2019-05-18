@@ -5,16 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.unison.appartment.Appartment;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.fragments.HomeListFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
@@ -101,7 +99,7 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         MainActivity della casa selezionata.
          */
 
-        Appartment.getInstance().setHome(item.getHomeName());
+        Appartment.getInstance().setHome(item.getHomename());
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }

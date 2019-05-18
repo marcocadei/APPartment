@@ -38,8 +38,9 @@ public class MyHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeRecycl
     @Override
     public void onBindViewHolder(final ViewHolderHome holder, int position) {
         final UserHome item = homesList.get(position);
-        holder.mNameView.setText(homesList.get(position).getHomeName());
-        holder.mRoleView.setText(homesList.get(position).getRole());
+        String[] roles = holder.mView.getContext().getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
+        holder.mNameView.setText(homesList.get(position).getHomename());
+        holder.mRoleView.setText(roles[homesList.get(position).getRole()]);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

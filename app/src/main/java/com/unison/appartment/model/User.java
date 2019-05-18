@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,26 +14,26 @@ import java.util.Map;
  */
 public class User implements Serializable {
 
+    public final static int GENDER_MALE = 0;
+    public final static int GENDER_FEMALE = 1;
+
     private String email;
     private String password;
-    private int age;
-    private String gender;
-
-    // TODO ancora da mettere le altre proprietà "casa-independent"
+    private String name;
+    private String birthdate;
+    private int gender;
     private Uri image;
 
-    // FIXME rifare il costruttore quando si è arrivati ad una struttura definitiva dell'utente
-    public User(String email, String password, int age, String gender) {
+    public User (){
+    }
+
+    public User(String email, String password, String name, String birthdate, int gender) {
         this.email = email;
         this.password = password;
-        this.age = age;
+        this.name = name;
+        this.birthdate = birthdate;
         this.gender = gender;
-
         this.image = null; // TODO: piazza anche l'immagine
-
-        // Attributi che devono essere impostati ad un valore di default alla creazione di un nuovo utente
-        // TODO ...
-
     }
 
     public String getEmail() {
@@ -51,19 +52,27 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public int getAge() {
-        return age;
+    public String getName() {
+        return name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getGender() {
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

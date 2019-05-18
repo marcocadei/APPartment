@@ -28,6 +28,7 @@
     <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
     <string name="form_error_invalid_characters">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
+    <string name="form_error_invalid_date">Specificare una data antecedente a quella odierna</string>
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
     <string name="form_error_missing_value">Specificare un valore</string>
     <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
@@ -42,18 +43,28 @@
     <string name="desc_rewards_homename_rewardid_description">Descrizione</string>
     <string name="desc_rewards_homename_rewardid_name">Nome</string>
     <string name="desc_rewards_homename_rewardid_points">Punti</string>
-    <string name="desc_uncompletedtasks_homename_taskid_deadline">Scadenza</string>
+    <string name="desc_uncompletedtasks_homename_taskid_creation_date">Data di creazione</string>
     <string name="desc_uncompletedtasks_homename_taskid_description">Descrizione</string>
     <string name="desc_uncompletedtasks_homename_taskid_name">Nome</string>
     <string name="desc_uncompletedtasks_homename_taskid_points">Punti</string>
     <string name="desc_userhomes_uid_homename_role">Ruolo</string>
-    <string name="desc_users_uid_age">Età</string>
+    <string name="desc_users_uid_birthdate">Data di nascita</string>
     <string name="desc_users_uid_email">Email</string>
     <string name="desc_users_uid_gender">Genere</string>
     <string name="desc_users_uid_gender_value_female">Femmina</string>
     <string name="desc_users_uid_gender_value_male">Maschio</string>
     <string name="desc_users_uid_password">Password</string>
     <string name="desc_users_uid_password_repeat">Ripeti password</string>
+
+    <string-array name="desc_users_uid_gender_values">
+        <item>Maschio</item>
+        <item>Femmina</item>
+    </string-array>
+    <string-array name="desc_userhomes_uid_homename_role_values">
+        <item>Proprietario</item>
+        <item>Leader</item>
+        <item>Collaboratore</item>
+    </string-array>
 
     <!-- Descrizioni dei drawable -->
 
@@ -66,6 +77,7 @@
     <string name="caption_ic_hourglass">Icona di una clessidra</string>
     <string name="caption_ic_person_add">Icona di nuovo utente</string>
     <string name="caption_ic_play_arrow">Simbolo di play</string>
+    <string name="caption_ic_check">Icona di un segno di spunta</string>
     <string name="caption_profile_pic">Foto profilo dell\'utente</string>
 
     <!-- Legate ad una specifica activity -->
@@ -90,7 +102,7 @@
     <string name="activity_join_home_text_info">Verrai inserito nella casa con il ruolo di collaboratore. Puoi essere promosso dai leader o dal proprietario.</string>
     <string name="activity_join_home_text_title">Unisciti ad una casa</string>
     <string name="activity_main_bottom_navigation_done">Finite</string>
-    <string name="activity_main_bottom_navigation_family">Famiglia</string>
+    <string name="activity_main_bottom_navigation_family">Casa</string>
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
