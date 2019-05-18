@@ -15,6 +15,7 @@ public class UserHome {
     public UserHome(String homename, int role) {
         this.homename = homename;
         this.role = role;
+        this.members = Home.DEFAULT_MEMBERS;
     }
 
     public UserHome(String homename, int role, int members) {
