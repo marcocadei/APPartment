@@ -41,6 +41,7 @@ public class MyUserHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyUserHo
         String[] roles = holder.mView.getContext().getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
         holder.mNameView.setText(homesList.get(position).getHomename());
         holder.mRoleView.setText(roles[homesList.get(position).getRole()]);
+        holder.mTextPointsView.setText(String.valueOf(homesList.get(position).getMembers()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,12 +64,14 @@ public class MyUserHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyUserHo
         public final View mView;
         public final TextView mNameView;
         public final TextView mRoleView;
+        public final TextView mTextPointsView;
 
         public ViewHolderHome(View view) {
             super(view);
             mView = view;
-            mNameView = view.findViewById(R.id.fragment_home_text_name);
-            mRoleView = view.findViewById(R.id.fragment_home_text_role);
+            mNameView = view.findViewById(R.id.fragment_userhome_text_name);
+            mRoleView = view.findViewById(R.id.fragment_userhome_text_role);
+            mTextPointsView = view.findViewById(R.id.fragment_userhome_text_points_value);
         }
 
         @Override

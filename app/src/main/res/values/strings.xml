@@ -11,6 +11,7 @@
     <string name="app_name">APPartment</string>
 
     <string name="general_points_name">Punti</string>
+    <string name="general_members_name">Membri</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
     <string name="general_ok_button">OK</string>
 
