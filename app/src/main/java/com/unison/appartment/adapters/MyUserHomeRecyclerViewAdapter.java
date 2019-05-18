@@ -1,5 +1,8 @@
 package com.unison.appartment.adapters;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -7,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.fragments.UserHomeListFragment.OnHomeListFragmentInteractionListener;
+import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
 
 import java.util.List;
@@ -18,13 +23,12 @@ import java.util.List;
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link UserHome} e che effettua una
  * chiamata al {@link UserHomeListFragment.OnHomeListFragmentInteractionListener listener} specificato.
  */
-public class MyUserHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyUserHomeRecyclerViewAdapter.ViewHolderHome> {
+public class MyUserHomeRecyclerViewAdapter extends ListAdapter<UserHome, RecyclerView.ViewHolder> {
 
-    private final List<UserHome> homesList;
     private final UserHomeListFragment.OnHomeListFragmentInteractionListener mListener;
 
-    public MyUserHomeRecyclerViewAdapter(List<UserHome> items, OnHomeListFragmentInteractionListener listener) {
-        homesList = items;
+    public MyUserHomeRecyclerViewAdapter(OnHomeListFragmentInteractionListener listener) {
+        super(MyUserHomeRecyclerViewAdapter.DIFF_CALLBACK);
         mListener = listener;
     }
 
@@ -36,27 +40,24 @@ public class MyUserHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyUserHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolderHome holder, int position) {
-        final UserHome item = homesList.get(position);
-        String[] roles = holder.mView.getContext().getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
-        holder.mNameView.setText(homesList.get(position).getHomename());
-        holder.mRoleView.setText(roles[homesList.get(position).getRole()]);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        final ViewHolderHome holderHome = (ViewHolderHome) holder;
+        // final UserHome item = homesList.get(position);
+        final UserHome userHome = getItem(position);
+        String[] roles = holderHome.mView.getContext().getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
+        holderHome.mNameView.setText(userHome.getHomename());
+        holderHome.mRoleView.setText(roles[userHome.getRole()]);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holderHome.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onHomeListFragmentInteraction(item);
+                    mListener.onHomeListFragmentInteraction(userHome);
                 }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return homesList.size();
     }
 
     public class ViewHolderHome extends RecyclerView.ViewHolder {
@@ -76,4 +77,17 @@ public class MyUserHomeRecyclerViewAdapter extends RecyclerView.Adapter<MyUserHo
             return super.toString() + " '" + mNameView.getText() + "'";
         }
     }
+
+    public static final DiffUtil.ItemCallback<UserHome> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<UserHome>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull UserHome oldItem, @NonNull UserHome newItem) {
+                    return oldItem.getHomename().equals(newItem.getHomename());
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull UserHome oldItem, @NonNull UserHome newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
 }
