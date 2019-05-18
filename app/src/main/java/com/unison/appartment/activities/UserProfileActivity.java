@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +20,7 @@ import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseDatabaseReader;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
+import com.unison.appartment.model.User;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.fragments.HomeListFragment;
 import com.unison.appartment.R;
@@ -34,6 +37,10 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
     FirebaseProgressDialogFragment progressDialog;
 
     private View emptyListLayout;
+    private TextView textName;
+    private TextView textEmail;
+    private TextView textGender;
+    private TextView textBirthdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,16 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         setSupportActionBar(toolbar);
 
         emptyListLayout = findViewById(R.id.activity_user_profile_layout_empty_list);
+        textName = findViewById(R.id.activity_user_profile_text_name_value);
+        textEmail = findViewById(R.id.activity_user_profile_text_email_value);
+        textGender = findViewById(R.id.activity_user_profile_text_gender_value);
+        textBirthdate = findViewById(R.id.activity_user_profile_text_birthdate_value);
+
+        User currentUser = Appartment.getInstance().getUser();
+        textName.setText(currentUser.getName());
+        textEmail.setText(currentUser.getEmail());
+        textGender.setText(currentUser.getGenderString());
+        textBirthdate.setText(currentUser.getBirthdate());
 
         // TODO riempire i campi di testo con i dati dell'utente loggato
 

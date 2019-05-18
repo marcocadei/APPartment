@@ -2,6 +2,9 @@ package com.unison.appartment.model;
 
 import android.net.Uri;
 
+import com.unison.appartment.R;
+import com.unison.appartment.state.MyApplication;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,6 +85,11 @@ public class User implements Serializable {
 
     public void setImage(Uri image) {
         this.image = image;
+    }
+
+    public String getGenderString() {
+        String[] genderValues = MyApplication.getAppContext().getResources().getStringArray(R.array.desc_users_uid_gender_values);
+        return genderValues[this.getGender()];
     }
 
     // TODO da togliere
