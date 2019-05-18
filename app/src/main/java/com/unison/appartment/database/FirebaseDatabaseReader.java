@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.User;
 
 public class FirebaseDatabaseReader implements DatabaseReader {
@@ -48,4 +49,11 @@ public class FirebaseDatabaseReader implements DatabaseReader {
                 DatabaseConstants.SEPARATOR + DatabaseConstants.HOMENAME_PASSWORD;
         read(path, listener, String.class);
     }
+
+    @Override
+    public void retrieveHome(String homeName, DatabaseReaderListener listener) {
+        String path = DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + homeName;
+        read(path, listener, Home.class);
+    }
+
 }

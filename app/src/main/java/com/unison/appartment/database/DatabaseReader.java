@@ -6,4 +6,5 @@ public interface DatabaseReader {
 
     void retrieveUser(final String uid, final DatabaseReaderListener listener);
     void retrieveHomePassword(final String homeName, final DatabaseReaderListener listener);
+    void retrieveHome(final String homeName, final DatabaseReaderListener listener);
 }

@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.MyApplication;
 import com.unison.appartment.R;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
@@ -39,23 +40,42 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
     public void writeUser(final User newUser, final String uid, final DatabaseWriterListener listener) {
         // Scrittura dei dati relativi al nuovo utente nel database
         String path = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
+
         HashMap<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(path, newUser);
+
         write(childUpdates, listener);
     }
 
     @Override
     public void writeJoinHome(final String homeName, final String uid,
-                              final HomeUser homeUser, final UserHome userHome, final DatabaseWriterListener listener) {
-        String familyPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
-                DatabaseConstants.SEPARATOR + uid;
-        String userhomePath = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + uid +
-                DatabaseConstants.SEPARATOR + homeName;
+                              final HomeUser homeUser, final UserHome userHome,
+                              final DatabaseWriterListener listener) {
+        String familyPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR + uid;
+        String userhomePath = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + uid + DatabaseConstants.SEPARATOR + homeName;
+
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(familyPath, homeUser);
         childUpdates.put(userhomePath, userHome);
 
         write(childUpdates, listener);
     }
+
+    @Override
+    public void writeCreateHome(final String homeName, final String uid,
+                                final Home home, final HomeUser homeUser, final UserHome userHome,
+                                final DatabaseWriterListener listener) {
+        final String homePath = DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + homeName;
+        final String homeuserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR + uid;
+        final String userhomePath = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + uid + DatabaseConstants.SEPARATOR + homeName;
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(homePath, home);
+        childUpdates.put(homeuserPath, homeUser);
+        childUpdates.put(userhomePath, userHome);
+
+        write(childUpdates, listener);
+    }
+
 
 }
