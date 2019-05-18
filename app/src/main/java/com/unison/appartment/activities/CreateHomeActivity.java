@@ -214,7 +214,7 @@ public class CreateHomeActivity extends FormActivity {
     final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
         @Override
         public void onWriteSuccess() {
-            Appartment.getInstance().setHome(inputHomeName.getText().toString());
+            Appartment.getInstance().setHome(createHome());
             moveToNextActivity(MainActivity.class);
             dismissProgress();
         }

@@ -33,6 +33,9 @@ public class JoinHomeActivity extends FormActivity {
     private DatabaseReader databaseReader;
     private DatabaseWriter databaseWriter;
 
+    // Oggetto che rappresenta la casa in cui si entrerà se il processo va a buon fine
+    private Home home;
+
     private EditText inputHomeName;
     private EditText inputPassword;
     private EditText inputNickname;
@@ -100,7 +103,7 @@ public class JoinHomeActivity extends FormActivity {
                             getString(R.string.activity_join_home_progress_check_title),
                             getString(R.string.activity_join_home_progress_check_description));
                     progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
-                    databaseReader.retrieveHomePassword(inputHomeName.getText().toString(), databaseReaderListener);
+                    databaseReader.retrieveHome(inputHomeName.getText().toString(), databaseReaderListener);
                 }
             }
         });
@@ -165,7 +168,7 @@ public class JoinHomeActivity extends FormActivity {
     final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
         @Override
         public void onWriteSuccess() {
-            Appartment.getInstance().setHome(inputHomeName.getText().toString());
+            Appartment.getInstance().setHome(home);
             moveToNextActivity(MainActivity.class);
             dismissProgress();
         }
@@ -200,8 +203,9 @@ public class JoinHomeActivity extends FormActivity {
     final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
         @Override
         public void onReadSuccess(Object object) {
+            home = (Home)object;
             String insertedPassword = inputPassword.getText().toString();
-            String homePassword = (String)object;
+            String homePassword = home.getPassword();
             if (!insertedPassword.equals(homePassword)) {
                 // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
                 layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
