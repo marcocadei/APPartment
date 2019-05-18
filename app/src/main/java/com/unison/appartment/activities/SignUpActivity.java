@@ -2,7 +2,6 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,13 +10,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.Appartment;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.AuthListener;
@@ -31,9 +28,9 @@ import com.unison.appartment.utils.DateUtils;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
-
 import java.util.Calendar;
 import java.util.Date;
+
 
 /**
  * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione

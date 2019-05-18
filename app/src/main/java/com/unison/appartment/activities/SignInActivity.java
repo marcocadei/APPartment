@@ -3,7 +3,6 @@ package com.unison.appartment.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -14,15 +13,13 @@ import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.AuthListener;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
-import com.unison.appartment.database.DatabaseWriter;
-import com.unison.appartment.database.DatabaseWriterListener;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.FirebaseDatabaseReader;
-import com.unison.appartment.database.FirebaseDatabaseWriter;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.User;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
+
 
 /**
  * Classe che rappresenta l'Activity per effettuare l'accesso all'applicazione
