@@ -3,13 +3,9 @@ package com.unison.appartment.database;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-
 import androidx.annotation.NonNull;
-
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,13 +17,12 @@ import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.MyApplication;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 
 public class FirebaseDatabaseWriter implements DatabaseWriter {
     @Override
@@ -88,21 +83,6 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
                     }
                 }
             });
-
-            /*// Listener per quando il download fallisce o ha successo
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    listener.onWriteFail(exception);
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    String userPhotoUrl = userImageRef.getDownloadUrl().toString();
-                    newUser.setImage(userPhotoUrl);
-                    writeUserAfterUpdate(newUser, uid, listener);
-                }
-            });*/
         } else {
             writeUserAfterUpdate(newUser, uid, listener);
         }
