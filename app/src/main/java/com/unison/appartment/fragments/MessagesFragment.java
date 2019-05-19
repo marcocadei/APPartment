@@ -2,7 +2,6 @@ package com.unison.appartment.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
@@ -57,24 +56,10 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     }
 
     @Override
-    public void onInsertPostFragmentSendText(String message) {
+    public void onInsertPostFragmentSendPost(String content, int postType) {
         PostListFragment pf = (PostListFragment)getChildFragmentManager()
                 .findFragmentById(R.id.fragment_messages_fragment_list_post);
-        pf.addTextPost(message);
-    }
-
-    @Override
-    public void onInsertPostFragmentSendImage(Uri selectedImage) {
-        PostListFragment pf = (PostListFragment)getChildFragmentManager()
-                .findFragmentById(R.id.fragment_messages_fragment_list_post);
-        pf.addImagePost(selectedImage);
-    }
-
-    @Override
-    public void onInsertPostFragmentSendAudio(String fileName) {
-        PostListFragment pf = (PostListFragment)getChildFragmentManager()
-                .findFragmentById(R.id.fragment_messages_fragment_list_post);
-        pf.addAudioPost(fileName);
+        pf.addPost(content, postType);
     }
 
     @Override
