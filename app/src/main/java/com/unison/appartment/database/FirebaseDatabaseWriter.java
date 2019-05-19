@@ -1,9 +1,13 @@
 package com.unison.appartment.database;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.provider.MediaStore;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,7 +22,6 @@ import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.MyApplication;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -47,42 +50,59 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
         // poi ottenere un URL a quella foto e salvare quello all'interno del realtime database
         // Tutto questo è fatto se l'utente ha selezionato una foto
         if (newUser.getImage() != null) {
-            Uri file = Uri.parse(newUser.getImage());
-            // Comprimo l'immagine prima di caricarla
-            Bitmap bmp = null;
-            try {
-                bmp = MediaStore.Images.Media.getBitmap(MyApplication.getAppContext().getContentResolver(), file);
-            } catch (IOException e) {
-                listener.onWriteFail(e);
-            }
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
-            byte[] data = baos.toByteArray();
-
-            // UUID genera un nome univoco per il file che sto caricando
-            final StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child("images/users/"+ UUID.randomUUID().toString());
-            UploadTask uploadTask = userImageRef.putBytes(data);
-
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            /*
+            Il codice è strutturato in questo modo perchéla foto caricata sullo storage di firebase veniva
+            ruotata di 90° quando scattata in modalità portrait. Questo è dovuto al fatto che molti telefoni
+            hanno una fotocamera in landscape e poi scrivono dei metadati (efix) per ricordarsi come è stata
+            scattata la foto.
+            Seguendo la guida ufficiale la foto veniva caricata ruotata e ci sono dei metodi per evitarlo, ma:
+            - non ne ho trovato uno funzionante
+            - richiedevano parecchio codice in più
+            Allora ho pensato a Glide che già uso per caricare le immagini e difatto risolve questo problema internamente.
+            L'unica differenza è che di solito lo uso per caricare in un ImageView, mentre in questo caso
+            carico il risultato in un Bitmap che poi mando allo storage di firebase
+            TODO: usare un compressore migliore, es: https://github.com/zetbaitsu/Compressor
+             */
+            Glide.with(MyApplication.getAppContext()).asBitmap().load(newUser.getImage()).into(new CustomTarget<Bitmap>() {
                 @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        listener.onWriteFail(task.getException());
-                    }
-                    return userImageRef.getDownloadUrl();
+                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    resource.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                    byte[] data = baos.toByteArray();
+
+                    // UUID genera un nome univoco per il file che sto caricando
+                    final StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.USER_IMAGES+ UUID.randomUUID().toString());
+                    UploadTask uploadTask = userImageRef.putBytes(data);
+
+                    // Codice della guida per ottenere l'URL di download del media appena caricato
+                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                listener.onWriteFail(task.getException());
+                            }
+                            return userImageRef.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                String userPhotoUrl = task.getResult().toString();
+                                newUser.setImage(userPhotoUrl);
+                                writeUserAfterUpdate(newUser, uid, listener);
+                            } else {
+                                listener.onWriteFail(task.getException());
+                            }
+                        }
+                    });
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+
                 @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        String userPhotoUrl = task.getResult().toString();
-                        newUser.setImage(userPhotoUrl);
-                        writeUserAfterUpdate(newUser, uid, listener);
-                    } else {
-                        listener.onWriteFail(task.getException());
-                    }
+                public void onLoadCleared(@Nullable Drawable placeholder) {
+
                 }
             });
+
         } else {
             writeUserAfterUpdate(newUser, uid, listener);
         }
