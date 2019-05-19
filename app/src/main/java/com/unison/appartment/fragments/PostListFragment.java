@@ -99,29 +99,23 @@ public class PostListFragment extends Fragment {
         listener = null;
     }
 
-    // TODO i tre metodi sotto adesso diventano uno solo :P
+    public void addPost(String content, int postType) {
+        Post post;
+        switch(postType) {
+            case Post.TEXT_POST:
+                post = new Post(Post.TEXT_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+                break;
+            case Post.IMAGE_POST:
+                post = new Post(Post.IMAGE_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+                break;
+            case Post.AUDIO_POST:
+                post = new Post(Post.AUDIO_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+                break;
+            default:
+                // TODO errore, non si deve entrare qui
+                post = null;
+        }
 
-    /**
-     * Metodi implementati da noi
-     */
-    // TODO sostituire costante con nome dell'utente realmente loggato
-    public void addTextPost(String message){
-        Post textPost = new Post(Post.TEXT_POST, message, MainActivity.LOGGED_USER, System.currentTimeMillis());
-        addPost(textPost);
-    }
-
-    public void addImagePost(Uri selectedImage) {
-        // FIXME cambiare da uri a stringa se funziona
-        Post imagePost = new Post(Post.IMAGE_POST, selectedImage.toString(), MainActivity.LOGGED_USER, System.currentTimeMillis());
-        addPost(imagePost);
-    }
-
-    public void addAudioPost(String fileName) {
-        Post audioPost = new Post(Post.AUDIO_POST, fileName, MainActivity.LOGGED_USER, System.currentTimeMillis());
-        addPost(audioPost);
-    }
-
-    private void addPost(Post post) {
         Post.addPost(0, post);
         myAdapter.notifyItemInserted(0);
         myRecyclerView.scrollToPosition(0);

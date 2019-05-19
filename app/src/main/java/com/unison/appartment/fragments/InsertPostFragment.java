@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.unison.appartment.R;
+import com.unison.appartment.model.Post;
 
 import java.io.IOException;
 
@@ -88,7 +89,7 @@ public class InsertPostFragment extends Fragment {
             public void onClick(View v) {
                 if (listener != null) {
                     EditText inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
-                    listener.onInsertPostFragmentSendText(inputText.getText().toString());
+                    listener.onInsertPostFragmentSendPost(inputText.getText().toString(), Post.TEXT_POST);
                     // Ripulisco l'edit text dopo che il messaggio è stato inviato
                     inputText.getText().clear();
                 }
@@ -153,7 +154,7 @@ public class InsertPostFragment extends Fragment {
                     inputText.setEnabled(true);
                     btnSendImg.setEnabled(true);
                     // Una volta terminata la registrazione dell'audio aggiungo il post
-                    listener.onInsertPostFragmentSendAudio(fileName);
+                    listener.onInsertPostFragmentSendPost(fileName, Post.AUDIO_POST);
                 } else {
                     // Se non si sta registrando e si preme sul bottone mostro un avviso su come
                     // registrare un audio attraverso l'uso di un toast
@@ -203,7 +204,7 @@ public class InsertPostFragment extends Fragment {
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            listener.onInsertPostFragmentSendImage(selectedImage);
+            listener.onInsertPostFragmentSendPost(selectedImage.toString(), Post.IMAGE_POST);
         }
     }
 
@@ -282,8 +283,6 @@ public class InsertPostFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnInsertPostFragmentListener {
-        void onInsertPostFragmentSendText(String message);
-        void onInsertPostFragmentSendImage(Uri selectedImage);
-        void onInsertPostFragmentSendAudio(String fileName);
+        void onInsertPostFragmentSendPost(String content, int postType);
     }
 }
