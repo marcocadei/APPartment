@@ -77,7 +77,6 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         textBirthdate.setText(currentUser.getBirthdate());
         if (currentUser.getImage() != null) {
             Glide.with(imgProfile.getContext()).load(currentUser.getImage()).placeholder(R.drawable.ic_person).apply(RequestOptions.circleCropTransform()).into(imgProfile);
-            Log.d("UTENTE", currentUser.getImage());
         }
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
