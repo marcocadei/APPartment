@@ -1,5 +1,7 @@
 package com.unison.appartment.model;
 
+import java.util.Objects;
+
 /**
  * Classe che rappresenta la relazione tra un utente e una casa a cui appartiene
  */
@@ -7,7 +9,6 @@ public class UserHome {
 
     private String homename;
     private int role;
-    private int members;
 
     public UserHome() {
     }
@@ -17,10 +18,6 @@ public class UserHome {
         this.role = role;
     }
 
-    public UserHome(String homename, int role, int members) {
-        this(homename, role);
-        this.members = members;
-    }
 
     public String getHomename() {
         return homename;
@@ -38,12 +35,17 @@ public class UserHome {
         this.role = role;
     }
 
-    public int getMembers() {
-        return members;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserHome userHome = (UserHome) o;
+        return role == userHome.role &&
+                Objects.equals(homename, userHome.homename);
     }
 
-    public void setMembers(int members) {
-        this.members = members;
+    @Override
+    public int hashCode() {
+        return Objects.hash(homename, role);
     }
-
 }

@@ -10,7 +10,7 @@
         android:id="@+id/activity_image_detail_img"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:transitionName="fragment_image_post_img"
+        android:transitionName="@string/transition_open_image"
         android:contentDescription="@string/activity_image_detail_img"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,14 +2,21 @@ package com.unison.appartment.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
@@ -18,8 +25,9 @@ import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseDatabaseReader;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
+import com.unison.appartment.model.User;
 import com.unison.appartment.state.Appartment;
-import com.unison.appartment.fragments.HomeListFragment;
+import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
 
@@ -27,13 +35,18 @@ import com.unison.appartment.model.UserHome;
  * Classe che rappresenta l'Activity per visualizzare il profilo dell'utente e la lista di case
  * in cui lo stesso è presente
  */
-public class UserProfileActivity extends AppCompatActivity implements HomeListFragment.OnHomeListFragmentInteractionListener {
+public class UserProfileActivity extends AppCompatActivity implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
     private DatabaseReader databaseReader;
 
     FirebaseProgressDialogFragment progressDialog;
 
     private View emptyListLayout;
+    private TextView textName;
+    private TextView textEmail;
+    private TextView textGender;
+    private TextView textBirthdate;
+    private ImageView imgProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +63,21 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         setSupportActionBar(toolbar);
 
         emptyListLayout = findViewById(R.id.activity_user_profile_layout_empty_list);
+        textName = findViewById(R.id.activity_user_profile_text_name_value);
+        textEmail = findViewById(R.id.activity_user_profile_text_email_value);
+        textGender = findViewById(R.id.activity_user_profile_text_gender_value);
+        textBirthdate = findViewById(R.id.activity_user_profile_text_birthdate_value);
+        imgProfile = findViewById(R.id.activity_user_profile_img_profile);
 
-        // TODO riempire i campi di testo con i dati dell'utente loggato
+        // Carico i dati dell'utente loggato
+        final User currentUser = Appartment.getInstance().getUser();
+        textName.setText(currentUser.getName());
+        textEmail.setText(currentUser.getEmail());
+        textGender.setText(currentUser.getGenderString());
+        textBirthdate.setText(currentUser.getBirthdate());
+        if (currentUser.getImage() != null) {
+            Glide.with(imgProfile.getContext()).load(currentUser.getImage()).placeholder(R.drawable.ic_person).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        }
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +131,7 @@ public class UserProfileActivity extends AppCompatActivity implements HomeListFr
         moveTaskToBack(true);
     }
 
-    // Questa Activity contiene il fragment HomeListFragment, quindi ne implementa i metodi del listener
+    // Questa Activity contiene il fragment UserHomeListFragment, quindi ne implementa i metodi del listener
 
     @Override
     public void onHomeListFragmentInteraction(UserHome item) {

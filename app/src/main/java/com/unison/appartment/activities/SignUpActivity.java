@@ -1,15 +1,25 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -37,6 +47,10 @@ import java.util.Date;
  */
 public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener {
 
+    // Request code per aprire l'activity usata per caricare un'immagine
+    private static int RESULT_LOAD_IMAGE = 1;
+    private String selectedImage;
+
     private static final int MIN_USER_PASSWORD_LENGTH = 6;
     private final static String BUNDLE_KEY_DATE_OBJECT = "dateObject";
 
@@ -56,6 +70,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private TextInputLayout layoutRepeatPassword;
     private TextInputLayout layoutBirthdate;
     private TextInputLayout layoutNickname;
+    private ImageView imgPhoto;
     private RadioGroup inputGender;
 
     private Date birthdate;
@@ -81,6 +96,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         layoutRepeatPassword = findViewById(R.id.activity_signup_input_repeat_password);
         layoutBirthdate = findViewById(R.id.activity_signup_input_birthdate);
         layoutNickname = findViewById(R.id.activity_signup_input_nickname);
+        imgPhoto = findViewById(R.id.activity_signup_img_photo);
 
         /*
         I listener sono duplicati anche se fanno la stessa cosa poiché la view che prende il focus
@@ -118,6 +134,18 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
             public void onClick(View v) {
                 resetErrorMessage(layoutBirthdate);
                 showDatePickerDialog();
+            }
+        });
+
+        MaterialButton btnPhoto = findViewById(R.id.activity_signup_btn_photo);
+        btnPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                        RESULT_LOAD_IMAGE);
             }
         });
 
@@ -163,6 +191,16 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         super.onRestoreInstanceState(savedInstanceState);
 
         birthdate = (Date) savedInstanceState.getSerializable(BUNDLE_KEY_DATE_OBJECT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            selectedImage = data.getData().toString();
+            Glide.with(imgPhoto.getContext()).load(selectedImage).apply(RequestOptions.circleCropTransform()).into(imgPhoto);
+            imgPhoto.setVisibility(View.VISIBLE);
+        }
     }
 
     protected boolean checkInput() {
@@ -260,7 +298,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 break;
         }
 
-        return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender);
+        return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
     }
 
     @Override
@@ -328,21 +366,19 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 layoutEmail.setError(getString(R.string.form_error_duplicate_email));
             } catch (FirebaseAuthWeakPasswordException e) {
                 // Password non abbastanza robusta
-
-                                /*
-                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-                                eseguiti controlli lato client sulla lunghezza della password.
-                                Se si entra in questo blocco c'è qualche problema!
-                                 */
+                /*
+                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                eseguiti controlli lato client sulla lunghezza della password.
+                Se si entra in questo blocco c'è qualche problema!
+                 */
                 Log.w(getClass().getCanonicalName(), e.getMessage());
             } catch (FirebaseAuthInvalidCredentialsException e) {
                 // Email malformata
-
-                                /*
-                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-                                eseguiti controlli lato client sulla struttura dell'indirizzo mail.
-                                Se si entra in questo blocco c'è qualche problema!
-                                 */
+                /*
+                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                eseguiti controlli lato client sulla struttura dell'indirizzo mail.
+                Se si entra in questo blocco c'è qualche problema!
+                 */
                 Log.w(getClass().getCanonicalName(), e.getMessage());
             } catch (Exception e) {
                 // Generico

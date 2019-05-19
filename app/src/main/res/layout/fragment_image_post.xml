@@ -36,7 +36,7 @@
                 android:layout_marginEnd="64dp"
                 android:layout_marginBottom="8dp"
                 android:contentDescription="@string/fragment_image_post_img"
-                android:transitionName="fragment_image_post_img"
+                android:transitionName="@string/transition_open_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/fragment_image_post_date"
                 app:layout_constraintStart_toStartOf="@+id/fragment_image_post_sender"

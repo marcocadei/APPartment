@@ -66,86 +66,142 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/activity_user_profile_layout_header"
-                    style="@style/Component.Layout.Header"
+                    style="@style/Component"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/activity_user_profile_layout_attributes"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <ImageView
                         android:id="@+id/activity_user_profile_img_profile"
                         style="@style/Component.ImageView.ProfileImage"
+                        android:transitionName="@string/transition_open_image"
                         android:contentDescription="@string/caption_profile_pic"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_email"
+                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_name_title"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_person" />
 
                     <TextView
-                        android:id="@+id/activity_user_profile_text_email"
-                        style="@style/Component.TextView.MultiLine.AttributeValue"
+                        android:id="@+id/activity_user_profile_text_name_title"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
                         android:textSize="@dimen/text_extra_large"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:text="@string/placeholder_text_long"
+                        android:text="@string/desc_users_uid_name"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginBottom="0dp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_email_title"
+                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_name_value"
+                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_img_profile"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/activity_user_profile_text_name_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/placeholder_text"
+                        app:layout_constraintBottom_toBottomOf="@+id/activity_user_profile_text_name_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_text_name_title"
+                        app:layout_constraintTop_toTopOf="@+id/activity_user_profile_text_name_title"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/activity_user_profile_text_email_title"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/text_extra_large"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="@string/desc_users_uid_email"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginBottom="0dp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_gender_title"
+                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_email_value"
+                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_img_profile"
+                        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_name_title" />
+
+                    <TextView
+                        android:id="@+id/activity_user_profile_text_email_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="marcocadei@live.com"
+                        app:layout_constraintBottom_toBottomOf="@+id/activity_user_profile_text_email_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_text_email_title"
+                        app:layout_constraintTop_toTopOf="@+id/activity_user_profile_text_email_title"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/activity_user_profile_text_gender_title"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/text_extra_large"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="@string/desc_users_uid_gender"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginBottom="0dp"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_birthdate_title"
+                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_gender_value"
+                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_img_profile"
+                        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_email_title" />
+
+                    <TextView
+                        android:id="@+id/activity_user_profile_text_gender_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Maschio"
+                        app:layout_constraintBottom_toBottomOf="@+id/activity_user_profile_text_gender_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_text_gender_title"
+                        app:layout_constraintTop_toTopOf="@+id/activity_user_profile_text_gender_title"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/activity_user_profile_text_birthdate_title"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/text_extra_large"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="@string/desc_users_uid_birthdate"
                         android:layout_marginStart="@dimen/margin_small"
                         android:layout_marginBottom="0dp"
                         app:layout_constraintVertical_chainStyle="packed"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_birthdate_value"
                         app:layout_constraintStart_toEndOf="@id/activity_user_profile_img_profile"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/activity_user_profile_layout_attributes"
-                    style="@style/Component.Layout.AttributeSet"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_user_profile_layout_header">
-
-                    <TextView
-                        android:id="@+id/activity_user_profile_text_age_title"
-                        style="@style/Component.TextView.MultiLine.AttributeTitle"
-                        android:text="@string/placeholder_text"
-                        android:layout_marginEnd="@dimen/margin_extra_small"
-                        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_age_value"
-                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_gender_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/activity_user_profile_text_age_value"
-                        style="@style/Component.TextView.MultiLine.AttributeValue"
-                        android:text="@string/placeholder_text"
-                        android:layout_marginEnd="@dimen/margin_extra_small"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_gender_value"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_age_title" />
-
-                    <TextView
-                        android:id="@+id/activity_user_profile_text_gender_title"
-                        style="@style/Component.TextView.MultiLine.AttributeTitle"
-                        android:text="@string/desc_users_uid_gender"
-                        android:layout_marginStart="@dimen/margin_extra_small"
-                        app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_gender_value"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_text_age_title"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/activity_user_profile_text_gender_value"
-                        style="@style/Component.TextView.MultiLine.AttributeValue"
-                        android:text="@string/placeholder_text"
-                        android:layout_marginStart="@dimen/margin_extra_small"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_text_age_value"
                         app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_gender_title" />
+
+                    <TextView
+                        android:id="@+id/activity_user_profile_text_birthdate_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="1995-04-31"
+                        app:layout_constraintBottom_toBottomOf="@+id/activity_user_profile_text_birthdate_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/activity_user_profile_text_birthdate_title"
+                        app:layout_constraintTop_toTopOf="@+id/activity_user_profile_text_birthdate_title"
+                        app:layout_constraintVertical_chainStyle="packed" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -188,10 +244,10 @@
 
             <fragment
                 android:id="@+id/activity_user_profile_fragment_container"
-                android:name="com.unison.appartment.fragments.HomeListFragment"
+                android:name="com.unison.appartment.fragments.UserHomeListFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_home_list"
+                tools:layout="@layout/fragment_userhome_list"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -6,6 +6,8 @@ import com.google.firebase.database.PropertyName;
  * Classe che rappresenta una casa
  */
 public class Home {
+    // Quando una casa è creata ha un membro (il creatore stesso)
+    public final static int DEFAULT_MEMBERS = 1;
 
     public final static int ROLE_OWNER = 0;
     public final static int ROLE_MASTER = 1;
@@ -25,7 +27,7 @@ public class Home {
     public Home() {}
 
     public Home(String name, String password) {
-        this(name, password, DEFAULT_CONVERSION_FACTOR, 0);
+        this(name, password, DEFAULT_CONVERSION_FACTOR, DEFAULT_MEMBERS);
     }
 
     public Home(String name, String password, int conversionFactor, int members) {

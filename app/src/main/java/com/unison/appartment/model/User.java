@@ -1,13 +1,10 @@
 package com.unison.appartment.model;
 
-import android.net.Uri;
-
+import com.unison.appartment.R;
+import com.unison.appartment.state.MyApplication;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Classe che rappresenta un utente registrato all'applicazione, indipendente dalla/e casa/e in cui è presente
@@ -22,18 +19,18 @@ public class User implements Serializable {
     private String name;
     private String birthdate;
     private int gender;
-    private Uri image;
+    private String image;
 
     public User (){
     }
 
-    public User(String email, String password, String name, String birthdate, int gender) {
+    public User(String email, String password, String name, String birthdate, int gender, String image) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.birthdate = birthdate;
         this.gender = gender;
-        this.image = null; // TODO: piazza anche l'immagine
+        this.image = image;
     }
 
     public String getEmail() {
@@ -76,12 +73,17 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public Uri getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Uri image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getGenderString() {
+        String[] genderValues = MyApplication.getAppContext().getResources().getStringArray(R.array.desc_users_uid_gender_values);
+        return genderValues[this.getGender()];
     }
 
     // TODO da togliere

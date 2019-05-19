@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -21,14 +20,15 @@ import com.unison.appartment.R;
  */
 public class ImageDetailActivity extends AppCompatActivity {
 
+    public final static String EXTRA_IMAGE_URI = "imageUri";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
 
         Intent i = getIntent();
-        Uri imageUri = Uri.parse(i.getStringExtra("imageUri"));
-
+        Uri imageUri = Uri.parse(i.getStringExtra(EXTRA_IMAGE_URI));
         // Prima di avviare l'animazione si attende che l'immagine venga caricata
         PhotoView image = findViewById(R.id.activity_image_detail_img);
         supportPostponeEnterTransition();

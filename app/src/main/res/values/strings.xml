@@ -11,6 +11,7 @@
     <string name="app_name">APPartment</string>
 
     <string name="general_points_name">Punti</string>
+    <string name="general_members_name">Membri</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
     <string name="general_ok_button">OK</string>
 
@@ -18,6 +19,9 @@
         <item quantity="one">%d elemento selezionato</item>
         <item quantity="other">%d elementi selezionati</item>
     </plurals>
+
+    <!-- Nome della transizione per aprire le immagini -->
+    <string name="transition_open_image">transitionOpenImage</string>
 
     <!-- Errori delle form -->
 
@@ -50,6 +54,7 @@
     <string name="desc_userhomes_uid_homename_role">Ruolo</string>
     <string name="desc_users_uid_birthdate">Data di nascita</string>
     <string name="desc_users_uid_email">Email</string>
+    <string name="desc_users_uid_name">Nickname</string>
     <string name="desc_users_uid_gender">Genere</string>
     <string name="desc_users_uid_gender_value_female">Femmina</string>
     <string name="desc_users_uid_gender_value_male">Maschio</string>
@@ -115,6 +120,7 @@
     <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
     <string name="activity_signin_progress_title">Accesso</string>
     <string name="activity_signin_text_title">Accedi ad APPartment</string>
+    <string name="activity_signup_btn_photo">Seleziona un\'immagine</string>
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
     <string name="activity_signup_signup_title">Registrazione</string>
     <string name="activity_signup_text_title">Registrati ad APPartment</string>
