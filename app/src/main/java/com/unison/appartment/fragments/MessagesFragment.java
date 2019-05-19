@@ -4,21 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentListener;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.activities.ImageDetailActivity;
+
 
 /**
  * Fragment che rappresenta l'intera bacheca
@@ -85,7 +82,7 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         Intent i = new Intent(getActivity(), ImageDetailActivity.class);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(), image, ViewCompat.getTransitionName(image));
-        i.putExtra("imageUri", imageUri);
+        i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, imageUri);
         startActivity(i, options.toBundle());
     }
 }
