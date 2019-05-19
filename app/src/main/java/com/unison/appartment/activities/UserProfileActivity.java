@@ -166,8 +166,7 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         }
     }
 
-    private void moveToNextActivity(Home home) {
-        Appartment.getInstance().setHome(home);
+    private void moveToNextActivity() {
         Intent i = new Intent(UserProfileActivity.this, MainActivity.class);
         startActivity(i);
     }
@@ -180,7 +179,8 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
             Quando l'utente seleziona una voce dalla lista delle case, deve essere portato alla
             MainActivity della casa selezionata.
             */
-            moveToNextActivity((Home) object);
+            Appartment.getInstance().setHome((Home) object);
+            moveToNextActivity();
             progressDialog.dismiss();
         }
 
