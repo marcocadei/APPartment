@@ -123,11 +123,6 @@ public class TodoListFragment extends Fragment {
     }
 
     public void addTask(UncompletedTask newUncompletedTask) {
-        /*UncompletedTask.addTask(0, newUncompletedTask);*/
-/*        uncompletedTasks.add(0, newUncompletedTask);
-        myAdapter.notifyItemInserted(0);
-        myRecyclerView.scrollToPosition(0);
-        Log.d("prova", "add");*/
         viewModel.addTask(newUncompletedTask);
     }
 
