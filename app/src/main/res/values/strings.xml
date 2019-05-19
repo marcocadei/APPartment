@@ -20,6 +20,9 @@
         <item quantity="other">%d elementi selezionati</item>
     </plurals>
 
+    <!-- Nome della transizione per aprire le immagini -->
+    <string name="transition_open_image">transitionOpenImage</string>
+
     <!-- Errori delle form -->
 
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>

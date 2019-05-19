@@ -75,6 +75,7 @@
                     <ImageView
                         android:id="@+id/activity_user_profile_img_profile"
                         style="@style/Component.ImageView.ProfileImage"
+                        android:transitionName="@string/transition_open_image"
                         android:contentDescription="@string/caption_profile_pic"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/activity_user_profile_text_name_title"
