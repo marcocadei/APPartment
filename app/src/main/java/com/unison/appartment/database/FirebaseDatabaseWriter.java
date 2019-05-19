@@ -1,18 +1,33 @@
 package com.unison.appartment.database;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
+import com.unison.appartment.state.MyApplication;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class FirebaseDatabaseWriter implements DatabaseWriter {
     @Override
@@ -33,6 +48,67 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
     }
 
     public void writeUser(final User newUser, final String uid, final DatabaseWriterListener listener) {
+        // Quando scrivo un utente nel database devo primare caricare la foto nel firebase storage
+        // poi ottenere un URL a quella foto e salvare quello all'interno del realtime database
+        // Tutto questo è fatto se l'utente ha selezionato una foto
+        if (newUser.getImage() != null) {
+            Uri file = Uri.parse(newUser.getImage());
+            // Comprimo l'immagine prima di caricarla
+            Bitmap bmp = null;
+            try {
+                bmp = MediaStore.Images.Media.getBitmap(MyApplication.getAppContext().getContentResolver(), file);
+            } catch (IOException e) {
+                listener.onWriteFail(e);
+            }
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+            byte[] data = baos.toByteArray();
+
+            // UUID genera un nome univoco per il file che sto caricando
+            final StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child("images/users/"+ UUID.randomUUID().toString());
+            UploadTask uploadTask = userImageRef.putBytes(data);
+
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        listener.onWriteFail(task.getException());
+                    }
+                    return userImageRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        String userPhotoUrl = task.getResult().toString();
+                        newUser.setImage(userPhotoUrl);
+                        writeUserAfterUpdate(newUser, uid, listener);
+                    } else {
+                        listener.onWriteFail(task.getException());
+                    }
+                }
+            });
+
+            /*// Listener per quando il download fallisce o ha successo
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    listener.onWriteFail(exception);
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    String userPhotoUrl = userImageRef.getDownloadUrl().toString();
+                    newUser.setImage(userPhotoUrl);
+                    writeUserAfterUpdate(newUser, uid, listener);
+                }
+            });*/
+        } else {
+            writeUserAfterUpdate(newUser, uid, listener);
+        }
+    }
+
+    private void writeUserAfterUpdate(final User newUser, final String uid, final DatabaseWriterListener listener) {
         // Scrittura dei dati relativi al nuovo utente nel database
         String path = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
 

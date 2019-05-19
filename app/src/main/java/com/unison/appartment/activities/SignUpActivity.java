@@ -366,21 +366,19 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 layoutEmail.setError(getString(R.string.form_error_duplicate_email));
             } catch (FirebaseAuthWeakPasswordException e) {
                 // Password non abbastanza robusta
-
-                                /*
-                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-                                eseguiti controlli lato client sulla lunghezza della password.
-                                Se si entra in questo blocco c'è qualche problema!
-                                 */
+                /*
+                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                eseguiti controlli lato client sulla lunghezza della password.
+                Se si entra in questo blocco c'è qualche problema!
+                 */
                 Log.w(getClass().getCanonicalName(), e.getMessage());
             } catch (FirebaseAuthInvalidCredentialsException e) {
                 // Email malformata
-
-                                /*
-                                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
-                                eseguiti controlli lato client sulla struttura dell'indirizzo mail.
-                                Se si entra in questo blocco c'è qualche problema!
-                                 */
+                /*
+                Questa eccezione non dovrebbe mai verificarsi in quanto sono già
+                eseguiti controlli lato client sulla struttura dell'indirizzo mail.
+                Se si entra in questo blocco c'è qualche problema!
+                 */
                 Log.w(getClass().getCanonicalName(), e.getMessage());
             } catch (Exception e) {
                 // Generico
