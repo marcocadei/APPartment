@@ -107,6 +107,9 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         if (elements == 0) {
             emptyTodoListTitle.setVisibility(View.VISIBLE);
             emptyTodoListText.setVisibility(View.VISIBLE);
+        } else {
+            emptyTodoListTitle.setVisibility(View.GONE);
+            emptyTodoListText.setVisibility(View.GONE);
         }
     }
 }
