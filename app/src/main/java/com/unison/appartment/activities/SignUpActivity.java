@@ -49,6 +49,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
 
     // Request code per aprire l'activity usata per caricare un'immagine
     private static int RESULT_LOAD_IMAGE = 1;
+    private String selectedImage;
 
     private static final int MIN_USER_PASSWORD_LENGTH = 6;
     private final static String BUNDLE_KEY_DATE_OBJECT = "dateObject";
@@ -196,7 +197,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
+            selectedImage = data.getData().toString();
             Glide.with(imgPhoto.getContext()).load(selectedImage).apply(RequestOptions.circleCropTransform()).into(imgPhoto);
             imgPhoto.setVisibility(View.VISIBLE);
         }
@@ -297,7 +298,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 break;
         }
 
-        return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender);
+        return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
     }
 
     @Override

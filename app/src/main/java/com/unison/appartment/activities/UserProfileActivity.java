@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +43,7 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
     private TextView textEmail;
     private TextView textGender;
     private TextView textBirthdate;
+    private ImageView imgProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +64,17 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         textEmail = findViewById(R.id.activity_user_profile_text_email_value);
         textGender = findViewById(R.id.activity_user_profile_text_gender_value);
         textBirthdate = findViewById(R.id.activity_user_profile_text_birthdate_value);
+        imgProfile = findViewById(R.id.activity_user_profile_img_profile);
 
+        // Carico i dati dell'utente loggato
         User currentUser = Appartment.getInstance().getUser();
         textName.setText(currentUser.getName());
         textEmail.setText(currentUser.getEmail());
         textGender.setText(currentUser.getGenderString());
         textBirthdate.setText(currentUser.getBirthdate());
+        if (currentUser.getImage() != null) {
+            Glide.with(imgProfile.getContext()).load(currentUser.getImage()).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        }
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {
