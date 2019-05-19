@@ -145,6 +145,8 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
                 getString(R.string.activity_user_profile_progress_title),
                 getString(R.string.activity_user_profile_progress_description));
         progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+        // Devo popolare Appartment con User (c'è già), Home (scarico), UserHome (elemento selezionato dalla lista), HomeUser (scarico)
+        Appartment.getInstance().setUserHome(item);
         databaseReader.retrieveHome(item.getHomename(), databaseReaderListener);
     }
 
