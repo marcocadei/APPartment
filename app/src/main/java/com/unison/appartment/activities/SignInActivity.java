@@ -123,6 +123,8 @@ public class SignInActivity extends FormActivity {
         @Override
         public void onReadSuccess(Object object) {
             Appartment.getInstance().setUser((User) object);
+            moveToNextActivity(UserProfileActivity.class);
+            dismissProgress();
         }
 
         @Override
@@ -132,12 +134,12 @@ public class SignInActivity extends FormActivity {
 
         @Override
         public void onReadCancelled(DatabaseError databaseError) {
-                /*
-                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
-                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
-                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
-                la situazione non può essere risolta dall'utente.
-                */
+            /*
+            onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+            le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+            In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+            la situazione non può essere risolta dall'utente.
+            */
             showErrorDialog();
         }
     };
@@ -147,8 +149,6 @@ public class SignInActivity extends FormActivity {
         @Override
         public void onSuccess() {
             databaseReader.retrieveUser(auth.getCurrentUserUid(), databaseReaderListener);
-            moveToNextActivity(UserProfileActivity.class);
-            dismissProgress();
         }
 
         @Override
