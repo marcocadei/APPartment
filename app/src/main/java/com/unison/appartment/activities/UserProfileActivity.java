@@ -56,6 +56,8 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         auth = new FirebaseAuth();
         databaseReader = new FirebaseDatabaseReader();
 
+        // Precondizione: Quando si entra in questa activity l'oggetto User di Appartment è già settato
+
         // Quando entro in quest activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
         Appartment.getInstance().setHome(null);
 

@@ -85,7 +85,7 @@ public class Appartment {
     }
 
     public HomeUser getHomeUser() {
-        if(homeUser == null) {
+        if (homeUser == null) {
             SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
             String json = sp.getString(SharedPreferencesConstants.HOMEUSER_KEY, null);
             Gson gson = new Gson();
