@@ -29,7 +29,7 @@ import com.unison.appartment.model.UserHome;
 /**
  * Classe che rappresenta l'Activity per creare una nuova casa
  */
-public class CreateHomeActivity extends FormActivity {
+public class CreateHomeActivity extends ActivityWithDialogs implements FormActivity {
 
     private static final int MIN_HOME_PASSWORD_LENGTH = 6;
 
@@ -120,7 +120,7 @@ public class CreateHomeActivity extends FormActivity {
         });
     }
 
-    protected boolean checkInput() {
+    public boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);

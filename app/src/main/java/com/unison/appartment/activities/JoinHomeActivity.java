@@ -28,7 +28,7 @@ import com.unison.appartment.model.UserHome;
 /**
  * Classe che rappresenta l'Activity per unirsi ad una nuova casa
  */
-public class JoinHomeActivity extends FormActivity {
+public class JoinHomeActivity extends ActivityWithDialogs implements FormActivity {
 
     private DatabaseReader databaseReader;
     private DatabaseWriter databaseWriter;
@@ -109,7 +109,7 @@ public class JoinHomeActivity extends FormActivity {
         });
     }
 
-    protected boolean checkInput() {
+    public boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutNickname);

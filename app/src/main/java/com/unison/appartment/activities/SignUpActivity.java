@@ -7,14 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
@@ -45,7 +43,7 @@ import java.util.Date;
 /**
  * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione
  */
-public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener {
+public class SignUpActivity extends ActivityWithDialogs implements DatePickerDialog.OnDateSetListener, FormActivity {
 
     // Request code per aprire l'activity usata per caricare un'immagine
     private final static int RESULT_LOAD_IMAGE = 1;
@@ -209,7 +207,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         }
     }
 
-    protected boolean checkInput() {
+    public boolean checkInput() {
         resetErrorMessage(layoutEmail);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);

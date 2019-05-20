@@ -24,7 +24,7 @@ import com.unison.appartment.R;
 /**
  * Classe che rappresenta l'Activity per effettuare l'accesso all'applicazione
  */
-public class SignInActivity extends FormActivity {
+public class SignInActivity extends ActivityWithDialogs implements FormActivity {
 
     private Auth auth;
     private DatabaseReader databaseReader;
@@ -85,7 +85,7 @@ public class SignInActivity extends FormActivity {
         });
     }
 
-    protected boolean checkInput() {
+    public boolean checkInput() {
         resetErrorMessage(layoutEmail);
         resetErrorMessage(layoutPassword);
 
