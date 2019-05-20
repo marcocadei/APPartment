@@ -47,15 +47,6 @@ public abstract class ActivityWithDialogs extends AppCompatActivity implements F
     }
 
     /**
-     * Toglie il messaggio d'errore da un campo della form.
-     * @param inputLayout Campo della form da cui togliere il messaggio d'errore.
-     */
-    protected void resetErrorMessage(TextInputLayout inputLayout) {
-        inputLayout.setError(null);
-        inputLayout.setErrorEnabled(false);
-    }
-
-    /**
      * Mostra l'AlertDialog con cui viene comunicata all'utente una situazione di errore.
      */
     protected void showErrorDialog() {

@@ -43,7 +43,7 @@ import java.util.Date;
 /**
  * Classe che rappresenta l'Activity per effettuare la registrazione all'applicazione
  */
-public class SignUpActivity extends ActivityWithDialogs implements DatePickerDialog.OnDateSetListener, FormActivity {
+public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener {
 
     // Request code per aprire l'activity usata per caricare un'immagine
     private final static int RESULT_LOAD_IMAGE = 1;
@@ -207,7 +207,7 @@ public class SignUpActivity extends ActivityWithDialogs implements DatePickerDia
         }
     }
 
-    public boolean checkInput() {
+    protected boolean checkInput() {
         resetErrorMessage(layoutEmail);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);

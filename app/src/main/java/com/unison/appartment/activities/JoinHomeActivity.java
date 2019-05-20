@@ -24,11 +24,10 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
 
-
 /**
  * Classe che rappresenta l'Activity per unirsi ad una nuova casa
  */
-public class JoinHomeActivity extends ActivityWithDialogs implements FormActivity {
+public class JoinHomeActivity extends FormActivity {
 
     private DatabaseReader databaseReader;
     private DatabaseWriter databaseWriter;
@@ -109,7 +108,7 @@ public class JoinHomeActivity extends ActivityWithDialogs implements FormActivit
         });
     }
 
-    public boolean checkInput() {
+    protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutNickname);
