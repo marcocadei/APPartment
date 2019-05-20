@@ -7,8 +7,8 @@ public class DatabaseConstants {
 
     // Case
     public final static String HOMES = "homes";
-    public final static String HOMENAME = "%1$s";
-    public final static String HOMENAME_PASSWORD = "password";
+    public final static String HOMES_HOMENAME = "%1$s";
+    public final static String HOMES_HOMENAME_PASSWORD = "password";
 
     // Utenti di una casa
     public final static String HOMEUSERS = "home-users";
@@ -16,8 +16,8 @@ public class DatabaseConstants {
     public final static String HOMEUSERS_HOMENAME_UID = "%1$s";
 
     // UncompletedTask
-    public final static String UNCOMPLETED_TASKS = "uncompleted-tasks";
-    public final static String UNCOMPLETED_TASKS_HOMENAME_TASKID_CREATIONDATE = "creation-date";
+    public final static String UNCOMPLETEDTASKS = "uncompleted-tasks";
+    public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE = "creation-date";
 
     // Case di un utente
     public final static String USERHOMES = "user-homes";

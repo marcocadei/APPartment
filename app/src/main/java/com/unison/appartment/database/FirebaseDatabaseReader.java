@@ -46,7 +46,7 @@ public class FirebaseDatabaseReader implements DatabaseReader {
     @Override
     public void retrieveHomePassword(String homeName, DatabaseReaderListener listener) {
         String path = DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + homeName +
-                DatabaseConstants.SEPARATOR + DatabaseConstants.HOMENAME_PASSWORD;
+                DatabaseConstants.SEPARATOR + DatabaseConstants.HOMES_HOMENAME_PASSWORD;
         read(path, listener, String.class);
     }
 
