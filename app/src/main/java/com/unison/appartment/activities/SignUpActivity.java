@@ -286,7 +286,6 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         String email = inputEmail.getText().toString();
         String password = inputPassword.getText().toString();
         String nickname = inputNickname.getText().toString();
-        RadioButton selectedGender = findViewById(inputGender.getCheckedRadioButtonId());
         int gender;
         switch (inputGender.getCheckedRadioButtonId()) {
             default:
