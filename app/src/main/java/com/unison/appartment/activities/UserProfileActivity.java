@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,10 @@ import com.unison.appartment.state.Appartment;
 import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
+import com.unison.appartment.utils.DateUtils;
+
+import java.text.ParseException;
+import java.util.Locale;
 
 /**
  * Classe che rappresenta l'Activity per visualizzare il profilo dell'utente e la lista di case
@@ -40,10 +45,6 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private DatabaseReader databaseReader;
 
     private View emptyListLayout;
-    private TextView textName;
-    private TextView textEmail;
-    private TextView textGender;
-    private TextView textBirthdate;
     private ImageView imgProfile;
 
     @Override
@@ -67,20 +68,33 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         setSupportActionBar(toolbar);
 
         emptyListLayout = findViewById(R.id.activity_user_profile_layout_empty_list);
-        textName = findViewById(R.id.activity_user_profile_text_name_value);
-        textEmail = findViewById(R.id.activity_user_profile_text_email_value);
-        textGender = findViewById(R.id.activity_user_profile_text_gender_value);
-        textBirthdate = findViewById(R.id.activity_user_profile_text_birthdate_value);
         imgProfile = findViewById(R.id.activity_user_profile_img_profile);
+        TextView textName = findViewById(R.id.activity_user_profile_text_name);
+        TextView textEmail = findViewById(R.id.activity_user_profile_text_email);
+        TextView textGender = findViewById(R.id.activity_user_profile_text_gender_value);
+        TextView textBirthdate = findViewById(R.id.activity_user_profile_text_birthdate_value);
+        TextView textAge = findViewById(R.id.activity_user_profile_text_age_value);
 
         // Carico i dati dell'utente loggato
         final User currentUser = Appartment.getInstance().getUser();
         textName.setText(currentUser.getName());
         textEmail.setText(currentUser.getEmail());
         textGender.setText(currentUser.getGenderString());
-        textBirthdate.setText(currentUser.getBirthdate());
+        try {
+            String standardBirthDate = currentUser.getBirthdate();
+            textBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(standardBirthDate)));
+            textAge.setText(String.format(Locale.getDefault(), "%d", currentUser.getAge()));
+        }
+        catch (ParseException e) {
+            /*
+            Questa eccezione non si può mai verificare se si assume che nel database la data è
+            sempre salvata nel formato corretto.
+             */
+            Log.e(getClass().getCanonicalName(), e.getMessage());
+        }
+
         if (currentUser.getImage() != null) {
-            Glide.with(imgProfile.getContext()).load(currentUser.getImage()).placeholder(R.drawable.ic_person).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+            Glide.with(imgProfile.getContext()).load(currentUser.getImage()).placeholder(R.drawable.scaled_ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         } else {
             Glide.with(imgProfile.getContext()).load(R.drawable.ic_person).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         }
