@@ -52,6 +52,7 @@
     <string name="desc_uncompletedtasks_homename_taskid_name">Nome</string>
     <string name="desc_uncompletedtasks_homename_taskid_points">Punti</string>
     <string name="desc_userhomes_uid_homename_role">Ruolo</string>
+    <string name="desc_users_uid_age">Età</string>
     <string name="desc_users_uid_birthdate">Data di nascita</string>
     <string name="desc_users_uid_email">Email</string>
     <string name="desc_users_uid_name">Nickname</string>
