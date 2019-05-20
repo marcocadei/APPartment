@@ -48,17 +48,21 @@ import java.util.Date;
 public class SignUpActivity extends FormActivity implements DatePickerDialog.OnDateSetListener {
 
     // Request code per aprire l'activity usata per caricare un'immagine
-    private static int RESULT_LOAD_IMAGE = 1;
-    private String selectedImage;
+    private final static int RESULT_LOAD_IMAGE = 1;
 
-    private static final int MIN_USER_PASSWORD_LENGTH = 6;
     private final static String BUNDLE_KEY_DATE_OBJECT = "dateObject";
+    private final static String BUNDLE_KEY_SELECTED_IMAGE = "selectedImage";
+    private final static String BUNDLE_KEY_NEW_USER = "newUser";
+
+    private final static int MIN_USER_PASSWORD_LENGTH = 6;
+
+    private Date birthdate;
+    private String selectedImage;
+    // Utente che verrà creato in questa activity
+    private User newUser;
 
     private Auth auth;
     private DatabaseWriter databaseWriter;
-
-    // Utente che verrà creato in questa activity
-    private User newUser;
 
     private EditText inputEmail;
     private EditText inputPassword;
@@ -72,8 +76,6 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private TextInputLayout layoutNickname;
     private ImageView imgPhoto;
     private RadioGroup inputGender;
-
-    private Date birthdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +184,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putSerializable(BUNDLE_KEY_DATE_OBJECT, birthdate);
+        outState.putString(BUNDLE_KEY_SELECTED_IMAGE, selectedImage);
+        outState.putSerializable(BUNDLE_KEY_NEW_USER, newUser);
 
         super.onSaveInstanceState(outState);
     }
@@ -191,6 +195,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         super.onRestoreInstanceState(savedInstanceState);
 
         birthdate = (Date) savedInstanceState.getSerializable(BUNDLE_KEY_DATE_OBJECT);
+        selectedImage = savedInstanceState.getString(BUNDLE_KEY_SELECTED_IMAGE);
+        newUser = (User) savedInstanceState.getSerializable(BUNDLE_KEY_NEW_USER);
     }
 
     @Override
