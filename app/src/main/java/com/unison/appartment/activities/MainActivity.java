@@ -26,9 +26,10 @@ public class MainActivity extends AppCompatActivity {
     // TODO da rimuovere
     public final static String LOGGED_USER = "MARCO";
 
-    private static final String SELECTED_BOTTOM_MENU_ITEM = "selectedBottomMenuItem";
+    private static final String BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM = "selectedBottomMenuItem";
 
     private int selectedBottomNavigationMenuItemId;
+
     private Toolbar toolbar;
 
     @Override
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         // selezionata del menù alla prima apertura
         BottomNavigationView bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
         if (savedInstanceState != null) {
-            selectedBottomNavigationMenuItemId = savedInstanceState.getInt(SELECTED_BOTTOM_MENU_ITEM);
+            selectedBottomNavigationMenuItemId = savedInstanceState.getInt(BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM);
         } else {
             selectedBottomNavigationMenuItemId = bottomNavigation.getSelectedItemId();
         }
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(SELECTED_BOTTOM_MENU_ITEM, selectedBottomNavigationMenuItemId);
+        outState.putInt(BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM, selectedBottomNavigationMenuItemId);
         super.onSaveInstanceState(outState);
     }
 
