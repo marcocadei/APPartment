@@ -57,7 +57,10 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         // Precondizione: Quando si entra in questa activity l'oggetto User di Appartment è già settato
 
         // Quando entro in quest activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
-        Appartment.getInstance().setHome(null);
+        Appartment appState = Appartment.getInstance();
+        appState.resetHome();
+        appState.resetHomeUser();
+        appState.resetUserHome();
 
         // Supporto per la toolbar
         Toolbar toolbar = findViewById(R.id.activity_user_profile_toolbar);

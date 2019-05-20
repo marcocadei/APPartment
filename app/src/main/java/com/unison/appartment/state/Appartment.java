@@ -2,6 +2,9 @@ package com.unison.appartment.state;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
@@ -22,82 +25,97 @@ public class Appartment {
     private UserHome userHome;
     private HomeUser homeUser;
 
-    public void setHome(Home home) {
+    private void setSharedPreferencesValue(final String key, final String jsonValue) {
         SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(SharedPreferencesConstants.HOME_KEY, new Gson().toJson(home));
+        editor.putString(key, jsonValue);
         editor.apply();
+    }
+
+    private void removeSharedPreferencesValue(final String key) {
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
+    private String getSharedPreferencesJsonValue(final String key) {
+        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+        return sp.getString(key, null);
+    }
+
+    public void setHome(@NonNull Home home) {
+        setSharedPreferencesValue(SharedPreferencesConstants.HOME_KEY, new Gson().toJson(home));
         this.home = home;
+    }
+
+    public void resetHome() {
+        removeSharedPreferencesValue(SharedPreferencesConstants.HOME_KEY);
+        this.home = null;
     }
 
     public Home getHome() {
         if (home == null) {
-            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-            String json = sp.getString(SharedPreferencesConstants.HOME_KEY, null);
-            Gson gson = new Gson();
-            home = gson.fromJson(json, Home.class);
+            home = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOME_KEY), Home.class);
         }
         return home;
     }
 
-    public void setUser(User user) {
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(SharedPreferencesConstants.USER_KEY, new Gson().toJson(user));
-        editor.apply();
+    public void setUser(@NonNull User user) {
+        setSharedPreferencesValue(SharedPreferencesConstants.USER_KEY, new Gson().toJson(user));
         this.user = user;
+    }
+
+    public void resetUser() {
+        removeSharedPreferencesValue(SharedPreferencesConstants.USER_KEY);
+        this.user = null;
     }
 
     public User getUser() {
         if (user == null) {
-            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-            String json = sp.getString(SharedPreferencesConstants.USER_KEY, null);
-            Gson gson = new Gson();
-            user = gson.fromJson(json, User.class);
+            user = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.USER_KEY), User.class);
         }
         return user;
     }
 
-    public void setUserHome(UserHome userHome) {
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(SharedPreferencesConstants.USERHOME_KEY, new Gson().toJson(userHome));
-        editor.apply();
+    public void setUserHome(@NonNull UserHome userHome) {
+        setSharedPreferencesValue(SharedPreferencesConstants.USERHOME_KEY, new Gson().toJson(userHome));
         this.userHome = userHome;
+    }
+
+    public void resetUserHome() {
+        removeSharedPreferencesValue(SharedPreferencesConstants.USERHOME_KEY);
+        this.userHome = null;
     }
 
     public UserHome getUserHome() {
         if (userHome == null) {
-            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-            String json = sp.getString(SharedPreferencesConstants.USERHOME_KEY, null);
-            Gson gson = new Gson();
-            userHome = gson.fromJson(json, UserHome.class);
+            userHome = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.USERHOME_KEY), UserHome.class);
         }
         return userHome;
     }
 
-    public void setHomeUser(HomeUser homeUser) {
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(SharedPreferencesConstants.HOMEUSER_KEY, new Gson().toJson(homeUser));
-        editor.apply();
+    public void setHomeUser(@NonNull HomeUser homeUser) {
+        setSharedPreferencesValue(SharedPreferencesConstants.HOMEUSER_KEY, new Gson().toJson(homeUser));
         this.homeUser = homeUser;
+    }
+
+    public void resetHomeUser() {
+        removeSharedPreferencesValue(SharedPreferencesConstants.HOMEUSER_KEY);
+        this.homeUser = null;
     }
 
     public HomeUser getHomeUser() {
         if (homeUser == null) {
-            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-            String json = sp.getString(SharedPreferencesConstants.HOMEUSER_KEY, null);
-            Gson gson = new Gson();
-            homeUser = gson.fromJson(json, HomeUser.class);
+            homeUser = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), HomeUser.class);
         }
         return homeUser;
     }
 
     public void clearAll() {
-        setUser(null);
-        setHome(null);
-        setUserHome(null);
-        setHomeUser(null);
+        resetUser();
+        resetHome();
+        resetUserHome();
+        resetHomeUser();
     }
 }
