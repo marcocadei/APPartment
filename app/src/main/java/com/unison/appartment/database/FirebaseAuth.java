@@ -1,6 +1,7 @@
 package com.unison.appartment.database;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +46,7 @@ public class FirebaseAuth implements Auth {
                 });
     }
 
+    @Nullable
     public String getCurrentUserUid() {
         try {
             return com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();

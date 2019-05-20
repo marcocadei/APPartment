@@ -1,5 +1,6 @@
 package com.unison.appartment.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
+import com.unison.appartment.database.Auth;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
@@ -24,17 +26,19 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
 
-
 /**
  * Classe che rappresenta l'Activity per unirsi ad una nuova casa
  */
 public class JoinHomeActivity extends FormActivity {
 
-    private DatabaseReader databaseReader;
-    private DatabaseWriter databaseWriter;
+    private final static String BUNDLE_KEY_HOME_TO_JOIN = "homeToJoin";
 
     // Oggetto che rappresenta la casa in cui si entrerà se il processo va a buon fine
     private Home home;
+
+    private Auth auth;
+    private DatabaseReader databaseReader;
+    private DatabaseWriter databaseWriter;
 
     private EditText inputHomeName;
     private EditText inputPassword;
@@ -48,6 +52,7 @@ public class JoinHomeActivity extends FormActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_home);
 
+        auth = new FirebaseAuth();
         databaseReader = new FirebaseDatabaseReader();
         databaseWriter = new FirebaseDatabaseWriter();
 
@@ -109,6 +114,20 @@ public class JoinHomeActivity extends FormActivity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putSerializable(BUNDLE_KEY_HOME_TO_JOIN, home);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        home = (Home) savedInstanceState.getSerializable(BUNDLE_KEY_HOME_TO_JOIN);
+    }
+
     protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
         resetErrorMessage(layoutPassword);
@@ -168,7 +187,10 @@ public class JoinHomeActivity extends FormActivity {
     final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
         @Override
         public void onWriteSuccess() {
-            Appartment.getInstance().setHome(home);
+            Appartment appState = Appartment.getInstance();
+            appState.setHome(home);
+            appState.setHomeUser(createHomeUser());
+            appState.setUserHome(createUserHome());
             moveToNextActivity(MainActivity.class);
             dismissProgress();
         }
@@ -214,7 +236,7 @@ public class JoinHomeActivity extends FormActivity {
             }
             else {
                 // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
-                databaseWriter.writeJoinHome(inputHomeName.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                databaseWriter.writeJoinHome(inputHomeName.getText().toString(), auth.getCurrentUserUid(),
                         createHomeUser(), createUserHome(), databaseWriterListener);
             }
         }

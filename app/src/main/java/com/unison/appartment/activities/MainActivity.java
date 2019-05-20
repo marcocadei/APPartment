@@ -10,10 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.unison.appartment.fragments.FamilyFragment;
 import com.unison.appartment.fragments.MessagesFragment;
 import com.unison.appartment.R;
@@ -39,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Precondizione: Quando si arriva in questa activity, TUTTI gli oggetti della classe
+        // Appartment sono stati settati
 
         // Supporto per la toolbar
         toolbar = findViewById(R.id.activity_main_toolbar);

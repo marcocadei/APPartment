@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-
 public class FirebaseDatabaseWriter implements DatabaseWriter {
     @Override
     public void write(final Map<String, Object> childUpdates, final DatabaseWriterListener listener) {
@@ -147,6 +146,5 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
 
         write(childUpdates, listener);
     }
-
 
 }

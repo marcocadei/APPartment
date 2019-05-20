@@ -5,11 +5,11 @@ import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.unison.appartment.database.DatabaseConstants;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
@@ -30,7 +30,7 @@ public class UserHomeRepository {
         userHomeRef =
                 FirebaseDatabase.getInstance().getReference(
                         DatabaseConstants.SEPARATOR + DatabaseConstants.USERHOMES +
-                                DatabaseConstants.SEPARATOR + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                DatabaseConstants.SEPARATOR + new FirebaseAuth().getCurrentUserUid());
         liveData = new FirebaseQueryLiveData(userHomeRef);
         userHomeLiveData = Transformations.map(liveData, new UserHomeRepository.Deserializer());
     }

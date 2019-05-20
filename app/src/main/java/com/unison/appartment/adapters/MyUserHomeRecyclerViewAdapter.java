@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.fragments.UserHomeListFragment.OnHomeListFragmentInteractionListener;

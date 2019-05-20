@@ -2,10 +2,12 @@ package com.unison.appartment.model;
 
 import com.google.firebase.database.PropertyName;
 
+import java.io.Serializable;
+
 /**
  * Classe che rappresenta una casa
  */
-public class Home {
+public class Home implements Serializable {
     // Quando una casa è creata ha un membro (il creatore stesso)
     public final static int DEFAULT_MEMBERS = 1;
 
