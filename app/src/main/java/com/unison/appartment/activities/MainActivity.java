@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Precondizione: Quando si arriva in questa activity, TUTTI gli oggetti della classe
+        // Appartment sono stati settati
+
         // Supporto per la toolbar
         toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
