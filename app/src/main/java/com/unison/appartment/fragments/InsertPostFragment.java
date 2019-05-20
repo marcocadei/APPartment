@@ -22,8 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Post;
 
@@ -157,9 +157,16 @@ public class InsertPostFragment extends Fragment {
                     listener.onInsertPostFragmentSendPost(fileName, Post.AUDIO_POST);
                 } else {
                     // Se non si sta registrando e si preme sul bottone mostro un avviso su come
-                    // registrare un audio attraverso l'uso di un toast
-                    Toast.makeText(getActivity(), getString(R.string.fragment_insert_post_btn_audio_suggestion),
-                            Toast.LENGTH_LONG).show();
+                    // registrare un audio attraverso l'uso di uno snackbar
+                    View snackbarView = getActivity().findViewById(R.id.fragment_messages);
+                    /*
+                    ATTENZIONE: Lo snackbar ha bisogno di un riferimento ad una parent view per
+                    essere visualizzato; in questo caso viene preso un riferimento ad un layout
+                    che dovrebbe essere sicuramente visualizzato ma comunque è ESTERNO a questo
+                    fragment.
+                     */
+                    Snackbar.make(snackbarView, getString(R.string.fragment_insert_post_btn_audio_suggestion),
+                            Snackbar.LENGTH_LONG).show();
                 }
                 btnSendAudio.setFocusableInTouchMode(false);
             }

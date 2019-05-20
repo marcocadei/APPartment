@@ -9,17 +9,18 @@
     <FrameLayout
         android:id="@+id/fragment_todo_progress_container"
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="@dimen/progress_bar_container_height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/fragment_todo_todolist">
+
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/fragment_todo_progress"
             android:indeterminate="true"
             style="@android:style/Widget.Material.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/progress_bar_component_height"
             android:layout_gravity="center"/>
     </FrameLayout>
 
@@ -58,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_todo_progress_container"
         tools:layout="@layout/fragment_todo_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

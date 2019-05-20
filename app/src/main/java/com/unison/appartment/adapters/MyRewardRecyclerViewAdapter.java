@@ -101,22 +101,12 @@ public class MyRewardRecyclerViewAdapter extends RecyclerView.Adapter<MyRewardRe
             super(view);
             textPointsView = (TextView) view.findViewById(R.id.fragment_reward_text_points_value);
         }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + textNameView.getText() + "'";
-        }
     }
 
     public class ViewHolderRequestedReward extends ViewHolderReward {
 
         public ViewHolderRequestedReward(View view) {
             super(view);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + textNameView.getText() + "'";
         }
     }
 

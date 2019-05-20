@@ -67,11 +67,6 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
             taskDescription = view.findViewById(R.id.fragment_todo_text_task_description);
             taskPoints = view.findViewById(R.id.fragment_todo_task_points_value);
         }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + taskName.getText() + "'";
-        }
     }
 
     public static final DiffUtil.ItemCallback<UncompletedTask> DIFF_CALLBACK =
