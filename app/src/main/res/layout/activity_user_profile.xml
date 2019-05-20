@@ -65,18 +65,18 @@
                 style="@style/Component.Layout.NestedScrollViewFixedElement">
 
                 <TextView
-                    android:id="@+id/activity_user_profile_text_email"
+                    android:id="@+id/activity_user_profile_text_name"
                     style="@style/Component.TextView.SingleLine.ListItemDescription"
                     android:layout_marginBottom="@dimen/margin_extra_small"
-                    android:textSize="@dimen/text_large"
+                    android:textSize="@dimen/text_extra_large"
                     android:text="@string/placeholder_text"
-                    app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_name"
+                    app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_email"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/activity_user_profile_text_name"
+                    android:id="@+id/activity_user_profile_text_email"
                     style="@style/Component.TextView.SingleLine.ListItemDescription"
                     android:layout_marginBottom="@dimen/margin_extra_small"
                     android:textSize="@dimen/text_large"
@@ -84,13 +84,13 @@
                     app:layout_constraintBottom_toTopOf="@id/activity_user_profile_layout_header"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_email" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_name" />
                 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/activity_user_profile_layout_header"
                     style="@style/Component"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_name"
+                    app:layout_constraintTop_toBottomOf="@id/activity_user_profile_text_email"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
