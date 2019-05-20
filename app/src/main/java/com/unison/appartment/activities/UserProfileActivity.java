@@ -34,12 +34,10 @@ import com.unison.appartment.model.UserHome;
  * Classe che rappresenta l'Activity per visualizzare il profilo dell'utente e la lista di case
  * in cui lo stesso è presente
  */
-public class UserProfileActivity extends AppCompatActivity implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
+public class UserProfileActivity extends ActivityWithDialogs implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
     private Auth auth;
     private DatabaseReader databaseReader;
-
-    FirebaseProgressDialogFragment progressDialog;
 
     private View emptyListLayout;
     private TextView textName;
@@ -174,11 +172,6 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         }
     }
 
-    private void moveToNextActivity() {
-        Intent i = new Intent(UserProfileActivity.this, MainActivity.class);
-        startActivity(i);
-    }
-
     // Listener processo di lettura nel database della casa in cui si vuole entrare
     final DatabaseReaderListener dbReaderHomeListener = new DatabaseReaderListener() {
         @Override
@@ -208,8 +201,8 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
             MainActivity della casa selezionata.
             */
             Appartment.getInstance().setHomeUser((HomeUser) object);
-            moveToNextActivity();
-            progressDialog.dismiss();
+            moveToNextActivity(MainActivity.class, false);
+            dismissProgress();
         }
 
         @Override
