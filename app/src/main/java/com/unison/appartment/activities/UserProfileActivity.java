@@ -2,6 +2,8 @@ package com.unison.appartment.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -98,6 +100,17 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         } else {
             Glide.with(imgProfile.getContext()).load(R.drawable.ic_person).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         }
+
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UserProfileActivity.this, ImageDetailActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        UserProfileActivity.this, imgProfile, ViewCompat.getTransitionName(imgProfile));
+                i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, Appartment.getInstance().getUser().getImage());
+                startActivity(i, options.toBundle());
+            }
+        });
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {

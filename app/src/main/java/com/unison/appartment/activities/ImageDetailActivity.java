@@ -28,7 +28,7 @@ public class ImageDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_detail);
 
         Intent i = getIntent();
-        Uri imageUri = Uri.parse(i.getStringExtra(EXTRA_IMAGE_URI));
+        String imageUri = i.getStringExtra(EXTRA_IMAGE_URI);
         // Prima di avviare l'animazione si attende che l'immagine venga caricata
         PhotoView image = findViewById(R.id.activity_image_detail_img);
         supportPostponeEnterTransition();

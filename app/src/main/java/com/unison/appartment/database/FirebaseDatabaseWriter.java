@@ -21,6 +21,8 @@ import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.MyApplication;
+import com.unison.appartment.utils.ImageUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +67,9 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
             Glide.with(MyApplication.getAppContext()).asBitmap().load(newUser.getImage()).into(new CustomTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    // Ridemnsiono l'immagine (in generale la rimpicciolisco)
+                    resource = ImageUtils.resize(resource, ImageUtils.MAX_WIDTH, ImageUtils.MAX_HEIGHT);
+                    // Comprimo l'immagine
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     resource.compress(Bitmap.CompressFormat.JPEG, 25, baos);
                     byte[] data = baos.toByteArray();
