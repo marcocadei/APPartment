@@ -93,4 +93,11 @@ public class Appartment {
         }
         return homeUser;
     }
+
+    public void clearAll() {
+        setUser(null);
+        setHome(null);
+        setUserHome(null);
+        setHomeUser(null);
+    }
 }
