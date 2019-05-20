@@ -174,15 +174,6 @@ public class JoinHomeActivity extends FormActivity {
         return new UserHome(homeName, Home.ROLE_SLAVE);
     }
 
-    @Override
-    protected void moveToNextActivity(Class destination) {
-        Intent i = new Intent(JoinHomeActivity.this, destination);
-        // Passo il nome della casa all'activity successiva
-        i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
-        startActivity(i);
-        finish();
-    }
-
     // Listener processo di scrittura nel database dei record necessari per registrare l'unione ad una casa
     final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
         @Override

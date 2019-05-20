@@ -23,8 +23,6 @@ import com.unison.appartment.fragments.TodoFragment;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public final static String EXTRA_HOME_NAME = "homeName";
-
     // TODO da rimuovere
     public final static String LOGGED_USER = "MARCO";
 

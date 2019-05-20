@@ -203,15 +203,6 @@ public class CreateHomeActivity extends FormActivity {
         return new UserHome(homeName, Home.ROLE_OWNER);
     }
 
-    @Override
-    protected void moveToNextActivity(Class destination) {
-        Intent i = new Intent(CreateHomeActivity.this, destination);
-        // Passo il nome della casa all'activity successiva
-        i.putExtra(MainActivity.EXTRA_HOME_NAME, inputHomeName.getText().toString());
-        startActivity(i);
-        finish();
-    }
-
     // Listener processo di scrittura nel database dei record necessari per registrare la creazione di una casa
     final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
         @Override
