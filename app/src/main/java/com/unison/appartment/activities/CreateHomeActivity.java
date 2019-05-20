@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
+import com.unison.appartment.database.Auth;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
@@ -32,6 +33,7 @@ public class CreateHomeActivity extends FormActivity {
 
     private static final int MIN_HOME_PASSWORD_LENGTH = 6;
 
+    private Auth auth;
     private DatabaseReader databaseReader;
     private DatabaseWriter databaseWriter;
 
@@ -49,6 +51,7 @@ public class CreateHomeActivity extends FormActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_home);
 
+        auth = new FirebaseAuth();
         databaseReader = new FirebaseDatabaseReader();
         databaseWriter = new FirebaseDatabaseWriter();
 
@@ -213,7 +216,10 @@ public class CreateHomeActivity extends FormActivity {
     final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
         @Override
         public void onWriteSuccess() {
-            Appartment.getInstance().setHome(createHome());
+            Appartment appState = Appartment.getInstance();
+            appState.setHome(createHome());
+            appState.setHomeUser(createHomeUser());
+            appState.setUserHome(createUserHome());
             moveToNextActivity(MainActivity.class);
             dismissProgress();
         }
@@ -257,7 +263,7 @@ public class CreateHomeActivity extends FormActivity {
 
         @Override
         public void onReadEmpty() {
-            databaseWriter.writeCreateHome(inputHomeName.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(),
+            databaseWriter.writeCreateHome(inputHomeName.getText().toString(), auth.getCurrentUserUid(),
                     createHome(), createHomeUser(), createUserHome(), databaseWriterListener);
         }
 
