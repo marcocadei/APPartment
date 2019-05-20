@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +15,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
+import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.FirebaseDatabaseReader;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.fragments.UserHomeListFragment;
@@ -35,6 +36,7 @@ import com.unison.appartment.model.UserHome;
  */
 public class UserProfileActivity extends AppCompatActivity implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
+    private Auth auth;
     private DatabaseReader databaseReader;
 
     FirebaseProgressDialogFragment progressDialog;
@@ -51,6 +53,7 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        auth = new FirebaseAuth();
         databaseReader = new FirebaseDatabaseReader();
 
         // Quando entro in quest activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
@@ -109,11 +112,13 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         // TODO ora è implementato soltanto il logout
         switch (item.getItemId()) {
             case R.id.activity_user_profile_toolbar_logout:
-                FirebaseAuth.getInstance().signOut();
+                // FIXME da cambiare usando la nostra FirebaseAuth
+                com.google.firebase.auth.FirebaseAuth.getInstance().signOut();
                 Intent i = new Intent(this, EnterActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -145,7 +150,8 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
         progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
         // Devo popolare Appartment con User (c'è già), Home (scarico), UserHome (elemento selezionato dalla lista), HomeUser (scarico)
         Appartment.getInstance().setUserHome(item);
-        databaseReader.retrieveHome(item.getHomename(), databaseReaderListener);
+        // Lettura degli oggetti Home e HomeUser (a cascata, vedi listeners)
+        databaseReader.retrieveHome(item.getHomename(), dbReaderHomeListener);
     }
 
     @Override
@@ -172,14 +178,34 @@ public class UserProfileActivity extends AppCompatActivity implements UserHomeLi
     }
 
     // Listener processo di lettura nel database della casa in cui si vuole entrare
-    final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+    final DatabaseReaderListener dbReaderHomeListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(Object object) {
+            Home home = (Home) object;
+            Appartment.getInstance().setHome(home);
+            databaseReader.retrieveHomeUser(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
+        }
+
+        @Override
+        public void onReadEmpty() {
+            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+        }
+    };
+
+    // Listener processo di lettura nel database dell'oggetto HomeUser
+    final DatabaseReaderListener dbReaderHomeUserListener = new DatabaseReaderListener() {
         @Override
         public void onReadSuccess(Object object) {
             /*
-            Quando l'utente seleziona una voce dalla lista delle case, deve essere portato alla
+            Selezionata una voce dalla lista delle case, l'utente deve infine essere portato alla
             MainActivity della casa selezionata.
             */
-            Appartment.getInstance().setHome((Home) object);
+            Appartment.getInstance().setHomeUser((HomeUser) object);
             moveToNextActivity();
             progressDialog.dismiss();
         }
