@@ -8,7 +8,6 @@ import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
 
-
 /**
  * Classe che rappresenta lo stato globale dell'applicazione
  */
@@ -32,13 +31,13 @@ public class Appartment {
     }
 
     public Home getHome() {
-        if (home != null) {
-            return home;
+        if (home == null) {
+            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+            String json = sp.getString(SharedPreferencesConstants.HOME_KEY, null);
+            Gson gson = new Gson();
+            home = gson.fromJson(json, Home.class);
         }
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-        String json = sp.getString(SharedPreferencesConstants.HOME_KEY, null);
-        Gson gson = new Gson();
-        return gson.fromJson(json, Home.class);
+        return home;
     }
 
     public void setUser(User user) {
@@ -50,13 +49,13 @@ public class Appartment {
     }
 
     public User getUser() {
-        if(user != null) {
-            return user;
+        if (user == null) {
+            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+            String json = sp.getString(SharedPreferencesConstants.USER_KEY, null);
+            Gson gson = new Gson();
+            user = gson.fromJson(json, User.class);
         }
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-        String json = sp.getString(SharedPreferencesConstants.USER_KEY, null);
-        Gson gson = new Gson();
-        return gson.fromJson(json, User.class);
+        return user;
     }
 
     public void setUserHome(UserHome userHome) {
@@ -68,13 +67,13 @@ public class Appartment {
     }
 
     public UserHome getUserHome() {
-        if(userHome != null) {
-            return userHome;
+        if (userHome == null) {
+            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+            String json = sp.getString(SharedPreferencesConstants.USERHOME_KEY, null);
+            Gson gson = new Gson();
+            userHome = gson.fromJson(json, UserHome.class);
         }
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-        String json = sp.getString(SharedPreferencesConstants.USERHOME_KEY, null);
-        Gson gson = new Gson();
-        return gson.fromJson(json, UserHome.class);
+        return userHome;
     }
 
     public void setHomeUser(HomeUser homeUser) {
@@ -86,12 +85,12 @@ public class Appartment {
     }
 
     public HomeUser getHomeUser() {
-        if(homeUser != null) {
-            return homeUser;
+        if(homeUser == null) {
+            SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
+            String json = sp.getString(SharedPreferencesConstants.HOMEUSER_KEY, null);
+            Gson gson = new Gson();
+            homeUser = gson.fromJson(json, HomeUser.class);
         }
-        SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
-        String json = sp.getString(SharedPreferencesConstants.HOMEUSER_KEY, null);
-        Gson gson = new Gson();
-        return gson.fromJson(json, HomeUser.class);
+        return homeUser;
     }
 }
