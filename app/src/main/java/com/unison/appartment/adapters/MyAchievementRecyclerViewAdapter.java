@@ -68,10 +68,5 @@ public class MyAchievementRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             achievementDescription = view.findViewById(R.id.fragment_achievement_text_description);
             achievementImage = view.findViewById(R.id.fragment_achievement_img_logo);
         }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + achievementName.getText() + "'";
-        }
     }
 }

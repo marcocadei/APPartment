@@ -79,10 +79,5 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
             textMemberPoints = view.findViewById(R.id.fragment_family_member_text_points_value);
             textMemberRole = view.findViewById(R.id.fragment_family_member_text_role);
         }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + textMemberName.getText() + "'";
-        }
     }
 }

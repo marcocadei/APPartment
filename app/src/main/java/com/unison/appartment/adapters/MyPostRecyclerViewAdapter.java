@@ -163,11 +163,6 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             textPostSender = view.findViewById(R.id.fragment_text_post_sender);
             textPostDate = view.findViewById(R.id.fragment_text_post_date);
         }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + textPostTxt.getText() + "'";
-        }
     }
 
     public class ViewHolderImagePost extends RecyclerView.ViewHolder {
@@ -182,11 +177,6 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             imagePostImg = view.findViewById(R.id.fragment_image_post_img);
             imagePostSender = view.findViewById(R.id.fragment_image_post_sender);
             imagePostDate = view.findViewById(R.id.fragment_image_post_date);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + "immagine" + "'";
         }
     }
 
@@ -204,11 +194,6 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             audioPostSender = view.findViewById(R.id.fragment_audio_post_sender);
             audioPostState = view.findViewById(R.id.fragment_audio_post_state);
             audioPostDate = view.findViewById(R.id.fragment_audio_post_date);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + "immagine" + "'";
         }
     }
 }

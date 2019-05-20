@@ -70,11 +70,6 @@ public class MyUserHomeRecyclerViewAdapter extends ListAdapter<UserHome, Recycle
             mNameView = view.findViewById(R.id.fragment_userhome_text_name);
             mRoleView = view.findViewById(R.id.fragment_userhome_text_role);
         }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mNameView.getText() + "'";
-        }
     }
 
     public static final DiffUtil.ItemCallback<UserHome> DIFF_CALLBACK =
