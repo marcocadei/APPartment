@@ -2,6 +2,8 @@ package com.unison.appartment.model;
 
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +90,7 @@ public class Reward implements Serializable {
         return rewardsList;
     }
 
+    @Exclude
     public boolean isRequested() {
         return this.reservation != null;
     }
