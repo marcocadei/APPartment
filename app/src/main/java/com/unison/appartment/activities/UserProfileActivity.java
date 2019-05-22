@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.appeaser.imagetransitionlibrary.TransitionImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
@@ -47,7 +48,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private DatabaseReader databaseReader;
 
     private View emptyListLayout;
-    private ImageView imgProfile;
+    private TransitionImageView imgProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.ImageDetailActivity" >
 
-    <com.github.chrisbanes.photoview.PhotoView
+    <com.appeaser.imagetransitionlibrary.TransitionImageView
         android:id="@+id/activity_image_detail_img"
         android:layout_width="0dp"
         android:layout_height="0dp"

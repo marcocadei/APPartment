@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+
+import com.appeaser.imagetransitionlibrary.ImageTransitionUtil;
+import com.appeaser.imagetransitionlibrary.TransitionImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -27,10 +30,11 @@ public class ImageDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
 
+        setEnterSharedElementCallback(ImageTransitionUtil.DEFAULT_SHARED_ELEMENT_CALLBACK);
         Intent i = getIntent();
         String imageUri = i.getStringExtra(EXTRA_IMAGE_URI);
         // Prima di avviare l'animazione si attende che l'immagine venga caricata
-        PhotoView image = findViewById(R.id.activity_image_detail_img);
+        TransitionImageView image = findViewById(R.id.activity_image_detail_img);
         supportPostponeEnterTransition();
         Glide
                 .with(this)
@@ -48,5 +52,11 @@ public class ImageDetailActivity extends AppCompatActivity {
                     }
                 })
                 .into(image);
+    }
+
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
+        super.onBackPressed();
     }
 }
