@@ -16,8 +16,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateRewardActivity;
 import com.unison.appartment.activities.RewardDetailActivity;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Reward;
-
+import com.unison.appartment.state.Appartment;
 
 /**
  * Le Activity che contengono questo fragment devono implementare l'interface
@@ -31,12 +32,12 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+//    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+//    private String mParam1;
+//    private String mParam2;
 
 //    FIXME Rimuovere se non serve
 //    private OnFragmentInteractionListener mListener;
@@ -58,20 +59,20 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     // TODO: Rename and change types and number of parameters
     public static RewardsFragment newInstance(String param1, String param2) {
         RewardsFragment fragment = new RewardsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
     }
 
     @Override
@@ -80,18 +81,26 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
 
-        /*
-        Impostazione dell'onClickListener per il floating action button che permette di aggiungere
-        un nuovo premio.
-         */
+
         FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
-        floatAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), CreateRewardActivity.class);
-                startActivityForResult(i, ADD_REWARD_REQUEST_CODE);
-            }
-        });
+        if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+            // Se l'utente è uno slave, non viene visualizzato il bottone per aggiungere un nuovo premio.
+            floatAdd.hide();
+        }
+        else {
+            /*
+            In caso contrario, viene impostato l'onClickListener per il FAB che permette di aggiungere
+            un nuovo premio.
+             */
+            floatAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getContext(), CreateRewardActivity.class);
+                    startActivityForResult(i, ADD_REWARD_REQUEST_CODE);
+                }
+            });
+        }
+
         return view;
     }
 
