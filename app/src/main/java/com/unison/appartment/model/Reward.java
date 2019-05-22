@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe che rappresenta un premio da reclamare
@@ -88,5 +89,21 @@ public class Reward implements Serializable {
 
     public boolean isRequested() {
         return this.reservation != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reward reward = (Reward) o;
+        return points == reward.points &&
+                name.equals(reward.name) &&
+                Objects.equals(description, reward.description) &&
+                Objects.equals(reservation, reward.reservation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, points, reservation);
     }
 }
