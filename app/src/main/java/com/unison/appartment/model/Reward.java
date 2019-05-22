@@ -10,7 +10,6 @@ import java.util.Objects;
 /**
  * Classe che rappresenta un premio da reclamare
  */
-// FIXME Eliminare metodi che non servono
 public class Reward implements Serializable {
 
     private static List<Reward> rewardsList = new ArrayList<>();
@@ -21,6 +20,8 @@ public class Reward implements Serializable {
     private int points;
     @Nullable
     private String reservation;
+
+    public Reward() {}
 
     public Reward(String name, String description, int points) {
         this.name = name;
