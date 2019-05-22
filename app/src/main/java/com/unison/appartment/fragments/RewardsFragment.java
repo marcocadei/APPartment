@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
@@ -26,21 +27,7 @@ import com.unison.appartment.state.Appartment;
  */
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
-    public final static String EXTRA_NEW_REWARD = "newReward";
-
     private static final int ADD_REWARD_REQUEST_CODE = 0xA1;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-
-//    FIXME Rimuovere se non serve
-//    private OnFragmentInteractionListener mListener;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -51,28 +38,15 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment RewardsFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static RewardsFragment newInstance(String param1, String param2) {
-        RewardsFragment fragment = new RewardsFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-        return fragment;
+    public static RewardsFragment newInstance() {
+        return new RewardsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
     }
 
     @Override
@@ -80,7 +54,6 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
-
 
         FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
         if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
@@ -111,35 +84,19 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             if (resultCode == Activity.RESULT_OK) {
                 RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
-                listFragment.addReward((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD));
+                listFragment.addReward((Reward) data.getSerializableExtra(CreateRewardActivity.EXTRA_NEW_REWARD));
             }
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        FIXME Rimuovere se non serve
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        FIXME Rimuovere se non serve
-//        mListener = null;
     }
 
     @Override
@@ -149,20 +106,12 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
         startActivity(i);
     }
 
+    @Override
+    public void onRewardListElementsLoaded(long elements) {
+        // Sia che la lista abbia elementi o meno, una volta fatta la lettura la
+        // progress bar deve interrompersi
+        ProgressBar progressBar = getView().findViewById(R.id.fragment_rewards_progress);
+        progressBar.setVisibility(View.GONE);
+    }
 
-//    FIXME Rimuovere se non serve
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

@@ -19,6 +19,8 @@ import com.unison.appartment.model.Reward;
  */
 public class CreateRewardActivity extends AppCompatActivity {
 
+    public final static String EXTRA_NEW_REWARD = "newReward";
+
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -67,7 +69,7 @@ public class CreateRewardActivity extends AppCompatActivity {
                 Integer.valueOf(inputPoints.getText().toString())
         );
         Intent i = new Intent();
-        i.putExtra(RewardsFragment.EXTRA_NEW_REWARD, reward);
+        i.putExtra(EXTRA_NEW_REWARD, reward);
         setResult(Activity.RESULT_OK, i);
         finish();
     }
