@@ -37,16 +37,17 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
     @NonNull
     @Override
     public ViewHolderReward onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int resource;
+        View view;
         if (viewType == AVAILABLE_REWARD_ITEM_TYPE){
-            resource = R.layout.fragment_reward;
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.fragment_reward, parent, false);
+            return new ViewHolderAvailableReward(view);
         }
         else {
-            resource = R.layout.fragment_requested_reward;
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.fragment_requested_reward, parent, false);
+            return new ViewHolderRequestedReward(view);
         }
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(resource, parent, false);
-        return new ViewHolderRequestedReward(view);
     }
 
     @Override
