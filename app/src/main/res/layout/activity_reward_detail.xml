@@ -96,10 +96,30 @@
                     android:id="@+id/activity_reward_detail_text_description_value"
                     style="@style/Component.TextView.MultiLine.AttributeValue"
                     android:text="@string/placeholder_text_long"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_reservation_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_description_title" />
+
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_reservation_title"
+                    style="@style/Component.TextView.MultiLine.AttributeTitle"
+                    android:text="@string/activity_reward_detail_text_reservation_title"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_reservation_value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_description_value" />
+
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_reservation_value"
+                    style="@style/Component.TextView.MultiLine.AttributeValue"
+                    android:text="@string/placeholder_text"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_reservation_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -114,21 +134,42 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_reward_detail_btn_reserve"
                     style="@style/Component.Button"
-                    android:text="@string/activity_reward_detail_btn_reserve_enabled"
-                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_btn_delete"
+                    android:text="@string/activity_reward_detail_btn_reserve_reward_available"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_btn_confirm_reservation"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_reward_detail_btn_confirm_reservation"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_reward_detail_btn_confirm_reservation"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_btn_cancel_reservation"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_btn_reserve" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_reward_detail_btn_cancel_reservation"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_reward_detail_btn_cancel_reservation"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_btn_delete"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_btn_confirm_reservation" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_reward_detail_btn_delete"
                     style="@style/Component.Button"
                     android:backgroundTint="@android:color/holo_red_dark"
                     android:text="@string/activity_reward_detail_btn_delete"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/activity_reward_detail_btn_reserve" />
+                    app:layout_constraintTop_toBottomOf="@+id/activity_reward_detail_btn_cancel_reservation" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
