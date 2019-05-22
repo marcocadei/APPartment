@@ -109,9 +109,9 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_REWARD_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                RewardListFragment fragmentRewardList = (RewardListFragment) getChildFragmentManager()
+                RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
-                fragmentRewardList.addReward((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD));
+                listFragment.addReward((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD));
             }
         }
     }

@@ -81,7 +81,7 @@ public class RewardListFragment extends Fragment {
             }
             myRecyclerView = recyclerView;
         }
-        myAdapter = new MyRewardRecyclerViewAdapter(Reward.getRewardsList(), mListener);
+        myAdapter = new MyRewardRecyclerViewAdapter(mListener);
         myRecyclerView.setAdapter(myAdapter);
         return view;
     }
