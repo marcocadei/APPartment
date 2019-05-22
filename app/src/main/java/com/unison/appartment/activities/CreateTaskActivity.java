@@ -53,17 +53,6 @@ public class CreateTaskActivity extends AppCompatActivity {
                 createTask();
             }
         });
-
-        /*
-        Se lo schermo è stato ruotato mentre il date picker era aperto, l'activity è stata distrutta
-        e ora sta venendo ricreata. Si vuole mantenere aperto lo stesso date picker, a cui però
-        deve essere cambiato il listener dal momento che altrimenti farebbe riferimento all'activity
-        distrutta non più esistente.
-         *//*
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(DatePickerFragment.TAG_DATE_PICKER);
-        if (fragment != null) {
-            ((DatePickerFragment) fragment).setListener(this);
-        }*/
     }
 
     public void createTask() {
