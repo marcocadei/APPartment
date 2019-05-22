@@ -28,8 +28,7 @@ public class TodoTaskRepository {
     public TodoTaskRepository() {
         // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
         uncompletedTasksRef =
-                FirebaseDatabase.getInstance().getReference(
-                        DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS +
+                FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
                               DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
         liveData = new FirebaseQueryLiveData(orderedTasks);
