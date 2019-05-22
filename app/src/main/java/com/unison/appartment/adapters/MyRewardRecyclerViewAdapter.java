@@ -15,7 +15,6 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardListFragment.OnRewardListFragmentInteractionListener;
 import com.unison.appartment.model.Reward;
 
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -54,9 +53,10 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
     public void onBindViewHolder(@NonNull final ViewHolderReward holder, int position) {
         final Reward rewardItem = getItem(position);
 
-        holder.textNameView.setText(rewardItem.getName());
+        holder.textName.setText(rewardItem.getName());
+        holder.textDescription.setText(rewardItem.getDescription());
         if (holder.getItemViewType() == AVAILABLE_REWARD_ITEM_TYPE) {
-            ((ViewHolderAvailableReward) holder).textPointsView.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
+            ((ViewHolderAvailableReward) holder).textPoints.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -76,22 +76,24 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
 
     protected abstract class ViewHolderReward extends RecyclerView.ViewHolder {
         public View mView;
-        public TextView textNameView;
+        public TextView textName;
+        public TextView textDescription;
 
         private ViewHolderReward(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
-            textNameView = itemView.findViewById(R.id.fragment_reward_text_name);
+            textName = itemView.findViewById(R.id.fragment_reward_text_name);
+            textDescription = itemView.findViewById(R.id.fragment_reward_text_description);
         }
 
     }
 
     public class ViewHolderAvailableReward extends ViewHolderReward {
-        public final TextView textPointsView;
+        public final TextView textPoints;
 
         public ViewHolderAvailableReward(View view) {
             super(view);
-            textPointsView = view.findViewById(R.id.fragment_reward_text_points_value);
+            textPoints = view.findViewById(R.id.fragment_reward_text_points_value);
         }
     }
 
