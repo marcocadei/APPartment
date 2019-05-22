@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".fragments.RewardsFragment">
 
+    <FrameLayout
+        android:id="@+id/fragment_rewards_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_container_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_rewards_fragment_money_reward">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/fragment_rewards_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_bar_component_height"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
     <fragment
         android:id="@+id/fragment_rewards_fragment_money_reward"
         android:name="com.unison.appartment.fragments.MoneyRewardFragment"
@@ -15,7 +33,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fragment_rewards_fragment_reward_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_rewards_progress_container"
         tools:layout="@layout/fragment_money_reward" />
 
     <fragment
