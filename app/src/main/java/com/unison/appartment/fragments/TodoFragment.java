@@ -98,7 +98,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
 
     @Override
     public void onTodoListElementsLoaded(long elements) {
-        // Sia che l'utente abbia delle case o meno, una volta fatta la lettura la
+        // Sia che la lista abbia elementi o meno, una volta fatta la lettura la
         // progress bar deve interrompersi
         ProgressBar progressBar = getView().findViewById(R.id.fragment_todo_progress);
         progressBar.setVisibility(View.GONE);
