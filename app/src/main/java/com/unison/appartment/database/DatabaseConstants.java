@@ -15,6 +15,10 @@ public class DatabaseConstants {
     public final static String HOMEUSERS_HOMENAME = "%1$s";
     public final static String HOMEUSERS_HOMENAME_UID = "%1$s";
 
+    // Premi
+    public final static String REWARDS = "rewards";
+    public final static String REWARDS_HOMENAME = "%1$s";
+
     // UncompletedTask
     public final static String UNCOMPLETEDTASKS = "uncompleted-tasks";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE = "creation-date";
