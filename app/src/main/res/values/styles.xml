@@ -10,6 +10,7 @@
         <!-- Animazione immagine -->
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
+        <!-- Animazione immagine tonda -->
         <item name="android:windowSharedElementEnterTransition">@transition/itl_image_transition</item>
         <item name="android:windowSharedElementExitTransition">@transition/itl_image_transition</item>
 

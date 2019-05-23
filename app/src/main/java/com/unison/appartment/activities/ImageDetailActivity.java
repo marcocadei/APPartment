@@ -24,13 +24,16 @@ import com.unison.appartment.R;
 public class ImageDetailActivity extends AppCompatActivity {
 
     public final static String EXTRA_IMAGE_URI = "imageUri";
+    public final static String EXTRA_IMAGE_TYPE = "imageType";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
 
+        // Riga necessaria per gestire l'animazione nel caso si apra un'immagine tonda
         setEnterSharedElementCallback(ImageTransitionUtil.DEFAULT_SHARED_ELEMENT_CALLBACK);
+
         Intent i = getIntent();
         String imageUri = i.getStringExtra(EXTRA_IMAGE_URI);
         // Prima di avviare l'animazione si attende che l'immagine venga caricata
