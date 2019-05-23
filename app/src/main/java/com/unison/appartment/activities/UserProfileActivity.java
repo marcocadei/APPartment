@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,7 @@ import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.utils.DateUtils;
+import com.unison.appartment.utils.ImageUtils;
 
 import java.text.ParseException;
 import java.util.Locale;
@@ -108,7 +110,11 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 Intent i = new Intent(UserProfileActivity.this, ImageDetailActivity.class);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         UserProfileActivity.this, imgProfile, ViewCompat.getTransitionName(imgProfile));
+
+                getWindow().setSharedElementEnterTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
+                getWindow().setSharedElementExitTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
                 i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, Appartment.getInstance().getUser().getImage());
+                i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
                 startActivity(i, options.toBundle());
             }
         });

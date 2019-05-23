@@ -3,6 +3,10 @@ package com.unison.appartment.utils;
 import android.graphics.Bitmap;
 
 public class ImageUtils {
+    // Costanti usate per indicare se l'immagine considerata è tonda o quadrata
+    // Serve quando un'immagine viene aperta perché il codice è diveso
+    public final static String IMAGE_TYPE_ROUND = "0";
+    public final static String IMAGE_TYPE_SQUARE = "1";
 
     public final static int MAX_WIDTH = 680;
     public final static int MAX_HEIGHT = 680;
