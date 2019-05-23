@@ -41,20 +41,17 @@ public class ImageDetailActivity extends AppCompatActivity {
         String imageUri = i.getStringExtra(EXTRA_IMAGE_URI);
         imageType = i.getStringExtra(EXTRA_IMAGE_TYPE);
 
-        /*PhotoView image = findViewById(R.id.activity_image_detail_img);
-        TransitionImageView imageRound = findViewById(R.id.activity_image_detail_img_round);*/
         ImageView image;
 
         // Riga necessaria per gestire l'animazione nel caso si apra un'immagine tonda
         if (imageType.equals(ImageUtils.IMAGE_TYPE_ROUND)) {
             setEnterSharedElementCallback(ImageTransitionUtil.DEFAULT_SHARED_ELEMENT_CALLBACK);
             image = findViewById(R.id.activity_image_detail_img_round);
+            // Animazione apertura immagine tonda
             getWindow().setSharedElementEnterTransition(TransitionInflater.from(ImageDetailActivity.this).inflateTransition(R.transition.itl_image_transition));
             getWindow().setSharedElementExitTransition(TransitionInflater.from(ImageDetailActivity.this).inflateTransition(R.transition.itl_image_transition));
-//            imageRound.setVisibility(View.VISIBLE);
         } else {
             image = findViewById(R.id.activity_image_detail_img);
-//            image.setVisibility(View.VISIBLE);
         }
         image.setVisibility(View.VISIBLE);
 
