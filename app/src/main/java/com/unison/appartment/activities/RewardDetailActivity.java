@@ -32,6 +32,7 @@ public class RewardDetailActivity extends AppCompatActivity {
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_DELETE = 0;
     public final static int OPERATION_RESERVE = 1;
+    public final static int OPERATION_CANCEL = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,16 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setVisibility(View.GONE);
                 btnConfirm.setVisibility(View.VISIBLE);
                 btnCancel.setVisibility(View.VISIBLE);
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_CANCEL);
+                        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+                        setResult(Activity.RESULT_OK, returnIntent);
+                        finish();
+                    }
+                });
             }
             else {
                 btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_available_masters));

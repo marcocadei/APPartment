@@ -33,4 +33,8 @@ public class RewardViewModel extends ViewModel {
     public void requestReward(String rewardId, String userId, String userName) {
         repository.requestReward(rewardId, userId, userName);
     }
+
+    public void cancelRequest(String rewardId) {
+        repository.cancelRequest(rewardId);
+    }
 }

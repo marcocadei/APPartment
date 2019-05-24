@@ -102,6 +102,9 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                                 data.getStringExtra(RewardDetailActivity.EXTRA_USER_ID),
                                 data.getStringExtra(RewardDetailActivity.EXTRA_USER_NAME));
                         break;
+                    case RewardDetailActivity.OPERATION_CANCEL:
+                        listFragment.cancelRequest(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
+                        break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }

@@ -59,6 +59,13 @@ public class RewardRepository {
         rewardsRef.child(rewardId).updateChildren(childUpdates);
     }
 
+    public void cancelRequest(String rewardId){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
+        rewardsRef.child(rewardId).updateChildren(childUpdates);
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<Reward>> {
         @Override
         public List<Reward> apply(DataSnapshot dataSnapshot) {
