@@ -110,6 +110,10 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                     case RewardDetailActivity.OPERATION_CANCEL:
                         listFragment.cancelRequest(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
                         break;
+                    case RewardDetailActivity.OPERATION_CONFIRM:
+                        listFragment.confirmRequest(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID),
+                                data.getStringExtra(RewardDetailActivity.EXTRA_USER_ID));
+                        break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }

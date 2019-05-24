@@ -56,18 +56,36 @@ public class RewardRepository {
         rewardsRef.child(id).removeValue();
     }
 
-    public void requestReward(String rewardId, String userId, String userName){
+    public void requestReward(String rewardId, String userId, String userName) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, userId);
         childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, userName);
         rewardsRef.child(rewardId).updateChildren(childUpdates);
     }
 
-    public void cancelRequest(String rewardId){
+    public void cancelRequest(String rewardId) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
         childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
         rewardsRef.child(rewardId).updateChildren(childUpdates);
+    }
+
+    public void confirmRequest(String rewardId, String userId) {
+        /*
+        Precondizione: L'utente ha abbastanza punti per ritirare il premio, e il saldo punti al
+        termine dell'operazione non è negativo.
+         */
+        Map<String, Object> childUpdates = new HashMap<>();
+        String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                rewardId;
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + userId;
+        childUpdates.put(rewardsPath, null);
+        // FIXME ora salva sempre 100 punti, cambiare quando nei 4 oggetti magici abbiamo anche tutti gli homeuser della casa corrente
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Math.random() * 100);
+        // FIXME come sopra ma per il campo claimed-rewards
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Math.random() * 10);
+        rootRef.updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Reward>> {

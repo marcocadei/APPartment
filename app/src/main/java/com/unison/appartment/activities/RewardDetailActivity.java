@@ -34,6 +34,7 @@ public class RewardDetailActivity extends AppCompatActivity {
     public final static int OPERATION_DELETE = 0;
     public final static int OPERATION_RESERVE = 1;
     public final static int OPERATION_CANCEL = 2;
+    public final static int OPERATION_CONFIRM = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +86,13 @@ public class RewardDetailActivity extends AppCompatActivity {
         MaterialButton btnReserve = findViewById(R.id.activity_reward_detail_btn_reserve);
 
         if (Appartment.getInstance().getHomeUser().getRole() == Home.ROLE_SLAVE) {
-            final String userId = new FirebaseAuth().getCurrentUserUid();
-
             /*
             Se l'utente è uno slave, l'unico bottone che viene visualizzato è quello per richiedere il
             premio (disabilitato se il premio se è già stato richiesto).
              */
+
+            final String userId = new FirebaseAuth().getCurrentUserUid();
+
             if (reward.isRequested()) {
                 btnReserve.setEnabled(false);
                 if (reward.getReservationId().equals(userId)) {
@@ -108,13 +110,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                                     Snackbar.LENGTH_LONG).show();
                         }
                         else {
-                            Intent returnIntent = new Intent();
-                            returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_RESERVE);
-                            returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
-                            returnIntent.putExtra(EXTRA_USER_ID, userId);
-                            returnIntent.putExtra(EXTRA_USER_NAME, Appartment.getInstance().getUser().getName());
-                            setResult(Activity.RESULT_OK, returnIntent);
-                            finish();
+                            sendMakeRequestData(reward, userId);
                         }
 
                     }
@@ -137,14 +133,16 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setVisibility(View.GONE);
                 btnConfirm.setVisibility(View.VISIBLE);
                 btnCancel.setVisibility(View.VISIBLE);
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendConfirmRequestData(reward);
+                    }
+                });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_CANCEL);
-                        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
-                        setResult(Activity.RESULT_OK, returnIntent);
-                        finish();
+                        sendCancelRequestData(reward);
                     }
                 });
             } else {
@@ -154,14 +152,46 @@ public class RewardDetailActivity extends AppCompatActivity {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_DELETE);
-                    returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
-                    setResult(Activity.RESULT_OK, returnIntent);
-                    finish();
+                    sendDeleteData(reward);
                 }
             });
         }
     }
-    //TODO fare i metodi dei listener
+
+    private void sendConfirmRequestData(Reward reward) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_CONFIRM);
+        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+        returnIntent.putExtra(EXTRA_USER_ID, reward.getReservationId());
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendMakeRequestData(Reward reward, String userId) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_RESERVE);
+        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+        returnIntent.putExtra(EXTRA_USER_ID, userId);
+        returnIntent.putExtra(EXTRA_USER_NAME, Appartment.getInstance().getUser().getName());
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendCancelRequestData(Reward reward) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_CANCEL);
+        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendDeleteData(Reward reward) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_DELETE);
+        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+
 }

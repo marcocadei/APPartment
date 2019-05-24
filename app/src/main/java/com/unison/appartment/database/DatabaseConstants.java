@@ -11,6 +11,8 @@ public class DatabaseConstants {
 
     // Utenti di una casa
     public final static String HOMEUSERS = "home-users";
+    public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
+    public final static String HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS = "claimed-rewards";
 
     // Premi
     public final static String REWARDS = "rewards";
