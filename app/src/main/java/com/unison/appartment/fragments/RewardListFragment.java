@@ -87,15 +87,13 @@ public class RewardListFragment extends Fragment {
             myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
-                    myRecyclerView.smoothScrollToPosition(0);
+                    myRecyclerView.smoothScrollToPosition(positionStart);
                 }
             });
             myRecyclerView.setAdapter(myAdapter);
 
             readRewards();
         }
-        myAdapter = new MyRewardRecyclerViewAdapter(listener);
-        myRecyclerView.setAdapter(myAdapter);
         return view;
     }
 

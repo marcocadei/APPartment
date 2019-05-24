@@ -18,6 +18,7 @@ public class DatabaseConstants {
     // Premi
     public final static String REWARDS = "rewards";
     public final static String REWARDS_HOMENAME = "%1$s";
+    public static final String REWARDS_HOMENAME_REWARDID_NAME = "name";
 
     // UncompletedTask
     public final static String UNCOMPLETEDTASKS = "uncompleted-tasks";

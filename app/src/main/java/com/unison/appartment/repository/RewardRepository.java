@@ -30,8 +30,8 @@ public class RewardRepository {
         // Riferimento al nodo del Database interessato
         rewardsRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.REWARDS +
                               DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-//        Query orderedTasks = rewardsRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
-        liveData = new FirebaseQueryLiveData(rewardsRef);
+        Query orderedReward = rewardsRef.orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_NAME);
+        liveData = new FirebaseQueryLiveData(orderedReward);
         rewardLiveData = Transformations.map(liveData, new RewardRepository.Deserializer());
     }
 
