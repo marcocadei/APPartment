@@ -1,5 +1,6 @@
 package com.unison.appartment.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -28,7 +29,11 @@ import java.util.Locale;
  */
 public class RewardDetailActivity extends AppCompatActivity {
 
+    private final static String BUNDLE_KEY_REWARD = "reward";
+
     private static final int EDIT_REWARD_REQUEST_CODE = 101;
+
+    private Reward reward;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        final Reward reward = (Reward) creationIntent.getSerializableExtra(RewardsFragment.EXTRA_REWARD_OBJECT);
+        reward = (Reward) creationIntent.getSerializableExtra(RewardsFragment.EXTRA_REWARD_OBJECT);
 
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
@@ -104,7 +109,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                                     Snackbar.LENGTH_LONG).show();
                         }
                         else {
-                            sendMakeRequestData(reward, userId);
+                            sendMakeRequestData(userId);
                         }
 
                     }
@@ -130,13 +135,13 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sendConfirmRequestData(reward, reward.getReservationId());
+                        sendConfirmRequestData(reward.getReservationId());
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sendCancelRequestData(reward);
+                        sendCancelRequestData();
                     }
                 });
             } else {
@@ -150,7 +155,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                                     Snackbar.LENGTH_LONG).show();
                         }
                         else {
-                            sendConfirmRequestData(reward, userId);
+                            sendConfirmRequestData(userId);
                         }
                     }
                 });
@@ -159,10 +164,24 @@ public class RewardDetailActivity extends AppCompatActivity {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendDeleteData(reward);
+                    sendDeleteData();
                 }
             });
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putSerializable(BUNDLE_KEY_REWARD, reward);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        reward = (Reward) savedInstanceState.getSerializable(BUNDLE_KEY_REWARD);
     }
 
     @Override
@@ -180,6 +199,7 @@ public class RewardDetailActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.activity_reward_detail_toolbar_edit) {
                 Intent i = new Intent(this, CreateRewardActivity.class);
                 startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
+                i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
                 finish();
                 return true;
             }
@@ -187,7 +207,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendConfirmRequestData(Reward reward, String userId) {
+    private void sendConfirmRequestData(String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CONFIRM);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
@@ -196,7 +216,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         finish();
     }
 
-    private void sendMakeRequestData(Reward reward, String userId) {
+    private void sendMakeRequestData(String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_RESERVE);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
@@ -206,7 +226,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         finish();
     }
 
-    private void sendCancelRequestData(Reward reward) {
+    private void sendCancelRequestData() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CANCEL);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
@@ -214,7 +234,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         finish();
     }
 
-    private void sendDeleteData(Reward reward) {
+    private void sendDeleteData() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_DELETE);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());

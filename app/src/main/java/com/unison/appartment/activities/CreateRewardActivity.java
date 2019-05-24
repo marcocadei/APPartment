@@ -20,6 +20,8 @@ import com.unison.appartment.utils.KeyboardUtils;
  */
 public class CreateRewardActivity extends FormActivity {
 
+    public final static String EXTRA_REWARD_DATA = "rewardData";
+
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -73,6 +75,14 @@ public class CreateRewardActivity extends FormActivity {
                 if (hasFocus) resetErrorMessage(layoutPoints);
             }
         });
+
+        Intent i = getIntent();
+        Reward reward = (Reward) i.getSerializableExtra(EXTRA_REWARD_DATA);
+        if (reward != null) {
+            inputPoints.setText(String.valueOf(reward.getPoints()));
+            inputDescription.setText(reward.getDescription());
+            inputName.setText(reward.getName());
+        }
 
         FloatingActionButton floatConfirm = findViewById(R.id.activity_create_reward_float_confirm);
         floatConfirm.setOnClickListener(new View.OnClickListener() {
