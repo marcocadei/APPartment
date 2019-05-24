@@ -86,7 +86,7 @@ public class RewardRepository {
         // FIXME ora salva sempre 100 punti, cambiare quando nei 4 oggetti magici abbiamo anche tutti gli homeuser della casa corrente
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, (int)(Math.random() * 100));
         // FIXME come sopra ma per il campo claimed-rewards
-        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, (int)(Math.random() * 10));
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, (int)(Math.random() * 100));
         rootRef.updateChildren(childUpdates);
     }
 

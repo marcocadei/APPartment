@@ -85,13 +85,13 @@ public class RewardDetailActivity extends AppCompatActivity {
 
         MaterialButton btnReserve = findViewById(R.id.activity_reward_detail_btn_reserve);
 
+        final String userId = new FirebaseAuth().getCurrentUserUid();
+
         if (Appartment.getInstance().getHomeUser().getRole() == Home.ROLE_SLAVE) {
             /*
             Se l'utente è uno slave, l'unico bottone che viene visualizzato è quello per richiedere il
             premio (disabilitato se il premio se è già stato richiesto).
              */
-
-            final String userId = new FirebaseAuth().getCurrentUserUid();
 
             if (reward.isRequested()) {
                 btnReserve.setEnabled(false);
@@ -133,10 +133,23 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setVisibility(View.GONE);
                 btnConfirm.setVisibility(View.VISIBLE);
                 btnCancel.setVisibility(View.VISIBLE);
+                btnReserve.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Appartment.getInstance().getHomeUser().getPoints() < reward.getPoints()) {
+                            Snackbar.make(findViewById(R.id.activity_reward_detail),
+                                    getString(R.string.error_not_enough_points),
+                                    Snackbar.LENGTH_LONG).show();
+                        }
+                        else {
+                            sendConfirmRequestData(reward, userId);
+                        }
+                    }
+                });
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sendConfirmRequestData(reward);
+                        sendConfirmRequestData(reward, reward.getReservationId());
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -158,11 +171,11 @@ public class RewardDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void sendConfirmRequestData(Reward reward) {
+    private void sendConfirmRequestData(Reward reward, String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_CONFIRM);
         returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
-        returnIntent.putExtra(EXTRA_USER_ID, reward.getReservationId());
+        returnIntent.putExtra(EXTRA_USER_ID, userId);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
