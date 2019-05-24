@@ -95,6 +95,11 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
                 switch (data.getIntExtra(RewardDetailActivity.EXTRA_OPERATION_TYPE, -1)) {
                     case RewardDetailActivity.OPERATION_DELETE:
+                        // FIXME per ora la cancelRequest è inutile perchè il delete cancella già tutto il nodo, però
+                        // in futuro vogliamo che con il cancel l'utente venga notificato o qualcos'altro
+                        // Se si decide di lasciare il cancel perché serve, farsi mandare un altro extra
+                        // per controllare se il premio è stato richiesto
+                        listFragment.cancelRequest(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
                         listFragment.deleteReward(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
                         break;
                     case RewardDetailActivity.OPERATION_RESERVE:

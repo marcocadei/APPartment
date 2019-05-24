@@ -82,12 +82,6 @@ public class RewardDetailActivity extends AppCompatActivity {
         }
 
         MaterialButton btnReserve = findViewById(R.id.activity_reward_detail_btn_reserve);
-        btnReserve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestReward();
-            }
-        });
 
         if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
             final String userId = new FirebaseAuth().getCurrentUserUid();
@@ -100,12 +94,10 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setEnabled(false);
                 if (reward.getReservationId().equals(userId)) {
                     btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_requested));
-                }
-                else {
+                } else {
                     btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_unavailable));
                 }
-            }
-            else {
+            } else {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -119,8 +111,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
-        else {
+        } else {
             /*
             Se l'utente è un master o un owner:
             - viene visualizzato il bottone per l'eliminazione del premio;
@@ -147,15 +138,13 @@ public class RewardDetailActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-            }
-            else {
+            } else {
                 btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_available_masters));
             }
 
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO mettere anche l'annulla richiesta
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_DELETE);
                     returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
@@ -165,8 +154,5 @@ public class RewardDetailActivity extends AppCompatActivity {
             });
         }
     }
-
-    private void requestReward() {
-
-    }
+    //TODO fare i metodi dei listener
 }
