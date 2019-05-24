@@ -55,7 +55,7 @@ public class RewardRepository {
     public void requestReward(String rewardId, String userId, String userName){
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, userId);
-        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, userId);
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, userName);
         rewardsRef.child(rewardId).updateChildren(childUpdates);
     }
 
