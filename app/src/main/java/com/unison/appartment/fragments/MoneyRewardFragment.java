@@ -4,14 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.unison.appartment.R;
-
+import com.unison.appartment.state.Appartment;
 
 /**
  * Le Activity che contengono questo fragment devono implementare l'interface
@@ -63,10 +65,13 @@ public class MoneyRewardFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_money_reward, container, false);
+        View view = inflater.inflate(R.layout.fragment_money_reward, container, false);
+        TextView textDescription = view.findViewById(R.id.fragment_money_reward_text_description);
+        textDescription.setText(getString(R.string.fragment_money_reward_text_description, Appartment.getInstance().getHome().getConversionFactor()));
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,7 +82,7 @@ public class MoneyRewardFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -103,7 +108,8 @@ public class MoneyRewardFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    // TODO questo fragment ce lo deve avere il listener? in teoria no perchè al parent non deve parlare?
+    // TODO questo fragment ce lo deve avere il listener? in teoria no perchè al parent non deve parlare?SBAGLIATO
+    // TODO   invece sì il listener serve!!! da agganciare ad onButtonPressed quando si pigia il bottone per far partire un intent e chiamare l'activity per richiedere il premio in denaro
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
