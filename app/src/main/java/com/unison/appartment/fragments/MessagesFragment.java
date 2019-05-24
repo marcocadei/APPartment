@@ -14,6 +14,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentListener;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.activities.ImageDetailActivity;
+import com.unison.appartment.utils.ImageUtils;
 
 
 /**
@@ -68,6 +69,7 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(), image, ViewCompat.getTransitionName(image));
         i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, imageUri);
+        i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_SQUARE);
         startActivity(i, options.toBundle());
     }
 }

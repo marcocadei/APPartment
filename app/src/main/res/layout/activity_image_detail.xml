@@ -16,5 +16,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:visibility="gone"/>
+
+    <com.appeaser.imagetransitionlibrary.TransitionImageView
+        android:id="@+id/activity_image_detail_img_round"
+        app:tiv_rounding="0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:transitionName="@string/transition_open_image"
+        android:contentDescription="@string/activity_image_detail_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"
+        android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
