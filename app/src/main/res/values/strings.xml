@@ -23,8 +23,9 @@
     <!-- Nome della transizione per aprire le immagini -->
     <string name="transition_open_image">transitionOpenImage</string>
 
-    <!-- Errori delle form -->
+    <!-- Messaggi di errore -->
 
+    <string name="error_not_enough_points">Non hai abbastanza punti per richiedere questo premio!</string>
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
     <string name="form_error_duplicate_homename">Esiste già una casa con questo nome</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>

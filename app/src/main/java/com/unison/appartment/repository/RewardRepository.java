@@ -21,7 +21,9 @@ import java.util.Map;
 
 public class RewardRepository {
 
-    // Nodo del database a cui sono interessato
+    // Riferimento al nodo root del database
+    private DatabaseReference rootRef;
+    // Riferimento al nodo del database a cui sono interessato
     private DatabaseReference rewardsRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
     // tramite un Deserializer in ogetti di tipo Reward
@@ -29,7 +31,9 @@ public class RewardRepository {
     private LiveData<List<Reward>> rewardLiveData;
 
     public RewardRepository() {
-        // Riferimento al nodo del Database interessato
+        // Riferimento al nodo root del database
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        // Riferimento al nodo del database a cui sono interessato
         rewardsRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.REWARDS +
                               DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         Query orderedReward = rewardsRef.orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_NAME);

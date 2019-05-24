@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Home;
@@ -83,7 +84,7 @@ public class RewardDetailActivity extends AppCompatActivity {
 
         MaterialButton btnReserve = findViewById(R.id.activity_reward_detail_btn_reserve);
 
-        if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+        if (Appartment.getInstance().getHomeUser().getRole() == Home.ROLE_SLAVE) {
             final String userId = new FirebaseAuth().getCurrentUserUid();
 
             /*
@@ -101,13 +102,21 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_RESERVE);
-                        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
-                        returnIntent.putExtra(EXTRA_USER_ID, userId);
-                        returnIntent.putExtra(EXTRA_USER_NAME, Appartment.getInstance().getUser().getName());
-                        setResult(Activity.RESULT_OK, returnIntent);
-                        finish();
+                        if (Appartment.getInstance().getHomeUser().getPoints() < reward.getPoints()) {
+                            Snackbar.make(findViewById(R.id.activity_reward_detail),
+                                    getString(R.string.error_not_enough_points),
+                                    Snackbar.LENGTH_LONG).show();
+                        }
+                        else {
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_RESERVE);
+                            returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+                            returnIntent.putExtra(EXTRA_USER_ID, userId);
+                            returnIntent.putExtra(EXTRA_USER_NAME, Appartment.getInstance().getUser().getName());
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            finish();
+                        }
+
                     }
                 });
             }

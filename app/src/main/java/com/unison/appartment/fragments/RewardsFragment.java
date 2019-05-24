@@ -60,7 +60,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
 
         FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
-        if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+        if (Appartment.getInstance().getHomeUser().getRole() == Home.ROLE_SLAVE) {
             // Se l'utente è uno slave, non viene visualizzato il bottone per aggiungere un nuovo premio.
             floatAdd.hide();
         } else {
