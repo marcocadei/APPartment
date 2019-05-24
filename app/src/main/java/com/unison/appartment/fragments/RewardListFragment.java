@@ -1,6 +1,5 @@
 package com.unison.appartment.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -98,7 +97,6 @@ public class RewardListFragment extends Fragment {
         }
         return view;
     }
-
 
     @Override
     public void onAttach(@NonNull Context context) {
