@@ -130,7 +130,6 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }
             } else if (resultCode == RewardDetailActivity.RESULT_EDITED) {
-                Log.d("MODIFICATO", ((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD)).getId());
                 listFragment.editReward((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD));
             }
         }

@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -206,8 +205,6 @@ public class RewardDetailActivity extends AppCompatActivity {
                 Intent i = new Intent(this, CreateRewardActivity.class);
                 i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
                 startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
-//                setResult(69);
-//                finish();
                 return true;
             }
         }
@@ -222,7 +219,6 @@ public class RewardDetailActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 returnIntent.putExtra(RewardsFragment.EXTRA_NEW_REWARD, data.getSerializableExtra(RewardsFragment.EXTRA_NEW_REWARD));
                 setResult(RESULT_EDITED, returnIntent);
-
             } else {
                 // Necessario impostare questo resultCode perché altrimenti il default è OK e non
                 // riesco a capire cosa è successo
