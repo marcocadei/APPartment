@@ -133,19 +133,6 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setVisibility(View.GONE);
                 btnConfirm.setVisibility(View.VISIBLE);
                 btnCancel.setVisibility(View.VISIBLE);
-                btnReserve.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (Appartment.getInstance().getHomeUser().getPoints() < reward.getPoints()) {
-                            Snackbar.make(findViewById(R.id.activity_reward_detail),
-                                    getString(R.string.error_not_enough_points),
-                                    Snackbar.LENGTH_LONG).show();
-                        }
-                        else {
-                            sendConfirmRequestData(reward, userId);
-                        }
-                    }
-                });
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -160,6 +147,19 @@ public class RewardDetailActivity extends AppCompatActivity {
                 });
             } else {
                 btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_available_masters));
+                btnReserve.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Appartment.getInstance().getHomeUser().getPoints() < reward.getPoints()) {
+                            Snackbar.make(findViewById(R.id.activity_reward_detail),
+                                    getString(R.string.error_not_enough_points),
+                                    Snackbar.LENGTH_LONG).show();
+                        }
+                        else {
+                            sendConfirmRequestData(reward, userId);
+                        }
+                    }
+                });
             }
 
             btnDelete.setOnClickListener(new View.OnClickListener() {
