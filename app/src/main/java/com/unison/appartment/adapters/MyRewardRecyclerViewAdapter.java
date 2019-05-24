@@ -5,13 +5,16 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 //FIXME Rimuovere se non serve
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.RewardListFragment.OnRewardListFragmentInteractionListener;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Reward;
@@ -62,9 +65,21 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
             ((ViewHolderAvailableReward) holder).textPoints.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
         }
         else {
+            ViewHolderRequestedReward requestedRewardHolder = (ViewHolderRequestedReward) holder;
+            Resources res = MyApplication.getAppContext().getResources();
             if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
-                ((ViewHolderRequestedReward) holder).textStatusUpper.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_1));
-                ((ViewHolderRequestedReward) holder).textStatusLower.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_2));
+                requestedRewardHolder.textStatusUpper.setText(res.getString(R.string.fragment_reward_text_status_pending_row_1));
+                requestedRewardHolder.textStatusLower.setText(res.getString(R.string.fragment_reward_text_status_pending_row_2));
+            }
+            else {
+                /*
+                L'invocazione di equals in questo punto non genera mai una NullPointerException in quanto
+                se si è in questo blocco vuol dire che è il premio è sicuramente prenotato da qualcuno.
+                 */
+                if (!rewardItem.getReservationId().equals(new FirebaseAuth().getCurrentUserUid())) {
+                    requestedRewardHolder.textStatusLower.setText(res.getString(R.string.fragment_reward_text_status_unavailable_row_2));
+                    requestedRewardHolder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_do_not_disturb_alt, null));
+                }
             }
         }
 
@@ -109,11 +124,13 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
     public class ViewHolderRequestedReward extends ViewHolderReward {
         private final TextView textStatusLower;
         private final TextView textStatusUpper;
+        private final ImageView itemIcon;
 
         public ViewHolderRequestedReward(View view) {
             super(view);
             textStatusLower = view.findViewById(R.id.fragment_reward_text_points_status_lower);
             textStatusUpper = view.findViewById(R.id.fragment_reward_text_points_status_upper);
+            itemIcon = view.findViewById(R.id.fragment_reward_img_hourglass);
         }
     }
 
