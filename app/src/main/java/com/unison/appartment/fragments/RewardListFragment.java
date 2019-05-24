@@ -135,6 +135,10 @@ public class RewardListFragment extends Fragment {
         viewModel.deleteReward(id);
     }
 
+    public void editReward(Reward reward) {
+        viewModel.editReward(reward);
+    }
+
     public void requestReward(String rewardId, String userId, String userName){
         viewModel.requestReward(rewardId, userId, userName);
     }
@@ -146,6 +150,7 @@ public class RewardListFragment extends Fragment {
     public void confirmRequest(String rewardId, String userId) {
         viewModel.confirmRequest(rewardId, userId);
     }
+
 
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo

@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,7 +61,7 @@ public class CreateRewardActivity extends FormActivity {
         layoutPoints = findViewById(R.id.activity_create_reward_input_points);
 
         Intent i = getIntent();
-        Reward reward = (Reward) i.getSerializableExtra(EXTRA_REWARD_DATA);
+        final Reward reward = (Reward) i.getSerializableExtra(EXTRA_REWARD_DATA);
         if (reward != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un premio
             toolbar.setTitle(R.string.activity_create_reward_title_edit);
@@ -97,7 +96,7 @@ public class CreateRewardActivity extends FormActivity {
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(CreateRewardActivity.this);
                 if (checkInput()) {
-                    createReward();
+                    createReward(reward);
                 }
             }
         });
@@ -137,14 +136,25 @@ public class CreateRewardActivity extends FormActivity {
     /**
      * Metodo per creare un nuovo Reward
      */
-    public void createReward() {
-        Reward reward = new Reward(
-                inputName.getText().toString(),
-                inputDescription.getText().toString(),
-                Integer.valueOf(inputPoints.getText().toString())
-        );
+    public void createReward(final Reward oldReward) {
+        Reward newReward;
+        // Se sto modificando il reward allora ho anche il campo id, che voglio mantenere uguale
+        if (oldReward != null) {
+            newReward = new Reward(
+                    oldReward.getId(),
+                    inputName.getText().toString(),
+                    inputDescription.getText().toString(),
+                    Integer.valueOf(inputPoints.getText().toString())
+            );
+        } else {
+            newReward = new Reward(
+                    inputName.getText().toString(),
+                    inputDescription.getText().toString(),
+                    Integer.valueOf(inputPoints.getText().toString())
+            );
+        }
         Intent i = new Intent();
-        i.putExtra(RewardsFragment.EXTRA_NEW_REWARD, reward);
+        i.putExtra(RewardsFragment.EXTRA_NEW_REWARD, newReward);
         setResult(Activity.RESULT_OK, i);
         finish();
     }

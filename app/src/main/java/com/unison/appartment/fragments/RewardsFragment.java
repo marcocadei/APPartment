@@ -102,9 +102,9 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                 listFragment.addReward((Reward) data.getSerializableExtra(EXTRA_NEW_REWARD));
             }
         } else if (requestCode == DETAIL_REWARD_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
-                        .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
+            RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
+                    .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
+            if (resultCode == RewardDetailActivity.RESULT_OK) {
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_DELETE:
                         // FIXME per ora la cancelRequest è inutile perchè il delete cancella già tutto il nodo, però
@@ -129,6 +129,9 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }
+            } else if (resultCode == RewardDetailActivity.RESULT_EDITED) {
+                Log.d("MODIFICATO", ((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD)).getId());
+                listFragment.editReward((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD));
             }
         }
     }

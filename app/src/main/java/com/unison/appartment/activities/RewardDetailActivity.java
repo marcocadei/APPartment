@@ -1,6 +1,7 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -8,6 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +33,11 @@ public class RewardDetailActivity extends AppCompatActivity {
 
     private final static String BUNDLE_KEY_REWARD = "reward";
 
-    private static final int EDIT_REWARD_REQUEST_CODE = 101;
+    private final static int EDIT_REWARD_REQUEST_CODE = 101;
+
+    public final static int RESULT_OK = 0;
+    public final static int RESULT_EDITED = 1;
+    public final static int RESULT_NOT_EDITED = 2;
 
     private Reward reward;
 
@@ -200,12 +206,30 @@ public class RewardDetailActivity extends AppCompatActivity {
                 Intent i = new Intent(this, CreateRewardActivity.class);
                 i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
                 startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
-                setResult(69);
-                finish();
+//                setResult(69);
+//                finish();
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_REWARD_REQUEST_CODE) {
+            Intent returnIntent = new Intent();
+            if (resultCode == Activity.RESULT_OK) {
+                returnIntent.putExtra(RewardsFragment.EXTRA_NEW_REWARD, data.getSerializableExtra(RewardsFragment.EXTRA_NEW_REWARD));
+                setResult(RESULT_EDITED, returnIntent);
+
+            } else {
+                // Necessario impostare questo resultCode perché altrimenti il default è OK e non
+                // riesco a capire cosa è successo
+                setResult(RESULT_NOT_EDITED, returnIntent);
+            }
+            finish();
+        }
     }
 
     private void sendConfirmRequestData(String userId) {
@@ -213,7 +237,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CONFIRM);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
-        setResult(Activity.RESULT_OK, returnIntent);
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 
@@ -223,7 +247,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getUser().getName());
-        setResult(Activity.RESULT_OK, returnIntent);
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 
@@ -231,7 +255,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CANCEL);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
-        setResult(Activity.RESULT_OK, returnIntent);
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 
@@ -239,7 +263,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_DELETE);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
-        setResult(Activity.RESULT_OK, returnIntent);
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 

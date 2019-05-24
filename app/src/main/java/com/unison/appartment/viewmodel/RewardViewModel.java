@@ -30,6 +30,10 @@ public class RewardViewModel extends ViewModel {
         repository.deleteReward(id);
     }
 
+    public void editReward(Reward reward) {
+        repository.editReward(reward);
+    }
+
     public void requestReward(String rewardId, String userId, String userName) {
         repository.requestReward(rewardId, userId, userName);
     }

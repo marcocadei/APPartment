@@ -56,6 +56,10 @@ public class RewardRepository {
         rewardsRef.child(id).removeValue();
     }
 
+    public void editReward(Reward reward) {
+        rewardsRef.child(reward.getId()).setValue(reward);
+    }
+
     public void requestReward(String rewardId, String userId, String userName) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, userId);

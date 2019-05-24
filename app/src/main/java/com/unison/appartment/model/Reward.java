@@ -31,6 +31,13 @@ public class Reward implements Serializable {
 
     public Reward() {}
 
+    public Reward(String id, String name, String description, int points) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.points = points;
+    }
+
     public Reward(String name, String description, int points) {
         this.name = name;
         this.description = description;
