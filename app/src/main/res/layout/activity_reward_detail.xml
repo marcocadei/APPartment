@@ -17,6 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_reward_detail_toolbar"
             style="@style/Component.ToolbarWithBackButton"
+            app:menu="@menu/activity_reward_detail_toolbar"
             app:title="@string/activity_reward_detail_title" />
     </com.google.android.material.appbar.AppBarLayout>
 

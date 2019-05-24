@@ -124,6 +124,7 @@
     <string name="activity_reward_detail_btn_reserve_reward_unavailable">Premio non disponibile</string>
     <string name="activity_reward_detail_text_reservation_title">Questo premio è stato richiesto da:</string>
     <string name="activity_reward_detail_title">Dettaglio premio</string>
+    <string name="activity_reward_detail_toolbar_edit">Modifica premio</string>
     <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
     <string name="activity_signin_progress_title">Accesso</string>
     <string name="activity_signin_text_title">Accedi ad APPartment</string>

@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ import java.util.Locale;
  * Classe che rappresenta l'Activity con il dettaglio del Reward
  */
 public class RewardDetailActivity extends AppCompatActivity {
+
+    private static final int EDIT_REWARD_REQUEST_CODE = 101;
 
     // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME
     public final static String EXTRA_REWARD_OBJECT = "rewardObject";
@@ -169,6 +173,28 @@ public class RewardDetailActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (Appartment.getInstance().getHomeUser().getRole() != Home.ROLE_SLAVE) {
+            getMenuInflater().inflate(R.menu.activity_reward_detail_toolbar, menu);
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (Appartment.getInstance().getHomeUser().getRole() != Home.ROLE_SLAVE) {
+            if (item.getItemId() == R.id.activity_reward_detail_toolbar_edit) {
+                Intent i = new Intent(this, CreateRewardActivity.class);
+                startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void sendConfirmRequestData(Reward reward, String userId) {
