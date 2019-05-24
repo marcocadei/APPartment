@@ -79,12 +79,14 @@ public class RewardRepository {
         String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
                 rewardId;
-        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + userId;
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                userId;
         childUpdates.put(rewardsPath, null);
         // FIXME ora salva sempre 100 punti, cambiare quando nei 4 oggetti magici abbiamo anche tutti gli homeuser della casa corrente
-        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Math.random() * 100);
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, (int)(Math.random() * 100));
         // FIXME come sopra ma per il campo claimed-rewards
-        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Math.random() * 10);
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, (int)(Math.random() * 10));
         rootRef.updateChildren(childUpdates);
     }
 
