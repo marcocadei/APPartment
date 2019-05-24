@@ -17,7 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_create_reward_toolbar"
             style="@style/Component.ToolbarWithBackButton"
-            app:title="@string/activity_create_reward_title" />
+            app:title="@string/activity_create_reward_title_new" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -42,7 +42,7 @@
                 <TextView
                     android:id="@+id/activity_create_reward_text_title"
                     style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
-                    android:text="@string/activity_create_reward_title"
+                    android:text="@string/activity_create_reward_title_new"
                     app:layout_constraintEnd_toStartOf="@+id/activity_create_reward_img_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

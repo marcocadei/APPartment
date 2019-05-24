@@ -2,24 +2,41 @@ package com.unison.appartment.model;
 
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.PropertyName;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe che rappresenta un premio da reclamare
  */
-// FIXME Eliminare metodi che non servono
 public class Reward implements Serializable {
 
-    private static List<Reward> rewardsList = new ArrayList<>();
+    private final static String ATTRIBUTE_RESERVATION_NAME = "reservation-name";
+    private final static String ATTRIBUTE_RESERVATION_ID = "reservation-id";
 
+    @Exclude
+    private String id;
     private String name;
     @Nullable
     private String description;
     private int points;
     @Nullable
-    private String reservation;
+    @PropertyName(ATTRIBUTE_RESERVATION_ID)
+    private String reservationId;
+    @Nullable
+    @PropertyName(ATTRIBUTE_RESERVATION_NAME)
+    private String reservationName;
+
+    public Reward() {}
+
+    public Reward(String id, String name, String description, int points) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.points = points;
+    }
 
     public Reward(String name, String description, int points) {
         this.name = name;
@@ -27,18 +44,30 @@ public class Reward implements Serializable {
         this.points = points;
     }
 
-    public Reward(String name, String description, int points, String reservation) {
+    public Reward(String name, String description, int points, String reservationId) {
         this(name, description, points);
-        this.reservation = reservation;
+        this.reservationId = reservationId;
     }
 
     @Nullable
-    public String getReservation() {
-        return reservation;
+    @PropertyName(ATTRIBUTE_RESERVATION_ID)
+    public String getReservationId() {
+        return reservationId;
     }
 
-    public void setReservation(@Nullable String reservation) {
-        this.reservation = reservation;
+    @PropertyName(ATTRIBUTE_RESERVATION_ID)
+    public void setReservationId(@Nullable String reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    @Exclude
+    public String getId() {
+        return id;
+    }
+
+    @Exclude
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -66,27 +95,35 @@ public class Reward implements Serializable {
         this.points = points;
     }
 
-    public static void addReward(int index, Reward reward) {
-        rewardsList.add(index, reward);
+    @Nullable
+    @PropertyName(ATTRIBUTE_RESERVATION_NAME)
+    public String getReservationName() {
+        return reservationName;
     }
 
-    public static void addReward(Reward reward) {
-        rewardsList.add(reward);
+    @PropertyName(ATTRIBUTE_RESERVATION_NAME)
+    public void setReservationName(@Nullable String reservationName) {
+        this.reservationName = reservationName;
     }
 
-    public static void removeReward(int position) {
-        rewardsList.remove(position);
-    }
-
-    public static Reward getReward(int position) {
-        return rewardsList.get(position);
-    }
-
-    public static List<Reward> getRewardsList() {
-        return rewardsList;
-    }
-
+    @Exclude
     public boolean isRequested() {
-        return this.reservation != null;
+        return this.reservationId != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reward reward = (Reward) o;
+        return points == reward.points &&
+                name.equals(reward.name) &&
+                Objects.equals(description, reward.description) &&
+                Objects.equals(reservationId, reward.reservationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, points, reservationId);
     }
 }

@@ -3,9 +3,14 @@ package com.unison.appartment.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,6 +20,9 @@ import android.view.ViewGroup;
 import com.unison.appartment.adapters.MyRewardRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Reward;
+import com.unison.appartment.viewmodel.RewardViewModel;
+
+import java.util.List;
 
 /**
  * Fragment che rappresenta una lista di Reward
@@ -27,10 +35,12 @@ public class RewardListFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    private RecyclerView.Adapter myAdapter;
+    private RewardViewModel viewModel;
+
+    private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
-    private OnRewardListFragmentInteractionListener mListener;
+    private OnRewardListFragmentInteractionListener listener;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -42,9 +52,9 @@ public class RewardListFragment extends Fragment {
     @SuppressWarnings("unused")
     public static RewardListFragment newInstance(int columnCount) {
         RewardListFragment fragment = new RewardListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_COLUMN_COUNT, columnCount);
+//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -56,17 +66,11 @@ public class RewardListFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        // FIXME da rimuovere
-        // Elemento di prova iniziale
-        if (Reward.getRewardsList().isEmpty()) {
-//            Reward.addReward(new Reward("ABC", 127));
-//            Reward.addReward(new Reward("Prenotato", 500));
-//            Reward.getReward(1).setRequested(true);
-        }
+        viewModel = ViewModelProviders.of(getActivity()).get(RewardViewModel.class);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reward_list, container, false);
 
@@ -80,19 +84,26 @@ public class RewardListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             myRecyclerView = recyclerView;
+            myAdapter = new MyRewardRecyclerViewAdapter(listener);
+            myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    myRecyclerView.smoothScrollToPosition(positionStart);
+                }
+            });
+            myRecyclerView.setAdapter(myAdapter);
+
+            readRewards();
         }
-        myAdapter = new MyRewardRecyclerViewAdapter(Reward.getRewardsList(), mListener);
-        myRecyclerView.setAdapter(myAdapter);
         return view;
     }
 
-
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         Fragment parentFragment = getParentFragment();
         if (parentFragment instanceof OnRewardListFragmentInteractionListener) {
-            mListener = (OnRewardListFragmentInteractionListener) parentFragment;
+            listener = (OnRewardListFragmentInteractionListener) parentFragment;
         } else {
             throw new RuntimeException(parentFragment.toString()
                     + " must implement OnRewardListFragmentInteractionListener");
@@ -102,14 +113,44 @@ public class RewardListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
+    }
+
+    private void readRewards() {
+        LiveData<List<Reward>> rewardLiveData = viewModel.getRewardLiveData();
+        rewardLiveData.observe(getViewLifecycleOwner(), new Observer<List<Reward>>() {
+            @Override
+            public void onChanged(List<Reward> rewards) {
+                myAdapter.submitList(rewards);
+                listener.onRewardListElementsLoaded(rewards.size());
+            }
+        });
     }
 
     public void addReward(Reward newReward) {
-        Reward.addReward(0, newReward);
-        myAdapter.notifyItemInserted(0);
-        myRecyclerView.scrollToPosition(0);
+        viewModel.addReward(newReward);
     }
+
+    public void deleteReward(String id) {
+        viewModel.deleteReward(id);
+    }
+
+    public void editReward(Reward reward) {
+        viewModel.editReward(reward);
+    }
+
+    public void requestReward(String rewardId, String userId, String userName){
+        viewModel.requestReward(rewardId, userId, userName);
+    }
+
+    public void cancelRequest(String rewardId){
+        viewModel.cancelRequest(rewardId);
+    }
+
+    public void confirmRequest(String rewardId, String userId) {
+        viewModel.confirmRequest(rewardId, userId);
+    }
+
 
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
@@ -117,7 +158,7 @@ public class RewardListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnRewardListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onRewardListFragmentInteraction(Reward item);
+        void onRewardListElementsLoaded(long elements);
     }
 }

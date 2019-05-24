@@ -23,8 +23,9 @@
     <!-- Nome della transizione per aprire le immagini -->
     <string name="transition_open_image">transitionOpenImage</string>
 
-    <!-- Errori delle form -->
+    <!-- Messaggi di errore -->
 
+    <string name="error_not_enough_points">Non hai abbastanza punti per richiedere questo premio!</string>
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
     <string name="form_error_duplicate_homename">Esiste già una casa con questo nome</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
@@ -93,7 +94,8 @@
     <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
     <string name="activity_create_home_text_title">Crea una nuova casa</string>
-    <string name="activity_create_reward_title">Aggiungi premio</string>
+    <string name="activity_create_reward_title_new">Aggiungi premio</string>
+    <string name="activity_create_reward_title_edit">Modifica premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
@@ -114,10 +116,16 @@
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
+    <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta</string>
+    <string name="activity_reward_detail_btn_confirm_reservation">Conferma richiesta</string>
     <string name="activity_reward_detail_btn_delete">Elimina premio</string>
-    <string name="activity_reward_detail_btn_reserve_disabled">Premio richiesto</string>
-    <string name="activity_reward_detail_btn_reserve_enabled">Richiedi premio</string>
+    <string name="activity_reward_detail_btn_reserve_reward_available">Richiedi premio</string>
+    <string name="activity_reward_detail_btn_reserve_reward_available_masters">Ottieni premio</string>
+    <string name="activity_reward_detail_btn_reserve_reward_requested">Premio richiesto</string>
+    <string name="activity_reward_detail_btn_reserve_reward_unavailable">Premio non disponibile</string>
+    <string name="activity_reward_detail_text_reservation_title">Questo premio è stato richiesto da:</string>
     <string name="activity_reward_detail_title">Dettaglio premio</string>
+    <string name="activity_reward_detail_toolbar_edit">Modifica premio</string>
     <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
     <string name="activity_signin_progress_title">Accesso</string>
     <string name="activity_signin_text_title">Accedi ad APPartment</string>
@@ -148,8 +156,12 @@
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
-    <string name="fragment_reward_text_status_row_1">Premio</string>
-    <string name="fragment_reward_text_status_row_2">richiesto</string>
+    <string name="fragment_reward_text_status_pending_row_1">Attesa</string>
+    <string name="fragment_reward_text_status_pending_row_2">conferma</string>
+    <string name="fragment_reward_text_status_requested_row_1">Premio</string>
+    <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
+    <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
+    <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>

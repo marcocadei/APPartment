@@ -43,8 +43,8 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
 //        TextView points = findViewById(R.id.activity_family_member_detail_points_value);
 //        ImageView image = findViewById(R.id.activity_family_member_detail_image);
 
-        Intent i = getIntent();
-        User user = (User) i.getSerializableExtra("user");
+//        Intent i = getIntent();
+//        User user = (User) i.getSerializableExtra("user");
         // Popolo l'interfaccia con i dati del task ricevuto
         // TODO risistemare con HomeUser e non User
 //        name.setText("paolo");

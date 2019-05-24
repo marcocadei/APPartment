@@ -7,13 +7,18 @@ public class DatabaseConstants {
 
     // Case
     public final static String HOMES = "homes";
-    public final static String HOMES_HOMENAME = "%1$s";
     public final static String HOMES_HOMENAME_PASSWORD = "password";
 
     // Utenti di una casa
     public final static String HOMEUSERS = "home-users";
-    public final static String HOMEUSERS_HOMENAME = "%1$s";
-    public final static String HOMEUSERS_HOMENAME_UID = "%1$s";
+    public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
+    public final static String HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS = "claimed-rewards";
+
+    // Premi
+    public final static String REWARDS = "rewards";
+    public static final String REWARDS_HOMENAME_REWARDID_NAME = "name";
+    public static final String REWARDS_HOMENAME_REWARDID_RESERVATIONID = "reservation-id";
+    public static final String REWARDS_HOMENAME_REWARDID_RESERVATIONNAME = "reservation-name";
 
     // UncompletedTask
     public final static String UNCOMPLETEDTASKS = "uncompleted-tasks";
@@ -21,11 +26,8 @@ public class DatabaseConstants {
 
     // Case di un utente
     public final static String USERHOMES = "user-homes";
-    public final static String USERHOMES_UID = "%1$s";
-    public final static String USERHOMES_UID_HOMENAME = "%1$s";
 
     // Utenti
     public final static String USERS = "users";
-    public final static String USERS_UID = "%1$s";
     public final static String USERS_UID_NAME = "name";
 }

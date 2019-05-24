@@ -29,7 +29,9 @@ import java.util.List;
  */
 public class TodoListFragment extends Fragment {
 
+    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    // TODO: Customize parameters
     private int mColumnCount = 1;
 
     private TodoTaskViewModel viewModel;
@@ -83,7 +85,8 @@ public class TodoListFragment extends Fragment {
             myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
-                    myRecyclerView.smoothScrollToPosition(0);
+                    // Finché i task sono ordinati per data di inserimento positionStart è sempre uguale a 0
+                    myRecyclerView.smoothScrollToPosition(positionStart);
                 }
             });
             myRecyclerView.setAdapter(myAdapter);

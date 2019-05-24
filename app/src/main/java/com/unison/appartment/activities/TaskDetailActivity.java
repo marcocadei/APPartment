@@ -43,6 +43,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         TextView creationDate = findViewById(R.id.activity_task_detail_text_creation_date_value);
 
         Intent i = getIntent();
+        // FIXME estrarre costante
         UncompletedTask uncompletedTask = (UncompletedTask) i.getSerializableExtra("uncompletedTask");
         // Popolo l'interfaccia con i dati del uncompletedTask ricevuto
         name.setText(uncompletedTask.getName());

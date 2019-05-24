@@ -55,7 +55,7 @@
             android:id="@+id/fragment_reward_text_points_status_upper"
             style="@style/Component.TextView.SingleLine.PointsValue"
             android:textSize="@dimen/text_medium"
-            android:text="@string/fragment_reward_text_status_row_1"
+            android:text="@string/fragment_reward_text_status_requested_row_1"
             app:layout_constraintBottom_toTopOf="@id/fragment_reward_text_points_status_lower"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
         <TextView
             android:id="@+id/fragment_reward_text_points_status_lower"
             style="@style/Component.TextView.SingleLine.PointsName"
-            android:text="@string/fragment_reward_text_status_row_2"
+            android:text="@string/fragment_reward_text_status_requested_row_2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/fragment_reward_text_points_status_upper"
             app:layout_constraintStart_toStartOf="@id/fragment_reward_text_points_status_upper"

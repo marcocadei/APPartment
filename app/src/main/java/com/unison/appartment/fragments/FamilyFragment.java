@@ -70,7 +70,8 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     @Override
     public void onFamilyMemberListFragmentOpenMember(User user) {
         Intent i = new Intent(getActivity(), FamilyMemberDetailActivity.class);
-        i.putExtra("user", user);
+//        TODO da sistemare
+//        i.putExtra("user", user);
         startActivity(i);
     }
 }
