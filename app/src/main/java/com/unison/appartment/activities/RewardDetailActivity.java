@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
@@ -27,6 +27,11 @@ public class RewardDetailActivity extends AppCompatActivity {
     // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME
     public final static String EXTRA_REWARD_OBJECT = "rewardObject";
     public final static String EXTRA_REWARD_ID = "rewardId";
+    public final static String EXTRA_USER_NAME = "userName";
+    public final static String EXTRA_USER_ID = "userId";
+    public final static String EXTRA_OPERATION_TYPE = "operationType";
+    public final static int OPERATION_DELETE = 0;
+    public final static int OPERATION_RESERVE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +77,7 @@ public class RewardDetailActivity extends AppCompatActivity {
             TextView textReservation = findViewById(R.id.activity_reward_detail_text_reservation_value);
             textReservationTitle.setVisibility(View.VISIBLE);
             textReservation.setVisibility(View.VISIBLE);
-            // FIXME cambiare quando si decide cosa mettere nel campo reservation
-            textReservation.setText(reward.getReservation());
+            textReservation.setText(reward.getReservationName());
         }
 
         MaterialButton btnReserve = findViewById(R.id.activity_reward_detail_btn_reserve);
@@ -85,18 +89,34 @@ public class RewardDetailActivity extends AppCompatActivity {
         });
 
         if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+            final String userId = new FirebaseAuth().getCurrentUserUid();
+
             /*
             Se l'utente è uno slave, l'unico bottone che viene visualizzato è quello per richiedere il
             premio (disabilitato se il premio se è già stato richiesto).
              */
             if (reward.isRequested()) {
                 btnReserve.setEnabled(false);
-                if (true) { // FIXME questo if deve controllare: se sono stato io ad aver prenotato il premio
+                if (reward.getReservationId().equals(userId)) {
                     btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_requested));
                 }
                 else {
                     btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_unavailable));
                 }
+            }
+            else {
+                btnReserve.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_RESERVE);
+                        returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+                        returnIntent.putExtra(EXTRA_USER_ID, userId);
+                        returnIntent.putExtra(EXTRA_USER_NAME, Appartment.getInstance().getUser().getName());
+                        setResult(Activity.RESULT_OK, returnIntent);
+                        finish();
+                    }
+                });
             }
         }
         else {
@@ -126,6 +146,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // TODO mettere anche l'annulla richiesta
                     Intent returnIntent = new Intent();
+                    returnIntent.putExtra(EXTRA_OPERATION_TYPE, OPERATION_DELETE);
                     returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();

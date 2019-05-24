@@ -29,4 +29,8 @@ public class RewardViewModel extends ViewModel {
     public void deleteReward(String id) {
         repository.deleteReward(id);
     }
+
+    public void requestReward(String rewardId, String userId, String userName) {
+        repository.requestReward(rewardId, userId, userName);
+    }
 }

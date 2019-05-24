@@ -15,7 +15,9 @@ import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RewardRepository {
 
@@ -48,6 +50,13 @@ public class RewardRepository {
 
     public void deleteReward(String id){
         rewardsRef.child(id).removeValue();
+    }
+
+    public void requestReward(String rewardId, String userId, String userName){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, userId);
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, userId);
+        rewardsRef.child(rewardId).updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Reward>> {
