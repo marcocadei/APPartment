@@ -13,7 +13,9 @@ import android.widget.TextView;
 //FIXME Rimuovere se non serve
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardListFragment.OnRewardListFragmentInteractionListener;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Reward;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.state.MyApplication;
 
 import java.util.Locale;
@@ -60,8 +62,10 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
             ((ViewHolderAvailableReward) holder).textPoints.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
         }
         else {
-            ((ViewHolderRequestedReward) holder).textStatusUpper.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_1));
-            ((ViewHolderRequestedReward) holder).textStatusLower.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_2));
+            if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
+                ((ViewHolderRequestedReward) holder).textStatusUpper.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_1));
+                ((ViewHolderRequestedReward) holder).textStatusLower.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_2));
+            }
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
