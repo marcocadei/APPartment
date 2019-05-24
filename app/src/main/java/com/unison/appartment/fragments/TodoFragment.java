@@ -26,6 +26,8 @@ import com.unison.appartment.model.UncompletedTask;
  */
 public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 
+    public final static String EXTRA_NEW_TASK = "newTask";
+
     private static final int ADD_TASK_REQUEST_CODE = 1;
 
     private TextView emptyTodoListTitle;
@@ -75,7 +77,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             TodoListFragment tlf = (TodoListFragment) getChildFragmentManager()
                     .findFragmentById(R.id.fragment_todo_todolist);
-            tlf.addTask((UncompletedTask) data.getSerializableExtra(CreateTaskActivity.EXTRA_NEW_TASK));
+            tlf.addTask((UncompletedTask) data.getSerializableExtra(EXTRA_NEW_TASK));
         }
     }
 

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.model.UncompletedTask;
 
 import java.util.Calendar;
@@ -20,8 +21,6 @@ import java.util.Calendar;
  * Classe che rappresenta l'Activity per creare un nuovo UncompletedTask
  */
 public class CreateTaskActivity extends AppCompatActivity {
-
-    public final static String EXTRA_NEW_TASK = "newTask";
 
     private EditText inputName;
     private EditText inputDescription;
@@ -65,7 +64,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                 (-1) * calendar.getTimeInMillis() // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
         );
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(EXTRA_NEW_TASK, newUncompletedTask);
+        returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, newUncompletedTask);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }

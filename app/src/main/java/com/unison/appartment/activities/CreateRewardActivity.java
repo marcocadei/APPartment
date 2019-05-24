@@ -1,6 +1,5 @@
 package com.unison.appartment.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
@@ -12,6 +11,7 @@ import android.widget.EditText;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.utils.KeyboardUtils;
 
@@ -19,8 +19,6 @@ import com.unison.appartment.utils.KeyboardUtils;
  * Classe che rappresenta l'Activity per creare un nuovo Reward
  */
 public class CreateRewardActivity extends FormActivity {
-
-    public final static String EXTRA_NEW_REWARD = "newReward";
 
     private EditText inputName;
     private EditText inputDescription;
@@ -129,7 +127,7 @@ public class CreateRewardActivity extends FormActivity {
                 Integer.valueOf(inputPoints.getText().toString())
         );
         Intent i = new Intent();
-        i.putExtra(EXTRA_NEW_REWARD, reward);
+        i.putExtra(RewardsFragment.EXTRA_NEW_REWARD, reward);
         setResult(Activity.RESULT_OK, i);
         finish();
     }

@@ -29,6 +29,18 @@ import com.unison.appartment.state.Appartment;
  */
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
+    // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME
+    public final static String EXTRA_REWARD_OBJECT = "rewardObject";
+    public final static String EXTRA_NEW_REWARD = "newReward";
+    public final static String EXTRA_REWARD_ID = "rewardId";
+    public final static String EXTRA_USER_NAME = "userName";
+    public final static String EXTRA_USER_ID = "userId";
+    public final static String EXTRA_OPERATION_TYPE = "operationType";
+    public final static int OPERATION_DELETE = 0;
+    public final static int OPERATION_RESERVE = 1;
+    public final static int OPERATION_CANCEL = 2;
+    public final static int OPERATION_CONFIRM = 3;
+
     private static final int ADD_REWARD_REQUEST_CODE = 1;
     private static final int DETAIL_REWARD_REQUEST_CODE = 2;
 
@@ -87,32 +99,32 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             if (resultCode == Activity.RESULT_OK) {
                 RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
-                listFragment.addReward((Reward) data.getSerializableExtra(CreateRewardActivity.EXTRA_NEW_REWARD));
+                listFragment.addReward((Reward) data.getSerializableExtra(EXTRA_NEW_REWARD));
             }
         } else if (requestCode == DETAIL_REWARD_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
-                switch (data.getIntExtra(RewardDetailActivity.EXTRA_OPERATION_TYPE, -1)) {
-                    case RewardDetailActivity.OPERATION_DELETE:
+                switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
+                    case OPERATION_DELETE:
                         // FIXME per ora la cancelRequest è inutile perchè il delete cancella già tutto il nodo, però
                         // in futuro vogliamo che con il cancel l'utente venga notificato o qualcos'altro
                         // Se si decide di lasciare il cancel perché serve, farsi mandare un altro extra
                         // per controllare se il premio è stato richiesto
-                        listFragment.cancelRequest(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
-                        listFragment.deleteReward(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
+                        listFragment.cancelRequest(data.getStringExtra(EXTRA_REWARD_ID));
+                        listFragment.deleteReward(data.getStringExtra(EXTRA_REWARD_ID));
                         break;
-                    case RewardDetailActivity.OPERATION_RESERVE:
-                        listFragment.requestReward(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID),
-                                data.getStringExtra(RewardDetailActivity.EXTRA_USER_ID),
-                                data.getStringExtra(RewardDetailActivity.EXTRA_USER_NAME));
+                    case OPERATION_RESERVE:
+                        listFragment.requestReward(data.getStringExtra(EXTRA_REWARD_ID),
+                                data.getStringExtra(EXTRA_USER_ID),
+                                data.getStringExtra(EXTRA_USER_NAME));
                         break;
-                    case RewardDetailActivity.OPERATION_CANCEL:
-                        listFragment.cancelRequest(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
+                    case OPERATION_CANCEL:
+                        listFragment.cancelRequest(data.getStringExtra(EXTRA_REWARD_ID));
                         break;
-                    case RewardDetailActivity.OPERATION_CONFIRM:
-                        listFragment.confirmRequest(data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID),
-                                data.getStringExtra(RewardDetailActivity.EXTRA_USER_ID));
+                    case OPERATION_CONFIRM:
+                        listFragment.confirmRequest(data.getStringExtra(EXTRA_REWARD_ID),
+                                data.getStringExtra(EXTRA_USER_ID));
                         break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
@@ -134,7 +146,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     @Override
     public void onRewardListFragmentInteraction(Reward item) {
         Intent i = new Intent(getActivity(), RewardDetailActivity.class);
-        i.putExtra(RewardDetailActivity.EXTRA_REWARD_OBJECT, item);
+        i.putExtra(EXTRA_REWARD_OBJECT, item);
         startActivityForResult(i, DETAIL_REWARD_REQUEST_CODE);
     }
 
