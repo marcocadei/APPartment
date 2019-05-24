@@ -77,6 +77,7 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
                 se si è in questo blocco vuol dire che è il premio è sicuramente prenotato da qualcuno.
                  */
                 if (!rewardItem.getReservationId().equals(new FirebaseAuth().getCurrentUserUid())) {
+                    requestedRewardHolder.textStatusUpper.setText(res.getString(R.string.fragment_reward_text_status_unavailable_row_1));
                     requestedRewardHolder.textStatusLower.setText(res.getString(R.string.fragment_reward_text_status_unavailable_row_2));
                     requestedRewardHolder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_do_not_disturb_alt, null));
                 }

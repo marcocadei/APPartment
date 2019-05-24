@@ -157,7 +157,8 @@
     <string name="fragment_reward_text_status_pending_row_2">conferma</string>
     <string name="fragment_reward_text_status_requested_row_1">Premio</string>
     <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
-    <string name="fragment_reward_text_status_unavailable_row_2">non disponibile</string>
+    <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
+    <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
