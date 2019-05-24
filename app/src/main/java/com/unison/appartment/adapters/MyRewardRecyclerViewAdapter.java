@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardListFragment.OnRewardListFragmentInteractionListener;
 import com.unison.appartment.model.Reward;
+import com.unison.appartment.state.MyApplication;
 
 import java.util.Locale;
 
@@ -58,6 +59,10 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
         if (holder.getItemViewType() == AVAILABLE_REWARD_ITEM_TYPE) {
             ((ViewHolderAvailableReward) holder).textPoints.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
         }
+        else {
+            ((ViewHolderRequestedReward) holder).textStatusUpper.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_1));
+            ((ViewHolderRequestedReward) holder).textStatusLower.setText(MyApplication.getAppContext().getResources().getString(R.string.fragment_reward_text_status_pending_row_2));
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,9 +80,9 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
     }
 
     protected abstract class ViewHolderReward extends RecyclerView.ViewHolder {
-        public View mView;
-        public TextView textName;
-        public TextView textDescription;
+        private View mView;
+        private TextView textName;
+        private TextView textDescription;
 
         private ViewHolderReward(@NonNull View itemView) {
             super(itemView);
@@ -89,7 +94,7 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
     }
 
     public class ViewHolderAvailableReward extends ViewHolderReward {
-        public final TextView textPoints;
+        private final TextView textPoints;
 
         public ViewHolderAvailableReward(View view) {
             super(view);
@@ -98,8 +103,13 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
     }
 
     public class ViewHolderRequestedReward extends ViewHolderReward {
+        private final TextView textStatusLower;
+        private final TextView textStatusUpper;
+
         public ViewHolderRequestedReward(View view) {
             super(view);
+            textStatusLower = view.findViewById(R.id.fragment_reward_text_points_status_lower);
+            textStatusUpper = view.findViewById(R.id.fragment_reward_text_points_status_upper);
         }
     }
 

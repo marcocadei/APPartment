@@ -153,8 +153,11 @@
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
-    <string name="fragment_reward_text_status_row_1">Premio</string>
-    <string name="fragment_reward_text_status_row_2">richiesto</string>
+    <string name="fragment_reward_text_status_pending_row_1">Attesa</string>
+    <string name="fragment_reward_text_status_pending_row_2">conferma</string>
+    <string name="fragment_reward_text_status_requested_row_1">Premio</string>
+    <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
+    <string name="fragment_reward_text_status_unavailable_row_2">non disponibile</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
