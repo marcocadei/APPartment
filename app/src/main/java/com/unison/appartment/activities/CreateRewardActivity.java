@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,6 +24,7 @@ public class CreateRewardActivity extends FormActivity {
 
     public final static String EXTRA_REWARD_DATA = "rewardData";
 
+    private TextView txtTitle;
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -34,6 +36,9 @@ public class CreateRewardActivity extends FormActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_reward);
+
+        // Modifica dell'activity di destinazione a cui andare quando si chiude il dialog di errore
+        this.errorDialogDestinationActivity = MainActivity.class;
 
         /*
         Impostazione del comportamento della freccia presente sulla toolbar
@@ -48,15 +53,24 @@ public class CreateRewardActivity extends FormActivity {
             }
         });
 
-        // Modifica dell'activity di destinazione a cui andare quando si chiude il dialog di errore
-        this.errorDialogDestinationActivity = MainActivity.class;
-
+        txtTitle = findViewById(R.id.activity_create_reward_text_title);
         inputName = findViewById(R.id.activity_create_reward_input_name_value);
         inputDescription = findViewById(R.id.activity_create_reward_input_description_value);
         inputPoints = findViewById(R.id.activity_create_reward_input_points_value);
         layoutName = findViewById(R.id.activity_create_reward_input_name);
         layoutDescription = findViewById(R.id.activity_create_reward_input_description);
         layoutPoints = findViewById(R.id.activity_create_reward_input_points);
+
+        Intent i = getIntent();
+        Reward reward = (Reward) i.getSerializableExtra(EXTRA_REWARD_DATA);
+        if (reward != null) {
+            // Imposto il titolo opportunamente se devo modificare e non creare un premio
+            toolbar.setTitle(R.string.activity_create_reward_title_edit);
+            txtTitle.setText(R.string.activity_create_reward_title_edit);
+            inputPoints.setText(String.valueOf(reward.getPoints()));
+            inputDescription.setText(reward.getDescription());
+            inputName.setText(reward.getName());
+        }
 
         inputName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -76,14 +90,6 @@ public class CreateRewardActivity extends FormActivity {
                 if (hasFocus) resetErrorMessage(layoutPoints);
             }
         });
-
-        Intent i = getIntent();
-        Reward reward = (Reward) i.getSerializableExtra(EXTRA_REWARD_DATA);
-        if (reward != null) {
-            inputPoints.setText(String.valueOf(reward.getPoints()));
-            inputDescription.setText(reward.getDescription());
-            inputName.setText(reward.getName());
-        }
 
         FloatingActionButton floatConfirm = findViewById(R.id.activity_create_reward_float_confirm);
         floatConfirm.setOnClickListener(new View.OnClickListener() {
