@@ -107,9 +107,7 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
             new DiffUtil.ItemCallback<Reward>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull Reward oldReward, @NonNull Reward newReward) {
-//                    return oldReward.getId().equals(newReward.getId());
-                    // FIXME solo temp
-                    return oldReward.equals(newReward);
+                    return oldReward.getId().equals(newReward.getId());
                 }
                 @Override
                 public boolean areContentsTheSame(@NonNull Reward oldReward, @NonNull Reward newReward) {

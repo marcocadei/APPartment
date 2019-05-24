@@ -27,7 +27,8 @@ import com.unison.appartment.state.Appartment;
  */
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
-    private static final int ADD_REWARD_REQUEST_CODE = 0xA1;
+    private static final int ADD_REWARD_REQUEST_CODE = 1;
+    private static final int DETAIL_REWARD_REQUEST_CODE = 2;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -86,6 +87,12 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
                 listFragment.addReward((Reward) data.getSerializableExtra(CreateRewardActivity.EXTRA_NEW_REWARD));
             }
+        } else  if (requestCode == DETAIL_REWARD_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
+                listFragment.deleteReward( data.getStringExtra(RewardDetailActivity.EXTRA_REWARD_ID));
+            }
         }
     }
 
@@ -103,7 +110,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     public void onRewardListFragmentInteraction(Reward item) {
         Intent i = new Intent(getActivity(), RewardDetailActivity.class);
         i.putExtra(RewardDetailActivity.EXTRA_REWARD_OBJECT, item);
-        startActivity(i);
+        startActivityForResult(i, DETAIL_REWARD_REQUEST_CODE);
     }
 
     @Override

@@ -42,8 +42,12 @@ public class RewardRepository {
 
     public void addReward(Reward newReward) {
         String key = rewardsRef.push().getKey();
-//        newReward.setId(key);
+        newReward.setId(key);
         rewardsRef.child(key).setValue(newReward);
+    }
+
+    public void deleteReward(String id){
+        rewardsRef.child(id).removeValue();
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Reward>> {
@@ -52,7 +56,7 @@ public class RewardRepository {
             List<Reward> rewards = new ArrayList<>();
             for (DataSnapshot rewardSnapshot : dataSnapshot.getChildren()) {
                 Reward reward = rewardSnapshot.getValue(Reward.class);
-//                reward.setId(rewardSnapshot.getKey());
+                reward.setId(rewardSnapshot.getKey());
                 rewards.add(reward);
             }
             return rewards;

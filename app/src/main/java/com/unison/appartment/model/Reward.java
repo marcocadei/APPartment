@@ -16,6 +16,8 @@ public class Reward implements Serializable {
 
     private static List<Reward> rewardsList = new ArrayList<>();
 
+    @Exclude
+    private String id;
     private String name;
     @Nullable
     private String description;
@@ -43,6 +45,16 @@ public class Reward implements Serializable {
 
     public void setReservation(@Nullable String reservation) {
         this.reservation = reservation;
+    }
+
+    @Exclude
+    public String getId() {
+        return id;
+    }
+
+    @Exclude
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

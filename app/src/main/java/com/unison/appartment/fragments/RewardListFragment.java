@@ -131,6 +131,10 @@ public class RewardListFragment extends Fragment {
         viewModel.addReward(newReward);
     }
 
+    public void deleteReward(String id) {
+        viewModel.deleteReward(id);
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity

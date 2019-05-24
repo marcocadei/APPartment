@@ -3,6 +3,7 @@ package com.unison.appartment.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class RewardDetailActivity extends AppCompatActivity {
 
     // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME
     public final static String EXTRA_REWARD_OBJECT = "rewardObject";
+    public final static String EXTRA_REWARD_ID = "rewardId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        Reward reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
+        final Reward reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
 
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
@@ -118,6 +120,17 @@ public class RewardDetailActivity extends AppCompatActivity {
             else {
                 btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_available_masters));
             }
+
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO mettere anche l'annulla richiesta
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra(EXTRA_REWARD_ID, reward.getId());
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                }
+            });
         }
     }
 
