@@ -198,8 +198,9 @@ public class RewardDetailActivity extends AppCompatActivity {
         if (Appartment.getInstance().getHomeUser().getRole() != Home.ROLE_SLAVE) {
             if (item.getItemId() == R.id.activity_reward_detail_toolbar_edit) {
                 Intent i = new Intent(this, CreateRewardActivity.class);
-                startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
                 i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
+                startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
+                setResult(69);
                 finish();
                 return true;
             }
@@ -241,6 +242,5 @@ public class RewardDetailActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
-
 
 }
