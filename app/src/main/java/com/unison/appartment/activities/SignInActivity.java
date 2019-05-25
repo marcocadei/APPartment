@@ -121,7 +121,7 @@ public class SignInActivity extends FormActivity {
     // Listener processo di lettura dal database del nuovo utente
     final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             Appartment.getInstance().setUser((User) object);
             moveToNextActivity(UserProfileActivity.class);
             dismissProgress();

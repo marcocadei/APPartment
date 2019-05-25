@@ -2,6 +2,7 @@ package com.unison.appartment.state;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 

@@ -1,5 +1,6 @@
 package com.unison.appartment.model;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 import java.util.Objects;
@@ -21,6 +22,8 @@ public class HomeUser {
 
     private final static int DEFAULT_POINTS = 0;
 
+    @Exclude
+    private String userId;
     private String nickname;
     private int points;
     @PropertyName(ATTRIBUTE_TOTAL_EARNED_POINTS)
@@ -70,6 +73,16 @@ public class HomeUser {
         this.imagePosts = imagePosts;
         this.rejectedTasks = rejectedTasks;
         this.unlockedAchievements = unlockedAchievements;
+    }
+
+    @Exclude
+    public String getUserId() {
+        return userId;
+    }
+
+    @Exclude
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getNickname() {

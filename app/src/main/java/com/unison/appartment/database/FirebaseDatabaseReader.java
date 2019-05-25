@@ -18,7 +18,7 @@ public class FirebaseDatabaseReader implements DatabaseReader {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    listener.onReadSuccess(dataSnapshot.getValue(type));
+                    listener.onReadSuccess(dataSnapshot.getKey(), dataSnapshot.getValue(type));
                 }
                 else {
                     listener.onReadEmpty();

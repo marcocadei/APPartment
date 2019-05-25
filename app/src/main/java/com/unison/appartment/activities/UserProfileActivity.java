@@ -212,7 +212,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     // Listener processo di lettura nel database della casa in cui si vuole entrare
     final DatabaseReaderListener dbReaderHomeListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             Home home = (Home) object;
             Appartment.getInstance().setHome(home);
             databaseReader.retrieveHomeUser(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
@@ -232,12 +232,14 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     // Listener processo di lettura nel database dell'oggetto HomeUser
     final DatabaseReaderListener dbReaderHomeUserListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             /*
             Selezionata una voce dalla lista delle case, l'utente deve infine essere portato alla
             MainActivity della casa selezionata.
             */
-            Appartment.getInstance().setHomeUser((HomeUser) object);
+            HomeUser homeUser = (HomeUser) object;
+            homeUser.setUserId(key);
+            Appartment.getInstance().setHomeUser(homeUser);
             moveToNextActivity(MainActivity.class, false);
             dismissProgress();
         }

@@ -215,7 +215,7 @@ public class JoinHomeActivity extends FormActivity {
     // Listener processo di lettura nel database della casa in cui si vuole entrare
     final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             home = (Home)object;
             String insertedPassword = inputPassword.getText().toString();
             String homePassword = home.getPassword();

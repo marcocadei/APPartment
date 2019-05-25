@@ -246,7 +246,7 @@ public class CreateHomeActivity extends FormActivity {
     // Listener processo di lettura nel database della casa che si vuole creare
     final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             // Esiste già una casa con il nome specificato dall'utente
             layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
             dismissProgress();
