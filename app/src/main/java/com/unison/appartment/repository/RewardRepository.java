@@ -74,7 +74,7 @@ public class RewardRepository {
         rewardsRef.child(rewardId).updateChildren(childUpdates);
     }
 
-    public void confirmRequest(String rewardId, String userId) {
+    public void confirmRequest(Reward reward, String userId) {
         /*
         Precondizione: L'utente ha abbastanza punti per ritirare il premio, e il saldo punti al
         termine dell'operazione non è negativo.
@@ -82,15 +82,15 @@ public class RewardRepository {
         Map<String, Object> childUpdates = new HashMap<>();
         String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                rewardId;
+                reward.getId();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
                 userId;
         childUpdates.put(rewardsPath, null);
-        // FIXME ora salva sempre 100 punti, cambiare quando nei 4 oggetti magici abbiamo anche tutti gli homeuser della casa corrente
-        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, (int)(Math.random() * 100));
-        // FIXME come sopra ma per il campo claimed-rewards
-        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, (int)(Math.random() * 100));
+        // I punti diminuiscono di una quantità pari ai punti associati al premio ottenuto
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(userId).getPoints() - reward.getPoints());
+        // I claimed rewards aumentano di uno
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Appartment.getInstance().getHomeUser(userId).getClaimedRewards() + 1);
         rootRef.updateChildren(childUpdates);
     }
 

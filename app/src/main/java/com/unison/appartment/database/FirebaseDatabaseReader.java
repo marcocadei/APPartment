@@ -10,6 +10,11 @@ import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class FirebaseDatabaseReader implements DatabaseReader {
     @Override
     public void read(final String path, final DatabaseReaderListener listener, final Class type) {
@@ -18,7 +23,38 @@ public class FirebaseDatabaseReader implements DatabaseReader {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    listener.onReadSuccess(dataSnapshot.getValue(type));
+                    listener.onReadSuccess(dataSnapshot.getKey(), dataSnapshot.getValue(type));
+                }
+                else {
+                    listener.onReadEmpty();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                /*
+                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+                la situazione non può essere risolta dall'utente.
+                 */
+                listener.onReadCancelled(databaseError);
+            }
+        });
+    }
+
+    @Override
+    public void readList(final String path, final DatabaseReaderListener listener, final Class type) {
+        DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(path);
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Object> map = new HashMap<>();
+                    for (DataSnapshot homeUserSnapshot : dataSnapshot.getChildren()) {
+                        map.put(homeUserSnapshot.getKey(), homeUserSnapshot.getValue(type));
+                    }
+                    listener.onReadSuccess(dataSnapshot.getKey(), map);
                 }
                 else {
                     listener.onReadEmpty();
@@ -52,10 +88,10 @@ public class FirebaseDatabaseReader implements DatabaseReader {
     }
 
     @Override
-    public void retrieveHomeUser(String homeName, String uid, DatabaseReaderListener listener) {
-        String path = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
-                DatabaseConstants.SEPARATOR + uid;
-        read(path, listener, HomeUser.class);
+    public void retrieveHomeUsers(String homeName, String uid, DatabaseReaderListener listener) {
+        String path = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName /*+
+                DatabaseConstants.SEPARATOR + uid*/;
+        readList(path, listener, HomeUser.class);
     }
 
     @Override

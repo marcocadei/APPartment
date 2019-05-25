@@ -20,7 +20,7 @@ public class MyApplication extends Application {
         Senza questa riga alla chiusura dell'app si perdono i dati e se la si riapre senza rete
         si continua a vedere la progress bar.
          */
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         MyApplication.context = getApplicationContext();
     }
 

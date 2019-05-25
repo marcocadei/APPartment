@@ -39,6 +39,7 @@ import com.unison.appartment.utils.ImageUtils;
 
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Classe che rappresenta l'Activity per visualizzare il profilo dell'utente e la lista di case
@@ -65,7 +66,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         // Quando entro in quest activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
         Appartment appState = Appartment.getInstance();
         appState.resetHome();
-        appState.resetHomeUser();
+        appState.resetHomeUsers();
         appState.resetUserHome();
 
         // Supporto per la toolbar
@@ -212,10 +213,10 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     // Listener processo di lettura nel database della casa in cui si vuole entrare
     final DatabaseReaderListener dbReaderHomeListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             Home home = (Home) object;
             Appartment.getInstance().setHome(home);
-            databaseReader.retrieveHomeUser(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
+            databaseReader.retrieveHomeUsers(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
         }
 
         @Override
@@ -232,12 +233,12 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     // Listener processo di lettura nel database dell'oggetto HomeUser
     final DatabaseReaderListener dbReaderHomeUserListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             /*
             Selezionata una voce dalla lista delle case, l'utente deve infine essere portato alla
             MainActivity della casa selezionata.
             */
-            Appartment.getInstance().setHomeUser((HomeUser) object);
+            Appartment.getInstance().setHomeUsers((Map<String, HomeUser>)object);
             moveToNextActivity(MainActivity.class, false);
             dismissProgress();
         }

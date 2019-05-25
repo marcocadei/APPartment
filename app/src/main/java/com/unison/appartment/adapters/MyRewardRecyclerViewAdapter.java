@@ -67,7 +67,7 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
         else {
             ViewHolderRequestedReward requestedRewardHolder = (ViewHolderRequestedReward) holder;
             Resources res = MyApplication.getAppContext().getResources();
-            if (Appartment.getInstance().getHomeUser().getRole() != Home.ROLE_SLAVE) {
+            if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE) {
                 requestedRewardHolder.textStatusUpper.setText(res.getString(R.string.fragment_reward_text_status_pending_row_1));
                 requestedRewardHolder.textStatusLower.setText(res.getString(R.string.fragment_reward_text_status_pending_row_2));
             }

@@ -26,6 +26,8 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.UserHome;
 
+import java.util.Map;
+
 /**
  * Classe che rappresenta l'Activity per creare una nuova casa
  */
@@ -209,10 +211,8 @@ public class CreateHomeActivity extends FormActivity {
         public void onWriteSuccess() {
             Appartment appState = Appartment.getInstance();
             appState.setHome(createHome());
-            appState.setHomeUser(createHomeUser());
             appState.setUserHome(createUserHome());
-            moveToNextActivity(MainActivity.class);
-            dismissProgress();
+            databaseReader.retrieveHomeUsers(createHome().getName(), auth.getCurrentUserUid(),  dbReaderHomeUserListener);
         }
 
         @Override
@@ -243,10 +243,29 @@ public class CreateHomeActivity extends FormActivity {
         }
     };
 
+    final DatabaseReaderListener dbReaderHomeUserListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(String key, Object object) {
+            Appartment.getInstance().setHomeUsers((Map<String, HomeUser>)object);
+            moveToNextActivity(MainActivity.class);
+            dismissProgress();
+        }
+
+        @Override
+        public void onReadEmpty() {
+            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+        }
+    };
+
     // Listener processo di lettura nel database della casa che si vuole creare
     final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
         @Override
-        public void onReadSuccess(Object object) {
+        public void onReadSuccess(String key, Object object) {
             // Esiste già una casa con il nome specificato dall'utente
             layoutHomeName.setError(getString(R.string.form_error_duplicate_homename));
             dismissProgress();
