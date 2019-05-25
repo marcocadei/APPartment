@@ -45,7 +45,6 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("SERVIZIO", Appartment.getInstance().getHome().getName());
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }

@@ -69,8 +69,6 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("SERVIZIO", Appartment.getInstance().getHome().getName());
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
 
