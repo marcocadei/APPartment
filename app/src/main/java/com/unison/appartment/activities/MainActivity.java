@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.unison.appartment.AppartmentService;
 import com.unison.appartment.fragments.FamilyFragment;
 import com.unison.appartment.fragments.MessagesFragment;
 import com.unison.appartment.R;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Avvio il servizio che mantiene aggiornato lo stato
+        Intent intent = new Intent(this, AppartmentService.class);
+        startService(intent);
 
         // Precondizione: Quando si arriva in questa activity, TUTTI gli oggetti della classe
         // Appartment sono stati settati
@@ -149,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
+
+                // Fermo il servizio che mantiene aggiornato lo stato
+                Intent intent = new Intent(this, AppartmentService.class);
+                stopService(intent);
                 return true;
             }
 

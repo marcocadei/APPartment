@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentListener;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.activities.ImageDetailActivity;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.ImageUtils;
 
 
@@ -42,6 +45,7 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("SERVIZIO", Appartment.getInstance().getHome().getName());
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages, container, false);
     }

@@ -57,24 +57,6 @@ public class Appartment {
     public void setHome(@NonNull Home home) {
         setSharedPreferencesValue(SharedPreferencesConstants.HOME_KEY, new Gson().toJson(home));
         this.home = home;
-        /*
-        È necessario mantenere l'oggetto casa continuamente aggiornato perché il "name" e il "conversionFactor"
-        sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
-         */
-        DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + home.getName());
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    setHomeFB(dataSnapshot.getValue(Home.class));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void setHomeFB(Home home) {
@@ -147,7 +129,7 @@ public class Appartment {
 
     public HomeUser getHomeUser(String uid) {
         if (homeUsers == null) {
-            homeUsers = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), new TypeToken<Map<String, Object>>() { }.getType());
+            homeUsers = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), new TypeToken<HashMap<String, Object>>() { }.getType());
         }
         return homeUsers.get(uid);
     }
