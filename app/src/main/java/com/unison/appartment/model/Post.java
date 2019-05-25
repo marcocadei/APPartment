@@ -1,11 +1,13 @@
 package com.unison.appartment.model;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Classe astratta che rappresenta un post della bacheca
+ * Classe che rappresenta un post della bacheca
  * Un post può essere del testo, un'immagine o un audio
  */
 public class Post {
@@ -15,6 +17,8 @@ public class Post {
 
     private static List<Post> postList = new ArrayList<>();
 
+    @Exclude
+    private String id;
     private int type;
     private String content;
     private String author;
@@ -41,6 +45,16 @@ public class Post {
 
     public static List<Post> getPostList() {
         return postList;
+    }
+
+    @Exclude
+    public String getId() {
+        return id;
+    }
+
+    @Exclude
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getType() {
