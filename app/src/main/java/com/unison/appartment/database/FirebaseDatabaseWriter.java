@@ -62,7 +62,6 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
             Allora ho pensato a Glide che già uso per caricare le immagini e difatto risolve questo problema internamente.
             L'unica differenza è che di solito lo uso per caricare in un ImageView, mentre in questo caso
             carico il risultato in un Bitmap che poi mando allo storage di firebase
-            TODO: usare un compressore migliore, es: https://github.com/zetbaitsu/Compressor
              */
             Glide.with(MyApplication.getAppContext()).asBitmap().load(newUser.getImage()).into(new CustomTarget<Bitmap>() {
                 @Override
