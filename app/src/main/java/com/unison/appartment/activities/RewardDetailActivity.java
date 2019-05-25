@@ -34,9 +34,9 @@ public class RewardDetailActivity extends AppCompatActivity {
 
     private final static int EDIT_REWARD_REQUEST_CODE = 101;
 
-    public final static int RESULT_OK = 0;
-    public final static int RESULT_EDITED = 1;
-    public final static int RESULT_NOT_EDITED = 2;
+    public final static int RESULT_OK = 200;
+    public final static int RESULT_EDITED = 201;
+    public final static int RESULT_NOT_EDITED = 202;
 
     private Reward reward;
 
