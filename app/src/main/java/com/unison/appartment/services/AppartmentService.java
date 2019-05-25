@@ -11,8 +11,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.database.DatabaseConstants;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
+import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 
 import java.util.HashMap;
@@ -35,6 +37,7 @@ public class AppartmentService extends Service {
          */
         listenHome();
         listenHomeUsers();
+        listenUserHome();
     }
 
     private void listenHome() {
@@ -73,6 +76,27 @@ public class AppartmentService extends Service {
                         homeUsers.put(homeUserSnapshot.getKey(), homeUserSnapshot.getValue(HomeUser.class));
                     }
                     Appartment.getInstance().setHomeUsers(homeUsers);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void listenUserHome() {
+        /*
+        È necessario mantenere l'oggetto casa continuamente aggiornato perché il "name" e il "conversionFactor"
+        sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
+         */
+        DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + new FirebaseAuth().getCurrentUserUid() + DatabaseConstants.SEPARATOR  + Appartment.getInstance().getHome().getName());
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Appartment.getInstance().setUserHome(dataSnapshot.getValue(UserHome.class));
                 }
             }
 
