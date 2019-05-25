@@ -242,7 +242,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_RESERVE);
         returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
-        returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getUser().getName());
+        returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname());
         setResult(RESULT_OK, returnIntent);
         finish();
     }
