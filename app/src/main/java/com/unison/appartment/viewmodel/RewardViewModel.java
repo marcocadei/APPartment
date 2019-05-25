@@ -42,7 +42,7 @@ public class RewardViewModel extends ViewModel {
         repository.cancelRequest(rewardId);
     }
 
-    public void confirmRequest(String rewardId, String userId) {
-        repository.confirmRequest(rewardId, userId);
+    public void confirmRequest(Reward reward, String userId) {
+        repository.confirmRequest(reward, userId);
     }
 }

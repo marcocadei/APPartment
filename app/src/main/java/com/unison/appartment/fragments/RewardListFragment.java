@@ -147,8 +147,8 @@ public class RewardListFragment extends Fragment {
         viewModel.cancelRequest(rewardId);
     }
 
-    public void confirmRequest(String rewardId, String userId) {
-        viewModel.confirmRequest(rewardId, userId);
+    public void confirmRequest(Reward reward, String userId) {
+        viewModel.confirmRequest(reward, userId);
     }
 
 

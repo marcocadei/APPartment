@@ -11,11 +11,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Classe che rappresenta lo stato globale dell'applicazione
@@ -29,7 +33,7 @@ public class Appartment {
     private Home home;
     private User user;
     private UserHome userHome;
-    private HomeUser homeUser;
+    private Map<String, HomeUser> homeUsers;
 
     private void setSharedPreferencesValue(final String key, final String jsonValue) {
         SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
@@ -131,27 +135,27 @@ public class Appartment {
         return userHome;
     }
 
-    public void setHomeUser(@NonNull HomeUser homeUser) {
-        setSharedPreferencesValue(SharedPreferencesConstants.HOMEUSER_KEY, new Gson().toJson(homeUser));
-        this.homeUser = homeUser;
+    public void setHomeUsers(@NonNull Map<String, HomeUser> homeUsers) {
+        setSharedPreferencesValue(SharedPreferencesConstants.HOMEUSER_KEY, new Gson().toJson(homeUsers));
+        this.homeUsers = homeUsers;
     }
 
-    public void resetHomeUser() {
+    public void resetHomeUsers() {
         removeSharedPreferencesValue(SharedPreferencesConstants.HOMEUSER_KEY);
-        this.homeUser = null;
+        this.homeUsers = null;
     }
 
-    public HomeUser getHomeUser() {
-        if (homeUser == null) {
-            homeUser = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), HomeUser.class);
+    public HomeUser getHomeUser(String uid) {
+        if (homeUsers == null) {
+            homeUsers = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), new TypeToken<Map<String, Object>>() { }.getType());
         }
-        return homeUser;
+        return homeUsers.get(uid);
     }
 
     public void clearAll() {
         resetUser();
         resetHome();
         resetUserHome();
-        resetHomeUser();
+        resetHomeUsers();
     }
 }

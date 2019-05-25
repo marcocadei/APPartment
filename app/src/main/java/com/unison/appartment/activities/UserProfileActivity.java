@@ -39,6 +39,7 @@ import com.unison.appartment.utils.ImageUtils;
 
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Classe che rappresenta l'Activity per visualizzare il profilo dell'utente e la lista di case
@@ -65,7 +66,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         // Quando entro in quest activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
         Appartment appState = Appartment.getInstance();
         appState.resetHome();
-        appState.resetHomeUser();
+        appState.resetHomeUsers();
         appState.resetUserHome();
 
         // Supporto per la toolbar
@@ -215,7 +216,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         public void onReadSuccess(String key, Object object) {
             Home home = (Home) object;
             Appartment.getInstance().setHome(home);
-            databaseReader.retrieveHomeUser(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
+            databaseReader.retrieveHomeUsers(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
         }
 
         @Override
@@ -237,9 +238,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
             Selezionata una voce dalla lista delle case, l'utente deve infine essere portato alla
             MainActivity della casa selezionata.
             */
-            HomeUser homeUser = (HomeUser) object;
-            homeUser.setUserId(key);
-            Appartment.getInstance().setHomeUser(homeUser);
+            Appartment.getInstance().setHomeUsers((Map<String, HomeUser>)object);
             moveToNextActivity(MainActivity.class, false);
             dismissProgress();
         }

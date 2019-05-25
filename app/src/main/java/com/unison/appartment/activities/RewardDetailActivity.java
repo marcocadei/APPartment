@@ -91,7 +91,7 @@ public class RewardDetailActivity extends AppCompatActivity {
 
         final String userId = new FirebaseAuth().getCurrentUserUid();
 
-        if (Appartment.getInstance().getHomeUser().getRole() == Home.ROLE_SLAVE) {
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
             /*
             Se l'utente è uno slave, l'unico bottone che viene visualizzato è quello per richiedere il
             premio (disabilitato se il premio se è già stato richiesto).
@@ -108,7 +108,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (Appartment.getInstance().getHomeUser().getPoints() < reward.getPoints()) {
+                        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getPoints() < reward.getPoints()) {
                             Snackbar.make(findViewById(R.id.activity_reward_detail),
                                     getString(R.string.error_not_enough_points),
                                     Snackbar.LENGTH_LONG).show();
@@ -154,7 +154,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (Appartment.getInstance().getHomeUser().getPoints() < reward.getPoints()) {
+                        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getPoints() < reward.getPoints()) {
                             Snackbar.make(findViewById(R.id.activity_reward_detail),
                                     getString(R.string.error_not_enough_points),
                                     Snackbar.LENGTH_LONG).show();
@@ -191,7 +191,7 @@ public class RewardDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (Appartment.getInstance().getHomeUser().getRole() != Home.ROLE_SLAVE) {
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE) {
             getMenuInflater().inflate(R.menu.activity_reward_detail_toolbar, menu);
             return true;
         }
@@ -200,7 +200,7 @@ public class RewardDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (Appartment.getInstance().getHomeUser().getRole() != Home.ROLE_SLAVE) {
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE) {
             if (item.getItemId() == R.id.activity_reward_detail_toolbar_edit) {
                 Intent i = new Intent(this, CreateRewardActivity.class);
                 i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
@@ -231,7 +231,7 @@ public class RewardDetailActivity extends AppCompatActivity {
     private void sendConfirmRequestData(String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CONFIRM);
-        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
+        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward);
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
         setResult(RESULT_OK, returnIntent);
         finish();
