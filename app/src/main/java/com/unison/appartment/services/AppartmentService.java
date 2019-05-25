@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -44,6 +44,16 @@ public class AppartmentService extends Service {
 
             }
         });
+    }
+
+    /*
+    Questo consente di far ripartire il servizio nel caso in cui sia ucciso dal sistema
+    https://stackoverflow.com/questions/45005648/how-to-restart-android-service-if-killed
+     */
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
+        return Service.START_STICKY;
     }
 
     @Override

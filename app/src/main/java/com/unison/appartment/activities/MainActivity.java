@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.unison.appartment.AppartmentService;
+import com.unison.appartment.services.AppartmentService;
 import com.unison.appartment.fragments.FamilyFragment;
 import com.unison.appartment.fragments.MessagesFragment;
 import com.unison.appartment.R;

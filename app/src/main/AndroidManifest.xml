@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".AppartmentService"
+            android:name=".services.AppartmentService"
             android:enabled="true"
             android:exported="true"></service>
 
