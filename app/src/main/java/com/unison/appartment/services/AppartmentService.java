@@ -12,7 +12,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.Home;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.state.Appartment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AppartmentService extends Service {
     public AppartmentService() {
@@ -21,8 +25,16 @@ public class AppartmentService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        /*
+        NB
+        Per l'utente non ha senso tenere i dati aggiornati con firebase perché solo lui può modificare i
+        propri dati andando nella UserProfileActivity, ma se ci va e li modifica allora poi quando rientra
+        nella MainActivity avremo già l'oggetto aggiornato.
+        Per gli altri oggetti invece è necessario il continuo aggiornamento perché possono essere modificati
+        da più fonti.
+         */
         listenHome();
+        listenHomeUsers();
     }
 
     private void listenHome() {
@@ -36,6 +48,31 @@ public class AppartmentService extends Service {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     Appartment.getInstance().setHome(dataSnapshot.getValue(Home.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void listenHomeUsers() {
+        /*
+        È necessario mantenere la lista di HomeUser continuamente aggiornata perché diversi attributi, tra
+        cui i points, sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
+         */
+        DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, HomeUser> homeUsers = new HashMap<>();
+                    for (DataSnapshot homeUserSnapshot : dataSnapshot.getChildren()) {
+                        homeUsers.put(homeUserSnapshot.getKey(), homeUserSnapshot.getValue(HomeUser.class));
+                    }
+                    Appartment.getInstance().setHomeUsers(homeUsers);
                 }
             }
 

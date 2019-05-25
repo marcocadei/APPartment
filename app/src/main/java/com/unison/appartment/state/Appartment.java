@@ -78,14 +78,6 @@ public class Appartment {
     public void setUser(@NonNull User user) {
         setSharedPreferencesValue(SharedPreferencesConstants.USER_KEY, new Gson().toJson(user));
         this.user = user;
-        /*
-        NB
-        Per l'utente non ha senso tenere i dati aggiornati con firebase perché solo lui può modificare i
-        propri dati andando nella UserProfileActivity, ma se ci va e li modifica allora poi quando rientra
-        nella MainActivity avremo già l'oggetto aggiornato.
-        Per gli altri oggetti invece è necessario il continuo aggiornamento perché possono essere modificati
-        da più fonti.
-         */
     }
 
     public void resetUser() {
