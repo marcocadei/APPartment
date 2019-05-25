@@ -83,11 +83,12 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         ProgressBar progressBar = getView().findViewById(R.id.fragment_messages_progress);
         progressBar.setVisibility(View.GONE);
 
-
+        View emptyListLayout = getView().findViewById(R.id.fragment_messages_layout_empty_list);
         // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
         if (elements == 0) {
-            View emptyListLayout = getView().findViewById(R.id.fragment_messages_layout_empty_list);
             emptyListLayout.setVisibility(View.VISIBLE);
+        } else {
+            emptyListLayout.setVisibility(View.GONE);
         }
     }
 }
