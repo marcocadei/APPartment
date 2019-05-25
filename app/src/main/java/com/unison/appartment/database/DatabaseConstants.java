@@ -5,6 +5,9 @@ public class DatabaseConstants {
     public final static String ROOT = "/";
     public final static String SEPARATOR = "/";
 
+    // Post
+    public final static String POSTS = "posts";
+
     // Case
     public final static String HOMES = "homes";
     public final static String HOMES_HOMENAME_PASSWORD = "password";
