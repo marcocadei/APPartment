@@ -1,5 +1,8 @@
 package com.unison.appartment.adapters;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.media.MediaPlayer;
@@ -14,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
+import com.unison.appartment.model.UserHome;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,10 +27,7 @@ import java.util.List;
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Post} e che effettua una
  * chiamata al {@link com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener listener} specificato.
  */
-public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private final List<Post> postList;
-    // private final OnListPostFragmentListener listener;
+public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.ViewHolder> {
 
     // Player usato per la riproduzione dei file audio
     private MediaPlayer player = null;
@@ -34,8 +35,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     private final OnPostListFragmentInteractionListener listener;
 
-    public MyPostRecyclerViewAdapter(List<Post> postList, OnPostListFragmentInteractionListener listener) {
-        this.postList = postList;
+    public MyPostRecyclerViewAdapter(OnPostListFragmentInteractionListener listener) {
+        super(MyPostRecyclerViewAdapter.DIFF_CALLBACK);
         this.listener = listener;
     }
 
@@ -67,14 +68,14 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
                 ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
-                Post textPostItem = postList.get(position);
+                Post textPostItem = getItem(position);
                 holderTextPost.textPostTxt.setText(textPostItem.getContent());
                 holderTextPost.textPostSender.setText(textPostItem.getAuthor());
                 holderTextPost.textPostDate.setText(format.format(textPostItem.getTimestamp()));
                 break;
             case Post.IMAGE_POST:
                 final ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
-                final Post imagePostItem = postList.get(position);
+                final Post imagePostItem = getItem(position);
                 // Carico l'immagine con una libreria che effettua il resize dell'immagine in modo
                 // efficiente, altrimenti se caricassi l'intera immagine già con poche immagini la
                 // recyclerView andrebbe a scatti
@@ -92,7 +93,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 break;
             case Post.AUDIO_POST:
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
-                final Post audioPostItem = postList.get(position);
+                final Post audioPostItem = getItem(position);
                 holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
                 holderAudioPost.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
                 holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
@@ -138,16 +139,6 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         holderAudioPost.audioPostState.setText(
                 holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
         );
-    }
-
-    @Override
-    public int getItemCount() {
-        return postList.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return postList.get(position).getType();
     }
 
     public class ViewHolderTextPost extends RecyclerView.ViewHolder {
@@ -196,4 +187,17 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             audioPostDate = view.findViewById(R.id.fragment_audio_post_date);
         }
     }
+
+    public static final DiffUtil.ItemCallback<Post> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Post>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull Post oldItem, @NonNull Post newItem) {
+                    return oldItem.getId().equals(newItem.getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull Post oldItem, @NonNull Post newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
 }

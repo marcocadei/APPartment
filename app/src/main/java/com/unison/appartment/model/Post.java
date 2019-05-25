@@ -5,6 +5,7 @@ import com.google.firebase.database.Exclude;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe che rappresenta un post della bacheca
@@ -87,5 +88,21 @@ public class Post {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return type == post.type &&
+                timestamp == post.timestamp &&
+                content.equals(post.content) &&
+                author.equals(post.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, content, author, timestamp);
     }
 }
