@@ -17,11 +17,10 @@ import com.bumptech.glide.Glide;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
-import com.unison.appartment.model.UserHome;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.List;
+
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Post} e che effettua una

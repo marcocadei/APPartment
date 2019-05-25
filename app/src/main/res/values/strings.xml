@@ -170,5 +170,6 @@
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
+    <string name="fragment_messages_empty_homes_list">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
 
 </resources>

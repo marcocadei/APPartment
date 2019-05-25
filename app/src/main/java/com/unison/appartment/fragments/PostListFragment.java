@@ -1,12 +1,15 @@
 package com.unison.appartment.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -16,10 +19,11 @@ import android.widget.ImageView;
 
 import com.unison.appartment.adapters.MyPostRecyclerViewAdapter;
 import com.unison.appartment.R;
-import com.unison.appartment.activities.MainActivity;
 import com.unison.appartment.model.Post;
+import com.unison.appartment.viewmodel.PostViewModel;
 
-import java.util.Date;
+import java.util.List;
+
 
 /**
  * Fragment che rappresenta una lista di Post
@@ -29,8 +33,10 @@ public class PostListFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
+    private PostViewModel viewModel;
+
     // Recyclerview e Adapter della recyclerview
-    private RecyclerView.Adapter myAdapter;
+    private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
     private OnPostListFragmentInteractionListener listener;
@@ -58,6 +64,7 @@ public class PostListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        viewModel = ViewModelProviders.of(getActivity()).get(PostViewModel.class);
     }
 
     @Override
@@ -75,8 +82,10 @@ public class PostListFragment extends Fragment {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            myAdapter = new MyPostRecyclerViewAdapter(Post.getPostList(), listener);
+            myAdapter = new MyPostRecyclerViewAdapter(listener);
             myRecyclerView.setAdapter(myAdapter);
+
+            readPosts();
         }
         return view;
     }
@@ -99,26 +108,40 @@ public class PostListFragment extends Fragment {
         listener = null;
     }
 
-    public void addPost(String content, int postType) {
-        Post post;
-        switch(postType) {
-            case Post.TEXT_POST:
-                post = new Post(Post.TEXT_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
-                break;
-            case Post.IMAGE_POST:
-                post = new Post(Post.IMAGE_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
-                break;
-            case Post.AUDIO_POST:
-                post = new Post(Post.AUDIO_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
-                break;
-            default:
-                // TODO errore, non si deve entrare qui
-                post = null;
-        }
+    /**
+     * Metodo per leggere da Firebase Database la lista dei post
+     */
+    private void readPosts() {
+        LiveData<List<Post>> postLiveData = viewModel.getPostLiveData();
+        postLiveData.observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                myAdapter.submitList(posts);
+                listener.onHomeListElementsLoaded(posts.size());
+            }
+        });
+    }
 
-        Post.addPost(0, post);
-        myAdapter.notifyItemInserted(0);
-        myRecyclerView.scrollToPosition(0);
+    public void addPost(String content, int postType) {
+//        Post post;
+//        switch(postType) {
+//            case Post.TEXT_POST:
+//                post = new Post(Post.TEXT_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+//                break;
+//            case Post.IMAGE_POST:
+//                post = new Post(Post.IMAGE_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+//                break;
+//            case Post.AUDIO_POST:
+//                post = new Post(Post.AUDIO_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+//                break;
+//            default:
+//                // TODO errore, non si deve entrare qui
+//                post = null;
+//        }
+//
+//        Post.addPost(0, post);
+//        myAdapter.notifyItemInserted(0);
+//        myRecyclerView.scrollToPosition(0);
     }
 
     /**
@@ -128,5 +151,11 @@ public class PostListFragment extends Fragment {
      */
     public interface OnPostListFragmentInteractionListener {
         void onPostListFragmentOpenImage(ImageView image, String imageUri);
+
+        /**
+         * Callback invocato quando viene completato il caricamento della lista dei post.
+         * @param elements Numero di elementi della lista.
+         */
+        void onHomeListElementsLoaded(int elements);
     }
 }

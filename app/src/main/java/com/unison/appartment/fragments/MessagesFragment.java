@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentListener;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
@@ -74,5 +76,18 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, imageUri);
         i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_SQUARE);
         startActivity(i, options.toBundle());
+    }
+
+    @Override
+    public void onHomeListElementsLoaded(int elements) {
+        ProgressBar progressBar = getView().findViewById(R.id.fragment_messages_progress);
+        progressBar.setVisibility(View.GONE);
+
+
+        // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
+        if (elements == 0) {
+            View emptyListLayout = getView().findViewById(R.id.fragment_messages_layout_empty_list);
+            emptyListLayout.setVisibility(View.VISIBLE);
+        }
     }
 }
