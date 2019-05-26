@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,17 +92,17 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 });
                 break;
             case Post.AUDIO_POST:
-                final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
+                playingTrack = (ViewHolderAudioPost) holder;
                 final Post audioPostItem = getItem(position);
-                holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
-                holderAudioPost.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
-                holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
+                playingTrack.audioPostSender.setText(audioPostItem.getAuthor());
+                playingTrack.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
+                playingTrack.audioPostbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         /*if (listener != null) {
                             listener.onListPostFragmentPlayAudio(audioPostItem.getFileName());
                         }*/
-                        handleAudioPlay(audioPostItem, holderAudioPost);
+                        handleAudioPlay(audioPostItem);
                     }
                 });
                 break;
@@ -115,7 +116,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         return getItem(position).getType();
     }
 
-    private void handleAudioPlay(Post audioPostItem, final ViewHolderAudioPost holderAudioPost) {
+    private void handleAudioPlay(Post audioPostItem) {
         // Se qualcosa era già in riproduzione allora la interrompo
         if (player != null) {
             player.release();
@@ -124,19 +125,13 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         }
         player = new MediaPlayer();
         try {
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
             player.setDataSource(audioPostItem.getContent());
-            player.prepare();
-            player.start();
-            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    stopPlay(holderAudioPost);
-                }
-            });
-            playingTrack = holderAudioPost;
+            player.setOnPreparedListener(audioPrepareListener);
+            player.prepareAsync();
         } catch (IOException e) {
         }
-        holderAudioPost.audioPostState.setText(holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
+        playingTrack.audioPostState.setText(playingTrack.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
     }
 
     private void stopPlay(final ViewHolderAudioPost holderAudioPost) {
@@ -144,6 +139,20 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
         );
     }
+
+    MediaPlayer.OnPreparedListener audioPrepareListener = new MediaPlayer.OnPreparedListener() {
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            player.start();
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopPlay(playingTrack);
+                }
+            });
+//            playingTrack = holderAudioPost;
+        }
+    };
 
     public class ViewHolderTextPost extends RecyclerView.ViewHolder {
         public final View mView;
