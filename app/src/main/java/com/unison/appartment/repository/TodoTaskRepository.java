@@ -41,9 +41,9 @@ public class TodoTaskRepository {
     }
 
     public void addTask(UncompletedTask newUncompletedTask) {
-        newUncompletedTask.setCreationDate((-1) * newUncompletedTask.getCreationDate());
         String key = uncompletedTasksRef.push().getKey();
         newUncompletedTask.setId(key);
+        newUncompletedTask.setCreationDate((-1) * newUncompletedTask.getCreationDate());
         uncompletedTasksRef.child(key).setValue(newUncompletedTask);
     }
 

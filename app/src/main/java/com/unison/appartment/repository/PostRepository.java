@@ -45,6 +45,7 @@ public class PostRepository {
     public void addPost(Post newPost) {
         String key = postRef.push().getKey();
         newPost.setId(key);
+        newPost.setTimestamp((-1) * newPost.getTimestamp());
         postRef.child(key).setValue(newPost);
     }
 
@@ -55,6 +56,7 @@ public class PostRepository {
             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                 Post post = postSnapshot.getValue(Post.class);
                 post.setId(postSnapshot.getKey());
+                post.setTimestamp((-1) * post.getTimestamp());
                 posts.add(post);
             }
             return posts;
