@@ -37,11 +37,11 @@ import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.StorageConstants;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.state.Appartment;
-import com.unison.appartment.state.MyApplication;
 import com.unison.appartment.utils.ImageUtils;
 import com.unison.appartment.viewmodel.PostViewModel;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -159,9 +159,9 @@ public class PostListFragment extends Fragment {
             case Post.IMAGE_POST:
                 addImagePost(content, nickname);
                 break;
-//            case Post.AUDIO_POST:
-//                post = new Post(Post.AUDIO_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
-//                break;
+            case Post.AUDIO_POST:
+                addAudioPost(content, nickname);
+                break;
             default:
                 // TODO errore, non si deve entrare qui
         }
@@ -185,8 +185,8 @@ public class PostListFragment extends Fragment {
                 byte[] data = baos.toByteArray();
 
                 // UUID genera un nome univoco per il file che sto caricando
-                final StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_IMAGES+ UUID.randomUUID().toString());
-                UploadTask uploadTask = userImageRef.putBytes(data);
+                final StorageReference postImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_IMAGES+ UUID.randomUUID().toString());
+                UploadTask uploadTask = postImageRef.putBytes(data);
 
                 // Codice della guida per ottenere l'URL di download del media appena caricato
                 uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -195,7 +195,7 @@ public class PostListFragment extends Fragment {
                         if (!task.isSuccessful()) {
                             // TODO gestire errore upload
                         }
-                        return userImageRef.getDownloadUrl();
+                        return postImageRef.getDownloadUrl();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
@@ -214,6 +214,35 @@ public class PostListFragment extends Fragment {
             @Override
             public void onLoadCleared(@Nullable Drawable placeholder) {
 
+            }
+        });
+    }
+
+    public void addAudioPost(String content, String nickname) {
+        final Post post = new Post(Post.AUDIO_POST, content, nickname, System.currentTimeMillis());
+        final StorageReference postAudioRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_AUDIOS+ UUID.randomUUID().toString());
+        Uri uri = Uri.fromFile(new File(content));
+        UploadTask uploadTask = postAudioRef.putFile(uri);
+
+        // Codice della guida per ottenere l'URL di download del media appena caricato
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    // TODO gestire errore upload
+                }
+                return postAudioRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    String audioUrl = task.getResult().toString();
+                    post.setContent(audioUrl);
+                    viewModel.addPost(post);
+                } else {
+                    // TODO gestire errore upload
+                }
             }
         });
     }
