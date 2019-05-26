@@ -79,7 +79,9 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 // Carico l'immagine con una libreria che effettua il resize dell'immagine in modo
                 // efficiente, altrimenti se caricassi l'intera immagine già con poche immagini la
                 // recyclerView andrebbe a scatti
-                Glide.with(holderImagePost.imagePostImg.getContext()).load(imagePostItem.getContent()).into(holderImagePost.imagePostImg);
+                Glide.with(holderImagePost.imagePostImg.getContext())
+                        .load(imagePostItem.getContent())
+                        .into(holderImagePost.imagePostImg);
                 holderImagePost.imagePostSender.setText(imagePostItem.getAuthor());
                 holderImagePost.imagePostDate.setText(format.format(imagePostItem.getTimestamp()));
                 holderImagePost.imagePostImg.setOnClickListener(new View.OnClickListener() {
