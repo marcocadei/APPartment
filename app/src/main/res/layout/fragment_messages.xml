@@ -7,16 +7,56 @@
     android:id="@+id/fragment_messages"
     tools:context=".fragments.MessagesFragment">
 
+    <FrameLayout
+        android:id="@+id/fragment_messages_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_container_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_messages_fragment_insert_post">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/fragment_messages_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_bar_component_height"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
     <fragment
         android:id="@+id/fragment_messages_fragment_insert_post"
         android:name="com.unison.appartment.fragments.InsertPostFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_messages_fragment_list_post"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_messages_layout_empty_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_messages_progress_container"
         tools:layout="@layout/fragment_insert_post" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_messages_layout_empty_list"
+        app:layout_constraintTop_toBottomOf="@id/fragment_messages_fragment_insert_post"
+        app:layout_constraintBottom_toTopOf="@id/fragment_messages_fragment_list_post"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        style="@style/Component.Layout.NestedScrollViewFixedElement">
+
+        <TextView
+            android:id="@+id/fragment_messages_empty_list_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_messages_empty_homes_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <fragment
         android:id="@+id/fragment_messages_fragment_list_post"
@@ -26,7 +66,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_messages_fragment_insert_post"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_messages_layout_empty_list"
         tools:layout="@layout/fragment_post_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -61,7 +61,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                 inputName.getText().toString(),
                 inputDescription.getText().toString(),
                 Integer.valueOf(inputPoints.getText().toString()),
-                (-1) * calendar.getTimeInMillis() // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
+                calendar.getTimeInMillis() // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
         );
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, newUncompletedTask);

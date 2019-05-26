@@ -18,6 +18,7 @@
 
             <TextView
                 android:id="@+id/fragment_audio_post_sender"
+                android:text="@string/placeholder_text"
                 style="@style/Component.TextView.SingleLine.ListItemTitle"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="0dp"
@@ -56,11 +57,23 @@
 
             <TextView
                 android:id="@+id/fragment_audio_post_date"
+                android:text="@string/placeholder_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_audio_post_options"
                 app:layout_constraintTop_toTopOf="@+id/fragment_audio_post_sender" />
+
+            <ImageView
+                android:id="@+id/fragment_audio_post_options"
+                android:src="@drawable/ic_more_vert"
+                android:tint="@color/colorPrimary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

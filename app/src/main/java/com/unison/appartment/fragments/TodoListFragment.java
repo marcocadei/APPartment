@@ -85,6 +85,8 @@ public class TodoListFragment extends Fragment {
             myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    super.onItemRangeInserted(positionStart, itemCount);
                     // Finché i task sono ordinati per data di inserimento positionStart è sempre uguale a 0
                     myRecyclerView.smoothScrollToPosition(positionStart);
                 }

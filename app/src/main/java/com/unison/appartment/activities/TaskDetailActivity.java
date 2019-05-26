@@ -51,7 +51,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         description.setText(uncompletedTask.getDescription());
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis((-1) * uncompletedTask.getCreationDate());
+        calendar.setTimeInMillis(uncompletedTask.getCreationDate());
         creationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(calendar.getTime()));
     }
 }

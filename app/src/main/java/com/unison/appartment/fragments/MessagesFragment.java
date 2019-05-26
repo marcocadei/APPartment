@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentListener;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.activities.ImageDetailActivity;
+import com.unison.appartment.model.Post;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.ImageUtils;
 
@@ -24,6 +27,8 @@ import com.unison.appartment.utils.ImageUtils;
  * Fragment che rappresenta l'intera bacheca
  */
 public class MessagesFragment extends Fragment implements OnInsertPostFragmentListener, OnPostListFragmentInteractionListener {
+
+    private ProgressBar progressBar;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -46,7 +51,11 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messages, container, false);
+        View view =  inflater.inflate(R.layout.fragment_messages, container, false);
+
+        progressBar = view.findViewById(R.id.fragment_messages_progress);
+
+        return view;
     }
 
     @Override
@@ -74,5 +83,40 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, imageUri);
         i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_SQUARE);
         startActivity(i, options.toBundle());
+    }
+
+    @Override
+    public void onHomeListElementsLoaded(int elements) {
+        if (!loading)
+            progressBar.setVisibility(View.GONE);
+
+        View emptyListLayout = getView().findViewById(R.id.fragment_messages_layout_empty_list);
+        // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
+        if (elements == 0) {
+            emptyListLayout.setVisibility(View.VISIBLE);
+        } else {
+            emptyListLayout.setVisibility(View.GONE);
+        }
+    }
+
+    // Variabile ausiliaria usata per indicare che è in corso un caricamento
+    private boolean loading;
+    @Override
+    public void loading(boolean loading) {
+        this.loading = loading;
+        if (loading) {
+            progressBar.setVisibility(View.VISIBLE);
+            Log.d("MESSAGGI", "LOADING");
+        } else {
+            progressBar.setVisibility(View.GONE);
+            Log.d("MESSAGGI", "STOP LOADING");
+        }
+    }
+
+    @Override
+    public void deletePost(Post post) {
+        PostListFragment pf = (PostListFragment)getChildFragmentManager()
+                .findFragmentById(R.id.fragment_messages_fragment_list_post);
+        pf.deletePost(post);
     }
 }

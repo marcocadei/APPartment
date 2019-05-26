@@ -1,25 +1,28 @@
 package com.unison.appartment.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.unison.appartment.adapters.MyPostRecyclerViewAdapter;
 import com.unison.appartment.R;
-import com.unison.appartment.activities.MainActivity;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Post;
+import com.unison.appartment.state.Appartment;
+import com.unison.appartment.viewmodel.PostViewModel;
+import java.util.List;
 
-import java.util.Date;
 
 /**
  * Fragment che rappresenta una lista di Post
@@ -29,8 +32,10 @@ public class PostListFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
+    private PostViewModel viewModel;
+
     // Recyclerview e Adapter della recyclerview
-    private RecyclerView.Adapter myAdapter;
+    private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
     private OnPostListFragmentInteractionListener listener;
@@ -58,12 +63,22 @@ public class PostListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        viewModel = ViewModelProviders.of(getActivity()).get(PostViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
+
+        // Controllo se è in corso un caricamento e in caso informo il parent che agirà di conseguenza
+        // mostrando ad esempio una progress bar
+        viewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loading) {
+                listener.loading(loading);
+            }
+        });
 
         // Imposto l'adapter
         if (view instanceof RecyclerView) {
@@ -75,8 +90,17 @@ public class PostListFragment extends Fragment {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            myAdapter = new MyPostRecyclerViewAdapter(Post.getPostList(), listener);
+            myAdapter = new MyPostRecyclerViewAdapter(listener);
+            myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    myRecyclerView.smoothScrollToPosition(positionStart);
+                }
+            });
             myRecyclerView.setAdapter(myAdapter);
+
+            readPosts();
         }
         return view;
     }
@@ -99,26 +123,42 @@ public class PostListFragment extends Fragment {
         listener = null;
     }
 
+    /**
+     * Metodo per leggere da Firebase Database la lista dei post
+     */
+    private void readPosts() {
+        LiveData<List<Post>> postLiveData = viewModel.getPostLiveData();
+        postLiveData.observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                myAdapter.submitList(posts);
+                listener.onHomeListElementsLoaded(posts.size());
+            }
+        });
+    }
+
     public void addPost(String content, int postType) {
-        Post post;
+        final Post post;
+        String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
         switch(postType) {
             case Post.TEXT_POST:
-                post = new Post(Post.TEXT_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+                post = new Post(Post.TEXT_POST, content, nickname, System.currentTimeMillis());
                 break;
             case Post.IMAGE_POST:
-                post = new Post(Post.IMAGE_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+                post = new Post(Post.IMAGE_POST, content, nickname, System.currentTimeMillis());
                 break;
             case Post.AUDIO_POST:
-                post = new Post(Post.AUDIO_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
+                post = new Post(Post.AUDIO_POST, content, nickname, System.currentTimeMillis());
                 break;
             default:
                 // TODO errore, non si deve entrare qui
                 post = null;
         }
+        viewModel.addPost(post);
+    }
 
-        Post.addPost(0, post);
-        myAdapter.notifyItemInserted(0);
-        myRecyclerView.scrollToPosition(0);
+    public void deletePost(Post post) {
+        viewModel.deletePost(post);
     }
 
     /**
@@ -128,5 +168,20 @@ public class PostListFragment extends Fragment {
      */
     public interface OnPostListFragmentInteractionListener {
         void onPostListFragmentOpenImage(ImageView image, String imageUri);
+
+        /**
+         * Callback invocato quando viene completato il caricamento della lista dei post.
+         * @param elements Numero di elementi della lista.
+         */
+        void onHomeListElementsLoaded(int elements);
+
+        /**
+         * Callback usata per indicare se si stanno caricando dei contenuti e quindi bisogna
+         * mostrare qualcosa all'utente (es progressbar)
+         * @param loading true se si sta caricando, false altrimenti
+         */
+        void loading(boolean loading);
+
+        void deletePost(Post post);
     }
 }
