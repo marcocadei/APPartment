@@ -173,6 +173,9 @@ public class PostListFragment extends Fragment {
     }
 
     public void addImagePost(String content, String nickname) {
+        // Come prima cosa avviso il parent che sto caricando dei contenuti
+        listener.loading(true);
+
         final Post post = new Post(Post.IMAGE_POST, content, nickname, System.currentTimeMillis());
         Glide.with(getContext()).asBitmap().load(post.getContent()).into(new CustomTarget<Bitmap>() {
             @Override
@@ -185,7 +188,8 @@ public class PostListFragment extends Fragment {
                 byte[] data = baos.toByteArray();
 
                 // UUID genera un nome univoco per il file che sto caricando
-                final StorageReference postImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_IMAGES+ UUID.randomUUID().toString());
+                final StorageReference postImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_IMAGES).
+                        child(Appartment.getInstance().getHome().getName()).child(UUID.randomUUID().toString());
                 UploadTask uploadTask = postImageRef.putBytes(data);
 
                 // Codice della guida per ottenere l'URL di download del media appena caricato
@@ -204,6 +208,9 @@ public class PostListFragment extends Fragment {
                             String imageUrl = task.getResult().toString();
                             post.setContent(imageUrl);
                             viewModel.addPost(post);
+
+                            // Avviso il parent che il caricamento è terminato
+                            listener.loading(false);
                         } else {
                             // TODO gestire errore upload
                         }
@@ -220,7 +227,8 @@ public class PostListFragment extends Fragment {
 
     public void addAudioPost(String content, String nickname) {
         final Post post = new Post(Post.AUDIO_POST, content, nickname, System.currentTimeMillis());
-        final StorageReference postAudioRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_AUDIOS+ UUID.randomUUID().toString());
+        final StorageReference postAudioRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_AUDIOS)
+                .child(Appartment.getInstance().getHome().getName()).child(UUID.randomUUID().toString());
         Uri uri = Uri.fromFile(new File(content));
         UploadTask uploadTask = postAudioRef.putFile(uri);
 
@@ -260,5 +268,12 @@ public class PostListFragment extends Fragment {
          * @param elements Numero di elementi della lista.
          */
         void onHomeListElementsLoaded(int elements);
+
+        /**
+         * Callback usata per indicare se si stanno caricando dei contenuti e quindi bisogna
+         * mostrare qualcosa all'utente (es progressbar)
+         * @param loading true se si sta caricando, false altrimenti
+         */
+        void loading(boolean loading);
     }
 }

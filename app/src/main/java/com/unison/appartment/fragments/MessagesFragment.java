@@ -27,6 +27,8 @@ import com.unison.appartment.utils.ImageUtils;
  */
 public class MessagesFragment extends Fragment implements OnInsertPostFragmentListener, OnPostListFragmentInteractionListener {
 
+    private ProgressBar progressBar;
+
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
@@ -48,7 +50,11 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messages, container, false);
+        View view =  inflater.inflate(R.layout.fragment_messages, container, false);
+
+        progressBar = view.findViewById(R.id.fragment_messages_progress);
+
+        return view;
     }
 
     @Override
@@ -80,8 +86,8 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
 
     @Override
     public void onHomeListElementsLoaded(int elements) {
-        ProgressBar progressBar = getView().findViewById(R.id.fragment_messages_progress);
-        progressBar.setVisibility(View.GONE);
+        if (!loading)
+            progressBar.setVisibility(View.GONE);
 
         View emptyListLayout = getView().findViewById(R.id.fragment_messages_layout_empty_list);
         // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
@@ -89,6 +95,20 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
             emptyListLayout.setVisibility(View.VISIBLE);
         } else {
             emptyListLayout.setVisibility(View.GONE);
+        }
+    }
+
+    // Variabile ausiliaria usata per indicare che è in corso un caricamento
+    private boolean loading;
+    @Override
+    public void loading(boolean loading) {
+        this.loading = loading;
+        if (loading) {
+            progressBar.setVisibility(View.VISIBLE);
+            Log.d("MESSAGGI", "LOADING");
+        } else {
+            progressBar.setVisibility(View.GONE);
+            Log.d("MESSAGGI", "STOP LOADING");
         }
     }
 }
