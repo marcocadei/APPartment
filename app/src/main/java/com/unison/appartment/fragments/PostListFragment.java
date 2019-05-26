@@ -226,6 +226,9 @@ public class PostListFragment extends Fragment {
     }
 
     public void addAudioPost(String content, String nickname) {
+        // Come prima cosa avviso il parent che sto caricando dei contenuti
+        listener.loading(true);
+
         final Post post = new Post(Post.AUDIO_POST, content, nickname, System.currentTimeMillis());
         final StorageReference postAudioRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_AUDIOS)
                 .child(Appartment.getInstance().getHome().getName()).child(UUID.randomUUID().toString());
@@ -248,6 +251,9 @@ public class PostListFragment extends Fragment {
                     String audioUrl = task.getResult().toString();
                     post.setContent(audioUrl);
                     viewModel.addPost(post);
+
+                    // Avviso il parent che il caricamento è terminato
+                    listener.loading(false);
                 } else {
                     // TODO gestire errore upload
                 }
