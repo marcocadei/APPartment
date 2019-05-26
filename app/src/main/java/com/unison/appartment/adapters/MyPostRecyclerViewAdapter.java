@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -69,7 +70,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
                 final ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
-                Post textPostItem = getItem(position);
+                final Post textPostItem = getItem(position);
                 holderTextPost.textPostTxt.setText(textPostItem.getContent());
                 holderTextPost.textPostSender.setText(textPostItem.getAuthor());
                 holderTextPost.textPostDate.setText(format.format(textPostItem.getTimestamp()));
@@ -80,6 +81,18 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
                         //inflating menu from xml resource
                         popup.inflate(R.menu.fragment_messages_post_options);
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch(item.getItemId()) {
+                                    case R.id.fragment_messages_post_options_delete:
+                                        listener.deletePost(textPostItem.getId());
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
                         popup.show();
                     }
                 });

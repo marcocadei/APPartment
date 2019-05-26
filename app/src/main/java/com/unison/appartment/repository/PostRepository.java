@@ -49,6 +49,10 @@ public class PostRepository {
         postRef.child(key).setValue(newPost);
     }
 
+    public void deletePost(String id) {
+        postRef.child(id).removeValue();
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<Post>> {
         @Override
         public List<Post> apply(DataSnapshot dataSnapshot) {

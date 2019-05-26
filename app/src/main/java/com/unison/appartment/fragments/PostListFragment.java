@@ -261,6 +261,10 @@ public class PostListFragment extends Fragment {
         });
     }
 
+    public void deletePost(String id) {
+        viewModel.deletePost(id);
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
@@ -281,5 +285,7 @@ public class PostListFragment extends Fragment {
          * @param loading true se si sta caricando, false altrimenti
          */
         void loading(boolean loading);
+
+        void deletePost(String id);
     }
 }

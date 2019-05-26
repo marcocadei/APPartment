@@ -111,4 +111,11 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
             Log.d("MESSAGGI", "STOP LOADING");
         }
     }
+
+    @Override
+    public void deletePost(String id) {
+        PostListFragment pf = (PostListFragment)getChildFragmentManager()
+                .findFragmentById(R.id.fragment_messages_fragment_list_post);
+        pf.deletePost(id);
+    }
 }

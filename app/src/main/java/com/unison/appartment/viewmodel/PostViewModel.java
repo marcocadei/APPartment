@@ -25,4 +25,8 @@ public class PostViewModel extends ViewModel {
     public void addPost(Post newPost) {
         repository.addPost(newPost);
     }
+
+    public void deletePost(String id) {
+        repository.deletePost(id);
+    }
 }
