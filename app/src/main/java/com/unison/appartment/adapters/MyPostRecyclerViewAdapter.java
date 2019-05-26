@@ -92,17 +92,18 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 });
                 break;
             case Post.AUDIO_POST:
-                playingTrack = (ViewHolderAudioPost) holder;
+//                playingTrack = (ViewHolderAudioPost) holder;
+                final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final Post audioPostItem = getItem(position);
-                playingTrack.audioPostSender.setText(audioPostItem.getAuthor());
-                playingTrack.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
-                playingTrack.audioPostbtn.setOnClickListener(new View.OnClickListener() {
+                holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
+                holderAudioPost.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
+                holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         /*if (listener != null) {
                             listener.onListPostFragmentPlayAudio(audioPostItem.getFileName());
                         }*/
-                        handleAudioPlay(audioPostItem);
+                        handleAudioPlay(audioPostItem, holderAudioPost);
                     }
                 });
                 break;
@@ -116,7 +117,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         return getItem(position).getType();
     }
 
-    private void handleAudioPlay(Post audioPostItem) {
+    private void handleAudioPlay(Post audioPostItem, ViewHolderAudioPost holderAudioPost) {
         // Se qualcosa era già in riproduzione allora la interrompo
         if (player != null) {
             player.release();
@@ -125,13 +126,15 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         }
         player = new MediaPlayer();
         try {
+            playingTrack = holderAudioPost;
+
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
             player.setDataSource(audioPostItem.getContent());
             player.setOnPreparedListener(audioPrepareListener);
             player.prepareAsync();
         } catch (IOException e) {
         }
-        playingTrack.audioPostState.setText(playingTrack.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
+        holderAudioPost.audioPostState.setText(holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
     }
 
     private void stopPlay(final ViewHolderAudioPost holderAudioPost) {
@@ -150,7 +153,6 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                     stopPlay(playingTrack);
                 }
             });
-//            playingTrack = holderAudioPost;
         }
     };
 
