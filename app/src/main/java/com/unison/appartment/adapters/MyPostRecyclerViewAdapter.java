@@ -68,16 +68,16 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy HH:mm");
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
-                ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
+                final ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
                 Post textPostItem = getItem(position);
                 holderTextPost.textPostTxt.setText(textPostItem.getContent());
                 holderTextPost.textPostSender.setText(textPostItem.getAuthor());
                 holderTextPost.textPostDate.setText(format.format(textPostItem.getTimestamp()));
                 // Popup menu
-                holderTextPost.textPostTxt.setOnClickListener(new View.OnClickListener() {
+                holderTextPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PopupMenu popup = new PopupMenu(v.getContext(), ((ViewHolderTextPost) holder).textPostTxt);
+                        PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
                         //inflating menu from xml resource
                         popup.inflate(R.menu.fragment_messages_post_options);
                         popup.show();
@@ -174,6 +174,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         public final TextView textPostTxt;
         public final TextView textPostSender;
         public final TextView textPostDate;
+        public final ImageView textPostOptions;
 
         public ViewHolderTextPost(View view) {
             super(view);
@@ -181,6 +182,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
             textPostTxt = view.findViewById(R.id.fragment_text_post_txt);
             textPostSender = view.findViewById(R.id.fragment_text_post_sender);
             textPostDate = view.findViewById(R.id.fragment_text_post_date);
+            textPostOptions = view.findViewById(R.id.fragment_text_post_options);
         }
     }
 

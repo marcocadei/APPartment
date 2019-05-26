@@ -164,6 +164,7 @@
     <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
     <string name="fragment_messages_empty_homes_list">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
     <string name="fragment_messages_post_options_delete">Elimina</string>
+    <string name="fragment_messages_post_options">⋮</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
