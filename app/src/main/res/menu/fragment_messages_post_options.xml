@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/activity_reward_detail_toolbar_edit"
+        android:title="@string/fragment_messages_post_options_delete" />
+</menu>

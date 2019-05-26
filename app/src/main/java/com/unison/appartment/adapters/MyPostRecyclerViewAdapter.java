@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -72,6 +73,16 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 holderTextPost.textPostTxt.setText(textPostItem.getContent());
                 holderTextPost.textPostSender.setText(textPostItem.getAuthor());
                 holderTextPost.textPostDate.setText(format.format(textPostItem.getTimestamp()));
+                // Popup menu
+                holderTextPost.textPostTxt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu popup = new PopupMenu(v.getContext(), ((ViewHolderTextPost) holder).textPostTxt);
+                        //inflating menu from xml resource
+                        popup.inflate(R.menu.fragment_messages_post_options);
+                        popup.show();
+                    }
+                });
                 break;
             case Post.IMAGE_POST:
                 final ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
