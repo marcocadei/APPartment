@@ -21,4 +21,8 @@ public class PostViewModel extends ViewModel {
     public LiveData<List<Post>> getPostLiveData() {
         return repository.getPostLiveData();
     }
+
+    public void addPost(Post newPost) {
+        repository.addPost(newPost);
+    }
 }

@@ -40,6 +40,12 @@ public class PostRepository {
         return postLiveData;
     }
 
+    public void addPost(Post newPost) {
+        String key = postRef.push().getKey();
+        newPost.setId(key);
+        postRef.child(key).setValue(newPost);
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<Post>> {
         @Override
         public List<Post> apply(DataSnapshot dataSnapshot) {

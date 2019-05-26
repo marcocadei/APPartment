@@ -19,7 +19,9 @@ import android.widget.ImageView;
 
 import com.unison.appartment.adapters.MyPostRecyclerViewAdapter;
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Post;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.viewmodel.PostViewModel;
 
 import java.util.List;
@@ -83,6 +85,13 @@ public class PostListFragment extends Fragment {
             }
 
             myAdapter = new MyPostRecyclerViewAdapter(listener);
+            myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    myRecyclerView.smoothScrollToPosition(positionStart);
+                }
+            });
             myRecyclerView.setAdapter(myAdapter);
 
             readPosts();
@@ -123,25 +132,23 @@ public class PostListFragment extends Fragment {
     }
 
     public void addPost(String content, int postType) {
-//        Post post;
-//        switch(postType) {
-//            case Post.TEXT_POST:
-//                post = new Post(Post.TEXT_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
-//                break;
+        Post post;
+        String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
+        switch(postType) {
+            case Post.TEXT_POST:
+                post = new Post(Post.TEXT_POST, content, nickname, System.currentTimeMillis());
+                break;
 //            case Post.IMAGE_POST:
 //                post = new Post(Post.IMAGE_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
 //                break;
 //            case Post.AUDIO_POST:
 //                post = new Post(Post.AUDIO_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
 //                break;
-//            default:
-//                // TODO errore, non si deve entrare qui
-//                post = null;
-//        }
-//
-//        Post.addPost(0, post);
-//        myAdapter.notifyItemInserted(0);
-//        myRecyclerView.scrollToPosition(0);
+            default:
+                // TODO errore, non si deve entrare qui
+                post = null;
+        }
+        viewModel.addPost(post);
     }
 
     /**

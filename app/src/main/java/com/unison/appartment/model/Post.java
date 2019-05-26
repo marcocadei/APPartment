@@ -16,8 +16,6 @@ public class Post {
     public static final int IMAGE_POST = 1;
     public static final int AUDIO_POST = 2;
 
-    private static List<Post> postList = new ArrayList<>();
-
     @Exclude
     private String id;
     private int type;
@@ -25,27 +23,13 @@ public class Post {
     private String author;
     private long timestamp;
 
+    public Post() {}
+
     public Post(int type, String content, String author, long timestamp) {
         this.type = type;
         this.content = content;
         this.author = author;
         this.timestamp = timestamp;
-    }
-
-    public static void addPost(int position, Post post) {
-        postList.add(position, post);
-    }
-
-    public static void removePost(int position) {
-        postList.remove(position);
-    }
-
-    public static Post getPost(int position) {
-        return postList.get(position);
-    }
-
-    public static List<Post> getPostList() {
-        return postList;
     }
 
     @Exclude
