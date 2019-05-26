@@ -8,6 +8,7 @@ import androidx.lifecycle.Transformations;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.Post;
@@ -31,7 +32,8 @@ public class PostRepository {
                 FirebaseDatabase.getInstance().getReference(
                         DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS +
                                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-        liveData = new FirebaseQueryLiveData(postRef);
+        Query orderedPosts = postRef.orderByChild(DatabaseConstants.POSTS_HOMENAME_POSTID_TIMESTAMP);
+        liveData = new FirebaseQueryLiveData(orderedPosts);
         postLiveData = Transformations.map(liveData, new PostRepository.Deserializer());
     }
 
