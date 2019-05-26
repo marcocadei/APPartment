@@ -116,6 +116,28 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         }
                     }
                 });
+                // Popup menu
+                holderImagePost.imagePostOptions.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu popup = new PopupMenu(v.getContext(), holderImagePost.imagePostOptions);
+                        //inflating menu from xml resource
+                        popup.inflate(R.menu.fragment_messages_post_options);
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch(item.getItemId()) {
+                                    case R.id.fragment_messages_post_options_delete:
+                                        listener.deletePost(imagePostItem.getId());
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                        popup.show();
+                    }
+                });
                 break;
             case Post.AUDIO_POST:
 //                playingTrack = (ViewHolderAudioPost) holder;
@@ -204,6 +226,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         public final ImageView imagePostImg;
         public final TextView imagePostSender;
         public final TextView imagePostDate;
+        public final ImageView imagePostOptions;
 
         public ViewHolderImagePost(View view) {
             super(view);
@@ -211,6 +234,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
             imagePostImg = view.findViewById(R.id.fragment_image_post_img);
             imagePostSender = view.findViewById(R.id.fragment_image_post_sender);
             imagePostDate = view.findViewById(R.id.fragment_image_post_date);
+            imagePostOptions = view.findViewById(R.id.fragment_image_post_options);
         }
     }
 
