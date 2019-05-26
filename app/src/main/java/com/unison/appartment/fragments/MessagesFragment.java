@@ -18,6 +18,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentListener;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.activities.ImageDetailActivity;
+import com.unison.appartment.model.Post;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.ImageUtils;
 
@@ -113,9 +114,9 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     }
 
     @Override
-    public void deletePost(String id) {
+    public void deletePost(Post post) {
         PostListFragment pf = (PostListFragment)getChildFragmentManager()
                 .findFragmentById(R.id.fragment_messages_fragment_list_post);
-        pf.deletePost(id);
+        pf.deletePost(post);
     }
 }

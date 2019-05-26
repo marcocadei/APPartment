@@ -9,6 +9,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.Post;
@@ -49,8 +51,13 @@ public class PostRepository {
         postRef.child(key).setValue(newPost);
     }
 
-    public void deletePost(String id) {
-        postRef.child(id).removeValue();
+    public void deletePost(Post post) {
+        // Elimino anche il media memorizzato nello storage associato al post, se c'è
+        if (post.getStoragePath() != null) {
+            StorageReference postRef = FirebaseStorage.getInstance().getReference(post.getStoragePath());
+            postRef.delete();
+        }
+        postRef.child(post.getId()).removeValue();
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Post>> {

@@ -190,6 +190,7 @@ public class PostListFragment extends Fragment {
                 // UUID genera un nome univoco per il file che sto caricando
                 final StorageReference postImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_IMAGES).
                         child(Appartment.getInstance().getHome().getName()).child(UUID.randomUUID().toString());
+                final String storagePath = postImageRef.getPath();
                 UploadTask uploadTask = postImageRef.putBytes(data);
 
                 // Codice della guida per ottenere l'URL di download del media appena caricato
@@ -207,6 +208,7 @@ public class PostListFragment extends Fragment {
                         if (task.isSuccessful()) {
                             String imageUrl = task.getResult().toString();
                             post.setContent(imageUrl);
+                            post.setStoragePath(storagePath);
                             viewModel.addPost(post);
 
                             // Avviso il parent che il caricamento è terminato
@@ -232,6 +234,7 @@ public class PostListFragment extends Fragment {
         final Post post = new Post(Post.AUDIO_POST, content, nickname, System.currentTimeMillis());
         final StorageReference postAudioRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_AUDIOS)
                 .child(Appartment.getInstance().getHome().getName()).child(UUID.randomUUID().toString());
+        final String storagePath = postAudioRef.getPath();
         Uri uri = Uri.fromFile(new File(content));
         UploadTask uploadTask = postAudioRef.putFile(uri);
 
@@ -250,6 +253,7 @@ public class PostListFragment extends Fragment {
                 if (task.isSuccessful()) {
                     String audioUrl = task.getResult().toString();
                     post.setContent(audioUrl);
+                    post.setStoragePath(storagePath);
                     viewModel.addPost(post);
 
                     // Avviso il parent che il caricamento è terminato
@@ -261,8 +265,8 @@ public class PostListFragment extends Fragment {
         });
     }
 
-    public void deletePost(String id) {
-        viewModel.deletePost(id);
+    public void deletePost(Post post) {
+        viewModel.deletePost(post);
     }
 
     /**
@@ -286,6 +290,6 @@ public class PostListFragment extends Fragment {
          */
         void loading(boolean loading);
 
-        void deletePost(String id);
+        void deletePost(Post post);
     }
 }

@@ -26,7 +26,7 @@ public class PostViewModel extends ViewModel {
         repository.addPost(newPost);
     }
 
-    public void deletePost(String id) {
-        repository.deletePost(id);
+    public void deletePost(Post post) {
+        repository.deletePost(post);
     }
 }

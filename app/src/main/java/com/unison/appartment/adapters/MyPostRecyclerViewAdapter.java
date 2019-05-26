@@ -86,7 +86,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch(item.getItemId()) {
                                     case R.id.fragment_messages_post_options_delete:
-                                        listener.deletePost(textPostItem.getId());
+                                        listener.deletePost(textPostItem);
                                         return true;
                                     default:
                                         return false;
@@ -128,7 +128,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch(item.getItemId()) {
                                     case R.id.fragment_messages_post_options_delete:
-                                        listener.deletePost(imagePostItem.getId());
+                                        listener.deletePost(imagePostItem);
                                         return true;
                                     default:
                                         return false;
@@ -165,7 +165,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch(item.getItemId()) {
                                     case R.id.fragment_messages_post_options_delete:
-                                        listener.deletePost(audioPostItem.getId());
+                                        listener.deletePost(audioPostItem);
                                         return true;
                                     default:
                                         return false;

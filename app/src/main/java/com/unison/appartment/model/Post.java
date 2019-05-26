@@ -18,6 +18,7 @@ public class Post {
 
     @Exclude
     private String id;
+    private String storagePath; // Percorso per rimuovere il file dallo storage quando si elimina un post
     private int type;
     private String content;
     private String author;
@@ -32,6 +33,14 @@ public class Post {
         this.timestamp = timestamp;
     }
 
+    public Post(String storagePath, int type, String content, String author, long timestamp) {
+        this.storagePath = storagePath;
+        this.type = type;
+        this.content = content;
+        this.author = author;
+        this.timestamp = timestamp;
+    }
+
     @Exclude
     public String getId() {
         return id;
@@ -40,6 +49,14 @@ public class Post {
     @Exclude
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStoragePath() {
+        return storagePath;
+    }
+
+    public void setStoragePath(String storagePath) {
+        this.storagePath = storagePath;
     }
 
     public int getType() {
