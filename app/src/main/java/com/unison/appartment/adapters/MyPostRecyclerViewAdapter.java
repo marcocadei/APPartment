@@ -110,6 +110,11 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return getItem(position).getType();
+    }
+
     private void handleAudioPlay(Post audioPostItem, final ViewHolderAudioPost holderAudioPost) {
         // Se qualcosa era già in riproduzione allora la interrompo
         if (player != null) {

@@ -1,8 +1,13 @@
 package com.unison.appartment.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -17,14 +22,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.unison.appartment.adapters.MyPostRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.database.StorageConstants;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.state.Appartment;
+import com.unison.appartment.state.MyApplication;
+import com.unison.appartment.utils.ImageUtils;
 import com.unison.appartment.viewmodel.PostViewModel;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -132,23 +151,71 @@ public class PostListFragment extends Fragment {
     }
 
     public void addPost(String content, int postType) {
-        Post post;
         String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
         switch(postType) {
             case Post.TEXT_POST:
-                post = new Post(Post.TEXT_POST, content, nickname, System.currentTimeMillis());
+                addTextPost(content, nickname);
                 break;
-//            case Post.IMAGE_POST:
-//                post = new Post(Post.IMAGE_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
-//                break;
+            case Post.IMAGE_POST:
+                addImagePost(content, nickname);
+                break;
 //            case Post.AUDIO_POST:
 //                post = new Post(Post.AUDIO_POST, content, MainActivity.LOGGED_USER, System.currentTimeMillis());
 //                break;
             default:
                 // TODO errore, non si deve entrare qui
-                post = null;
         }
+    }
+
+    public void addTextPost(String content, String nickname) {
+        Post post = new Post(Post.TEXT_POST, content, nickname, System.currentTimeMillis());
         viewModel.addPost(post);
+    }
+
+    public void addImagePost(String content, String nickname) {
+        final Post post = new Post(Post.IMAGE_POST, content, nickname, System.currentTimeMillis());
+        Glide.with(getContext()).asBitmap().load(post.getContent()).into(new CustomTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                // Ridemnsiono l'immagine (in generale la rimpicciolisco)
+                resource = ImageUtils.resize(resource, ImageUtils.MAX_WIDTH, ImageUtils.MAX_HEIGHT);
+                // Comprimo l'immagine
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                resource.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                byte[] data = baos.toByteArray();
+
+                // UUID genera un nome univoco per il file che sto caricando
+                final StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.POST_IMAGES+ UUID.randomUUID().toString());
+                UploadTask uploadTask = userImageRef.putBytes(data);
+
+                // Codice della guida per ottenere l'URL di download del media appena caricato
+                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            // TODO gestire errore upload
+                        }
+                        return userImageRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            String imageUrl = task.getResult().toString();
+                            post.setContent(imageUrl);
+                            viewModel.addPost(post);
+                        } else {
+                            // TODO gestire errore upload
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+        });
     }
 
     /**
