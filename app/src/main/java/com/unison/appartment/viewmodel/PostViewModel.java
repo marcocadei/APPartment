@@ -29,4 +29,8 @@ public class PostViewModel extends ViewModel {
     public void deletePost(Post post) {
         repository.deletePost(post);
     }
+
+    public LiveData<Boolean> getLoadingLiveData() {
+        return repository.getLoadingLiveData();
+    }
 }
