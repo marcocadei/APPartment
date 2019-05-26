@@ -140,7 +140,6 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 });
                 break;
             case Post.AUDIO_POST:
-//                playingTrack = (ViewHolderAudioPost) holder;
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final Post audioPostItem = getItem(position);
                 holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
@@ -152,6 +151,28 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                             listener.onListPostFragmentPlayAudio(audioPostItem.getFileName());
                         }*/
                         handleAudioPlay(audioPostItem, holderAudioPost);
+                    }
+                });
+                // Popup menu
+                holderAudioPost.audioPostOptions.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu popup = new PopupMenu(v.getContext(), holderAudioPost.audioPostOptions);
+                        //inflating menu from xml resource
+                        popup.inflate(R.menu.fragment_messages_post_options);
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch(item.getItemId()) {
+                                    case R.id.fragment_messages_post_options_delete:
+                                        listener.deletePost(audioPostItem.getId());
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                        popup.show();
                     }
                 });
                 break;
@@ -244,6 +265,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         public final TextView audioPostSender;
         public final TextView audioPostState;
         public final TextView audioPostDate;
+        public final ImageView audioPostOptions;
 
         public ViewHolderAudioPost(View view) {
             super(view);
@@ -252,6 +274,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
             audioPostSender = view.findViewById(R.id.fragment_audio_post_sender);
             audioPostState = view.findViewById(R.id.fragment_audio_post_state);
             audioPostDate = view.findViewById(R.id.fragment_audio_post_date);
+            audioPostOptions = view.findViewById(R.id.fragment_audio_post_options);
         }
     }
 
