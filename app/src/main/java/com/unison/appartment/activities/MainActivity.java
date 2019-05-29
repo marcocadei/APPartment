@@ -19,13 +19,15 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
 
+
 /**
  * Classe che rappresenta l'Activity principale di una Home
  */
 public class MainActivity extends AppCompatActivity {
-
-    // TODO da rimuovere
-    public final static String LOGGED_USER = "MARCO";
+    // Ultima voce selezionata nella bottom navigation
+    private int lastPosition = 0;
+    // Voce attualmente selezionata nella bottom navigation
+    private int currentPosition = 0;
 
     private static final String BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM = "selectedBottomMenuItem";
 
@@ -96,24 +98,28 @@ public class MainActivity extends AppCompatActivity {
     private void switchToFragment(int menuItemId){
         switch (menuItemId) {
             case R.id.activity_main_bottom_navigation_messages:
+                currentPosition = 0;
                 switchToFragment(MessagesFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_family:
+                currentPosition = 1;
                 switchToFragment(FamilyFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_todo:
+                currentPosition = 2;
                 switchToFragment(TodoFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_done:
                 // TODO aggiungere fragment done
+                currentPosition = 3;
                 break;
             case R.id.activity_main_bottom_navigation_rewards:
+                currentPosition = 4;
                 switchToFragment(RewardsFragment.class);
                 break;
             default:
                 break;
         }
-
     }
 
     /**
@@ -124,6 +130,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void switchToFragment(Class fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (currentPosition > lastPosition) {
+            ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        } else {
+            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+        }
+        lastPosition = currentPosition;
         try {
             ft.replace(R.id.activity_main_fragment_container, (Fragment) fragment.newInstance());
         } catch (IllegalAccessException e) {
