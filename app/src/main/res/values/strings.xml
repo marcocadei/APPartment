@@ -94,8 +94,8 @@
     <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
     <string name="activity_create_home_text_title">Crea una nuova casa</string>
-    <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_reward_title_edit">Modifica premio</string>
+    <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
@@ -133,14 +133,24 @@
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
     <string name="activity_signup_signup_title">Registrazione</string>
     <string name="activity_signup_text_title">Registrati ad APPartment</string>
+    <string name="activity_task_detail_btn_assign">Prenota attività</string>
+    <string name="activity_task_detail_btn_assign_masters">Assegna attività</string>
+    <string name="activity_task_detail_btn_cancel_completion">Annulla completamento</string>
+    <string name="activity_task_detail_btn_complete_task_already_assigned">Attività già assegnata</string>
+    <string name="activity_task_detail_btn_complete_task_available">Completa attività</string>
+    <string name="activity_task_detail_btn_complete_task_available_masters">Completa attività</string>
+    <string name="activity_task_detail_btn_complete_task_marked">Attesa conferma</string>
+    <string name="activity_task_detail_btn_confirm_completion">Conferma completamento</string>
     <string name="activity_task_detail_btn_delete">Elimina attività</string>
+    <string name="activity_task_detail_btn_unassign">Rimuovi assegnamento</string>
+    <string name="activity_task_detail_text_assigned_user_title">Questa attività è stata assegnata a:</string>
     <string name="activity_task_detail_title">Dettaglio attività</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_empty_homes_list">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
-    <string name="activity_user_profile_text_homelist_title">Le mie case</string>
     <string name="activity_user_profile_progress_description">Recupero dati casa in corso</string>
     <string name="activity_user_profile_progress_title">Accesso</string>
+    <string name="activity_user_profile_text_homelist_title">Le mie case</string>
     <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
@@ -154,6 +164,9 @@
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
     <string name="fragment_insert_post_img_send_text_description">Bottone di invio testo</string>
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
+    <string name="fragment_messages_empty_homes_list">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
+    <string name="fragment_messages_post_options">⋮</string>
+    <string name="fragment_messages_post_options_delete">Elimina</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
     <string name="fragment_reward_text_status_pending_row_1">Attesa</string>
@@ -162,9 +175,6 @@
     <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
     <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
     <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
-    <string name="fragment_messages_empty_homes_list">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
-    <string name="fragment_messages_post_options_delete">Elimina</string>
-    <string name="fragment_messages_post_options">⋮</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
@@ -173,4 +183,5 @@
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
+
 </resources>

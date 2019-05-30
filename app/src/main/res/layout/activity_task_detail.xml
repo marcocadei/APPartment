@@ -113,10 +113,29 @@
                 <TextView
                     android:id="@+id/activity_task_detail_text_creation_date_value"
                     style="@style/Component.TextView.MultiLine.AttributeValue"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_assigned_user_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/activity_task_detail_text_creation_date_title" />
+
+                <TextView
+                    android:id="@+id/activity_task_detail_text_assigned_user_title"
+                    style="@style/Component.TextView.MultiLine.AttributeTitle"
+                    android:text="@string/activity_task_detail_text_assigned_user_title"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_text_assigned_user_value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_text_creation_date_value" />
+
+                <TextView
+                    android:id="@+id/activity_task_detail_text_assigned_user_value"
+                    style="@style/Component.TextView.MultiLine.AttributeValue"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_text_assigned_user_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -129,6 +148,54 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_task_detail_btn_complete"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_task_detail_btn_complete_task_available"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_assign"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_task_detail_btn_assign"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_task_detail_btn_assign"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_unassign"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_task_detail_btn_unassign"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_task_detail_btn_unassign"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_confirm_completion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_assign" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_task_detail_btn_confirm_completion"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_task_detail_btn_confirm_completion"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_cancel_completion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_unassign" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_task_detail_btn_cancel_completion"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_task_detail_btn_cancel_completion"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_delete"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_confirm_completion" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_task_detail_btn_delete"
                     style="@style/Component.Button"
                     android:backgroundTint="@android:color/holo_red_dark"
@@ -136,7 +203,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
