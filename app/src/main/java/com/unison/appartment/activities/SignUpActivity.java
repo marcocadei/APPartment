@@ -357,7 +357,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     final AuthListener authListener =  new AuthListener() {
         @Override
         public void onSuccess() {
-            databaseWriter.writeUser(newUser, auth.getCurrentUserUid(), databaseWriterListener );
+            databaseWriter.writeUser(newUser, auth.getCurrentUserUid(), databaseWriterListener);
         }
 
         @Override
