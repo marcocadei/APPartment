@@ -29,7 +29,6 @@
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
     <string name="form_error_duplicate_homename">Esiste già una casa con questo nome</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
-    <string name="form_error_incorrect_credentials">Credenziali non corrette</string>
     <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
     <string name="form_error_invalid_characters">Il nome della casa contiene caratteri non validi (.$[]#/)</string>
@@ -37,6 +36,7 @@
     <string name="form_error_mismatch_password">Le password devono coincidere</string>
     <string name="form_error_missing_value">Specificare un valore</string>
     <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
+    <string name="form_error_nonexistent_home">Non esiste alcuna casa con questo nome</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
 
     <!-- Descrizioni dei campi del database -->
