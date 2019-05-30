@@ -89,7 +89,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         try {
             String standardBirthDate = currentUser.getBirthdate();
             textBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(standardBirthDate)));
-            textAge.setText(String.format(Locale.getDefault(), "%d", currentUser.getAge()));
+            textAge.setText(String.valueOf(currentUser.getAge()));
         }
         catch (ParseException e) {
             /*

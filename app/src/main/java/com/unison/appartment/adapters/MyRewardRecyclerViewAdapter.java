@@ -62,7 +62,7 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
         holder.textName.setText(rewardItem.getName());
         holder.textDescription.setText(rewardItem.getDescription());
         if (holder.getItemViewType() == AVAILABLE_REWARD_ITEM_TYPE) {
-            ((ViewHolderAvailableReward) holder).textPoints.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
+            ((ViewHolderAvailableReward) holder).textPoints.setText(String.valueOf(rewardItem.getPoints()));
         }
         else {
             ViewHolderRequestedReward requestedRewardHolder = (ViewHolderRequestedReward) holder;
