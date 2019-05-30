@@ -131,6 +131,11 @@ public class UncompletedTask implements Serializable {
         this.marked = marked;
     }
 
+    @Exclude
+    public boolean isAssigned() {
+        return this.assignedUserId != null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
