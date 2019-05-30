@@ -70,7 +70,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         TextView textPoints = findViewById(R.id.activity_reward_detail_text_points_value);
 
         textName.setText(reward.getName());
-        textPoints.setText(String.format(Locale.getDefault(), "%d", reward.getPoints()));
+        textPoints.setText(String.valueOf(reward.getPoints()));
         // Viene gestito il caso in cui la descrizione sia vuota
         String shownDescription = reward.getDescription();
         if (shownDescription == null || shownDescription.isEmpty()) {
@@ -91,7 +91,7 @@ public class RewardDetailActivity extends AppCompatActivity {
 
         final String userId = new FirebaseAuth().getCurrentUserUid();
 
-        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+        if (Appartment.getInstance().getHomeUser(userId).getRole() == Home.ROLE_SLAVE) {
             /*
             Se l'utente è uno slave, l'unico bottone che viene visualizzato è quello per richiedere il
             premio (disabilitato se il premio se è già stato richiesto).
@@ -108,7 +108,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getPoints() < reward.getPoints()) {
+                        if (Appartment.getInstance().getHomeUser(userId).getPoints() < reward.getPoints()) {
                             Snackbar.make(findViewById(R.id.activity_reward_detail),
                                     getString(R.string.error_not_enough_points),
                                     Snackbar.LENGTH_LONG).show();
@@ -154,7 +154,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getPoints() < reward.getPoints()) {
+                        if (Appartment.getInstance().getHomeUser(userId).getPoints() < reward.getPoints()) {
                             Snackbar.make(findViewById(R.id.activity_reward_detail),
                                     getString(R.string.error_not_enough_points),
                                     Snackbar.LENGTH_LONG).show();
