@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +24,7 @@ import com.unison.appartment.model.Post;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-
+import java.util.Date;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Post} e che effettua una
@@ -65,15 +66,20 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy HH:mm");
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
+        java.text.DateFormat dateFormat = DateFormat.getDateFormat(holder.itemView.getContext());
+        java.text.DateFormat timeFormat = DateFormat.getTimeFormat(holder.itemView.getContext());
+        Date timestamp;
+        Resources res = holder.itemView.getContext().getResources();
+
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
                 final ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
                 final Post textPostItem = getItem(position);
                 holderTextPost.textPostTxt.setText(textPostItem.getContent());
                 holderTextPost.textPostSender.setText(textPostItem.getAuthor());
-                holderTextPost.textPostDate.setText(format.format(textPostItem.getTimestamp()));
+                timestamp = new Date(textPostItem.getTimestamp());
+                holderTextPost.textPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
                 // Popup menu
                 holderTextPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -107,7 +113,8 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         .load(imagePostItem.getContent())
                         .into(holderImagePost.imagePostImg);
                 holderImagePost.imagePostSender.setText(imagePostItem.getAuthor());
-                holderImagePost.imagePostDate.setText(format.format(imagePostItem.getTimestamp()));
+                timestamp = new Date(imagePostItem.getTimestamp());
+                holderImagePost.imagePostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
                 holderImagePost.imagePostImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -143,7 +150,8 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final Post audioPostItem = getItem(position);
                 holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
-                holderAudioPost.audioPostDate.setText(format.format(audioPostItem.getTimestamp()));
+                timestamp = new Date(audioPostItem.getTimestamp());
+                holderAudioPost.audioPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
                 holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -165,6 +165,7 @@
     <string name="fragment_messages_empty_homes_list">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
     <string name="fragment_messages_post_options_delete">Elimina</string>
     <string name="fragment_messages_post_options">⋮</string>
+    <string name="fragment_post_datetime_format">%1$s %2$s</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
