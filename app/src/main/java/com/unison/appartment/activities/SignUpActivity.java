@@ -252,9 +252,9 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         }
 
         // Controllo che la data scelta non si a successiva alla data odierna
-        Calendar today = Calendar.getInstance();
+        Date today = new Date();
         if (birthdate != null) {
-            if (birthdate.compareTo(today.getTime()) > 0) {
+            if (birthdate.compareTo(today) > 0) {
                 layoutBirthdate.setError(getString(R.string.form_error_invalid_date));
                 result = false;
             }

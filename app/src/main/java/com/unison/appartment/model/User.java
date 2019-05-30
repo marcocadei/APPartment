@@ -9,10 +9,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Classe che rappresenta un utente registrato all'applicazione, indipendente dalla/e casa/e in cui è presente
@@ -76,7 +74,7 @@ public class User implements Serializable {
     public int getAge() throws ParseException {
         // Non si può fare di meglio in Java 7 purtroppo :/
         Date birth = DateUtils.parseDateWithStandardLocale(birthdate);
-        Date today = Calendar.getInstance().getTime();
+        Date today = new Date();
         DateFormat formatter = new SimpleDateFormat("yyyyMMdd", DateUtils.STANDARD_LOCALE);
         return (Integer.parseInt(formatter.format(today)) - Integer.parseInt(formatter.format(birth))) / 10000;
     }
