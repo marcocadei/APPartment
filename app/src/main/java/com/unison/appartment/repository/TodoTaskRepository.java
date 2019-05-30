@@ -13,7 +13,9 @@ import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.UncompletedTask;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TodoTaskRepository {
@@ -52,6 +54,13 @@ public class TodoTaskRepository {
 
     public void deleteTask(String id){
         uncompletedTasksRef.child(id).removeValue();
+    }
+
+    public void assignTask(String taskId, String userId, String userName) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
+        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {

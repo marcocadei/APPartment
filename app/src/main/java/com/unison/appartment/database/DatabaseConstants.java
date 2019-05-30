@@ -27,6 +27,8 @@ public class DatabaseConstants {
     // UncompletedTask
     public final static String UNCOMPLETEDTASKS = "uncompleted-tasks";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE = "creation-date";
+    public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID = "assigned-user-id";
+    public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME = "assigned-user-name";
 
     // Case di un utente
     public final static String USERHOMES = "user-homes";

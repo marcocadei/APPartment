@@ -29,4 +29,9 @@ public class TodoTaskViewModel extends ViewModel {
     public void deleteTask(String id) {
         repository.deleteTask(id);
     }
+
+    public void assignTask(String taskId, String userId, String userName) {
+        repository.assignTask(taskId, userId, userName);
+    }
+
 }

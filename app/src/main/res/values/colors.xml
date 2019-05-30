@@ -13,4 +13,5 @@
     <color name="colorBackground">#ffccff</color>
 
     <color name="gray">#D3D3D3</color>
+    <color name="darkGray">#AAAAAA</color>
 </resources>

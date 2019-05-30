@@ -33,8 +33,11 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     public final static String EXTRA_TASK_OBJECT = "taskObject";
     public final static String EXTRA_NEW_TASK = "newTask";
     public final static String EXTRA_TASK_ID = "taskId";
+    public final static String EXTRA_USER_NAME = "userName";
+    public final static String EXTRA_USER_ID = "userId";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_DELETE = 0;
+    public final static int OPERATION_ASSIGN = 1;
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
     private static final int DETAIL_TASK_REQUEST_CODE = 2;
@@ -108,6 +111,11 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                         // FIXME così come pensato per il RewardsFragment, prima di fare la delete
                         // annullare il mark-as-complete e annullare anche l'assegnamento all'utente
                         listFragment.deleteTask(data.getStringExtra(EXTRA_TASK_ID));
+                        break;
+                    case OPERATION_ASSIGN:
+                        listFragment.assignTask(data.getStringExtra(EXTRA_TASK_ID),
+                                data.getStringExtra(EXTRA_USER_ID),
+                                data.getStringExtra(EXTRA_USER_NAME));
                         break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");

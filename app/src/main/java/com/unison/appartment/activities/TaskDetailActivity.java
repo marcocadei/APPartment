@@ -147,7 +147,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                 btnAssign.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO assegnamento
+                        sendAssignData(userId);
                     }
                 });
                 btnComplete.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +194,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                     btnAssign.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // TODO assegnamento
+                            // TODO disassegnamento
                         }
                     });
                 }
@@ -245,6 +245,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                 entrambi i bottoni assign e complete, il master ha la possibilità di completare lui
                 stesso il task oppure di assegnarlo ad utente qualunque.
                  */
+                btnAssign.setText(R.string.activity_task_detail_btn_assign_masters);
                 btnAssign.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -273,6 +274,16 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         task = (UncompletedTask) savedInstanceState.getSerializable(BUNDLE_KEY_TASK);
+    }
+
+    private void sendAssignData(String userId) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_ASSIGN);
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 
     private void sendDeleteData() {

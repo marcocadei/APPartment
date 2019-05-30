@@ -5,14 +5,17 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener;
+import com.unison.appartment.state.MyApplication;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link UncompletedTask} e che effettua una
@@ -37,9 +40,19 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final ViewHolderTask holderTask = (ViewHolderTask) holder;
-//        final UncompletedTask uncompletedTask = tasks.get(position);
         final UncompletedTask uncompletedTask = getItem(position);
 
+        if (uncompletedTask.isAssigned()) {
+            Resources res = MyApplication.getAppContext().getResources();
+            holderTask.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user, uncompletedTask.getAssignedUserName()));
+            holderTask.taskAssignedUser.setVisibility(View.VISIBLE);
+            if (uncompletedTask.isMarked()) {
+                holderTask.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
+            }
+            else {
+                holderTask.itemIcon.setColorFilter(res.getColor(R.color.darkGray, null));
+            }
+        }
         holderTask.taskName.setText(uncompletedTask.getName());
         holderTask.taskDescription.setText(uncompletedTask.getDescription());
         holderTask.taskPoints.setText(String.valueOf(uncompletedTask.getPoints()));
@@ -56,14 +69,18 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
 
     public class ViewHolderTask extends RecyclerView.ViewHolder {
         public final View mView;
+        public final ImageView itemIcon;
         public final TextView taskName;
+        public final TextView taskAssignedUser;
         public final TextView taskDescription;
         public final TextView taskPoints;
 
         public ViewHolderTask(View view) {
             super(view);
             mView = view;
+            itemIcon = view.findViewById(R.id.fragment_todo_img_check);
             taskName = view.findViewById(R.id.fragment_todo_text_task_name);
+            taskAssignedUser = view.findViewById(R.id.fragment_todo_text_assigned_user);
             taskDescription = view.findViewById(R.id.fragment_todo_text_task_description);
             taskPoints = view.findViewById(R.id.fragment_todo_task_points_value);
         }
