@@ -15,8 +15,6 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.model.UncompletedTask;
 
-import java.util.Calendar;
-
 /**
  * Classe che rappresenta l'Activity per creare un nuovo UncompletedTask
  */
@@ -55,13 +53,11 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
     public void createTask() {
-        Calendar calendar = Calendar.getInstance();
-
         UncompletedTask newUncompletedTask = new UncompletedTask(
                 inputName.getText().toString(),
                 inputDescription.getText().toString(),
                 Integer.valueOf(inputPoints.getText().toString()),
-                calendar.getTimeInMillis() // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
+                System.currentTimeMillis() // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
         );
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, newUncompletedTask);

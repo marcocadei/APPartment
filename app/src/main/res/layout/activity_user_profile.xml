@@ -70,6 +70,7 @@
                     android:layout_marginBottom="@dimen/margin_extra_small"
                     android:textSize="@dimen/text_extra_large"
                     android:text="@string/placeholder_text"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/activity_user_profile_text_email"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
