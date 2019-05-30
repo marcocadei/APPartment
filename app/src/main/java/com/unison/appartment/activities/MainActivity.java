@@ -24,10 +24,21 @@ import com.unison.appartment.fragments.TodoFragment;
  * Classe che rappresenta l'Activity principale di una Home
  */
 public class MainActivity extends AppCompatActivity {
+
+    /*
+    Costanti che indicano la posizione delle varie sezioni così come ordinate nella bottom
+    navigation; sono usate per le animazioni di ingresso/uscita al cambio fragment.
+     */
+    private static final byte POSITION_MESSAGES = 0;
+    private static final byte POSITION_FAMILY = 1;
+    private static final byte POSITION_TODO = 2;
+    private static final byte POSITION_DONE = 3;
+    private static final byte POSITION_REWARDS = 4;
+
     // Ultima voce selezionata nella bottom navigation
-    private int lastPosition = 0;
+    private int lastPosition = POSITION_MESSAGES;
     // Voce attualmente selezionata nella bottom navigation
-    private int currentPosition = 0;
+    private int currentPosition = POSITION_MESSAGES;
 
     private static final String BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM = "selectedBottomMenuItem";
 
@@ -98,23 +109,23 @@ public class MainActivity extends AppCompatActivity {
     private void switchToFragment(int menuItemId){
         switch (menuItemId) {
             case R.id.activity_main_bottom_navigation_messages:
-                currentPosition = 0;
+                currentPosition = POSITION_MESSAGES;
                 switchToFragment(MessagesFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_family:
-                currentPosition = 1;
+                currentPosition = POSITION_FAMILY;
                 switchToFragment(FamilyFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_todo:
-                currentPosition = 2;
+                currentPosition = POSITION_TODO;
                 switchToFragment(TodoFragment.class);
                 break;
             case R.id.activity_main_bottom_navigation_done:
                 // TODO aggiungere fragment done
-                currentPosition = 3;
+                currentPosition = POSITION_DONE;
                 break;
             case R.id.activity_main_bottom_navigation_rewards:
-                currentPosition = 4;
+                currentPosition = POSITION_REWARDS;
                 switchToFragment(RewardsFragment.class);
                 break;
             default:
