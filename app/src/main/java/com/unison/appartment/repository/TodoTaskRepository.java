@@ -50,6 +50,10 @@ public class TodoTaskRepository {
         uncompletedTasksRef.child(key).setValue(newUncompletedTask);
     }
 
+    public void deleteTask(String id){
+        uncompletedTasksRef.child(id).removeValue();
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
         @Override
         public List<UncompletedTask> apply(DataSnapshot dataSnapshot) {

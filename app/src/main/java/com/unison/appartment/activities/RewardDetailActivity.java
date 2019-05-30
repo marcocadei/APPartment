@@ -133,6 +133,13 @@ public class RewardDetailActivity extends AppCompatActivity {
             MaterialButton btnDelete = findViewById(R.id.activity_reward_detail_btn_delete);
 
             btnDelete.setVisibility(View.VISIBLE);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendDeleteData();
+                }
+            });
+
             if (reward.isRequested()) {
                 btnReserve.setVisibility(View.GONE);
                 btnConfirm.setVisibility(View.VISIBLE);
@@ -165,13 +172,6 @@ public class RewardDetailActivity extends AppCompatActivity {
                     }
                 });
             }
-
-            btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendDeleteData();
-                }
-            });
         }
     }
 

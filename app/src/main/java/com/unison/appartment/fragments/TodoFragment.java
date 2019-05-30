@@ -8,12 +8,14 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateTaskActivity;
@@ -23,7 +25,6 @@ import com.unison.appartment.model.Home;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.state.Appartment;
 
-
 /**
  * Fragment che rappresenta una lista di attività da svolgere
  */
@@ -31,8 +32,12 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
 
     public final static String EXTRA_TASK_OBJECT = "taskObject";
     public final static String EXTRA_NEW_TASK = "newTask";
+    public final static String EXTRA_TASK_ID = "taskId";
+    public final static String EXTRA_OPERATION_TYPE = "operationType";
+    public final static int OPERATION_DELETE = 0;
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
+    private static final int DETAIL_TASK_REQUEST_CODE = 2;
 
     private TextView emptyTodoListTitle;
     private TextView emptyTodoListText;
@@ -87,10 +92,27 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            TodoListFragment tlf = (TodoListFragment) getChildFragmentManager()
+        if (requestCode == ADD_TASK_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                TodoListFragment tlf = (TodoListFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.fragment_todo_todolist);
+                tlf.addTask((UncompletedTask) data.getSerializableExtra(EXTRA_NEW_TASK));
+            }
+        }
+        else if (requestCode == DETAIL_TASK_REQUEST_CODE) {
+            TodoListFragment listFragment = (TodoListFragment) getChildFragmentManager()
                     .findFragmentById(R.id.fragment_todo_todolist);
-            tlf.addTask((UncompletedTask) data.getSerializableExtra(EXTRA_NEW_TASK));
+            if (resultCode == TaskDetailActivity.RESULT_OK) {
+                switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
+                    case OPERATION_DELETE:
+                        // FIXME così come pensato per il RewardsFragment, prima di fare la delete
+                        // annullare il mark-as-complete e annullare anche l'assegnamento all'utente
+                        listFragment.deleteTask(data.getStringExtra(EXTRA_TASK_ID));
+                        break;
+                    default:
+                        Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
+                }
+            }
         }
     }
 
@@ -108,7 +130,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     public void onTodoListFragmentOpenTask(UncompletedTask uncompletedTask) {
         Intent i = new Intent(getActivity(), TaskDetailActivity.class);
         i.putExtra(EXTRA_TASK_OBJECT, uncompletedTask);
-        startActivity(i);
+        startActivityForResult(i, DETAIL_TASK_REQUEST_CODE);
     }
 
     @Override

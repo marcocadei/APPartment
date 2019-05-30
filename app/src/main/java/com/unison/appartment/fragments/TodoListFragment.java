@@ -131,6 +131,10 @@ public class TodoListFragment extends Fragment {
         viewModel.addTask(newUncompletedTask);
     }
 
+    public void deleteTask(String id) {
+        viewModel.deleteTask(id);
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity

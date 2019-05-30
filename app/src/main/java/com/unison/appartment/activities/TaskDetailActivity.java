@@ -168,6 +168,13 @@ public class TaskDetailActivity extends AppCompatActivity {
             MaterialButton btnDelete = findViewById(R.id.activity_task_detail_btn_delete);
 
             btnDelete.setVisibility(View.VISIBLE);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendDeleteData();
+                }
+            });
+
             if (task.isAssigned()) {
                 if (task.getAssignedUserId().equals(userId)) {
                     /*
@@ -266,5 +273,13 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         task = (UncompletedTask) savedInstanceState.getSerializable(BUNDLE_KEY_TASK);
+    }
+
+    private void sendDeleteData() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_DELETE);
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 }
