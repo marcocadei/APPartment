@@ -18,7 +18,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateTaskActivity;
 import com.unison.appartment.activities.TaskDetailActivity;
+import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.UncompletedTask;
+import com.unison.appartment.state.Appartment;
 
 
 /**
@@ -26,6 +29,7 @@ import com.unison.appartment.model.UncompletedTask;
  */
 public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 
+    public final static String EXTRA_TASK_OBJECT = "taskObject";
     public final static String EXTRA_NEW_TASK = "newTask";
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
@@ -60,13 +64,22 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         emptyTodoListText = myView.findViewById(R.id.fragment_todo_empty_home_list_text);
 
         final FloatingActionButton floatAddTask = myView.findViewById(R.id.fragment_todo_float_add_task);
-        floatAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), CreateTaskActivity.class);
-                startActivityForResult(i, ADD_TASK_REQUEST_CODE);
-            }
-        });
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+            // Se l'utente è uno slave, non viene visualizzato il bottone per aggiungere un nuovo task.
+            floatAddTask.hide();
+        } else {
+            /*
+            In caso contrario, viene impostato l'onClickListener per il FAB che permette di aggiungere
+            un nuovo task.
+             */
+            floatAddTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), CreateTaskActivity.class);
+                    startActivityForResult(i, ADD_TASK_REQUEST_CODE);
+                }
+            });
+        }
 
         return myView;
     }
@@ -94,7 +107,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     @Override
     public void onTodoListFragmentOpenTask(UncompletedTask uncompletedTask) {
         Intent i = new Intent(getActivity(), TaskDetailActivity.class);
-        i.putExtra("uncompletedTask", uncompletedTask);
+        i.putExtra(EXTRA_TASK_OBJECT, uncompletedTask);
         startActivity(i);
     }
 
