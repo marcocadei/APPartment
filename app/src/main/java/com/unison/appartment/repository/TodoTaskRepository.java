@@ -18,7 +18,9 @@ import java.util.List;
 
 public class TodoTaskRepository {
 
-    // Nodo del database a cui sono interessato
+    // Riferimento al nodo root del database
+    private DatabaseReference rootRef;
+    // Riferimento al nodo del database a cui sono interessato
     private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
     // tramite un Deserializer in ogetti di tipo UncompletedTask
@@ -26,10 +28,11 @@ public class TodoTaskRepository {
     private LiveData<List<UncompletedTask>> taskLiveData;
 
     public TodoTaskRepository() {
-        // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
-        uncompletedTasksRef =
-                FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
-                              DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        // Riferimento al nodo root del database
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        // Riferimento al nodo del database a cui sono interessato
+        uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
         liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());

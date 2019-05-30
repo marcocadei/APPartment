@@ -35,7 +35,7 @@ public class RewardRepository {
         rootRef = FirebaseDatabase.getInstance().getReference();
         // Riferimento al nodo del database a cui sono interessato
         rewardsRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.REWARDS +
-                              DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         Query orderedReward = rewardsRef.orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_NAME);
         liveData = new FirebaseQueryLiveData(orderedReward);
         rewardLiveData = Transformations.map(liveData, new RewardRepository.Deserializer());
