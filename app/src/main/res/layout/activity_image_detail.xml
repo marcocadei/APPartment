@@ -22,8 +22,9 @@
     <com.appeaser.imagetransitionlibrary.TransitionImageView
         android:id="@+id/activity_image_detail_img_round"
         app:tiv_rounding="0"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         android:transitionName="@string/transition_open_image"
         android:contentDescription="@string/activity_image_detail_img"
         app:layout_constraintBottom_toBottomOf="parent"
