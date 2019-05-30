@@ -112,6 +112,15 @@ public class Appartment {
     }
 
     public void setHomeUsers(@NonNull Map<String, HomeUser> homeUsers) {
+        /*
+        Per gli HomeUser è necessario salvare anche l'id poiché dato che non vengono usati i repository
+        non è possibile fare questa operazione direttamente alla lettura dal database, ma gli id
+        servono memorizzati altrimenti non si possono recuperare dallo stato / da SharedPreferences.
+         */
+        for (Map.Entry<String, HomeUser> entry : homeUsers.entrySet()) {
+            entry.getValue().setUserId(entry.getKey());
+        }
+
         setSharedPreferencesValue(SharedPreferencesConstants.HOMEUSER_KEY, new Gson().toJson(homeUsers));
         this.homeUsers = homeUsers;
     }

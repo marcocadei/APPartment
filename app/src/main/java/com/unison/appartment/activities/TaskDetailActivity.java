@@ -254,7 +254,6 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                 btnAssign.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO assegnamento (ad un utente qualunque)
                         UserPickerFragment.newInstance().show(getSupportFragmentManager(), UserPickerFragment.TAG_USER_PICKER);
                     }
                 });
@@ -305,6 +304,11 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         DialogFragment fragment = (DialogFragment) getSupportFragmentManager().findFragmentByTag(UserPickerFragment.TAG_USER_PICKER);
         if (fragment != null) {
             fragment.dismiss();
+            Log.i("hohohohoiojio", item.getUserId());
+            sendAssignData(item.getUserId());
+        }
+        else {
+            Log.e(getClass().getCanonicalName(), new NullPointerException().getMessage());
         }
     }
 }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener;
 import com.unison.appartment.state.MyApplication;
@@ -44,8 +45,14 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
 
         if (uncompletedTask.isAssigned()) {
             Resources res = MyApplication.getAppContext().getResources();
-            holderTask.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user, uncompletedTask.getAssignedUserName()));
+            if (uncompletedTask.getAssignedUserId().equals(new FirebaseAuth().getCurrentUserUid())) {
+                holderTask.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user_self));
+            }
+            else {
+                holderTask.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user, uncompletedTask.getAssignedUserName()));
+            }
             holderTask.taskAssignedUser.setVisibility(View.VISIBLE);
+
             if (uncompletedTask.isMarked()) {
                 holderTask.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
             }
