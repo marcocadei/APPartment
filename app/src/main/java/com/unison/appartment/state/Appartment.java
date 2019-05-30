@@ -18,7 +18,9 @@ import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -124,6 +126,10 @@ public class Appartment {
             homeUsers = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), new TypeToken<HashMap<String, Object>>() { }.getType());
         }
         return homeUsers.get(uid);
+    }
+
+    public List<HomeUser> getHomeUsersList() {
+        return new ArrayList<>(homeUsers.values());
     }
 
     public void clearAll() {

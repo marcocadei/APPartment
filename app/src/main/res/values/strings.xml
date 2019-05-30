@@ -176,6 +176,7 @@
     <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
     <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
     <string name="fragment_todo_text_assigned_user">Assegnato a: %1$s</string>
+    <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>

@@ -3,10 +3,13 @@ package com.unison.appartment.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,7 +17,9 @@ import com.google.android.material.button.MaterialButton;
 import com.unison.appartment.R;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.TodoFragment;
+import com.unison.appartment.fragments.UserPickerFragment;
 import com.unison.appartment.model.Home;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.DateUtils;
@@ -24,7 +29,7 @@ import java.util.Calendar;
 /**
  * Classe che rappresenta l'Activity con il dettaglio del UncompletedTask
  */
-public class TaskDetailActivity extends AppCompatActivity {
+public class TaskDetailActivity extends AppCompatActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
 
     private final static String BUNDLE_KEY_TASK = "task";
 
@@ -250,6 +255,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // TODO assegnamento (ad un utente qualunque)
+                        UserPickerFragment.newInstance().show(getSupportFragmentManager(), UserPickerFragment.TAG_USER_PICKER);
                     }
                 });
                 btnComplete.setOnClickListener(new View.OnClickListener() {
@@ -292,5 +298,13 @@ public class TaskDetailActivity extends AppCompatActivity {
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
         setResult(RESULT_OK, returnIntent);
         finish();
+    }
+
+    @Override
+    public void onListFragmentInteraction(HomeUser item) {
+        DialogFragment fragment = (DialogFragment) getSupportFragmentManager().findFragmentByTag(UserPickerFragment.TAG_USER_PICKER);
+        if (fragment != null) {
+            fragment.dismiss();
+        }
     }
 }
