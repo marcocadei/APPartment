@@ -24,7 +24,7 @@ import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.DateUtils;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Classe che rappresenta l'Activity con il dettaglio del UncompletedTask
@@ -74,9 +74,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
             textDescription.setTypeface(null, Typeface.ITALIC);
         }
         textDescription.setText(shownDescription);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(task.getCreationDate());
-        textCreationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(calendar.getTime()));
+        textCreationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(task.getCreationDate())));
 
         if (task.isAssigned()) {
             TextView textAssignedUserTitle = findViewById(R.id.activity_task_detail_text_assigned_user_title);
