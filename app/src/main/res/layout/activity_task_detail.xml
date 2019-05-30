@@ -160,20 +160,10 @@
                     android:id="@+id/activity_task_detail_btn_assign"
                     style="@style/Component.Button"
                     android:text="@string/activity_task_detail_btn_assign"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_unassign"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_task_detail_btn_unassign"
-                    style="@style/Component.Button"
-                    android:text="@string/activity_task_detail_btn_unassign"
-                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_confirm_completion"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_assign" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_task_detail_btn_confirm_completion"
@@ -183,7 +173,7 @@
                     app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_cancel_completion"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_unassign" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_task_detail_btn_cancel_completion"
@@ -200,6 +190,7 @@
                     style="@style/Component.Button"
                     android:backgroundTint="@android:color/holo_red_dark"
                     android:text="@string/activity_task_detail_btn_delete"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
