@@ -230,11 +230,12 @@ public class HomeUser {
                 imagePosts == homeUser.imagePosts &&
                 rejectedTasks == homeUser.rejectedTasks &&
                 unlockedAchievements == homeUser.unlockedAchievements &&
-                Objects.equals(nickname, homeUser.nickname);
+                nickname.equals(homeUser.nickname) &&
+                Objects.equals(image, homeUser.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, points, totalEarnedPoints, role, completedTasks, claimedRewards, earnedMoney, textPosts, audioPosts, imagePosts, rejectedTasks, unlockedAchievements);
+        return Objects.hash(nickname, points, totalEarnedPoints, role, image, completedTasks, claimedRewards, earnedMoney, textPosts, audioPosts, imagePosts, rejectedTasks, unlockedAchievements);
     }
 }
