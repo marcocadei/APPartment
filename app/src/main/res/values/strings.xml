@@ -167,7 +167,6 @@
     <string name="fragment_insert_post_img_send_text_description">Bottone di invio testo</string>
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
     <string name="fragment_messages_empty_homes_list">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
-    <string name="fragment_messages_post_options">⋮</string>
     <string name="fragment_messages_post_options_delete">Elimina</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
