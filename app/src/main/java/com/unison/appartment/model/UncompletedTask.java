@@ -20,7 +20,6 @@ public class UncompletedTask implements Serializable {
     @Exclude
     private String id;
     private String name;
-    @Nullable
     private String description;
     private int points;
     @PropertyName(ATTRIBUTE_CREATION_DATE)
@@ -47,7 +46,7 @@ public class UncompletedTask implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public UncompletedTask(String name, @Nullable String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked) {
+    public UncompletedTask(String name, String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked) {
         this.name = name;
         this.description = description;
         this.points = points;

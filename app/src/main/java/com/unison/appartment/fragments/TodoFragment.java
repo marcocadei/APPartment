@@ -38,6 +38,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_DELETE = 0;
     public final static int OPERATION_ASSIGN = 1;
+    public final static int OPERATION_REMOVE_ASSIGNMENT = 2;
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
     private static final int DETAIL_TASK_REQUEST_CODE = 2;
@@ -117,6 +118,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                                 data.getStringExtra(EXTRA_USER_ID),
                                 data.getStringExtra(EXTRA_USER_NAME));
                         break;
+                    case OPERATION_REMOVE_ASSIGNMENT:
+                        listFragment.removeAssignment(data.getStringExtra(EXTRA_TASK_ID));
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }

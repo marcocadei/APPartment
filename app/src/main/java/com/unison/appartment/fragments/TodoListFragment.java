@@ -135,8 +135,12 @@ public class TodoListFragment extends Fragment {
         viewModel.deleteTask(id);
     }
 
-    public void assignTask(String taskId, String userId, String userName){
+    public void assignTask(String taskId, String userId, String userName) {
         viewModel.assignTask(taskId, userId, userName);
+    }
+
+    public void removeAssignment(String taskId) {
+        viewModel.removeAssignment(taskId);
     }
 
     /**

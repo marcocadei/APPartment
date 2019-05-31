@@ -63,6 +63,13 @@ public class TodoTaskRepository {
         uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
     }
 
+    public void removeAssignment(String taskId) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
         @Override
         public List<UncompletedTask> apply(DataSnapshot dataSnapshot) {
