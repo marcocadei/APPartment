@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.Resources;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,10 @@ import android.widget.TextView;
 
 import com.unison.appartment.R;
 import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.state.MyApplication;
 
 /**
@@ -54,7 +58,9 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
 
         holder.taskName.setText(uncompletedTask.getName());
         holder.taskDescription.setText(uncompletedTask.getDescription());
-        holder.taskPoints.setText(String.valueOf(uncompletedTask.getPoints()));
+        holder.textStatusUpper.setText(String.valueOf(uncompletedTask.getPoints()));
+        holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
+        holder.textStatusLower.setText(R.string.general_points_name);
 
         if (uncompletedTask.isAssigned()) {
             if (uncompletedTask.getAssignedUserId().equals(new FirebaseAuth().getCurrentUserUid())) {
@@ -67,6 +73,15 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
 
             if (uncompletedTask.isMarked()) {
                 holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
+                holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_medium));
+                if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+                    holder.textStatusUpper.setText(R.string.fragment_todo_text_status_requested_row_1);
+                    holder.textStatusLower.setText(R.string.fragment_todo_text_status_requested_row_2);
+                }
+                else {
+                    holder.textStatusUpper.setText(R.string.fragment_todo_text_status_pending_row_1);
+                    holder.textStatusLower.setText(R.string.fragment_todo_text_status_pending_row_2);
+                }
             }
             else {
                 holder.itemIcon.setColorFilter(res.getColor(R.color.darkGray, null));
@@ -89,7 +104,8 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
         public final TextView taskName;
         public final TextView taskAssignedUser;
         public final TextView taskDescription;
-        public final TextView taskPoints;
+        public final TextView textStatusLower;
+        public final TextView textStatusUpper;
 
         public ViewHolderTask(View view) {
             super(view);
@@ -98,7 +114,8 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
             taskName = view.findViewById(R.id.fragment_todo_text_task_name);
             taskAssignedUser = view.findViewById(R.id.fragment_todo_text_assigned_user);
             taskDescription = view.findViewById(R.id.fragment_todo_text_task_description);
-            taskPoints = view.findViewById(R.id.fragment_todo_task_points_value);
+            textStatusUpper = view.findViewById(R.id.fragment_todo_task_points_value);
+            textStatusLower = view.findViewById(R.id.fragment_todo_task_points_label);
         }
     }
 

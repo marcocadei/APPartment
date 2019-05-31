@@ -65,14 +65,14 @@
             android:text="@string/general_points_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_todo_task_points_value"
+            app:layout_constraintTop_toBottomOf="@id/fragment_todo_task_points_value"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/fragment_todo_task_points_value"
             style="@style/Component.TextView.SingleLine.PointsValue"
             android:text="@string/placeholder_number"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_todo_task_points_label"
+            app:layout_constraintBottom_toTopOf="@id/fragment_todo_task_points_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
