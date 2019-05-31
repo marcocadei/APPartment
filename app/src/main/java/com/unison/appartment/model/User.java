@@ -1,5 +1,7 @@
 package com.unison.appartment.model;
 
+import androidx.annotation.Nullable;
+
 import com.unison.appartment.R;
 import com.unison.appartment.state.MyApplication;
 import com.unison.appartment.utils.DateUtils;
@@ -12,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Classe che rappresenta un utente registrato all'applicazione, indipendente dalla/e casa/e in cui è presente
@@ -27,12 +28,13 @@ public class User implements Serializable {
     private String name;
     private String birthdate;
     private int gender;
+    @Nullable
     private String image;
 
     public User (){
     }
 
-    public User(String email, String password, String name, String birthdate, int gender, String image) {
+    public User(String email, String password, String name, String birthdate, int gender, @Nullable String image) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -89,11 +91,12 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
+    @Nullable
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(@Nullable String image) {
         this.image = image;
     }
 
