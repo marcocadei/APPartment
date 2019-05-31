@@ -302,7 +302,6 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         DialogFragment fragment = (DialogFragment) getSupportFragmentManager().findFragmentByTag(UserPickerFragment.TAG_USER_PICKER);
         if (fragment != null) {
             fragment.dismiss();
-            Log.i("hohohohoiojio", item.getUserId());
             sendAssignData(item.getUserId());
         }
         else {

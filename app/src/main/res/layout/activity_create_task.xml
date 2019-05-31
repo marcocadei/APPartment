@@ -98,7 +98,7 @@
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/desc_uncompletedtasks_homename_taskid_description"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_task_input_assigned_user"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_create_task_input_points">
 
@@ -106,6 +106,22 @@
                     android:id="@+id/activity_create_task_input_description_value"
                     android:inputType="textMultiLine|text"
                     style="@style/CustomFormTextFieldInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_task_input_assigned_user"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/desc_uncompletedtasks_homename_taskid_assignedusername"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_task_input_description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_task_input_assigned_user_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:focusable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

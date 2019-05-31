@@ -186,5 +186,6 @@
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
+    <string name="desc_uncompletedtasks_homename_taskid_assignedusername">Utente assegnato (opzionale)</string>
 
 </resources>
