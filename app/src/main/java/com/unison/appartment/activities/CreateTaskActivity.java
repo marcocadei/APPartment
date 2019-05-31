@@ -96,7 +96,7 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
                 inputName.getText().toString(),
                 inputDescription.getText().toString(),
                 Integer.valueOf(inputPoints.getText().toString()),
-                System.currentTimeMillis() // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
+                System.currentTimeMillis(), // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
                 assignedUserId,
                 assignedUserName,
                 false
