@@ -239,9 +239,8 @@ public class JoinHomeActivity extends FormActivity {
             String insertedPassword = inputPassword.getText().toString();
             String homePassword = home.getPassword();
             if (!insertedPassword.equals(homePassword)) {
-                // La password inserita è sbagliata (viene comunque mostrato un messaggio d'errore generico)
-                layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
-                layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
+                // La password inserita è sbagliata
+                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
                 dismissProgress();
             }
             else {
@@ -253,9 +252,8 @@ public class JoinHomeActivity extends FormActivity {
 
         @Override
         public void onReadEmpty() {
-            // La casa specificata non esiste (viene comunque mostrato un messaggio d'errore generico)
-            layoutHomeName.setError(getString(R.string.form_error_incorrect_credentials));
-            layoutPassword.setError(getString(R.string.form_error_incorrect_credentials));
+            // La casa specificata non esiste
+            layoutHomeName.setError(getString(R.string.form_error_nonexistent_home));
             dismissProgress();
         }
 
