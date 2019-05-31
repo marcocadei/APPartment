@@ -48,6 +48,7 @@
     <string name="desc_rewards_homename_rewardid_description">Descrizione</string>
     <string name="desc_rewards_homename_rewardid_name">Nome</string>
     <string name="desc_rewards_homename_rewardid_points">Punti</string>
+    <string name="desc_uncompletedtasks_homename_taskid_assignedusername">Utente assegnato (opzionale)</string>
     <string name="desc_uncompletedtasks_homename_taskid_creation_date">Data di creazione</string>
     <string name="desc_uncompletedtasks_homename_taskid_description">Descrizione</string>
     <string name="desc_uncompletedtasks_homename_taskid_name">Nome</string>
@@ -142,6 +143,7 @@
     <string name="activity_task_detail_btn_complete_task_marked">Attesa conferma</string>
     <string name="activity_task_detail_btn_confirm_completion">Conferma completamento</string>
     <string name="activity_task_detail_btn_delete">Elimina attività</string>
+    <string name="activity_task_detail_btn_switch">Cambia assegnamento</string>
     <string name="activity_task_detail_btn_unassign">Rimuovi assegnamento</string>
     <string name="activity_task_detail_text_assigned_user_title">Questa attività è stata assegnata a:</string>
     <string name="activity_task_detail_title">Dettaglio attività</string>
@@ -186,6 +188,5 @@
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
-    <string name="desc_uncompletedtasks_homename_taskid_assignedusername">Utente assegnato (opzionale)</string>
 
 </resources>

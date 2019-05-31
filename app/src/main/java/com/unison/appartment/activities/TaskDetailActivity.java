@@ -168,6 +168,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
              */
             MaterialButton btnConfirm = findViewById(R.id.activity_task_detail_btn_confirm_completion);
             MaterialButton btnCancel = findViewById(R.id.activity_task_detail_btn_cancel_completion);
+            MaterialButton btnSwitch = findViewById(R.id.activity_task_detail_btn_switch);
             MaterialButton btnDelete = findViewById(R.id.activity_task_detail_btn_delete);
 
             btnDelete.setVisibility(View.VISIBLE);
@@ -198,6 +199,13 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                         @Override
                         public void onClick(View v) {
                             // TODO disassegnamento
+                        }
+                    });
+                    btnSwitch.setVisibility(View.VISIBLE);
+                    btnSwitch.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UserPickerFragment.newInstance().show(getSupportFragmentManager(), UserPickerFragment.TAG_USER_PICKER);
                         }
                     });
                 }
@@ -237,6 +245,13 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                             @Override
                             public void onClick(View v) {
                                 // TODO disassegnamento
+                            }
+                        });
+                        btnSwitch.setVisibility(View.VISIBLE);
+                        btnSwitch.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                UserPickerFragment.newInstance().show(getSupportFragmentManager(), UserPickerFragment.TAG_USER_PICKER);
                             }
                         });
                     }

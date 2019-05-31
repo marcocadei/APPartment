@@ -151,10 +151,20 @@
                     android:id="@+id/activity_task_detail_btn_complete"
                     style="@style/Component.Button"
                     android:text="@string/activity_task_detail_btn_complete_task_available"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_assign"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_switch"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activity_task_detail_btn_switch"
+                    style="@style/Component.Button"
+                    android:text="@string/activity_task_detail_btn_switch"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_assign"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_task_detail_btn_assign"
@@ -163,7 +173,7 @@
                     app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_confirm_completion"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_switch" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_task_detail_btn_confirm_completion"
