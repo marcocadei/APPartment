@@ -43,8 +43,20 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
     public void onBindViewHolder(@NonNull final ViewHolderTask holder, int position) {
         final UncompletedTask uncompletedTask = getItem(position);
 
+        Resources res = holder.itemView.getResources();
+        /*
+        Resetto le view ai valori di default (solo per i campi che non sono comunque resettati ad un
+        altro valore) in modo che se il ViewHolder è stato riciclato non mi trovo risultati strani.
+         */
+        holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check_circle, null));
+        holder.itemIcon.setColorFilter(res.getColor(R.color.colorPrimaryDark, null));
+        holder.taskAssignedUser.setVisibility(View.GONE);
+
+        holder.taskName.setText(uncompletedTask.getName());
+        holder.taskDescription.setText(uncompletedTask.getDescription());
+        holder.taskPoints.setText(String.valueOf(uncompletedTask.getPoints()));
+
         if (uncompletedTask.isAssigned()) {
-            Resources res = MyApplication.getAppContext().getResources();
             if (uncompletedTask.getAssignedUserId().equals(new FirebaseAuth().getCurrentUserUid())) {
                 holder.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user_self));
             }
@@ -60,9 +72,6 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
                 holder.itemIcon.setColorFilter(res.getColor(R.color.darkGray, null));
             }
         }
-        holder.taskName.setText(uncompletedTask.getName());
-        holder.taskDescription.setText(uncompletedTask.getDescription());
-        holder.taskPoints.setText(String.valueOf(uncompletedTask.getPoints()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

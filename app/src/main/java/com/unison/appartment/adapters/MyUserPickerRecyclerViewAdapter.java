@@ -46,6 +46,10 @@ public class MyUserPickerRecyclerViewAdapter extends RecyclerView.Adapter<MyUser
             holder.imgProfile.setColorFilter(holder.mView.getContext().getResources().getColor(R.color.transparentWhite, null));
             Glide.with(holder.imgProfile.getContext()).load(item.getImage()).apply(RequestOptions.circleCropTransform()).into(holder.imgProfile);
         }
+        else {
+            holder.imgProfile.setColorFilter(holder.mView.getContext().getResources().getColor(R.color.colorPrimaryDark, null));
+            Glide.with(holder.imgProfile.getContext()).load(R.drawable.ic_person).into(holder.imgProfile);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
