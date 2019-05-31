@@ -5,7 +5,7 @@
     style="@style/Component.Layout.ListItem">
 
     <ImageView
-        android:id="@+id/fragment_userpicker_img_home"
+        android:id="@+id/fragment_userpicker_img_user"
         style="@style/Component.ImageView.ListItemIcon"
         android:contentDescription="@string/caption_profile_pic"
         android:src="@drawable/ic_person"
@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_userpicker_layout_name"
-        app:layout_constraintStart_toEndOf="@id/fragment_userpicker_img_home"
+        app:layout_constraintStart_toEndOf="@id/fragment_userpicker_img_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

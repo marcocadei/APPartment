@@ -165,7 +165,7 @@ public class JoinHomeActivity extends FormActivity {
 
         String nickname = inputNickname.getText().toString();
 
-        return new HomeUser(nickname, Home.ROLE_SLAVE);
+        return new HomeUser(nickname, Home.ROLE_SLAVE, Appartment.getInstance().getUser().getImage());
     }
 
     private UserHome createUserHome() {

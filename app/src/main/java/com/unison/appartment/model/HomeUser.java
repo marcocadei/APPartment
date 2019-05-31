@@ -53,15 +53,16 @@ public class HomeUser {
     public HomeUser() {
     }
 
-    public HomeUser(String nickname, int role) {
-        this(nickname, DEFAULT_POINTS, DEFAULT_POINTS, role);
+    public HomeUser(String nickname, int role, @Nullable String image) {
+        this(nickname, DEFAULT_POINTS, DEFAULT_POINTS, role, image);
     }
 
-    public HomeUser(String nickname, int points, long totalEarnedPoints, int role) {
+    public HomeUser(String nickname, int points, long totalEarnedPoints, int role, @Nullable String image) {
         this.nickname = nickname;
         this.points = points;
         this.totalEarnedPoints = totalEarnedPoints;
         this.role = role;
+        this.image = image;
     }
 
     public HomeUser(String nickname, int points, long totalEarnedPoints, int role, @Nullable String image, int completedTasks, int claimedRewards, int earnedMoney, int textPosts, int audioPosts, int imagePosts, int rejectedTasks, int unlockedAchievements) {
