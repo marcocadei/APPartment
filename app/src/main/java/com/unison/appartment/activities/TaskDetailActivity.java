@@ -229,7 +229,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                         btnCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // TODO annulla richiesta completamento
+                                sendUnmarkData();
                             }
                         });
                     }
@@ -318,6 +318,14 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
         returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendUnmarkData() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_UNMARK);
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
         setResult(RESULT_OK, returnIntent);
         finish();
     }

@@ -147,6 +147,10 @@ public class TodoListFragment extends Fragment {
         viewModel.markTask(taskId, userId, userName);
     }
 
+    public void cancelCompletion(String taskId) {
+        viewModel.cancelCompletion(taskId);
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity

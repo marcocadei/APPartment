@@ -78,6 +78,10 @@ public class TodoTaskRepository {
         uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
     }
 
+    public void cancelCompletion(String taskId) {
+        uncompletedTasksRef.child(taskId).child(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED).setValue(false);
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
         @Override
         public List<UncompletedTask> apply(DataSnapshot dataSnapshot) {

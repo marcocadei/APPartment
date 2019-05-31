@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.Resources;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.unison.appartment.model.Home;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener;
 import com.unison.appartment.state.Appartment;
-import com.unison.appartment.state.MyApplication;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link UncompletedTask} e che effettua una
