@@ -143,6 +143,10 @@ public class TodoListFragment extends Fragment {
         viewModel.removeAssignment(taskId);
     }
 
+    public void markTask(String taskId, String userId, String userName) {
+        viewModel.markTask(taskId, userId, userName);
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity

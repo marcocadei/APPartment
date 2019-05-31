@@ -118,7 +118,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                         btnComplete.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // TODO marca come completato
+                                sendMarkData(userId);
                             }
                         });
                         btnAssign.setText(R.string.activity_task_detail_btn_unassign);
@@ -156,7 +156,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                 btnComplete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO assegnamento + richiesta completamento
+                        sendMarkData(userId);
                     }
                 });
             }
@@ -308,6 +308,16 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_REMOVE_ASSIGNMENT);
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendMarkData(String userId) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_MARK_AS_COMPLETED);
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
         setResult(RESULT_OK, returnIntent);
         finish();
     }

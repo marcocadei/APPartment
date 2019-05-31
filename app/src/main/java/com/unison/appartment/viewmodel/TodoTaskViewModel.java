@@ -38,4 +38,8 @@ public class TodoTaskViewModel extends ViewModel {
         repository.removeAssignment(taskId);
     }
 
+    public void markTask(String taskId, String userId, String userName) {
+        repository.markTask(taskId, userId, userName);
+    }
+
 }
