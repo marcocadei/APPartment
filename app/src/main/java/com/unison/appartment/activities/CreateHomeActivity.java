@@ -194,7 +194,7 @@ public class CreateHomeActivity extends FormActivity {
 
         String nickname = inputNickname.getText().toString();
 
-        return new HomeUser(nickname, Home.ROLE_OWNER);
+        return new HomeUser(nickname, Home.ROLE_OWNER, Appartment.getInstance().getUser().getImage());
     }
 
     private UserHome createUserHome() {

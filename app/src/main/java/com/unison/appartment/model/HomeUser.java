@@ -1,5 +1,7 @@
 package com.unison.appartment.model;
 
+import androidx.annotation.Nullable;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
@@ -29,6 +31,8 @@ public class HomeUser {
     @PropertyName(ATTRIBUTE_TOTAL_EARNED_POINTS)
     private long totalEarnedPoints;
     private int role;
+    @Nullable
+    private String image;
     @PropertyName(ATTRIBUTE_COMPLETED_TASKS)
     private int completedTasks;
     @PropertyName(ATTRIBUTE_CLAIMED_REWARDS)
@@ -49,22 +53,24 @@ public class HomeUser {
     public HomeUser() {
     }
 
-    public HomeUser(String nickname, int role) {
-        this(nickname, DEFAULT_POINTS, DEFAULT_POINTS, role);
+    public HomeUser(String nickname, int role, @Nullable String image) {
+        this(nickname, DEFAULT_POINTS, DEFAULT_POINTS, role, image);
     }
 
-    public HomeUser(String nickname, int points, long totalEarnedPoints, int role) {
+    public HomeUser(String nickname, int points, long totalEarnedPoints, int role, @Nullable String image) {
         this.nickname = nickname;
         this.points = points;
         this.totalEarnedPoints = totalEarnedPoints;
         this.role = role;
+        this.image = image;
     }
 
-    public HomeUser(String nickname, int points, long totalEarnedPoints, int role, int completedTasks, int claimedRewards, int earnedMoney, int textPosts, int audioPosts, int imagePosts, int rejectedTasks, int unlockedAchievements) {
+    public HomeUser(String nickname, int points, long totalEarnedPoints, int role, @Nullable String image, int completedTasks, int claimedRewards, int earnedMoney, int textPosts, int audioPosts, int imagePosts, int rejectedTasks, int unlockedAchievements) {
         this.nickname = nickname;
         this.points = points;
         this.totalEarnedPoints = totalEarnedPoints;
         this.role = role;
+        this.image = image;
         this.completedTasks = completedTasks;
         this.claimedRewards = claimedRewards;
         this.earnedMoney = earnedMoney;
@@ -117,6 +123,15 @@ public class HomeUser {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    @Nullable
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(@Nullable String image) {
+        this.image = image;
     }
 
     @PropertyName(ATTRIBUTE_COMPLETED_TASKS)
@@ -215,11 +230,12 @@ public class HomeUser {
                 imagePosts == homeUser.imagePosts &&
                 rejectedTasks == homeUser.rejectedTasks &&
                 unlockedAchievements == homeUser.unlockedAchievements &&
-                Objects.equals(nickname, homeUser.nickname);
+                nickname.equals(homeUser.nickname) &&
+                Objects.equals(image, homeUser.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, points, totalEarnedPoints, role, completedTasks, claimedRewards, earnedMoney, textPosts, audioPosts, imagePosts, rejectedTasks, unlockedAchievements);
+        return Objects.hash(nickname, points, totalEarnedPoints, role, image, completedTasks, claimedRewards, earnedMoney, textPosts, audioPosts, imagePosts, rejectedTasks, unlockedAchievements);
     }
 }

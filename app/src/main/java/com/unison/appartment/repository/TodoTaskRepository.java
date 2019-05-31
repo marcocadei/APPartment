@@ -13,12 +13,16 @@ import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.UncompletedTask;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TodoTaskRepository {
 
-    // Nodo del database a cui sono interessato
+    // Riferimento al nodo root del database
+    private DatabaseReference rootRef;
+    // Riferimento al nodo del database a cui sono interessato
     private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
     // tramite un Deserializer in ogetti di tipo UncompletedTask
@@ -26,10 +30,11 @@ public class TodoTaskRepository {
     private LiveData<List<UncompletedTask>> taskLiveData;
 
     public TodoTaskRepository() {
-        // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
-        uncompletedTasksRef =
-                FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
-                              DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        // Riferimento al nodo root del database
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        // Riferimento al nodo del database a cui sono interessato
+        uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
         liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
@@ -45,6 +50,36 @@ public class TodoTaskRepository {
         newUncompletedTask.setId(key);
         newUncompletedTask.setCreationDate((-1) * newUncompletedTask.getCreationDate());
         uncompletedTasksRef.child(key).setValue(newUncompletedTask);
+    }
+
+    public void deleteTask(String id){
+        uncompletedTasksRef.child(id).removeValue();
+    }
+
+    public void assignTask(String taskId, String userId, String userName) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
+        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
+    }
+
+    public void removeAssignment(String taskId) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
+    }
+
+    public void markTask(String taskId, String userId, String userName) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, true);
+        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
+    }
+
+    public void cancelCompletion(String taskId) {
+        uncompletedTasksRef.child(taskId).child(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED).setValue(false);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {

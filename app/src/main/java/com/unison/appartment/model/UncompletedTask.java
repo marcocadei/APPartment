@@ -14,19 +14,22 @@ import java.util.Objects;
 public class UncompletedTask implements Serializable {
 
     private final static String ATTRIBUTE_CREATION_DATE = "creation-date";
-    private final static String ATTRIBUTE_ASSIGNED_USER = "assigned-user";
+    private final static String ATTRIBUTE_ASSIGNED_USER_ID = "assigned-user-id";
+    private final static String ATTRIBUTE_ASSIGNED_USER_NAME = "assigned-user-name";
 
     @Exclude
     private String id;
     private String name;
-    @Nullable
     private String description;
     private int points;
     @PropertyName(ATTRIBUTE_CREATION_DATE)
     private long creationDate;
     @Nullable
-    @PropertyName(ATTRIBUTE_ASSIGNED_USER)
-    private String assignedUser;
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER_ID)
+    private String assignedUserId;
+    @Nullable
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER_NAME)
+    private String assignedUserName;
     private boolean marked;
 
     // Costruttore vuoto richiesto da firebase
@@ -43,9 +46,13 @@ public class UncompletedTask implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public UncompletedTask(String name, String description, int points, long creationDate, String assignedUser, boolean marked) {
-        this(name, description, points, creationDate);
-        this.assignedUser = assignedUser;
+    public UncompletedTask(String name, String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked) {
+        this.name = name;
+        this.description = description;
+        this.points = points;
+        this.creationDate = creationDate;
+        this.assignedUserId = assignedUserId;
+        this.assignedUserName = assignedUserName;
         this.marked = marked;
     }
 
@@ -94,14 +101,25 @@ public class UncompletedTask implements Serializable {
     }
 
     @Nullable
-    @PropertyName(ATTRIBUTE_ASSIGNED_USER)
-    public String getAssignedUser() {
-        return assignedUser;
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER_ID)
+    public String getAssignedUserId() {
+        return assignedUserId;
     }
 
-    @PropertyName(ATTRIBUTE_ASSIGNED_USER)
-    public void setAssignedUser(@Nullable String assignedUser) {
-        this.assignedUser = assignedUser;
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER_ID)
+    public void setAssignedUserId(@Nullable String assignedUserId) {
+        this.assignedUserId = assignedUserId;
+    }
+
+    @Nullable
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER_NAME)
+    public String getAssignedUserName() {
+        return assignedUserName;
+    }
+
+    @PropertyName(ATTRIBUTE_ASSIGNED_USER_NAME)
+    public void setAssignedUserName(@Nullable String assignedUserName) {
+        this.assignedUserName = assignedUserName;
     }
 
     public boolean isMarked() {
@@ -110,6 +128,11 @@ public class UncompletedTask implements Serializable {
 
     public void setMarked(boolean marked) {
         this.marked = marked;
+    }
+
+    @Exclude
+    public boolean isAssigned() {
+        return this.assignedUserId != null;
     }
 
     @Override
@@ -121,12 +144,13 @@ public class UncompletedTask implements Serializable {
                 creationDate == that.creationDate &&
                 marked == that.marked &&
                 name.equals(that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(assignedUser, that.assignedUser);
+                description.equals(that.description) &&
+                Objects.equals(assignedUserId, that.assignedUserId) &&
+                Objects.equals(assignedUserName, that.assignedUserName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, points, creationDate, assignedUser, marked);
+        return Objects.hash(name, description, points, creationDate, assignedUserId, assignedUserName, marked);
     }
 }

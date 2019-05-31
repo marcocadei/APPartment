@@ -31,13 +31,23 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/fragment_todo_text_assigned_user"
+            android:text="@string/placeholder_text_long"
+            style="@style/Component.TextView.SingleLine.ListItemDescription"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/fragment_todo_text_task_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_todo_text_task_name" />
+
+        <TextView
             android:id="@+id/fragment_todo_text_task_description"
             android:text="@string/placeholder_text_long"
             style="@style/Component.TextView.SingleLine.ListItemDescription"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/fragment_todo_text_task_name"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_todo_text_task_name" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_todo_text_assigned_user" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,14 +65,14 @@
             android:text="@string/general_points_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_todo_task_points_value"
+            app:layout_constraintTop_toBottomOf="@id/fragment_todo_task_points_value"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/fragment_todo_task_points_value"
             style="@style/Component.TextView.SingleLine.PointsValue"
             android:text="@string/placeholder_number"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_todo_task_points_label"
+            app:layout_constraintBottom_toTopOf="@id/fragment_todo_task_points_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

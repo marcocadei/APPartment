@@ -62,7 +62,7 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
         holder.textName.setText(rewardItem.getName());
         holder.textDescription.setText(rewardItem.getDescription());
         if (holder.getItemViewType() == AVAILABLE_REWARD_ITEM_TYPE) {
-            ((ViewHolderAvailableReward) holder).textPoints.setText(String.format(Locale.getDefault(), "%d", rewardItem.getPoints()));
+            ((ViewHolderAvailableReward) holder).textPoints.setText(String.valueOf(rewardItem.getPoints()));
         }
         else {
             ViewHolderRequestedReward requestedRewardHolder = (ViewHolderRequestedReward) holder;
@@ -70,6 +70,7 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
             if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE) {
                 requestedRewardHolder.textStatusUpper.setText(res.getString(R.string.fragment_reward_text_status_pending_row_1));
                 requestedRewardHolder.textStatusLower.setText(res.getString(R.string.fragment_reward_text_status_pending_row_2));
+                requestedRewardHolder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
             }
             else {
                 /*
@@ -80,6 +81,11 @@ public class MyRewardRecyclerViewAdapter extends ListAdapter<Reward, MyRewardRec
                     requestedRewardHolder.textStatusUpper.setText(res.getString(R.string.fragment_reward_text_status_unavailable_row_1));
                     requestedRewardHolder.textStatusLower.setText(res.getString(R.string.fragment_reward_text_status_unavailable_row_2));
                     requestedRewardHolder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_do_not_disturb_alt, null));
+                }
+                else {
+                    requestedRewardHolder.textStatusUpper.setText(res.getString(R.string.fragment_reward_text_status_requested_row_1));
+                    requestedRewardHolder.textStatusLower.setText(res.getString(R.string.fragment_reward_text_status_requested_row_2));
+                    requestedRewardHolder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
                 }
             }
         }

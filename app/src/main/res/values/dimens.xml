@@ -22,4 +22,5 @@
 
     <dimen name="progress_bar_container_height">4dp</dimen>
     <dimen name="progress_bar_component_height">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

@@ -5,20 +5,26 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener;
+import com.unison.appartment.state.Appartment;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link UncompletedTask} e che effettua una
  * chiamata al {@link com.unison.appartment.fragments.TodoListFragment.OnTodoListFragmentInteractionListener listener} specificato.
  */
-public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, RecyclerView.ViewHolder> {
+public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, MyTodoListRecyclerViewAdapter.ViewHolderTask> {
 
     private final OnTodoListFragmentInteractionListener listener;
 
@@ -27,24 +33,60 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
         this.listener = listener;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderTask onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_todo_task, parent, false);
         return new ViewHolderTask(view);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        final ViewHolderTask holderTask = (ViewHolderTask) holder;
-//        final UncompletedTask uncompletedTask = tasks.get(position);
+    public void onBindViewHolder(@NonNull final ViewHolderTask holder, int position) {
         final UncompletedTask uncompletedTask = getItem(position);
 
-        holderTask.taskName.setText(uncompletedTask.getName());
-        holderTask.taskDescription.setText(uncompletedTask.getDescription());
-        holderTask.taskPoints.setText(String.valueOf(uncompletedTask.getPoints()));
+        Resources res = holder.itemView.getResources();
+        /*
+        Resetto le view ai valori di default (solo per i campi che non sono comunque resettati ad un
+        altro valore) in modo che se il ViewHolder è stato riciclato non mi trovo risultati strani.
+         */
+        holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check_circle, null));
+        holder.itemIcon.setColorFilter(res.getColor(R.color.colorPrimaryDark, null));
+        holder.taskAssignedUser.setVisibility(View.GONE);
 
-        holderTask.mView.setOnClickListener(new View.OnClickListener() {
+        holder.taskName.setText(uncompletedTask.getName());
+        holder.taskDescription.setText(uncompletedTask.getDescription());
+        holder.textStatusUpper.setText(String.valueOf(uncompletedTask.getPoints()));
+        holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
+        holder.textStatusLower.setText(R.string.general_points_name);
+
+        if (uncompletedTask.isAssigned()) {
+            if (uncompletedTask.getAssignedUserId().equals(new FirebaseAuth().getCurrentUserUid())) {
+                holder.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user_self));
+            }
+            else {
+                holder.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user, uncompletedTask.getAssignedUserName()));
+            }
+            holder.taskAssignedUser.setVisibility(View.VISIBLE);
+
+            if (uncompletedTask.isMarked()) {
+                holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
+                holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_medium));
+                if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+                    holder.textStatusUpper.setText(R.string.fragment_todo_text_status_requested_row_1);
+                    holder.textStatusLower.setText(R.string.fragment_todo_text_status_requested_row_2);
+                }
+                else {
+                    holder.textStatusUpper.setText(R.string.fragment_todo_text_status_pending_row_1);
+                    holder.textStatusLower.setText(R.string.fragment_todo_text_status_pending_row_2);
+                }
+            }
+            else {
+                holder.itemIcon.setColorFilter(res.getColor(R.color.darkGray, null));
+            }
+        }
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -56,16 +98,22 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
 
     public class ViewHolderTask extends RecyclerView.ViewHolder {
         public final View mView;
+        public final ImageView itemIcon;
         public final TextView taskName;
+        public final TextView taskAssignedUser;
         public final TextView taskDescription;
-        public final TextView taskPoints;
+        public final TextView textStatusLower;
+        public final TextView textStatusUpper;
 
         public ViewHolderTask(View view) {
             super(view);
             mView = view;
+            itemIcon = view.findViewById(R.id.fragment_todo_img_check);
             taskName = view.findViewById(R.id.fragment_todo_text_task_name);
+            taskAssignedUser = view.findViewById(R.id.fragment_todo_text_assigned_user);
             taskDescription = view.findViewById(R.id.fragment_todo_text_task_description);
-            taskPoints = view.findViewById(R.id.fragment_todo_task_points_value);
+            textStatusUpper = view.findViewById(R.id.fragment_todo_task_points_value);
+            textStatusLower = view.findViewById(R.id.fragment_todo_task_points_label);
         }
     }
 

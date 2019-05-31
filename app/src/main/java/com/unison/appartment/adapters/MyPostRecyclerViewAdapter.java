@@ -38,6 +38,8 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
 
     private final OnPostListFragmentInteractionListener listener;
 
+    private String playingAudioId = null;
+
     public MyPostRecyclerViewAdapter(OnPostListFragmentInteractionListener listener) {
         super(MyPostRecyclerViewAdapter.DIFF_CALLBACK);
         this.listener = listener;
@@ -149,10 +151,16 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
             case Post.AUDIO_POST:
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final Post audioPostItem = getItem(position);
+                if (audioPostItem.getId().equals(playingAudioId)) {
+                    holderAudioPost.audioPostState.setText(R.string.fragment_audio_post_state_playing);
+                }
+                else {
+                    holderAudioPost.audioPostState.setText(R.string.fragment_audio_post_state_play);
+                }
                 holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
                 timestamp = new Date(audioPostItem.getTimestamp());
                 holderAudioPost.audioPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
-                holderAudioPost.audioPostbtn.setOnClickListener(new View.OnClickListener() {
+                holderAudioPost.audioPostBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         /*if (listener != null) {
@@ -209,15 +217,17 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
             player.setDataSource(audioPostItem.getContent());
             player.setOnPreparedListener(audioPrepareListener);
             player.prepareAsync();
+            holderAudioPost.audioPostState.setText(holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
+            playingAudioId = audioPostItem.getId();
         } catch (IOException e) {
         }
-        holderAudioPost.audioPostState.setText(holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_playing));
     }
 
     private void stopPlay(final ViewHolderAudioPost holderAudioPost) {
         holderAudioPost.audioPostState.setText(
                 holderAudioPost.itemView.getContext().getResources().getString(R.string.fragment_audio_post_state_play)
         );
+        playingAudioId = null;
     }
 
     MediaPlayer.OnPreparedListener audioPrepareListener = new MediaPlayer.OnPreparedListener() {
@@ -269,7 +279,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
 
     public class ViewHolderAudioPost extends RecyclerView.ViewHolder {
         public final View mView;
-        public final ImageButton audioPostbtn;
+        public final ImageButton audioPostBtn;
         public final TextView audioPostSender;
         public final TextView audioPostState;
         public final TextView audioPostDate;
@@ -278,7 +288,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         public ViewHolderAudioPost(View view) {
             super(view);
             mView = view;
-            audioPostbtn = view.findViewById(R.id.fragment_audio_post_btn);
+            audioPostBtn = view.findViewById(R.id.fragment_audio_post_btn);
             audioPostSender = view.findViewById(R.id.fragment_audio_post_sender);
             audioPostState = view.findViewById(R.id.fragment_audio_post_state);
             audioPostDate = view.findViewById(R.id.fragment_audio_post_date);

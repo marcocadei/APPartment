@@ -106,6 +106,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signup_input_birthdate_value"
                     style="@style/CustomFormTextFieldInput"
+                    android:longClickable="false"
                     android:focusable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>

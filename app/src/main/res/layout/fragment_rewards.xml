@@ -30,7 +30,7 @@
         android:name="com.unison.appartment.fragments.MoneyRewardFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_rewards_fragment_reward_list"
+        app:layout_constraintBottom_toTopOf="@id/fragment_rewards_fragment_reward_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_rewards_progress_container"
