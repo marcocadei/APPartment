@@ -37,8 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_done_tabs"
-        app:layout_constraintBottom_toTopOf="@id/fragment_done_fragment_done_list"
-        android:visibility="gone">
+        app:layout_constraintBottom_toTopOf="@id/fragment_done_fragment_done_list">
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/fragment_done_progress"
@@ -49,9 +48,36 @@
             android:layout_gravity="center"/>
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/fragment_done_empty_completedtask_list_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_done_empty_completedtask_list_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_done_progress_container"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_margin="@dimen/margin_large"
+        style="@style/Component.TextView.MultiLine.ObjectTitle"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/fragment_done_empty_completedtask_list_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_done_empty_completedtask_list_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_done_empty_completedtask_list_title"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_margin="@dimen/margin_large"
+        android:visibility="gone"/>
+
     <fragment
         android:id="@+id/fragment_done_fragment_done_list"
-        android:name="com.unison.appartment.AllCompletedTasksListFragment"
+        android:name="com.unison.appartment.fragments.AllCompletedTasksListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

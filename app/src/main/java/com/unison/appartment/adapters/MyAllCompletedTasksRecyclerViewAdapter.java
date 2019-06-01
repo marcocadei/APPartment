@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -12,11 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.unison.appartment.AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener;
-import com.unison.appartment.dummy.DummyContent.DummyItem;
+import com.unison.appartment.R;
+import com.unison.appartment.fragments.AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener;
 import com.unison.appartment.model.CompletedTask;
-
-import java.util.List;
 
 public class MyAllCompletedTasksRecyclerViewAdapter extends ListAdapter<CompletedTask, MyAllCompletedTasksRecyclerViewAdapter.ViewHolderCompletedTask> {
 

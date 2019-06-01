@@ -4,7 +4,7 @@
     android:id="@+id/fragment_todo_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AllCompletedTasksListFragment"
+    tools:context=".fragments.AllCompletedTasksListFragment"
     tools:listitem="@layout/fragment_completedtask" />
 
 

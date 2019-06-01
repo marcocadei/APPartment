@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,7 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unison.appartment.dummy.DummyContent;
+import com.unison.appartment.adapters.MyAllCompletedTasksRecyclerViewAdapter;
+import com.unison.appartment.R;
 import com.unison.appartment.dummy.DummyContent.DummyItem;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.viewmodel.CompletedTaskViewModel;
@@ -38,8 +39,7 @@ public class AllCompletedTasksListFragment extends Fragment {
     private OnAllCompletedTasksListFragmentInteractionListener listener;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
     public AllCompletedTasksListFragment() {
     }
@@ -97,12 +97,12 @@ public class AllCompletedTasksListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (getParentFragment() instanceof OnAllCompletedTasksListFragmentInteractionListener) {
+            listener = (OnAllCompletedTasksListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }*/
+                    + " must implement onAllCompletedTasksListElementsLoaded");
+        }
     }
 
     @Override
@@ -117,13 +117,13 @@ public class AllCompletedTasksListFragment extends Fragment {
             @Override
             public void onChanged(List<CompletedTask> completedTasks) {
                 myAdapter.submitList(completedTasks);
-                /*listener.onTodoListElementsLoaded(uncompletedTasks.size());
-                Log.d("provaListAdapter", "aggiunto");*/
+                listener.onAllCompletedTasksListElementsLoaded(completedTasks.size());
             }
         });
     }
 
     public interface OnAllCompletedTasksListFragmentInteractionListener {
         void onAllCompletedTasksListFragmentInteraction(DummyItem item);
+        void onAllCompletedTasksListElementsLoaded(int elements);
     }
 }
