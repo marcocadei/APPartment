@@ -106,6 +106,10 @@ public class TodoTaskRepository {
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {
         Map<String, Object> childUpdates;
+
+        // Aggiornamento di uncompleted-tasks
+        uncompletedTasksRef.child(task.getId()).removeValue();
+
         // Aggiornamento di home-users
         childUpdates = new HashMap<>();
         HomeUser homeUser = Appartment.getInstance().getHomeUser(assignedUserId);
