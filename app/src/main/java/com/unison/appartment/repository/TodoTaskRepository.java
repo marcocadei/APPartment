@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.unison.appartment.model.CompletedTask;
+import com.unison.appartment.model.Completion;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.DatabaseConstants;
@@ -30,6 +31,8 @@ public class TodoTaskRepository {
     // Riferimento al nodo completed-tasks/home-name/task-name che viene aggiornato quando si conferma
     // il completamento di un task
     private DatabaseReference completedTaskRef;
+    // Riferimento al nodo completions usato per mantenere una cronologia
+    private DatabaseReference completionsRef;
     // Riferimento al nodo del database a cui sono interessato
     private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
@@ -47,6 +50,9 @@ public class TodoTaskRepository {
         // Riferimento al nodo completed-tasks/home-name/task-name che viene aggiornato quando si conferma
         // il completamento di un task
         completedTaskRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.COMPLETEDTASKS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName());
+        // Riferimento al nodo completions usato per mantenere una cronologia
+        completionsRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.COMPLETIONS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName());
         // Riferimento al nodo del database a cui sono interessato
         uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
@@ -110,9 +116,17 @@ public class TodoTaskRepository {
 
         // Aggiornamento dei completed-tasks
         childUpdates = new HashMap<>();
-        CompletedTask completedTask = new CompletedTask(task.getName(), task.getDescription(), task.getPoints(), (-1) * System.currentTimeMillis());
+        long completionDate = System.currentTimeMillis();
+        CompletedTask completedTask = new CompletedTask(task.getName(), task.getDescription(), task.getPoints(), (-1) * completionDate);
         childUpdates.put(task.getName(), completedTask);
         completedTaskRef.updateChildren(childUpdates);
+
+        // Aggiornamento di completions
+        childUpdates = new HashMap<>();
+        Completion completion = new Completion(task.getAssignedUserName(), task.getPoints(), (-1) * completionDate);
+        String key = completionsRef.child(task.getName()).push().getKey();
+        childUpdates.put(key, completion);
+        completionsRef.child(task.getName()).updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
