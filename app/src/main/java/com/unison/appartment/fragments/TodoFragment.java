@@ -35,12 +35,14 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     public final static String EXTRA_TASK_ID = "taskId";
     public final static String EXTRA_USER_NAME = "userName";
     public final static String EXTRA_USER_ID = "userId";
+    public final static String EXTRA_TASK = "task";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_DELETE = 0;
     public final static int OPERATION_ASSIGN = 1;
     public final static int OPERATION_REMOVE_ASSIGNMENT = 2;
     public final static int OPERATION_MARK_AS_COMPLETED = 3;
     public final static int OPERATION_UNMARK = 4;
+    public final static int OPERATION_CONFIRM_COMPLETION = 5;
 
     private static final int ADD_TASK_REQUEST_CODE = 1;
     private static final int DETAIL_TASK_REQUEST_CODE = 2;
@@ -130,6 +132,10 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                         break;
                     case OPERATION_UNMARK:
                         listFragment.cancelCompletion(data.getStringExtra(EXTRA_TASK_ID));
+                        break;
+                    case OPERATION_CONFIRM_COMPLETION:
+                        listFragment.confirmCompletion((UncompletedTask)data.getSerializableExtra(EXTRA_TASK),
+                                data.getStringExtra(EXTRA_USER_ID));
                         break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");

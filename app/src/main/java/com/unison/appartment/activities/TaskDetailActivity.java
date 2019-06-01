@@ -191,7 +191,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                     btnComplete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // TODO completa (include rimozione dalla lista dei todo)
+                            sendCompletionData(userId);
                         }
                     });
                     btnAssign.setText(R.string.activity_task_detail_btn_unassign);
@@ -222,7 +222,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                         btnConfirm.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // TODO conferma richiesta completamento
+                                sendCompletionData(task.getAssignedUserId());
                             }
                         });
                         btnCancel.setVisibility(View.VISIBLE);
@@ -273,7 +273,15 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                 btnComplete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO assegnamento a sé stesso + completamento (include rimozione lista)
+                        // In questo caso devo fare sia l'assegnamento (a me stesso) che il completamento
+                        // In realtà mi basta fare il completamento normale perché:
+                        // -> uncompleted tasks viene eliminato e quindi non conta in che stato era
+                        // -> le stat in home-users sono aggiornate correttamente
+                        // -> completed-tasks contiene solo le informazioni sul task e non sugli utenti
+                        // -> completions vuole sapere chi ha completato il task e quindi sarebbe necessario
+                        //    assegnarlo, ma in realtà nel repository io recupero il nickname dell'utente
+                        //    a partire dalle informazioni nello stato e lo userId
+                        sendCompletionData(userId);
                     }
                 });
             }
@@ -334,6 +342,15 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_DELETE);
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendCompletionData(String assignedUserId) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_CONFIRM_COMPLETION);
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK, task);
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, assignedUserId);
         setResult(RESULT_OK, returnIntent);
         finish();
     }

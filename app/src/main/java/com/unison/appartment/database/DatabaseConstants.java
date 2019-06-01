@@ -17,6 +17,8 @@ public class DatabaseConstants {
     public final static String HOMEUSERS = "home-users";
     public final static String HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS = "claimed-rewards";
     public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
+    public final static String HOMEUSERS_HOMENAME_UID_COMPLETEDTASKS = "completed-tasks";
+    public final static String HOMEUSERS_HOMENAME_UID_TOTALEARNEDPOINTS = "total-earned-points";
 
     // Premi
     public final static String REWARDS = "rewards";
@@ -30,6 +32,12 @@ public class DatabaseConstants {
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME = "assigned-user-name";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE = "creation-date";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED = "marked";
+
+    // CompletedTask
+    public final static String COMPLETEDTASKS = "completed-tasks";
+
+    // Completions
+    public final static String COMPLETIONS = "completions";
 
     // Case di un utente
     public final static String USERHOMES = "user-homes";
