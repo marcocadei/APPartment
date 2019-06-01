@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 
 import com.unison.appartment.adapters.MyAllCompletedTasksRecyclerViewAdapter;
 import com.unison.appartment.R;
-import com.unison.appartment.dummy.DummyContent.DummyItem;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.viewmodel.CompletedTaskViewModel;
 
@@ -123,7 +122,7 @@ public class AllCompletedTasksListFragment extends Fragment {
     }
 
     public interface OnAllCompletedTasksListFragmentInteractionListener {
-        void onAllCompletedTasksListFragmentInteraction(DummyItem item);
+        void onAllCompletedTasksListFragmentInteraction(CompletedTask completedTask);
         void onAllCompletedTasksListElementsLoaded(int elements);
     }
 }

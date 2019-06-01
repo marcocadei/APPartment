@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
-import com.unison.appartment.dummy.DummyContent;
+import com.unison.appartment.model.CompletedTask;
 
 
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
@@ -62,7 +62,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     }
 
     @Override
-    public void onAllCompletedTasksListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onAllCompletedTasksListFragmentInteraction(CompletedTask completedTask) {
 
     }
 
