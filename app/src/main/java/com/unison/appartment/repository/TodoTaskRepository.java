@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.DatabaseConstants;
@@ -26,6 +27,9 @@ public class TodoTaskRepository {
     // Riferimento al nodo home-users/home-name che mi serve per aggiornare le statistiche dell'utente
     // una volta completato un compito
     private DatabaseReference homeUserRef;
+    // Riferimento al nodo completed-tasks/home-name/task-name che viene aggiornato quando si conferma
+    // il completamento di un task
+    private DatabaseReference completedTaskRef;
     // Riferimento al nodo del database a cui sono interessato
     private DatabaseReference uncompletedTasksRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
@@ -39,6 +43,10 @@ public class TodoTaskRepository {
         // Riferimento al nodo home-users/home-name che mi serve per aggiornare le statistiche dell'utente
         // una volta completato un compito
         homeUserRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName());
+        // Riferimento al nodo completed-tasks/home-name/task-name che viene aggiornato quando si conferma
+        // il completamento di un task
+        completedTaskRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.COMPLETEDTASKS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName());
         // Riferimento al nodo del database a cui sono interessato
         uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
@@ -91,13 +99,20 @@ public class TodoTaskRepository {
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {
-        Map<String, Object> childUpdates = new HashMap<>();
-        // Aggiornamento dello homeUser
+        Map<String, Object> childUpdates;
+        // Aggiornamento di home-users
+        childUpdates = new HashMap<>();
         HomeUser homeUser = Appartment.getInstance().getHomeUser(assignedUserId);
         childUpdates.put(DatabaseConstants.HOMEUSERS_HOMENAME_UID_COMPLETEDTASKS, homeUser.getCompletedTasks() + 1);
         childUpdates.put(DatabaseConstants.HOMEUSERS_HOMENAME_UID_TOTALEARNEDPOINTS, homeUser.getTotalEarnedPoints() + task.getPoints());
         childUpdates.put(DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, homeUser.getPoints() + task.getPoints());
         homeUserRef.child(assignedUserId).updateChildren(childUpdates);
+
+        // Aggiornamento dei completed-tasks
+        childUpdates = new HashMap<>();
+        CompletedTask completedTask = new CompletedTask(task.getName(), task.getDescription(), task.getPoints(), (-1) * System.currentTimeMillis());
+        childUpdates.put(task.getName(), completedTask);
+        completedTaskRef.updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
