@@ -43,16 +43,14 @@ public class MyCompletedTasksRecyclerViewAdapter extends ListAdapter<CompletedTa
        holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
        holder.textStatusLower.setText(R.string.general_points_name);
 
-        /*holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onAllCompletedTasksListFragmentInteraction(completedTask);
                 }
             }
-        });*/
+        });
     }
 
     public class ViewHolderCompletedTask extends RecyclerView.ViewHolder {

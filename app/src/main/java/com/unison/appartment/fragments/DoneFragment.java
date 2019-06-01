@@ -1,6 +1,7 @@
 package com.unison.appartment.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,11 +15,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.unison.appartment.CompletedTaskDetailActivity;
 import com.unison.appartment.R;
 import com.unison.appartment.model.CompletedTask;
 
 
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
+
+    public final static String EXTRA_COMPLETEDTASK_OBJECT = "completedTaskObject";
 
     private TextView emptyTodoListTitle;
     private TextView emptyTodoListText;
@@ -125,7 +129,9 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
     @Override
     public void onAllCompletedTasksListFragmentInteraction(CompletedTask completedTask) {
-
+        Intent i = new Intent(getActivity(), CompletedTaskDetailActivity.class);
+        i.putExtra(EXTRA_COMPLETEDTASK_OBJECT, completedTask);
+        startActivity(i);
     }
 
     @Override
