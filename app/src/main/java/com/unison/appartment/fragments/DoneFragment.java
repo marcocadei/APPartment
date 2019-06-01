@@ -92,8 +92,6 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     }
 
     public void updateFragmentContent(int position) {
-        AllCompletedTasksListFragment listFragment = (AllCompletedTasksListFragment) getChildFragmentManager()
-                .findFragmentById(R.id.fragment_done_fragment_done_list);
         switch (position) {
             default:
             case ALL_COMPLETEDTASKS_POSITION:
@@ -108,7 +106,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     }
 
     private void switchToFragment(Class fragment) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         if (currentPosition > lastPosition) {
             ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         } else {

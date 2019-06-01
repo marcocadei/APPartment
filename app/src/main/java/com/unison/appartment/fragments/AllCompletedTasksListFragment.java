@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,12 +97,12 @@ public class AllCompletedTasksListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (getParentFragment() instanceof OnAllCompletedTasksListFragmentInteractionListener) {
+        if (getParentFragment() instanceof OnAllCompletedTasksListFragmentInteractionListener) {
             listener = (OnAllCompletedTasksListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement onAllCompletedTasksListElementsLoaded");
-        }*/
+        }
     }
 
     @Override
@@ -116,7 +117,7 @@ public class AllCompletedTasksListFragment extends Fragment {
             @Override
             public void onChanged(List<CompletedTask> completedTasks) {
                 myAdapter.submitList(completedTasks);
-//                listener.onAllCompletedTasksListElementsLoaded(completedTasks.size());
+                listener.onAllCompletedTasksListElementsLoaded(completedTasks.size());
             }
         });
     }
