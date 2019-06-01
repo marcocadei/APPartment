@@ -184,6 +184,8 @@
     <string name="fragment_todo_text_status_requested_row_1">Conferma</string>
     <string name="fragment_todo_text_status_requested_row_2">richiesta</string>
     <string name="fragment_userpicker_text_title">Membri della casa</string>
+    <string name="fragment_done_tab_all">TUTTE</string>
+    <string name="fragment_done_tab_recent">RECENTI</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
@@ -192,5 +194,8 @@
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

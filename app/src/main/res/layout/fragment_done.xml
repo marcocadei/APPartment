@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_done"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DoneFragment">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/fragment_done_tabs"
+        android:background="@color/colorPrimary"
+        app:tabTextColor="@color/colorPrimaryText"
+        app:tabIndicatorColor="@color/colorPrimaryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_done_tabs"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/fragment_done_tab_all"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+        <com.google.android.material.tabs.TabItem
+            android:text="@string/fragment_done_tab_recent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_done_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_container_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_done_tabs"
+        app:layout_constraintBottom_toTopOf="@id/fragment_done_fragment_done_list"
+        android:visibility="gone">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/fragment_done_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_bar_component_height"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <fragment
+        android:id="@+id/fragment_done_fragment_done_list"
+        android:name="com.unison.appartment.AllCompletedTasksListFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_done_progress_container"
+        tools:layout="@layout/fragment_completedtask_list" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
