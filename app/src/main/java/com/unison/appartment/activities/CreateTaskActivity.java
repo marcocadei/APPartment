@@ -18,8 +18,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.fragments.UserPickerFragment;
+import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.UncompletedTask;
 
@@ -58,6 +60,13 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
         inputDescription = findViewById(R.id.activity_create_task_input_description_value);
         inputPoints = findViewById(R.id.activity_create_task_input_points_value);
         inputAssignedUser = findViewById(R.id.activity_create_task_input_assigned_user_value);
+
+        // Se provengo dall'activity di dettaglio di un'attività completata allora ho già delle informazioni
+        Intent creationIntent = getIntent();
+        CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
+        inputName.setText(completedTask.getName());
+        inputDescription.setText(completedTask.getLastDescription());
+        inputPoints.setText(String.valueOf(completedTask.getLastPoints()));
 
         inputAssignedUser.setOnClickListener(new View.OnClickListener() {
             @Override

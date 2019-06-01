@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,6 +24,7 @@ import com.unison.appartment.model.CompletedTask;
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
 
     public final static String EXTRA_COMPLETEDTASK_OBJECT = "completedTaskObject";
+    private static final int DETAIL_COMPLETED_TASK_REQUEST_CODE = 1;
 
     private TextView emptyTodoListTitle;
     private TextView emptyTodoListText;
@@ -131,7 +133,12 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     public void onAllCompletedTasksListFragmentInteraction(CompletedTask completedTask) {
         Intent i = new Intent(getActivity(), CompletedTaskDetailActivity.class);
         i.putExtra(EXTRA_COMPLETEDTASK_OBJECT, completedTask);
-        startActivity(i);
+        startActivityForResult(i, DETAIL_COMPLETED_TASK_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

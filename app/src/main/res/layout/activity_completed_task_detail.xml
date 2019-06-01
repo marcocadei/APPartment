@@ -97,27 +97,27 @@
                     android:id="@+id/activity_completed_task_detail_text_description_value"
                     style="@style/Component.TextView.MultiLine.AttributeValue"
                     android:text="@string/placeholder_text_long"
-                    app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_creation_date_title"
+                    app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_completion_date_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_description_title" />
 
                 <TextView
-                    android:id="@+id/activity_completed_task_detail_text_creation_date_title"
+                    android:id="@+id/activity_completed_task_detail_text_completion_date_title"
                     style="@style/Component.TextView.MultiLine.AttributeTitle"
                     android:text="@string/activity_completed_task_detail_text_last_completion_date"
-                    app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_creation_date_value"
+                    app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_completion_date_value"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_description_value" />
 
                 <TextView
-                    android:id="@+id/activity_completed_task_detail_text_creation_date_value"
+                    android:id="@+id/activity_completed_task_detail_text_completion_date_value"
                     style="@style/Component.TextView.MultiLine.AttributeValue"
                     app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_assigned_user_value"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_creation_date_title" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_completion_date_title" />
 
                 <TextView
                     android:id="@+id/activity_completed_task_detail_text_assigned_user_value"
@@ -126,7 +126,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_creation_date_value" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_completion_date_value" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -139,7 +139,7 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_completed_task_detail_btn_complete"
+                    android:id="@+id/activity_completed_task_detail_btn_create"
                     style="@style/Component.Button"
                     android:text="@string/activity_completed_task_detail_btn_create_task"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -1,16 +1,30 @@
 package com.unison.appartment;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
+import com.unison.appartment.activities.CreateTaskActivity;
 import com.unison.appartment.fragments.DoneFragment;
+import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.model.CompletedTask;
+import com.unison.appartment.utils.DateUtils;
+
+import java.util.Date;
 
 public class CompletedTaskDetailActivity extends AppCompatActivity {
+
+    private static final int ADD_TASK_REQUEST_CODE = 101;
+    public final static int RESULT_OK = 200;
+    public final static int RESULT_CREATED = 201;
+    public final static int RESULT_NOT_CREATED = 202;
 
     private CompletedTask completedTask;
 
@@ -35,5 +49,41 @@ public class CompletedTaskDetailActivity extends AppCompatActivity {
         Intent creationIntent = getIntent();
         completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
 
+        TextView textName = findViewById(R.id.activity_completed_task_detail_name);
+        TextView textPoints = findViewById(R.id.activity_completed_task_detail_points_value);
+        TextView textDescription = findViewById(R.id.activity_completed_task_detail_text_description_value);
+        TextView textCompletionDate = findViewById(R.id.activity_completed_task_detail_text_completion_date_value);
+
+        textName.setText(completedTask.getName());
+        textPoints.setText(String.valueOf(completedTask.getLastPoints()));
+        textDescription.setText(completedTask.getLastDescription());
+        textCompletionDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(completedTask.getLastCompletionDate())));
+
+        MaterialButton btnCreate = findViewById(R.id.activity_completed_task_detail_btn_create);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CompletedTaskDetailActivity.this, CreateTaskActivity.class);
+                i.putExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT, completedTask);
+                startActivityForResult(i, ADD_TASK_REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_TASK_REQUEST_CODE) {
+            Intent returnIntent = new Intent();
+            if (resultCode == Activity.RESULT_OK) {
+                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+                setResult(RESULT_CREATED, returnIntent);
+            } else {
+                // Necessario impostare questo resultCode perché altrimenti il default è OK e non
+                // riesco a capire cosa è successo
+                setResult(RESULT_NOT_CREATED, returnIntent);
+            }
+            finish();
+        }
     }
 }
