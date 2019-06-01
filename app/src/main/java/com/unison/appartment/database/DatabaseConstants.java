@@ -35,6 +35,7 @@ public class DatabaseConstants {
 
     // CompletedTask
     public final static String COMPLETEDTASKS = "completed-tasks";
+    public final static String COMPLETEDTASKS_HOMENAME_TASKID_NAME = "name";
 
     // Completions
     public final static String COMPLETIONS = "completions";
