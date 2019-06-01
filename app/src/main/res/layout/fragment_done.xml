@@ -5,7 +5,7 @@
     android:id="@+id/fragment_done"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DoneFragment">
+    tools:context=".fragments.DoneFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fragment_done_tabs"

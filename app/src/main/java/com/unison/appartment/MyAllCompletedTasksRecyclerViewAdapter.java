@@ -1,46 +1,51 @@
 package com.unison.appartment;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.unison.appartment.AllCompletedTasksListFragment.OnListFragmentInteractionListener;
+import com.unison.appartment.AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener;
 import com.unison.appartment.dummy.DummyContent.DummyItem;
+import com.unison.appartment.model.CompletedTask;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyAllCompletedTasksRecyclerViewAdapter extends RecyclerView.Adapter<MyAllCompletedTasksRecyclerViewAdapter.ViewHolder> {
+public class MyAllCompletedTasksRecyclerViewAdapter extends ListAdapter<CompletedTask, MyAllCompletedTasksRecyclerViewAdapter.ViewHolderCompletedTask> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnAllCompletedTasksListFragmentInteractionListener mListener;
 
-    public MyAllCompletedTasksRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyAllCompletedTasksRecyclerViewAdapter(OnAllCompletedTasksListFragmentInteractionListener listener) {
+        super(MyAllCompletedTasksRecyclerViewAdapter.DIFF_CALLBACK);
         mListener = listener;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderCompletedTask onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_completedtask, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolderCompletedTask(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+    public void onBindViewHolder(final ViewHolderCompletedTask holder, int position) {
+        final CompletedTask completedTask = getItem(position);
+        Resources res = holder.itemView.getResources();
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+       holder.taskName.setText(completedTask.getName());
+       holder.taskDescription.setText(completedTask.getLastDescription());
+       holder.textStatusUpper.setText(String.valueOf(completedTask.getLastPoints()));
+       holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
+       holder.textStatusLower.setText(R.string.general_points_name);
+
+        /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
@@ -49,30 +54,36 @@ public class MyAllCompletedTasksRecyclerViewAdapter extends RecyclerView.Adapter
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
-        });
+        });*/
     }
 
-    @Override
-    public int getItemCount() {
-        return mValues.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolderCompletedTask extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView taskName;
+        public final TextView taskDescription;
+        public final TextView textStatusLower;
+        public final TextView textStatusUpper;
 
-        public ViewHolder(View view) {
+        public ViewHolderCompletedTask(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            taskName = view.findViewById(R.id.fragment_done_text_task_name);
+            taskDescription = view.findViewById(R.id.fragment_done_text_task_description);
+            textStatusUpper = view.findViewById(R.id.fragment_done_task_points_value);
+            textStatusLower = view.findViewById(R.id.fragment_done_task_points_label);
         }
     }
+
+    public static final DiffUtil.ItemCallback<CompletedTask> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<CompletedTask>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull CompletedTask oldItem, @NonNull CompletedTask newItem) {
+                    return oldItem.getId().equals(newItem.getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull CompletedTask oldItem, @NonNull CompletedTask newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
 }
