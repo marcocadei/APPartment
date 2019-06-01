@@ -73,8 +73,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_todo, container, false);
 
-        emptyTodoListTitle = myView.findViewById(R.id.fragment_done_empty_completedtask_list_title);
-        emptyTodoListText = myView.findViewById(R.id.fragment_done_empty_completedtask_list_text);
+        emptyTodoListTitle = myView.findViewById(R.id.fragment_todo_empty_todo_list_title);
+        emptyTodoListText = myView.findViewById(R.id.fragment_todo_empty_todo_list_text);
 
         final FloatingActionButton floatAddTask = myView.findViewById(R.id.fragment_todo_float_add_task);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {

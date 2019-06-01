@@ -190,8 +190,8 @@
     <string name="fragment_done_empty_completedtask_list_text">Non c\'é nessuna attivita completata!</string>
 
     <!-- FIXME ancora da riallineare -->
-    <string name="fragment_todo_empty_homes_list">Non c\'é nessuna attivita da svolgere!</string>
-    <string name="fragment_todo_empty_homes_list_title">Non c\'é nulla qui :(</string>
+    <string name="fragment_todo_empty_todo_list">Non c\'é nessuna attivita da svolgere!</string>
+    <string name="fragment_todo_empty_todo_list_title">Non c\'é nulla qui :(</string>
     <string name="fragment_todo_img_check">Simbolo di spunta</string>
 
     <!-- TODO rimuovere -->

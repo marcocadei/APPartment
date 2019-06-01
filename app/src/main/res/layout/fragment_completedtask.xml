@@ -8,6 +8,7 @@
         style="@style/Component.ImageView.ListItemIcon"
         android:contentDescription="@string/fragment_todo_img_check"
         android:src="@drawable/ic_check_circle"
+        android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/fragment_done_layout_name"
