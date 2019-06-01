@@ -222,7 +222,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                         btnConfirm.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // TODO conferma richiesta completamento
+                                sendCompletionData(task.getAssignedUserId());
                             }
                         });
                         btnCancel.setVisibility(View.VISIBLE);
@@ -334,6 +334,15 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_DELETE);
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendCompletionData(String assignedUserId) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_CONFIRM_COMPLETION);
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK, task);
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, assignedUserId);
         setResult(RESULT_OK, returnIntent);
         finish();
     }

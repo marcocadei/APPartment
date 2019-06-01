@@ -17,6 +17,8 @@ public class DatabaseConstants {
     public final static String HOMEUSERS = "home-users";
     public final static String HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS = "claimed-rewards";
     public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
+    public final static String HOMEUSERS_HOMENAME_UID_COMPLETEDTASKS = "completed-tasks";
+    public final static String HOMEUSERS_HOMENAME_UID_TOTALEARNEDPOINTS = "total-earned-points";
 
     // Premi
     public final static String REWARDS = "rewards";
