@@ -191,7 +191,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                     btnComplete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // TODO completa (include rimozione dalla lista dei todo)
+                            sendCompletionData(userId);
                         }
                     });
                     btnAssign.setText(R.string.activity_task_detail_btn_unassign);
