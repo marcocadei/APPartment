@@ -21,4 +21,9 @@ public class CompletedTaskViewModel extends ViewModel {
     public LiveData<List<CompletedTask>> getCompletedTaskLiveData() {
         return repository.getCompletedTaskLiveData();
     }
+
+    @NonNull
+    public LiveData<List<CompletedTask>> getRecentCompletedTaskLiveData() {
+        return repository.getRecentCompletedTaskLiveData();
+    }
 }

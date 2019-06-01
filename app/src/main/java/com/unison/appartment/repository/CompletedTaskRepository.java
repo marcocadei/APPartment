@@ -25,6 +25,7 @@ public class CompletedTaskRepository {
     // tramite un Deserializer in ogetti di tipo UncompletedTask
     private FirebaseQueryLiveData liveData;
     private LiveData<List<CompletedTask>> completedTaskLiveData;
+    private LiveData<List<CompletedTask>> recentCompletedTaskLiveData;
 
     public CompletedTaskRepository() {
         // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
@@ -35,11 +36,21 @@ public class CompletedTaskRepository {
         Query orderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKID_NAME);
         liveData = new FirebaseQueryLiveData(orderedCompletedTasks);
         completedTaskLiveData = Transformations.map(liveData, new CompletedTaskRepository.Deserializer());
+
+        // Task completati recenti
+        Query recentOrderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKID_LASTCOMPLETIONDATE);
+        liveData = new FirebaseQueryLiveData(recentOrderedCompletedTasks);
+        recentCompletedTaskLiveData = Transformations.map(liveData, new CompletedTaskRepository.Deserializer());
     }
 
     @NonNull
     public LiveData<List<CompletedTask>> getCompletedTaskLiveData() {
         return completedTaskLiveData;
+    }
+
+    @NonNull
+    public LiveData<List<CompletedTask>> getRecentCompletedTaskLiveData() {
+        return recentCompletedTaskLiveData;
     }
 
     private class Deserializer implements Function<DataSnapshot, List<CompletedTask>> {
