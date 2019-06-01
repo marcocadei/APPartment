@@ -188,6 +188,7 @@
     <string name="fragment_done_tab_recent">RECENTI</string>
     <string name="fragment_done_empty_completedtask_list_title">Non c\'é nulla qui :(</string>
     <string name="fragment_done_empty_completedtask_list_text">Non c\'é nessuna attivita completata!</string>
+    <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_todo_list">Non c\'é nessuna attivita da svolgere!</string>
@@ -199,5 +200,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity_completed_task_detail_btn_create_task">Crea</string>
+    <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
+    <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
 
 </resources>
