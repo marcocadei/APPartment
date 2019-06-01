@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,20 +55,11 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         emptyTodoListTitle = myView.findViewById(R.id.fragment_done_empty_completedtask_list_title);
         emptyTodoListText = myView.findViewById(R.id.fragment_done_empty_completedtask_list_text);
         tabLayout = myView.findViewById(R.id.fragment_done_tabs);
+        updateFragmentContent(tabLayout.getSelectedTabPosition());
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                AllCompletedTasksListFragment listFragment = (AllCompletedTasksListFragment) getChildFragmentManager()
-                        .findFragmentById(R.id.fragment_done_fragment_done_list);
-                switch (tab.getPosition()) {
-                    default:
-                    case ALL_COMPLETEDTASKS_POSITION:
-
-                        break;
-                    case RECENT_COMPLETEDTASKS_POSITION:
-
-                        break;
-                }
+                updateFragmentContent(tab.getPosition());
             }
 
             @Override
@@ -92,6 +84,38 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    public void updateFragmentContent(int position) {
+        AllCompletedTasksListFragment listFragment = (AllCompletedTasksListFragment) getChildFragmentManager()
+                .findFragmentById(R.id.fragment_done_fragment_done_list);
+        switch (position) {
+            default:
+            case ALL_COMPLETEDTASKS_POSITION:
+                switchToFragment(AllCompletedTasksListFragment.class);
+                break;
+            case RECENT_COMPLETEDTASKS_POSITION:
+                switchToFragment(RecentCompletedTasksListFragment.class);
+                break;
+        }
+    }
+
+    private void switchToFragment(Class fragment) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        /*if (currentPosition > lastPosition) {
+            ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        } else {
+            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+        }
+        lastPosition = currentPosition;*/
+        try {
+            ft.replace(R.id.fragment_done_fragment_done_list, (Fragment) fragment.newInstance());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        }
+        ft.commit();
     }
 
     @Override

@@ -75,15 +75,13 @@
         android:layout_margin="@dimen/margin_large"
         android:visibility="gone"/>
 
-    <fragment
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/fragment_done_fragment_done_list"
-        android:name="com.unison.appartment.fragments.AllCompletedTasksListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_done_progress_container"
-        tools:layout="@layout/fragment_completedtask_list" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_done_progress_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

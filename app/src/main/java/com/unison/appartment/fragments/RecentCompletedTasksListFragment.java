@@ -96,12 +96,12 @@ public class RecentCompletedTasksListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getParentFragment() instanceof OnAllCompletedTasksListFragmentInteractionListener) {
+        /*if (getParentFragment() instanceof OnAllCompletedTasksListFragmentInteractionListener) {
             listener = (OnAllCompletedTasksListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement onAllCompletedTasksListElementsLoaded");
-        }
+        }*/
     }
 
     @Override
@@ -116,7 +116,7 @@ public class RecentCompletedTasksListFragment extends Fragment {
             @Override
             public void onChanged(List<CompletedTask> completedTasks) {
                 myAdapter.submitList(completedTasks);
-                listener.onAllCompletedTasksListElementsLoaded(completedTasks.size());
+//                listener.onAllCompletedTasksListElementsLoaded(completedTasks.size());
             }
         });
     }
