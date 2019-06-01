@@ -3,10 +3,16 @@ package com.unison.appartment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.unison.appartment.fragments.DoneFragment;
+import com.unison.appartment.model.CompletedTask;
+
 public class CompletedTaskDetailActivity extends AppCompatActivity {
+
+    private CompletedTask completedTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,5 +31,9 @@ public class CompletedTaskDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Intent creationIntent = getIntent();
+        completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
+
     }
 }
