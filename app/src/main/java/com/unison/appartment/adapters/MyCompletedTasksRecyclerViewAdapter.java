@@ -16,12 +16,12 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener;
 import com.unison.appartment.model.CompletedTask;
 
-public class MyAllCompletedTasksRecyclerViewAdapter extends ListAdapter<CompletedTask, MyAllCompletedTasksRecyclerViewAdapter.ViewHolderCompletedTask> {
+public class MyCompletedTasksRecyclerViewAdapter extends ListAdapter<CompletedTask, MyCompletedTasksRecyclerViewAdapter.ViewHolderCompletedTask> {
 
     private final OnAllCompletedTasksListFragmentInteractionListener mListener;
 
-    public MyAllCompletedTasksRecyclerViewAdapter(OnAllCompletedTasksListFragmentInteractionListener listener) {
-        super(MyAllCompletedTasksRecyclerViewAdapter.DIFF_CALLBACK);
+    public MyCompletedTasksRecyclerViewAdapter(OnAllCompletedTasksListFragmentInteractionListener listener) {
+        super(MyCompletedTasksRecyclerViewAdapter.DIFF_CALLBACK);
         mListener = listener;
     }
 

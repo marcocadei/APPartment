@@ -12,12 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unison.appartment.adapters.MyAllCompletedTasksRecyclerViewAdapter;
+import com.unison.appartment.adapters.MyCompletedTasksRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.viewmodel.CompletedTaskViewModel;
@@ -78,7 +77,7 @@ public class AllCompletedTasksListFragment extends Fragment {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            myAdapter = new MyAllCompletedTasksRecyclerViewAdapter(listener);
+            myAdapter = new MyCompletedTasksRecyclerViewAdapter(listener);
             myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {

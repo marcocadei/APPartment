@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unison.appartment.R;
-import com.unison.appartment.adapters.MyAllCompletedTasksRecyclerViewAdapter;
+import com.unison.appartment.adapters.MyCompletedTasksRecyclerViewAdapter;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.viewmodel.CompletedTaskViewModel;
 import com.unison.appartment.fragments.AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener;
@@ -77,7 +77,7 @@ public class RecentCompletedTasksListFragment extends Fragment {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            myAdapter = new MyAllCompletedTasksRecyclerViewAdapter(listener);
+            myAdapter = new MyCompletedTasksRecyclerViewAdapter(listener);
             myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
