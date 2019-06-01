@@ -26,6 +26,11 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     private final static int ALL_COMPLETEDTASKS_POSITION = 0;
     private final static int RECENT_COMPLETEDTASKS_POSITION = 1;
 
+    // Ultima voce selezionata nella bottom navigation
+    private int lastPosition = ALL_COMPLETEDTASKS_POSITION;
+    // Voce attualmente selezionata nella bottom navigation
+    private int currentPosition = ALL_COMPLETEDTASKS_POSITION;
+
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -92,9 +97,11 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         switch (position) {
             default:
             case ALL_COMPLETEDTASKS_POSITION:
+                currentPosition = ALL_COMPLETEDTASKS_POSITION;
                 switchToFragment(AllCompletedTasksListFragment.class);
                 break;
             case RECENT_COMPLETEDTASKS_POSITION:
+                currentPosition = RECENT_COMPLETEDTASKS_POSITION;
                 switchToFragment(RecentCompletedTasksListFragment.class);
                 break;
         }
@@ -102,12 +109,12 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
     private void switchToFragment(Class fragment) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        /*if (currentPosition > lastPosition) {
+        if (currentPosition > lastPosition) {
             ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         } else {
             ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
         }
-        lastPosition = currentPosition;*/
+        lastPosition = currentPosition;
         try {
             ft.replace(R.id.fragment_done_fragment_done_list, (Fragment) fragment.newInstance());
         } catch (IllegalAccessException e) {
