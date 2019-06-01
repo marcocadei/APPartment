@@ -127,7 +127,7 @@ public class TodoTaskRepository {
 
         // Aggiornamento di completions
         childUpdates = new HashMap<>();
-        Completion completion = new Completion(task.getAssignedUserName(), task.getPoints(), (-1) * completionDate);
+        Completion completion = new Completion(Appartment.getInstance().getHomeUser(assignedUserId).getNickname(), task.getPoints(), (-1) * completionDate);
         String key = completionsRef.child(task.getName()).push().getKey();
         childUpdates.put(key, completion);
         completionsRef.child(task.getName()).updateChildren(childUpdates);

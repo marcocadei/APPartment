@@ -273,7 +273,15 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
                 btnComplete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO assegnamento a sé stesso + completamento (include rimozione lista)
+                        // In questo caso devo fare sia l'assegnamento (a me stesso) che il completamento
+                        // In realtà mi basta fare il completamento normale perché:
+                        // -> uncompleted tasks viene eliminato e quindi non conta in che stato era
+                        // -> le stat in home-users sono aggiornate correttamente
+                        // -> completed-tasks contiene solo le informazioni sul task e non sugli utenti
+                        // -> completions vuole sapere chi ha completato il task e quindi sarebbe necessario
+                        //    assegnarlo, ma in realtà nel repository io recupero il nickname dell'utente
+                        //    a partire dalle informazioni nello stato e lo userId
+                        sendCompletionData(userId);
                     }
                 });
             }
