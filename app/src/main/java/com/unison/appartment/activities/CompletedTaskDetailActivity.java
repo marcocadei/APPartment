@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
-import com.unison.appartment.activities.CreateTaskActivity;
+import com.unison.appartment.R;
 import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.model.CompletedTask;

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
-import com.unison.appartment.CompletedTaskDetailActivity;
+import com.unison.appartment.activities.CompletedTaskDetailActivity;
 import com.unison.appartment.R;
-import com.unison.appartment.activities.CreateTaskActivity;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.viewmodel.TodoTaskViewModel;

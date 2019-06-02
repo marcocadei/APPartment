@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CompletedTaskDetailActivity">
+    tools:context=".activities.CompletedTaskDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_completed_task_detail_appbar"
@@ -148,6 +148,7 @@
 
             <fragment
                 android:id="@+id/fragment_completion_list"
+                android:name="com.unison.appartment.fragments.CompletionListFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/margin_extra_large"
@@ -155,7 +156,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_completed_task_detail_text_completions_title"
-                tools:layout="@layout/fragment_achievement_list" />
+                tools:layout="@layout/fragment_completion_list" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
