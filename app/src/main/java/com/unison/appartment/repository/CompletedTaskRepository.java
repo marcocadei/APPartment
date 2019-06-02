@@ -22,7 +22,7 @@ public class CompletedTaskRepository {
     // Nodo del database a cui sono interessato
     private DatabaseReference completedTaskRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
-    // tramite un Deserializer in ogetti di tipo UncompletedTask
+    // tramite un Deserializer in ogetti di tipo CompletedTask
     private FirebaseQueryLiveData liveData;
     private LiveData<List<CompletedTask>> completedTaskLiveData;
     private LiveData<List<CompletedTask>> recentCompletedTaskLiveData;

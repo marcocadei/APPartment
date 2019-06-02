@@ -40,6 +40,7 @@ public class DatabaseConstants {
 
     // Completions
     public final static String COMPLETIONS = "completions";
+    public final static String COMPLETIONS_HOMENAME_TASKID_COMPLETIONDATE = "completion-date";
 
     // Case di un utente
     public final static String USERHOMES = "user-homes";
