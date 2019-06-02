@@ -10,13 +10,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.FamilyFragment;
+import com.unison.appartment.fragments.RewardsFragment;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 
 /**
  * Classe che rappresenta l'Activity con il dettaglio di un membro della famiglia
  */
 public class FamilyMemberDetailActivity extends AppCompatActivity {
+
+    private HomeUser member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,6 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         Toolbar toolbar;
         toolbar = findViewById(R.id.activity_family_member_detail_toolbar);
         setSupportActionBar(toolbar);
-        // Gestione del click della freccia indietro presente sulla toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,19 +44,27 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Recupero il riferimento agli elementi dell'interfaccia
-//        TextView name = findViewById(R.id.activity_family_member_detail_name);
-//        TextView points = findViewById(R.id.activity_family_member_detail_points_value);
-//        ImageView image = findViewById(R.id.activity_family_member_detail_image);
+        Intent creationIntent = getIntent();
+        member = (HomeUser) creationIntent.getSerializableExtra(FamilyFragment.EXTRA_MEMBER_OBJECT);
+        
+        String[] roles = getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
 
-//        Intent i = getIntent();
-//        User user = (User) i.getSerializableExtra("user");
-        // Popolo l'interfaccia con i dati del task ricevuto
-        // TODO risistemare con HomeUser e non User
-//        name.setText("paolo");
-//        points.setText("444");
-//        name.setText(user.getName());
-//        points.setText(String.valueOf(user.getLastPoints()));
-        /*image.setImage(user.getLastDescription());*/
+        // Recupero il riferimento agli elementi dell'interfaccia
+        ImageView image = findViewById(R.id.activity_family_member_detail_img_profile);
+        TextView name = findViewById(R.id.activity_family_member_detail_text_name);
+        TextView points = findViewById(R.id.activity_family_member_detail_text_points_value);
+        TextView role = findViewById(R.id.activity_family_member_detail_text_role_value);
+        
+        name.setText(member.getNickname());
+        points.setText(String.valueOf(member.getPoints()));
+        role.setText(roles[member.getRole()]);
+        if (member.getImage() != null) {
+            image.setColorFilter(getResources().getColor(R.color.transparentWhite, null));
+            Glide.with(image.getContext()).load(member.getImage()).apply(RequestOptions.circleCropTransform()).into(image);
+        }
+        else {
+            image.setColorFilter(getResources().getColor(R.color.colorPrimaryDark, null));
+            Glide.with(image.getContext()).load(R.drawable.ic_person).into(image);
+        }
     }
 }
