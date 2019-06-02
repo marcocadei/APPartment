@@ -64,9 +64,11 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
         // Se provengo dall'activity di dettaglio di un'attività completata allora ho già delle informazioni
         Intent creationIntent = getIntent();
         CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
-        inputName.setText(completedTask.getName());
-        inputDescription.setText(completedTask.getLastDescription());
-        inputPoints.setText(String.valueOf(completedTask.getLastPoints()));
+        if (completedTask != null) {
+            inputName.setText(completedTask.getName());
+            inputDescription.setText(completedTask.getLastDescription());
+            inputPoints.setText(String.valueOf(completedTask.getLastPoints()));
+        }
 
         inputAssignedUser.setOnClickListener(new View.OnClickListener() {
             @Override
