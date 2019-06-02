@@ -15,6 +15,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.model.CompletedTask;
+import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.DateUtils;
 
 import java.util.Date;
@@ -48,6 +49,8 @@ public class CompletedTaskDetailActivity extends AppCompatActivity {
 
         Intent creationIntent = getIntent();
         completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
+        // Imposto il nome del task visualizzato all'interno dello stato
+        Appartment.getInstance().setCurrentCompletedTaskName(completedTask.getName());
 
         TextView textName = findViewById(R.id.activity_completed_task_detail_name);
         TextView textPoints = findViewById(R.id.activity_completed_task_detail_points_value);

@@ -37,6 +37,21 @@ public class Appartment {
     private UserHome userHome;
     private Map<String, HomeUser> homeUsers;
 
+    // Questo mi serve perché quando apro un completed task voglio visualizzare la cronologia, ma
+    // per far ciò nel database devo leggere il percorso completions/home-name/task-name quindi mi
+    // serve sapere il nome del task corrente
+    private String currentCompletedTaskName;
+    public String getCurrentCompletedTaskName() {
+        if (currentCompletedTaskName == null) {
+            currentCompletedTaskName = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.CURRENT_COMPLETEDTASK_NAME), String.class);
+        }
+        return currentCompletedTaskName;
+    }
+    public void setCurrentCompletedTaskName(String currentCompletedTaskName) {
+        setSharedPreferencesValue(SharedPreferencesConstants.CURRENT_COMPLETEDTASK_NAME, new Gson().toJson(currentCompletedTaskName));
+        this.currentCompletedTaskName = currentCompletedTaskName;
+    }
+
     private void setSharedPreferencesValue(final String key, final String jsonValue) {
         SharedPreferences sp = MyApplication.getAppContext().getSharedPreferences(SharedPreferencesConstants.FILE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();

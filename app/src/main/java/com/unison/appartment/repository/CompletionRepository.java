@@ -30,7 +30,8 @@ public class CompletionRepository {
         completionRef =
                 FirebaseDatabase.getInstance().getReference(
                         DatabaseConstants.SEPARATOR + DatabaseConstants.COMPLETIONS +
-                                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+                                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName() +
+                                DatabaseConstants.SEPARATOR + Appartment.getInstance().getCurrentCompletedTaskName());
         Query orderedCompletions = completionRef.orderByChild(DatabaseConstants.COMPLETIONS_HOMENAME_TASKID_COMPLETIONDATE);
         liveData = new FirebaseQueryLiveData(orderedCompletions);
         completionLiveData = Transformations.map(liveData, new CompletionRepository.Deserializer());
