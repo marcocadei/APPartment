@@ -77,7 +77,7 @@ public class FamilyMemberListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myAdapter = new MyFamilyMemberRecyclerViewAdapter(/*listener*/);
+            myAdapter = new MyFamilyMemberRecyclerViewAdapter(listener);
             myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -126,7 +126,7 @@ public class FamilyMemberListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnFamilyMemberListFragmentInteractionListener {
-        void onFamilyMemberListFragmentOpenMember(User user);
+        void onFamilyMemberListFragmentOpenMember(HomeUser member);
         void onFamilyMemberListElementsLoaded(int elements);
     }
 }

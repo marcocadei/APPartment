@@ -29,10 +29,11 @@ import java.util.List;
  */
 public class MyFamilyMemberRecyclerViewAdapter extends ListAdapter<HomeUser, MyFamilyMemberRecyclerViewAdapter.ViewHolderMember> {
 
-//    private final OnFamilyMemberListFragmentInteractionListener listener;
+    private final OnFamilyMemberListFragmentInteractionListener listener;
 
-    public MyFamilyMemberRecyclerViewAdapter(/*OnFamilyMemberListFragmentInteractionListener listener*/) {
+    public MyFamilyMemberRecyclerViewAdapter(OnFamilyMemberListFragmentInteractionListener listener) {
         super(MyFamilyMemberRecyclerViewAdapter.DIFF_CALLBACK);
+        this.listener = listener;
     }
 
     @Override
@@ -62,14 +63,14 @@ public class MyFamilyMemberRecyclerViewAdapter extends ListAdapter<HomeUser, MyF
             Glide.with(holder.imageMember.getContext()).load(R.drawable.ic_person).into(holder.imageMember);
         }
 
-        /*holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onFamilyMemberListFragmentOpenMember(user);
+                    listener.onFamilyMemberListFragmentOpenMember(member);
                 }
             }
-        });*/
+        });
     }
 
     public class ViewHolderMember extends RecyclerView.ViewHolder {
