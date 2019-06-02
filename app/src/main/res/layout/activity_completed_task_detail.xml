@@ -114,19 +114,11 @@
                 <TextView
                     android:id="@+id/activity_completed_task_detail_text_completion_date_value"
                     style="@style/Component.TextView.MultiLine.AttributeValue"
-                    app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_assigned_user_value"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_completion_date_title" />
-
-                <TextView
-                    android:id="@+id/activity_completed_task_detail_text_assigned_user_value"
-                    style="@style/Component.TextView.MultiLine.AttributeValue"
-                    android:visibility="gone"
+                    android:text="@string/placeholder_date"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_completion_date_value" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_completion_date_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
