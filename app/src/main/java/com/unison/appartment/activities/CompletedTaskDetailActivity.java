@@ -3,15 +3,18 @@ package com.unison.appartment.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.CompletionListFragment;
 import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.model.CompletedTask;
@@ -47,10 +50,16 @@ public class CompletedTaskDetailActivity extends AppCompatActivity {
             }
         });
 
+        // Carico il fragment contenente la cronologia dei completamenti
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.activity_completed_task_detal_fragment_completion_list, CompletionListFragment.newInstance(1));
+        ft.commit();
+
         Intent creationIntent = getIntent();
         completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
         // Imposto il nome del task visualizzato all'interno dello stato
         Appartment.getInstance().setCurrentCompletedTaskName(completedTask.getName());
+        Log.d("STATO", Appartment.getInstance().getCurrentCompletedTaskName());
 
         TextView textName = findViewById(R.id.activity_completed_task_detail_name);
         TextView textPoints = findViewById(R.id.activity_completed_task_detail_points_value);

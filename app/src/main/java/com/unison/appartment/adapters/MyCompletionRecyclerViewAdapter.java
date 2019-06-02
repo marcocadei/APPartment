@@ -1,79 +1,75 @@
 package com.unison.appartment.adapters;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unison.appartment.R;
-import com.unison.appartment.fragments.CompletionListFragment.OnListFragmentInteractionListener;
-import com.unison.appartment.dummy.DummyContent.DummyItem;
+import com.unison.appartment.model.Completion;
+import com.unison.appartment.utils.DateUtils;
 
-import java.util.List;
+import java.util.Date;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyCompletionRecyclerViewAdapter extends RecyclerView.Adapter<MyCompletionRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+public class MyCompletionRecyclerViewAdapter extends ListAdapter<Completion, MyCompletionRecyclerViewAdapter.ViewHolderCompletion> {
 
-    public MyCompletionRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public MyCompletionRecyclerViewAdapter() {
+        super(MyCompletionRecyclerViewAdapter.DIFF_CALLBACK);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderCompletion onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_completion, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolderCompletion(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+    public void onBindViewHolder(final ViewHolderCompletion holder, int position) {
+        final Completion completion = getItem(position);
+        Resources res = holder.itemView.getResources();
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+        holder.completionUser.setText(completion.getUser());
+        holder.completionDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(completion.getCompletionDate())));
+        holder.textStatusUpper.setText(String.valueOf(completion.getPoints()));
+        holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
+        holder.textStatusLower.setText(R.string.general_points_name);
     }
 
-    @Override
-    public int getItemCount() {
-        return mValues.size();
-    }
+    public class ViewHolderCompletion extends RecyclerView.ViewHolder {
+        public final View mView;
+        public final TextView completionUser;
+        public final TextView completionDate;
+        public final TextView textStatusLower;
+        public final TextView textStatusUpper;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView= null;
-        public final TextView mIdView = null;
-        public final TextView mContentView = null;
-        public DummyItem mItem;
-
-        public ViewHolder(View view) {
-            super(view);/*
+        public ViewHolderCompletion(View view) {
+            super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);*/
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            completionUser = view.findViewById(R.id.fragment_completion_text_user);
+            completionDate = view.findViewById(R.id.fragment_completion_text_date);
+            textStatusUpper = view.findViewById(R.id.fragment_completion_task_points_value);
+            textStatusLower = view.findViewById(R.id.fragment_completion_task_points_label);
         }
     }
+
+    public static final DiffUtil.ItemCallback<Completion> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Completion>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull Completion oldItem, @NonNull Completion newItem) {
+                    return oldItem.getId().equals(newItem.getId());
+                }
+                @Override
+                public boolean areContentsTheSame(@NonNull Completion oldItem, @NonNull Completion newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
 }

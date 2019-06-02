@@ -48,6 +48,8 @@ public class CompletionRepository {
             List<Completion> completions = new ArrayList<>();
             for (DataSnapshot completionSnapshot : dataSnapshot.getChildren()) {
                 Completion completion = completionSnapshot.getValue(Completion.class);
+                completion.setId(completionSnapshot.getKey());
+                completion.setCompletionDate((-1) * completion.getCompletionDate());
                 completions.add(completion);
             }
             return completions;

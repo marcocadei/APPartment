@@ -4,8 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,37 +18,32 @@ import android.view.ViewGroup;
 
 import com.unison.appartment.adapters.MyCompletionRecyclerViewAdapter;
 import com.unison.appartment.R;
-import com.unison.appartment.dummy.DummyContent;
-import com.unison.appartment.dummy.DummyContent.DummyItem;
+import com.unison.appartment.model.Completion;
+import com.unison.appartment.viewmodel.CompletionViewModel;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+import java.util.List;
+
 public class CompletionListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+
+    private CompletionViewModel viewModel;
+
+    private ListAdapter myAdapter;
+    private RecyclerView myRecyclerView;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
     public CompletionListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static CompletionListFragment newInstance(int columnCount) {
         CompletionListFragment fragment = new CompletionListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -55,6 +54,8 @@ public class CompletionListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        viewModel = ViewModelProviders.of(getActivity()).get(CompletionViewModel.class);
     }
 
     @Override
@@ -65,13 +66,24 @@ public class CompletionListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            myRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                myRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyCompletionRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            myAdapter = new MyCompletionRecyclerViewAdapter();
+            myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    myRecyclerView.smoothScrollToPosition(positionStart);
+                }
+            });
+            myRecyclerView.setAdapter(myAdapter);
+
+            readCompletions();
         }
         return view;
     }
@@ -80,32 +92,21 @@ public class CompletionListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+    public void readCompletions() {
+        LiveData<List<Completion>> rewardLiveData = viewModel.getCompletionLiveData();
+        rewardLiveData.observe(getViewLifecycleOwner(), new Observer<List<Completion>>() {
+            @Override
+            public void onChanged(List<Completion> completions) {
+                myAdapter.submitList(completions);
+//                listener.onRewardListElementsLoaded(rewards.size());
+            }
+        });
     }
 }
