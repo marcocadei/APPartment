@@ -5,12 +5,13 @@ import androidx.annotation.Nullable;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Classe che rappresenta un membro di una casa
  */
-public class HomeUser {
+public class HomeUser implements Serializable {
 
     private final static String ATTRIBUTE_TOTAL_EARNED_POINTS = "total-earned-points";
     private final static String ATTRIBUTE_COMPLETED_TASKS = "completed-tasks";

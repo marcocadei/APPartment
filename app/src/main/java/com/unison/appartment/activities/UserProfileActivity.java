@@ -101,24 +101,23 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
 
         if (currentUser.getImage() != null) {
             Glide.with(imgProfile.getContext()).load(currentUser.getImage()).placeholder(R.drawable.scaled_ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+            imgProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(UserProfileActivity.this, ImageDetailActivity.class);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            UserProfileActivity.this, imgProfile, ViewCompat.getTransitionName(imgProfile));
+                    // Animazione apertura immagine tonda
+                    getWindow().setSharedElementEnterTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
+                    getWindow().setSharedElementExitTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
+                    i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, Appartment.getInstance().getUser().getImage());
+                    i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
+                    startActivity(i, options.toBundle());
+                }
+            });
         } else {
             Glide.with(imgProfile.getContext()).load(R.drawable.ic_person).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         }
-
-        imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(UserProfileActivity.this, ImageDetailActivity.class);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        UserProfileActivity.this, imgProfile, ViewCompat.getTransitionName(imgProfile));
-                // Animazione apertura immagine tonda
-                getWindow().setSharedElementEnterTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
-                getWindow().setSharedElementExitTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
-                i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, Appartment.getInstance().getUser().getImage());
-                i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
-                startActivity(i, options.toBundle());
-            }
-        });
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
         btnJoin.setOnClickListener(new View.OnClickListener() {

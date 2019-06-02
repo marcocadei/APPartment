@@ -2,21 +2,33 @@ package com.unison.appartment.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.unison.appartment.R;
+import com.unison.appartment.fragments.FamilyFragment;
+import com.unison.appartment.fragments.RewardsFragment;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
+import com.unison.appartment.state.Appartment;
+import com.unison.appartment.utils.ImageUtils;
 
 /**
  * Classe che rappresenta l'Activity con il dettaglio di un membro della famiglia
  */
 public class FamilyMemberDetailActivity extends AppCompatActivity {
+
+    private HomeUser member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +42,6 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         Toolbar toolbar;
         toolbar = findViewById(R.id.activity_family_member_detail_toolbar);
         setSupportActionBar(toolbar);
-        // Gestione del click della freccia indietro presente sulla toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,19 +49,59 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Recupero il riferimento agli elementi dell'interfaccia
-//        TextView name = findViewById(R.id.activity_family_member_detail_name);
-//        TextView points = findViewById(R.id.activity_family_member_detail_points_value);
-//        ImageView image = findViewById(R.id.activity_family_member_detail_image);
+        Intent creationIntent = getIntent();
+        member = (HomeUser) creationIntent.getSerializableExtra(FamilyFragment.EXTRA_MEMBER_OBJECT);
+        
+        String[] roles = getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
 
-//        Intent i = getIntent();
-//        User user = (User) i.getSerializableExtra("user");
-        // Popolo l'interfaccia con i dati del task ricevuto
-        // TODO risistemare con HomeUser e non User
-//        name.setText("paolo");
-//        points.setText("444");
-//        name.setText(user.getName());
-//        points.setText(String.valueOf(user.getLastPoints()));
-        /*image.setImage(user.getLastDescription());*/
+        // Recupero il riferimento agli elementi dell'interfaccia
+        final ImageView image = findViewById(R.id.activity_family_member_detail_img_profile);
+        TextView name = findViewById(R.id.activity_family_member_detail_text_name);
+        TextView points = findViewById(R.id.activity_family_member_detail_text_points_value);
+        TextView role = findViewById(R.id.activity_family_member_detail_text_role_value);
+
+        TextView earnedPoints = findViewById(R.id.activity_family_member_detail_total_points_earned_value);
+        TextView earnedMoney = findViewById(R.id.activity_family_member_detail_total_money_earned_value);
+        TextView publishedMessages = findViewById(R.id.activity_family_member_detail_total_published_messages_value);
+        TextView publishedImages = findViewById(R.id.activity_family_member_detail_total_published_images_value);
+        TextView publishedAudio = findViewById(R.id.activity_family_member_detail_total_published_audio_value);
+        TextView claimedRewards = findViewById(R.id.activity_family_member_detail_total_claimed_rewards_value);
+        TextView completedTasks = findViewById(R.id.activity_family_member_detail_total_completed_tasks_value);
+        TextView rejectedTasks = findViewById(R.id.activity_family_member_detail_total_rejected_tasks_value);
+        earnedPoints.setText(String.valueOf(member.getPoints()));
+        earnedMoney.setText(String.valueOf(member.getEarnedMoney()));
+        publishedMessages.setText(String.valueOf(member.getTextPosts()));
+        publishedImages.setText(String.valueOf(member.getImagePosts()));
+        publishedAudio.setText(String.valueOf(member.getAudioPosts()));
+        claimedRewards.setText(String.valueOf(member.getClaimedRewards()));
+        completedTasks.setText(String.valueOf(member.getCompletedTasks()));
+        rejectedTasks.setText(String.valueOf(member.getRejectedTasks()));
+        
+        name.setText(member.getNickname());
+        points.setText(String.valueOf(member.getPoints()));
+        role.setText(roles[member.getRole()]);
+        if (member.getImage() != null) {
+            image.setColorFilter(getResources().getColor(R.color.transparentWhite, null));
+            Glide.with(image.getContext()).load(member.getImage()).apply(RequestOptions.circleCropTransform()).into(image);
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(FamilyMemberDetailActivity.this, ImageDetailActivity.class);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            FamilyMemberDetailActivity.this, image, ViewCompat.getTransitionName(image));
+                    // Animazione apertura immagine tonda
+                    getWindow().setSharedElementEnterTransition(TransitionInflater.from(FamilyMemberDetailActivity.this).inflateTransition(R.transition.itl_image_transition));
+                    getWindow().setSharedElementExitTransition(TransitionInflater.from(FamilyMemberDetailActivity.this).inflateTransition(R.transition.itl_image_transition));
+                    i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, member.getImage());
+                    i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
+                    startActivity(i, options.toBundle());
+                }
+            });
+        }
+        else {
+            image.setColorFilter(getResources().getColor(R.color.colorPrimaryDark, null));
+            Glide.with(image.getContext()).load(R.drawable.ic_person).into(image);
+        }
     }
 }

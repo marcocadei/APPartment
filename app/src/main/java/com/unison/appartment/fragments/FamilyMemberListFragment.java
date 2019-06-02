@@ -4,8 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,7 +18,11 @@ import android.view.ViewGroup;
 
 import com.unison.appartment.adapters.MyFamilyMemberRecyclerViewAdapter;
 import com.unison.appartment.R;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
+import com.unison.appartment.viewmodel.HomeUserViewModel;
+
+import java.util.List;
 
 /**
  * Fragment che rappresenta la lista dei membri di una famiglia
@@ -25,8 +33,9 @@ public class FamilyMemberListFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
-    // RecyclerView e Adapter della recyclerView
-    private RecyclerView.Adapter myAdapter;
+    private HomeUserViewModel viewModel;
+
+    private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
     private OnFamilyMemberListFragmentInteractionListener listener;
@@ -40,9 +49,6 @@ public class FamilyMemberListFragment extends Fragment {
     @SuppressWarnings("unused")
     public static FamilyMemberListFragment newInstance(int columnCount) {
         FamilyMemberListFragment fragment = new FamilyMemberListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -53,6 +59,8 @@ public class FamilyMemberListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        viewModel = ViewModelProviders.of(getActivity()).get(HomeUserViewModel.class);
     }
 
     @Override
@@ -69,8 +77,17 @@ public class FamilyMemberListFragment extends Fragment {
             } else {
                 myRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myAdapter = new MyFamilyMemberRecyclerViewAdapter(User.getUserList(), listener);
+            myAdapter = new MyFamilyMemberRecyclerViewAdapter(listener);
+            myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    myRecyclerView.smoothScrollToPosition(positionStart);
+                }
+            });
             myRecyclerView.setAdapter(myAdapter);
+
+            readFamilyMembers();
         }
         return view;
     }
@@ -92,15 +109,15 @@ public class FamilyMemberListFragment extends Fragment {
         listener = null;
     }
 
-    public void addMember(User newUser) {
-        User.addUser(0, newUser);
-        myAdapter.notifyItemInserted(0);
-        myRecyclerView.scrollToPosition(0);
-    }
-
-    public void removeMember(int position){
-        User.removeUser(position);
-        myAdapter.notifyItemRemoved(position);
+    private void readFamilyMembers() {
+        LiveData<List<HomeUser>> rewardLiveData = viewModel.getHomeUserLiveData();
+        rewardLiveData.observe(getViewLifecycleOwner(), new Observer<List<HomeUser>>() {
+            @Override
+            public void onChanged(List<HomeUser> familyMembers) {
+                myAdapter.submitList(familyMembers);
+                listener.onFamilyMemberListElementsLoaded(familyMembers.size());
+            }
+        });
     }
 
     /**
@@ -109,6 +126,7 @@ public class FamilyMemberListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnFamilyMemberListFragmentInteractionListener {
-        void onFamilyMemberListFragmentOpenMember(User user);
+        void onFamilyMemberListFragmentOpenMember(HomeUser member);
+        void onFamilyMemberListElementsLoaded(int elements);
     }
 }

@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.unison.appartment.R;
 import com.unison.appartment.activities.FamilyMemberDetailActivity;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 
 
@@ -19,6 +21,8 @@ import com.unison.appartment.model.User;
  * Fragment che contiene la lista dei membri di una famiglia e le relative statistiche
  */
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
+
+    public final static String EXTRA_MEMBER_OBJECT = "memberObject";
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -57,10 +61,17 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     }
 
     @Override
-    public void onFamilyMemberListFragmentOpenMember(User user) {
+    public void onFamilyMemberListFragmentOpenMember(HomeUser member) {
         Intent i = new Intent(getActivity(), FamilyMemberDetailActivity.class);
-//        TODO da sistemare
-//        i.putExtra("user", user);
+        i.putExtra(EXTRA_MEMBER_OBJECT, member);
         startActivity(i);
+    }
+
+    @Override
+    public void onFamilyMemberListElementsLoaded(int elements) {
+        // Sia che la lista abbia elementi o meno, una volta fatta la lettura la
+        // progress bar deve interrompersi
+        ProgressBar progressBar = getView().findViewById(R.id.fragment_family_progress);
+        progressBar.setVisibility(View.GONE);
     }
 }
