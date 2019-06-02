@@ -42,7 +42,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/activity_family_member_detail_layout_header"
                     style="@style/Component.Layout.Header"
-                    app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_attributes"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -50,15 +50,16 @@
                     <com.appeaser.imagetransitionlibrary.TransitionImageView
                         android:id="@+id/activity_family_member_detail_img_profile"
                         style="@style/Component.ImageView.ProfileImage"
-                        android:scaleType="centerCrop"
-                        app:tiv_rounding="1"
-                        android:transitionName="@string/transition_open_image"
                         android:contentDescription="@string/caption_profile_pic"
+                        android:scaleType="centerCrop"
+                        android:transitionName="@string/transition_open_image"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_person" />
+                        app:srcCompat="@drawable/ic_person"
+                        app:tiv_rounding="1"
+                        tools:srcCompat="@tools:sample/avatars" />
 
                     <TextView
                         android:id="@+id/activity_family_member_detail_text_name"
@@ -76,7 +77,7 @@
                         style="@style/Component.Layout"
                         android:layout_width="0dp"
                         android:layout_marginStart="@dimen/margin_small"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_role"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
                         app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_name">
@@ -108,35 +109,45 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/activity_family_member_detail_layout_attributes"
-                    style="@style/Component.Layout.AttributeSet"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_header">
-
-                    <TextView
-                        android:id="@+id/activity_family_member_detail_text_role_title"
-                        style="@style/Component.TextView.MultiLine.AttributeTitle"
-                        android:text="@string/desc_userhomes_uid_homename_role"
-                        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_role_value"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/activity_family_member_detail_text_role_value"
-                        style="@style/Component.TextView.MultiLine.AttributeValue"
-                        android:text="@string/placeholder_text"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/activity_family_member_detail_layout_role"
+                        style="@style/Component.Layout"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/margin_small"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_role_title" />
+                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
+                        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_points">
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_role_name"
+                            style="@style/Component.TextView.SingleLine.PointsName"
+                            android:gravity="start"
+                            android:text="@string/activity_family_member_detail_role_name"
+                            android:textSize="@dimen/text_extra_large"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_role_value"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent" />
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_role_value"
+                            style="@style/Component.TextView.SingleLine.PointsValue"
+                            android:gravity="start"
+                            android:text="@string/placeholder_text"
+                            android:textSize="@dimen/text_extra_large"
+                            android:layout_marginStart="@dimen/margin_small"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_role_name"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -148,12 +159,12 @@
                 android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:textSize="@dimen/text_extra_large"
-                app:layout_constraintBottom_toTopOf="@id/fragment_achievement_list"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_profile" />
 
-            <fragment
+            <!--<fragment
                 android:id="@+id/fragment_achievement_list"
                 android:name="com.unison.appartment.fragments.AchievementListFragment"
                 android:layout_width="0dp"
@@ -163,7 +174,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_text_achievement_title"
-                tools:layout="@layout/fragment_achievement_list" />
+                tools:layout="@layout/fragment_achievement_list" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -178,7 +189,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Component.Layout.ButtonSet">
+        style="@style/Component.Layout.ButtonSet"
+        android:visibility="gone">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_family_member_detail_btn_edit"

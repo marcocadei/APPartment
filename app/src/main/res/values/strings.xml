@@ -104,7 +104,7 @@
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
     <string name="activity_family_member_detail_points_name">Punti:</string>
-    <string name="activity_family_member_detail_text_achievement_title">Achievement sbloccati</string>
+    <string name="activity_family_member_detail_text_achievement_title">Obiettivi raggiunti</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_image_detail_img">Immagine del post aperta</string>
     <string name="activity_join_home_progress_check_description">Per favore attendi, è in corso la verifica delle credenziali</string>
@@ -205,5 +205,6 @@
     <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
     <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
+    <string name="activity_family_member_detail_role_name">Ruolo:</string>
 
 </resources>
