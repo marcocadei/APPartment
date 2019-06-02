@@ -25,10 +25,10 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/fragment_todo_empty_home_list_title"
+        android:id="@+id/fragment_todo_empty_todo_list_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_todo_empty_homes_list_title"
+        android:text="@string/fragment_todo_empty_todo_list_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,14 +39,14 @@
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/fragment_todo_empty_home_list_text"
+        android:id="@+id/fragment_todo_empty_todo_list_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_todo_empty_homes_list"
+        android:text="@string/fragment_todo_empty_todo_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_todo_empty_home_list_title"
+        app:layout_constraintTop_toBottomOf="@id/fragment_todo_empty_todo_list_title"
         app:layout_constraintVertical_bias="0.0"
         android:layout_margin="@dimen/margin_large"
         android:visibility="gone"/>

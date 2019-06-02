@@ -24,10 +24,7 @@ import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
 
-/**
- * Le Activity che contengono questo fragment devono implementare l'interface
- * {@link RewardListFragment.OnRewardListFragmentInteractionListener} per gestire gli eventi di interazione
- */
+
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
     // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME

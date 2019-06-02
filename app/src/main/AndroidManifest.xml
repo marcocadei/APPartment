@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unison.appartment">
-
     <!-- Permesso per poter usare il registratore -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
@@ -13,10 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.CompletedTaskDetailActivity"></activity>
+
         <service
             android:name=".services.AppartmentService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity android:name=".activities.UserProfileActivity" />
         <activity android:name=".activities.JoinHomeActivity" />
