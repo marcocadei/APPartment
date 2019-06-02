@@ -1,14 +1,22 @@
 package com.unison.appartment.adapters;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.unison.appartment.R;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
 import com.unison.appartment.fragments.FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener;
 
@@ -19,16 +27,12 @@ import java.util.List;
  * {@link com.unison.appartment.model.HomeUser HomeUser} e che effettua una
  * chiamata al {@link OnFamilyMemberListFragmentInteractionListener listener} specificato.
  */
-public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFamilyMemberRecyclerViewAdapter.ViewHolderMember> {
+public class MyFamilyMemberRecyclerViewAdapter extends ListAdapter<HomeUser, MyFamilyMemberRecyclerViewAdapter.ViewHolderMember> {
 
-    private final List<User> userList;
-    // TODO: implementare listener
+//    private final OnFamilyMemberListFragmentInteractionListener listener;
 
-    private final OnFamilyMemberListFragmentInteractionListener listener;
-
-    public MyFamilyMemberRecyclerViewAdapter(List<User> userList, OnFamilyMemberListFragmentInteractionListener listener) {
-        this.userList = userList;
-        this.listener = listener;
+    public MyFamilyMemberRecyclerViewAdapter(/*OnFamilyMemberListFragmentInteractionListener listener*/) {
+        super(MyFamilyMemberRecyclerViewAdapter.DIFF_CALLBACK);
     }
 
     @Override
@@ -40,44 +44,62 @@ public class MyFamilyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     @Override
     public void onBindViewHolder(final ViewHolderMember holder, int position) {
-        ViewHolderMember holderMember = (ViewHolderMember) holder;
-        final User user = (User) userList.get(position);
-        // TODO risistemare con HomeUser e non User
-        holderMember.textMemberName.setText("riccardo");
-        holderMember.textMemberPoints.setText("578");
-//        holderMember.textMemberName.setText(user.getName());
-//        holderMember.textMemberPoints.setText(String.valueOf(user.getLastPoints()));
-//      holderMember.imageMember.setImageURI(memberItem.getImage());
+        final HomeUser member = getItem(position);
+        Resources res = holder.itemView.getResources();
+        String[] roles = res.getStringArray(R.array.desc_userhomes_uid_homename_role_values);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.textMemberName.setText(member.getNickname());
+        holder.textMemberRole.setText(roles[member.getRole()]);
+        holder.textStatusUpper.setText(String.valueOf(member.getPoints()));
+        holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
+        holder.textStatusLower.setText(R.string.general_points_name);
+        if (member.getImage() != null) {
+            holder.imageMember.setColorFilter(holder.mView.getContext().getResources().getColor(R.color.transparentWhite, null));
+            Glide.with(holder.imageMember.getContext()).load(member.getImage()).apply(RequestOptions.circleCropTransform()).into(holder.imageMember);
+        }
+        else {
+            holder.imageMember.setColorFilter(holder.mView.getContext().getResources().getColor(R.color.colorPrimaryDark, null));
+            Glide.with(holder.imageMember.getContext()).load(R.drawable.ic_person).into(holder.imageMember);
+        }
+
+        /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onFamilyMemberListFragmentOpenMember(user);
                 }
             }
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return userList.size();
+        });*/
     }
 
     public class ViewHolderMember extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView imageMember;
         public final TextView textMemberName;
-        public final TextView textMemberPoints;
         public final TextView textMemberRole;
+        public final TextView textStatusLower;
+        public final TextView textStatusUpper;
 
         public ViewHolderMember(View view) {
             super(view);
             mView = view;
             imageMember = view.findViewById(R.id.fragment_family_member_img_member);
             textMemberName = view.findViewById(R.id.fragment_family_member_text_name);
-            textMemberPoints = view.findViewById(R.id.fragment_family_member_text_points_value);
             textMemberRole = view.findViewById(R.id.fragment_family_member_text_role);
+            textStatusUpper = view.findViewById(R.id.fragment_family_member_text_points_value);
+            textStatusLower = view.findViewById(R.id.fragment_family_member_text_points_name);
         }
     }
+
+    public static final DiffUtil.ItemCallback<HomeUser> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<HomeUser>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull HomeUser oldItem, @NonNull HomeUser newItem) {
+                    return oldItem.getUserId().equals(newItem.getUserId());
+                }
+                @Override
+                public boolean areContentsTheSame(@NonNull HomeUser oldItem, @NonNull HomeUser newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
 }
