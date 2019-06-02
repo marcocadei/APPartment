@@ -35,7 +35,7 @@ public class HomeUserRepository {
     }
 
     @NonNull
-    public LiveData<List<HomeUser>> getRewardLiveData() {
+    public LiveData<List<HomeUser>> getHomeUserLiveData() {
         return homeUserLiveData;
     }
 
