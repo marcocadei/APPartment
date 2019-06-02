@@ -43,17 +43,6 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_family, container, false);
 
-        // TODO: da fare per implementare la cancellazione di un elemento nella lista
-        /*Button btnDeleteMember = myView.findViewById(R.id.fragment_family_member_btn_delete_member);
-        btnDeleteMember.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FamilyMemberListFragment fmlf = (FamilyMemberListFragment) getChildFragmentManager()
-                        .findFragmentById(R.id.fragment_family_member_list);
-                fmlf.removeUser();
-            }
-        });*/
-
         return myView;
     }
 
