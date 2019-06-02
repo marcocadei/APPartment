@@ -47,9 +47,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
+                    <com.appeaser.imagetransitionlibrary.TransitionImageView
                         android:id="@+id/activity_family_member_detail_img_profile"
                         style="@style/Component.ImageView.ProfileImage"
+                        android:scaleType="centerCrop"
+                        app:tiv_rounding="1"
+                        android:transitionName="@string/transition_open_image"
+                        android:contentDescription="@string/caption_profile_pic"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_name"
                         app:layout_constraintStart_toStartOf="parent"
