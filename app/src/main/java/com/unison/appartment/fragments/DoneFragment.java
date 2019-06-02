@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,10 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.unison.appartment.CompletedTaskDetailActivity;
 import com.unison.appartment.R;
+import com.unison.appartment.activities.CreateTaskActivity;
 import com.unison.appartment.model.CompletedTask;
+import com.unison.appartment.model.UncompletedTask;
+import com.unison.appartment.viewmodel.TodoTaskViewModel;
 
 
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
@@ -36,6 +40,10 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     private int lastPosition = ALL_COMPLETEDTASKS_POSITION;
     // Voce attualmente selezionata nella bottom navigation
     private int currentPosition = ALL_COMPLETEDTASKS_POSITION;
+
+    // Questo ViewModel è necessario perché a partire da un'attività completata è possibile crearne
+    // una nuova
+    private TodoTaskViewModel viewModel;
 
 
     /**
@@ -57,6 +65,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = ViewModelProviders.of(getActivity()).get(TodoTaskViewModel.class);
     }
 
     @Override
@@ -139,6 +148,11 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == DETAIL_COMPLETED_TASK_REQUEST_CODE) {
+            if (resultCode == CompletedTaskDetailActivity.RESULT_CREATED) {
+                viewModel.addTask((UncompletedTask) data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+            }
+        }
     }
 
     @Override
