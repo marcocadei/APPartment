@@ -19,10 +19,28 @@
             app:title="@string/activity_completed_task_detail_title" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <FrameLayout
+        android:id="@+id/activity_completed_task_detail_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_container_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_appbar"
+        app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_scroll_completion">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/activity_completed_task_detail_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_bar_component_height"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
     <ScrollView
         android:id="@+id/activity_completed_task_detail_scroll_completion"
         style="@style/Component.ScrollView"
-        app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_appbar"
+        app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_progress_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_layout_buttons">

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
@@ -23,7 +24,7 @@ import com.unison.appartment.utils.DateUtils;
 
 import java.util.Date;
 
-public class CompletedTaskDetailActivity extends AppCompatActivity {
+public class CompletedTaskDetailActivity extends AppCompatActivity implements CompletionListFragment.OnCompletionListFragmentInteractionListener {
 
     private static final int ADD_TASK_REQUEST_CODE = 101;
     public final static int RESULT_OK = 200;
@@ -97,5 +98,13 @@ public class CompletedTaskDetailActivity extends AppCompatActivity {
             }
             finish();
         }
+    }
+
+    @Override
+    public void onRewardListElementsLoaded(long elements) {
+        // Sia che la lista abbia elementi o meno, una volta fatta la lettura la
+        // progress bar deve interrompersi
+        ProgressBar progressBar = findViewById(R.id.activity_completed_task_detail_progress);
+        progressBar.setVisibility(View.GONE);
     }
 }

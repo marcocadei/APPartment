@@ -35,6 +35,8 @@ public class CompletionListFragment extends Fragment {
     private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
+    private OnCompletionListFragmentInteractionListener listener;
+
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
@@ -92,6 +94,12 @@ public class CompletionListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof OnCompletionListFragmentInteractionListener) {
+            listener = (OnCompletionListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnRewardListFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -105,8 +113,17 @@ public class CompletionListFragment extends Fragment {
             @Override
             public void onChanged(List<Completion> completions) {
                 myAdapter.submitList(completions);
-//                listener.onRewardListElementsLoaded(rewards.size());
+                listener.onRewardListElementsLoaded(completions.size());
             }
         });
+    }
+
+    /**
+     * Questa interfaccia deve essere implementata dalle activity che contengono questo
+     * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
+     * che a sua volta può comunicare con altri fragment
+     */
+    public interface OnCompletionListFragmentInteractionListener {
+        void onRewardListElementsLoaded(long elements);
     }
 }
