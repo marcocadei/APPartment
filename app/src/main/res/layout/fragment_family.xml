@@ -7,26 +7,59 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FamilyFragment">
 
-    <fragment
-        android:id="@+id/fragment_family_member_list"
-        android:name="com.unison.appartment.fragments.FamilyMemberListFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <FrameLayout
+        android:id="@+id/fragment_family_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_container_height"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_charts"
-        tools:layout="@layout/fragment_family_member_list" />
+        app:layout_constraintBottom_toTopOf="@id/fragment_family_scroll">
 
-    <fragment
-        android:id="@+id/fragment_charts"
-        android:name="com.unison.appartment.fragments.ChartsFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/fragment_family_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_bar_component_height"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/fragment_family_scroll"
+        style="@style/Component.ScrollView"
+        app:layout_constraintTop_toBottomOf="@id/fragment_family_progress_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_family_member_list"
-        tools:layout="@layout/fragment_charts"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Component.Layout">
+        
+            <fragment
+                android:id="@+id/fragment_family_member_list"
+                android:name="com.unison.appartment.fragments.FamilyMemberListFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/fragment_charts"
+                tools:layout="@layout/fragment_family_member_list" />
+
+            <fragment
+                android:id="@+id/fragment_charts"
+                android:name="com.unison.appartment.fragments.ChartsFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_family_member_list"
+                tools:layout="@layout/fragment_charts"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
