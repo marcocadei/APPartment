@@ -206,5 +206,13 @@
     <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
     <string name="activity_family_member_detail_role_name">Ruolo:</string>
+    <string name="activity_family_member_detail_total_points_earned_label">Punti guadagnati:</string>
+    <string name="activity_family_member_detail_total_money_earned_label">Soldi guadagnati:</string>
+    <string name="activity_family_member_detail_total_published_messages_label">Messaggi pubblicati:</string>
+    <string name="activity_family_member_detail_total_published_images_label">Immagini pubblicate:</string>
+    <string name="activity_family_member_detail_total_published_audio_label">Audio pubblicati:</string>
+    <string name="activity_family_member_detail_total_claimed_rewards_label">Premi ottenuti:</string>
+    <string name="activity_family_member_detail_total_completed_tasks_label">Attività completate:</string>
+    <string name="activity_family_member_detail_total_rejected_tasks_label">Attività rifiutate:</string>
 
 </resources>

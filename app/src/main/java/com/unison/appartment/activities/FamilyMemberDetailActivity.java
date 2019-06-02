@@ -59,6 +59,23 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         TextView name = findViewById(R.id.activity_family_member_detail_text_name);
         TextView points = findViewById(R.id.activity_family_member_detail_text_points_value);
         TextView role = findViewById(R.id.activity_family_member_detail_text_role_value);
+
+        TextView earnedPoints = findViewById(R.id.activity_family_member_detail_total_points_earned_value);
+        TextView earnedMoney = findViewById(R.id.activity_family_member_detail_total_money_earned_value);
+        TextView publishedMessages = findViewById(R.id.activity_family_member_detail_total_published_messages_value);
+        TextView publishedImages = findViewById(R.id.activity_family_member_detail_total_published_images_value);
+        TextView publishedAudio = findViewById(R.id.activity_family_member_detail_total_published_audio_value);
+        TextView claimedRewards = findViewById(R.id.activity_family_member_detail_total_claimed_rewards_value);
+        TextView completedTasks = findViewById(R.id.activity_family_member_detail_total_completed_tasks_value);
+        TextView rejectedTasks = findViewById(R.id.activity_family_member_detail_total_rejected_tasks_value);
+        earnedPoints.setText(String.valueOf(member.getPoints()));
+        earnedMoney.setText(String.valueOf(member.getEarnedMoney()));
+        publishedMessages.setText(String.valueOf(member.getTextPosts()));
+        publishedImages.setText(String.valueOf(member.getImagePosts()));
+        publishedAudio.setText(String.valueOf(member.getAudioPosts()));
+        claimedRewards.setText(String.valueOf(member.getClaimedRewards()));
+        completedTasks.setText(String.valueOf(member.getCompletedTasks()));
+        rejectedTasks.setText(String.valueOf(member.getRejectedTasks()));
         
         name.setText(member.getNickname());
         points.setText(String.valueOf(member.getPoints()));
