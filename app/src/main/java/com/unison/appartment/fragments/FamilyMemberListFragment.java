@@ -38,7 +38,7 @@ public class FamilyMemberListFragment extends Fragment {
     private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
-//    private OnFamilyMemberListFragmentInteractionListener listener;
+    private OnFamilyMemberListFragmentInteractionListener listener;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -95,18 +95,18 @@ public class FamilyMemberListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (getParentFragment() instanceof OnFamilyMemberListFragmentInteractionListener) {
+        if (getParentFragment() instanceof OnFamilyMemberListFragmentInteractionListener) {
             listener = (OnFamilyMemberListFragmentInteractionListener) getParentFragment();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFamilyMemberListFragmentListener");
-        }*/
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        listener = null;
+        listener = null;
     }
 
     private void readFamilyMembers() {
@@ -115,7 +115,7 @@ public class FamilyMemberListFragment extends Fragment {
             @Override
             public void onChanged(List<HomeUser> familyMembers) {
                 myAdapter.submitList(familyMembers);
-//                listener.onRewardListElementsLoaded(rewards.size());
+                listener.onFamilyMemberListElementsLoaded(familyMembers.size());
             }
         });
     }
@@ -127,5 +127,6 @@ public class FamilyMemberListFragment extends Fragment {
      */
     public interface OnFamilyMemberListFragmentInteractionListener {
         void onFamilyMemberListFragmentOpenMember(User user);
+        void onFamilyMemberListElementsLoaded(int elements);
     }
 }

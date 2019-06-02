@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.unison.appartment.R;
 import com.unison.appartment.activities.FamilyMemberDetailActivity;
@@ -62,5 +63,13 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
 //        TODO da sistemare
 //        i.putExtra("user", user);
         startActivity(i);
+    }
+
+    @Override
+    public void onFamilyMemberListElementsLoaded(int elements) {
+        // Sia che la lista abbia elementi o meno, una volta fatta la lettura la
+        // progress bar deve interrompersi
+        ProgressBar progressBar = getView().findViewById(R.id.fragment_family_progress);
+        progressBar.setVisibility(View.GONE);
     }
 }
