@@ -75,6 +75,7 @@ public class User implements Serializable {
         this.birthdate = birthdate;
     }
 
+    @Exclude
     public int getAge() throws ParseException {
         // Non si può fare di meglio in Java 7 purtroppo :/
         Date birth = DateUtils.parseDateWithStandardLocale(birthdate);
@@ -105,33 +106,4 @@ public class User implements Serializable {
         String[] genderValues = MyApplication.getAppContext().getResources().getStringArray(R.array.desc_users_uid_gender_values);
         return genderValues[this.getGender()];
     }
-
-    // TODO da togliere
-
-    /**
-     * Metodi statici per gestire la lista di membri
-     */
-    private static List<User> userList = new ArrayList<User>(){
-        {
-//            add(new User("Gianluca", "g.roscigno@studenti.unibs.it", 22, "Maschio", "Leader", 10));
-//            add(new User("Marco", "marcocadei@live.com", 24, "Maschio", "Leader", 100));
-        }
-    };
-
-    public static void addUser(int position, User user) {
-        userList.add(position, user);
-    }
-
-    public static void removeUser(int position) {
-        userList.remove(position);
-    }
-
-    public static User getUser(int position) {
-        return userList.get(position);
-    }
-
-    public static List<User> getUserList() {
-        return userList;
-    }
-
 }
