@@ -147,7 +147,7 @@ public class Appartment {
 
     public HomeUser getHomeUser(String uid) {
         if (homeUsers == null) {
-            homeUsers = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), new TypeToken<HashMap<String, Object>>() { }.getType());
+            homeUsers = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), new TypeToken<HashMap<String, HomeUser>>() { }.getType());
         }
         return homeUsers.get(uid);
     }
