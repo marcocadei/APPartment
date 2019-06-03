@@ -196,7 +196,13 @@ public class RewardDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE) {
+        /*
+        L'options menù contiene il solo tasto di modifica, che è visualizzato solo se sono soddisfatte
+        entrambe le seguenti condizioni:
+        - l'utente loggato è un master o il proprietario della casa;
+        - il premio di cui sono visualizzati i dettagli non è ancora stato richiesto da nessuno
+         */
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE && !reward.isRequested()) {
             getMenuInflater().inflate(R.menu.activity_reward_detail_toolbar, menu);
             return true;
         }

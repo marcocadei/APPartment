@@ -3,6 +3,7 @@ package com.unison.appartment.adapters;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,9 @@ public class MyUserPickerRecyclerViewAdapter extends RecyclerView.Adapter<MyUser
     @Override
     public void onBindViewHolder(@NonNull final ViewHolderHomeUser holder, int position) {
         final HomeUser item = mValues.get(position);
-        String[] roles = holder.mView.getContext().getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
+        Resources res = holder.mView.getResources();
+        String[] roles = res.getStringArray(R.array.desc_userhomes_uid_homename_role_values);
+
         holder.textName.setText(item.getNickname());
         holder.textRole.setText(roles[item.getRole()]);
         if (item.getImage() != null) {
@@ -48,7 +51,7 @@ public class MyUserPickerRecyclerViewAdapter extends RecyclerView.Adapter<MyUser
         }
         else {
             holder.imgProfile.setColorFilter(holder.mView.getContext().getResources().getColor(R.color.colorPrimaryDark, null));
-            Glide.with(holder.imgProfile.getContext()).load(R.drawable.ic_person).into(holder.imgProfile);
+            holder.imgProfile.setImageDrawable(res.getDrawable(R.drawable.ic_person, null));
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
