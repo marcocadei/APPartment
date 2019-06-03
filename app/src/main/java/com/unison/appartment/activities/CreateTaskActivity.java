@@ -27,6 +27,8 @@ import com.unison.appartment.utils.KeyboardUtils;
  */
 public class CreateTaskActivity extends FormActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
 
+    public final static String EXTRA_TASK_DATA = "taskData";
+
     private final static String BUNDLE_KEY_ASSIGNED_USER_ID = "assignedUserId";
     private final static String BUNDLE_KEY_ASSIGNED_USER_NAME = "assignedUserName";
 
@@ -72,7 +74,7 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
 
         // Se provengo dall'activity di dettaglio di un'attività completata allora ho già delle informazioni
         Intent creationIntent = getIntent();
-        CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
+        CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(EXTRA_TASK_DATA);
         if (completedTask != null) {
             inputName.setText(completedTask.getName());
             inputDescription.setText(completedTask.getLastDescription());

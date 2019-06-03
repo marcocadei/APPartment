@@ -26,6 +26,8 @@ import java.util.Date;
 
 public class CompletedTaskDetailActivity extends AppCompatActivity implements CompletionListFragment.OnCompletionListFragmentInteractionListener {
 
+    public final static String EXTRA_COMPLETED_TASK_OBJECT = "completedTaskObject";
+
     private static final int ADD_TASK_REQUEST_CODE = 101;
     public final static int RESULT_OK = 200;
     public final static int RESULT_CREATED = 201;
@@ -57,7 +59,7 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
         ft.commit();
 
         Intent creationIntent = getIntent();
-        final CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
+        final CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(EXTRA_COMPLETED_TASK_OBJECT);
         // Imposto il nome del task visualizzato all'interno dello stato
         Appartment.getInstance().setCurrentCompletedTaskName(completedTask.getName());
         Log.d("STATO", Appartment.getInstance().getCurrentCompletedTaskName());
@@ -78,7 +80,7 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(CompletedTaskDetailActivity.this, CreateTaskActivity.class);
-                i.putExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT, completedTask);
+                i.putExtra(CreateTaskActivity.EXTRA_TASK_DATA, completedTask);
                 startActivityForResult(i, ADD_TASK_REQUEST_CODE);
             }
         });

@@ -26,8 +26,7 @@ import com.unison.appartment.viewmodel.TodoTaskViewModel;
 
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
 
-    public final static String EXTRA_COMPLETEDTASK_OBJECT = "completedTaskObject";
-    private static final int DETAIL_COMPLETED_TASK_REQUEST_CODE = 1;
+    private final static int DETAIL_COMPLETED_TASK_REQUEST_CODE = 1;
 
     private final static int ALL_COMPLETEDTASKS_POSITION = 0;
     private final static int RECENT_COMPLETEDTASKS_POSITION = 1;
@@ -133,7 +132,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     @Override
     public void onAllCompletedTasksListFragmentInteraction(CompletedTask completedTask) {
         Intent i = new Intent(getActivity(), CompletedTaskDetailActivity.class);
-        i.putExtra(EXTRA_COMPLETEDTASK_OBJECT, completedTask);
+        i.putExtra(CompletedTaskDetailActivity.EXTRA_COMPLETED_TASK_OBJECT, completedTask);
         startActivityForResult(i, DETAIL_COMPLETED_TASK_REQUEST_CODE);
     }
 
