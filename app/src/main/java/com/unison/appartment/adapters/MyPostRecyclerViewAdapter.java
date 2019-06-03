@@ -20,8 +20,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
+import com.unison.appartment.state.Appartment;
 
 import java.io.IOException;
 import java.util.Date;
@@ -73,6 +76,8 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         java.text.DateFormat timeFormat = DateFormat.getTimeFormat(holder.itemView.getContext());
         Date timestamp;
         Resources res = holder.itemView.getContext().getResources();
+        int role = Appartment.getInstance().getUserHome().getRole();
+        String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
 
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
@@ -82,29 +87,40 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 holderTextPost.textPostSender.setText(textPostItem.getAuthor());
                 timestamp = new Date(textPostItem.getTimestamp());
                 holderTextPost.textPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
-                // Popup menu
-                holderTextPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
-                        //inflating menu from xml resource
-                        popup.inflate(R.menu.fragment_messages_post_options);
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch(item.getItemId()) {
-                                    case R.id.fragment_messages_post_options_delete:
-                                        listener.deletePost(textPostItem);
-                                        return true;
-                                    default:
-                                        return false;
+                /*
+                Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
+                - per gli slave, solo ai propri post;
+                - per i master, a tutti quanti i post.
+                 */
+                if (role != Home.ROLE_SLAVE || textPostItem.getAuthor().equals(nickname)) {
+                    holderTextPost.textPostOptions.setVisibility(View.VISIBLE);
+                    holderTextPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
+                            //inflating menu from xml resource
+                            popup.inflate(R.menu.fragment_messages_post_options);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch(item.getItemId()) {
+                                        case R.id.fragment_messages_post_options_delete:
+                                            listener.deletePost(textPostItem);
+                                            return true;
+                                        default:
+                                            return false;
+                                    }
                                 }
-                            }
-                        });
-                        popup.show();
-                    }
-                });
+                            });
+                            popup.show();
+                        }
+                    });
+                }
+                else {
+                    holderTextPost.textPostOptions.setVisibility(View.INVISIBLE);
+                }
                 break;
+
             case Post.IMAGE_POST:
                 final ViewHolderImagePost holderImagePost = (ViewHolderImagePost) holder;
                 final Post imagePostItem = getItem(position);
@@ -125,29 +141,39 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         }
                     }
                 });
-                // Popup menu
-                holderImagePost.imagePostOptions.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PopupMenu popup = new PopupMenu(v.getContext(), holderImagePost.imagePostOptions);
-                        //inflating menu from xml resource
-                        popup.inflate(R.menu.fragment_messages_post_options);
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch(item.getItemId()) {
-                                    case R.id.fragment_messages_post_options_delete:
-                                        listener.deletePost(imagePostItem);
-                                        return true;
-                                    default:
-                                        return false;
+                /*
+                Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
+                - per gli slave, solo ai propri post;
+                - per i master, a tutti quanti i post.
+                 */
+                if (role != Home.ROLE_SLAVE || imagePostItem.getAuthor().equals(nickname)) {
+                    holderImagePost.imagePostOptions.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PopupMenu popup = new PopupMenu(v.getContext(), holderImagePost.imagePostOptions);
+                            //inflating menu from xml resource
+                            popup.inflate(R.menu.fragment_messages_post_options);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch(item.getItemId()) {
+                                        case R.id.fragment_messages_post_options_delete:
+                                            listener.deletePost(imagePostItem);
+                                            return true;
+                                        default:
+                                            return false;
+                                    }
                                 }
-                            }
-                        });
-                        popup.show();
-                    }
-                });
+                            });
+                            popup.show();
+                        }
+                    });
+                }
+                else {
+                    holderImagePost.imagePostOptions.setVisibility(View.INVISIBLE);
+                }
                 break;
+
             case Post.AUDIO_POST:
                 final ViewHolderAudioPost holderAudioPost = (ViewHolderAudioPost) holder;
                 final Post audioPostItem = getItem(position);
@@ -169,29 +195,39 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         handleAudioPlay(audioPostItem, holderAudioPost);
                     }
                 });
-                // Popup menu
-                holderAudioPost.audioPostOptions.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PopupMenu popup = new PopupMenu(v.getContext(), holderAudioPost.audioPostOptions);
-                        //inflating menu from xml resource
-                        popup.inflate(R.menu.fragment_messages_post_options);
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch(item.getItemId()) {
-                                    case R.id.fragment_messages_post_options_delete:
-                                        listener.deletePost(audioPostItem);
-                                        return true;
-                                    default:
-                                        return false;
+                /*
+                Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
+                - per gli slave, solo ai propri post;
+                - per i master, a tutti quanti i post.
+                 */
+                if (role != Home.ROLE_SLAVE || audioPostItem.getAuthor().equals(nickname)) {
+                    holderAudioPost.audioPostOptions.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PopupMenu popup = new PopupMenu(v.getContext(), holderAudioPost.audioPostOptions);
+                            //inflating menu from xml resource
+                            popup.inflate(R.menu.fragment_messages_post_options);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch(item.getItemId()) {
+                                        case R.id.fragment_messages_post_options_delete:
+                                            listener.deletePost(audioPostItem);
+                                            return true;
+                                        default:
+                                            return false;
+                                    }
                                 }
-                            }
-                        });
-                        popup.show();
-                    }
-                });
+                            });
+                            popup.show();
+                        }
+                    });
+                }
+                else {
+                    holderAudioPost.audioPostOptions.setVisibility(View.INVISIBLE);
+                }
                 break;
+
             default:
                 break;
         }
