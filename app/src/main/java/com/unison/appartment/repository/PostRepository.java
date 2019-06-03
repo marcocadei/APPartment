@@ -79,10 +79,13 @@ public class PostRepository {
             case Post.TEXT_POST:
                 // Nel caso del testo il post non deve essere modificato
                 addUpdatedPost(newPost);
+                break;
             case Post.IMAGE_POST:
                 addImagePost(newPost);
+                break;
             case Post.AUDIO_POST:
                 addAudioPost(newPost);
+                break;
         }
     }
 
