@@ -80,6 +80,7 @@ public class UserHomeListFragment extends Fragment {
             }
 
             myAdapter = new MyUserHomeRecyclerViewAdapter(mListener);
+            // FIXME questo qui deve rimanere scommentato?
             /*myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
