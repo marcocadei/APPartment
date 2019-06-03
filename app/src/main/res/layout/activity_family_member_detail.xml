@@ -50,6 +50,7 @@
                     <com.appeaser.imagetransitionlibrary.TransitionImageView
                         android:id="@+id/activity_family_member_detail_img_profile"
                         style="@style/Component.ImageView.ProfileImage"
+                        android:visibility="invisible"
                         android:contentDescription="@string/caption_profile_pic"
                         android:scaleType="centerCrop"
                         android:transitionName="@string/transition_open_image"
@@ -57,9 +58,21 @@
                         app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_person"
-                        app:tiv_rounding="1"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        app:tiv_rounding="1" />
+
+                    <ImageView
+                        android:id="@+id/activity_family_member_detail_img_profile_default"
+                        style="@style/Component.ImageView.ProfileImage"
+                        android:visibility="visible"
+                        android:scaleType="centerCrop"
+                        android:transitionName="@string/transition_open_image"
+                        android:contentDescription="@string/caption_profile_pic"
+                        app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_img_profile"
+                        app:layout_constraintEnd_toEndOf="@id/activity_family_member_detail_img_profile"
+                        app:layout_constraintStart_toStartOf="@id/activity_family_member_detail_img_profile"
+                        app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_img_profile"
+                        android:tint="@color/colorPrimaryDark"
+                        app:srcCompat="@drawable/ic_person" />
 
                     <TextView
                         android:id="@+id/activity_family_member_detail_text_name"

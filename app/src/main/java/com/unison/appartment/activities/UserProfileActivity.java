@@ -52,6 +52,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
 
     private View emptyListLayout;
     private TransitionImageView imgProfile;
+    private ImageView imgDefault;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
 
         emptyListLayout = findViewById(R.id.activity_user_profile_layout_empty_list);
         imgProfile = findViewById(R.id.activity_user_profile_img_profile);
+        imgDefault = findViewById(R.id.activity_user_profile_img_profile_default);
         TextView textName = findViewById(R.id.activity_user_profile_text_name);
         TextView textEmail = findViewById(R.id.activity_user_profile_text_email);
         TextView textGender = findViewById(R.id.activity_user_profile_text_gender_value);
@@ -100,6 +102,8 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         }
 
         if (currentUser.getImage() != null) {
+            imgDefault.setVisibility(View.INVISIBLE);
+            imgProfile.setVisibility(View.VISIBLE);
             Glide.with(imgProfile.getContext()).load(currentUser.getImage()).placeholder(R.drawable.scaled_ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
             imgProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -115,8 +119,6 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                     startActivity(i, options.toBundle());
                 }
             });
-        } else {
-            Glide.with(imgProfile.getContext()).load(R.drawable.ic_person).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         }
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);

@@ -99,6 +99,7 @@
                     <com.appeaser.imagetransitionlibrary.TransitionImageView
                         android:id="@+id/activity_user_profile_img_profile"
                         style="@style/Component.ImageView.ProfileImage"
+                        android:visibility="invisible"
                         android:scaleType="centerCrop"
                         app:tiv_rounding="1"
                         android:transitionName="@string/transition_open_image"
@@ -106,7 +107,20 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/activity_user_profile_layout_attributes"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/activity_user_profile_img_profile_default"
+                        style="@style/Component.ImageView.ProfileImage"
+                        android:visibility="visible"
+                        android:scaleType="centerCrop"
+                        android:transitionName="@string/transition_open_image"
+                        android:contentDescription="@string/caption_profile_pic"
+                        app:layout_constraintBottom_toBottomOf="@id/activity_user_profile_img_profile"
+                        app:layout_constraintEnd_toEndOf="@id/activity_user_profile_img_profile"
+                        app:layout_constraintStart_toStartOf="@id/activity_user_profile_img_profile"
+                        app:layout_constraintTop_toTopOf="@id/activity_user_profile_img_profile"
+                        android:tint="@color/colorPrimaryDark"
                         app:srcCompat="@drawable/ic_person" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout

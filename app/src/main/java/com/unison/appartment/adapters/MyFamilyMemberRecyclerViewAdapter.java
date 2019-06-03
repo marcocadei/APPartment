@@ -60,7 +60,7 @@ public class MyFamilyMemberRecyclerViewAdapter extends ListAdapter<HomeUser, MyF
         }
         else {
             holder.imageMember.setColorFilter(holder.mView.getContext().getResources().getColor(R.color.colorPrimaryDark, null));
-            Glide.with(holder.imageMember.getContext()).load(R.drawable.ic_person).into(holder.imageMember);
+            holder.imageMember.setImageDrawable(res.getDrawable(R.drawable.ic_person, null));
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

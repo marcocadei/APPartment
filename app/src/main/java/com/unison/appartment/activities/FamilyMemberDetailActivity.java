@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
 
         // Recupero il riferimento agli elementi dell'interfaccia
         final ImageView image = findViewById(R.id.activity_family_member_detail_img_profile);
+        final ImageView imgDefault = findViewById(R.id.activity_family_member_detail_img_profile_default);
         TextView name = findViewById(R.id.activity_family_member_detail_text_name);
         TextView points = findViewById(R.id.activity_family_member_detail_text_points_value);
         TextView role = findViewById(R.id.activity_family_member_detail_text_role_value);
@@ -83,7 +85,8 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         points.setText(String.valueOf(member.getPoints()));
         role.setText(roles[member.getRole()]);
         if (member.getImage() != null) {
-            image.setColorFilter(getResources().getColor(R.color.transparentWhite, null));
+            imgDefault.setVisibility(View.INVISIBLE);
+            image.setVisibility(View.VISIBLE);
             Glide.with(image.getContext()).load(member.getImage()).apply(RequestOptions.circleCropTransform()).into(image);
 
             image.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +103,6 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
                     startActivity(i, options.toBundle());
                 }
             });
-        }
-        else {
-            image.setColorFilter(getResources().getColor(R.color.colorPrimaryDark, null));
-            Glide.with(image.getContext()).load(R.drawable.ic_person).into(image);
         }
     }
 }
