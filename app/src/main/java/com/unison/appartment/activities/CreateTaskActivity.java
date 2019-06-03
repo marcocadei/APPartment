@@ -164,6 +164,14 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
             result = false;
         }
 
+        // Controllo che il nome del task non contenga un carattere non ammesso
+        // (Il nome del task è usato come nome di un nodo in Firebase e lì alcuni caratteri non sono ammessi)
+        if (nameValue.matches(".*[.$\\[\\]#/].*")) {
+            layoutName.setError(null);
+            layoutName.setError(getString(R.string.form_error_invalid_characters));
+            result = false;
+        }
+
         return result;
     }
 
