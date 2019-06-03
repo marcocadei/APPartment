@@ -28,6 +28,8 @@ import com.unison.appartment.utils.ImageUtils;
  */
 public class FamilyMemberDetailActivity extends AppCompatActivity {
 
+    public final static String EXTRA_MEMBER_OBJECT = "memberObject";
+
     private HomeUser member;
 
     @Override
@@ -50,7 +52,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         });
 
         Intent creationIntent = getIntent();
-        member = (HomeUser) creationIntent.getSerializableExtra(FamilyFragment.EXTRA_MEMBER_OBJECT);
+        member = (HomeUser) creationIntent.getSerializableExtra(EXTRA_MEMBER_OBJECT);
         
         String[] roles = getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -30,7 +31,6 @@ import com.unison.appartment.state.Appartment;
  */
 public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 
-    public final static String EXTRA_TASK_OBJECT = "taskObject";
     public final static String EXTRA_NEW_TASK = "newTask";
     public final static String EXTRA_TASK_ID = "taskId";
     public final static String EXTRA_USER_NAME = "userName";
@@ -47,8 +47,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     private static final int ADD_TASK_REQUEST_CODE = 1;
     private static final int DETAIL_TASK_REQUEST_CODE = 2;
 
-    private TextView emptyTodoListTitle;
-    private TextView emptyTodoListText;
+    private View emptyListLayout;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -56,10 +55,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     public TodoFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static TodoFragment newInstance(String param1, String param2) {
-        TodoFragment fragment = new TodoFragment();
-        return fragment;
+    public static TodoFragment newInstance() {
+        return new TodoFragment();
     }
 
     @Override
@@ -68,13 +65,12 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_todo, container, false);
 
-        emptyTodoListTitle = myView.findViewById(R.id.fragment_todo_empty_todo_list_title);
-        emptyTodoListText = myView.findViewById(R.id.fragment_todo_empty_todo_list_text);
+        emptyListLayout = myView.findViewById(R.id.fragment_todo_layout_empty_list);
 
         final FloatingActionButton floatAddTask = myView.findViewById(R.id.fragment_todo_float_add_task);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
@@ -145,7 +141,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
@@ -157,7 +153,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     @Override
     public void onTodoListFragmentOpenTask(UncompletedTask uncompletedTask) {
         Intent i = new Intent(getActivity(), TaskDetailActivity.class);
-        i.putExtra(EXTRA_TASK_OBJECT, uncompletedTask);
+        i.putExtra(TaskDetailActivity.EXTRA_TASK_OBJECT, uncompletedTask);
         startActivityForResult(i, DETAIL_TASK_REQUEST_CODE);
     }
 
@@ -170,11 +166,9 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
 
         // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
         if (elements == 0) {
-            emptyTodoListTitle.setVisibility(View.VISIBLE);
-            emptyTodoListText.setVisibility(View.VISIBLE);
+            emptyListLayout.setVisibility(View.VISIBLE);
         } else {
-            emptyTodoListTitle.setVisibility(View.GONE);
-            emptyTodoListText.setVisibility(View.GONE);
+            emptyListLayout.setVisibility(View.GONE);
         }
     }
 }

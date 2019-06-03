@@ -10,6 +10,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -36,7 +37,7 @@ import java.io.IOException;
  */
 public class InsertPostFragment extends Fragment {
 
-    public static final int PERMISSION_REQUEST_RECORDER = 1;
+    private static final int PERMISSION_REQUEST_RECORDER = 1;
 
     // Edittext contenente l'input del messaggio
     private EditText inputText;
@@ -65,8 +66,7 @@ public class InsertPostFragment extends Fragment {
      * @return A new instance of fragment InsertPostFragment.
      */
     public static InsertPostFragment newInstance() {
-        InsertPostFragment fragment = new InsertPostFragment();
-        return fragment;
+        return new InsertPostFragment();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class InsertPostFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
@@ -222,7 +222,7 @@ public class InsertPostFragment extends Fragment {
      * @param grantResults i risultati ottenuti
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_RECORDER: {
                 // Se la richiesta è cancellata l'array dei risultati è vuoto
@@ -268,7 +268,7 @@ public class InsertPostFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof OnInsertPostFragmentListener) {
             listener = (OnInsertPostFragmentListener) getParentFragment();

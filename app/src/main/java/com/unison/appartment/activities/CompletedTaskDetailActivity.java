@@ -26,12 +26,14 @@ import java.util.Date;
 
 public class CompletedTaskDetailActivity extends AppCompatActivity implements CompletionListFragment.OnCompletionListFragmentInteractionListener {
 
+    public final static String EXTRA_COMPLETED_TASK_OBJECT = "completedTaskObject";
+
     private static final int ADD_TASK_REQUEST_CODE = 101;
     public final static int RESULT_OK = 200;
     public final static int RESULT_CREATED = 201;
     public final static int RESULT_NOT_CREATED = 202;
 
-    private CompletedTask completedTask;
+    private View emptyListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +55,16 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
 
         // Carico il fragment contenente la cronologia dei completamenti
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.activity_completed_task_detal_fragment_completion_list, CompletionListFragment.newInstance(1));
+        ft.replace(R.id.activity_completed_task_detail_fragment_completion_list, CompletionListFragment.newInstance(1));
         ft.commit();
 
         Intent creationIntent = getIntent();
-        completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
+        final CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(EXTRA_COMPLETED_TASK_OBJECT);
         // Imposto il nome del task visualizzato all'interno dello stato
         Appartment.getInstance().setCurrentCompletedTaskName(completedTask.getName());
         Log.d("STATO", Appartment.getInstance().getCurrentCompletedTaskName());
 
+        emptyListLayout = findViewById(R.id.activity_completed_task_detail_layout_empty_list);
         TextView textName = findViewById(R.id.activity_completed_task_detail_name);
         TextView textPoints = findViewById(R.id.activity_completed_task_detail_points_value);
         TextView textDescription = findViewById(R.id.activity_completed_task_detail_text_description_value);
@@ -77,7 +80,7 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(CompletedTaskDetailActivity.this, CreateTaskActivity.class);
-                i.putExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT, completedTask);
+                i.putExtra(CreateTaskActivity.EXTRA_TASK_DATA, completedTask);
                 startActivityForResult(i, ADD_TASK_REQUEST_CODE);
             }
         });
@@ -101,10 +104,17 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
     }
 
     @Override
-    public void onRewardListElementsLoaded(long elements) {
+    public void onCompletionListElementsLoaded(long elements) {
         // Sia che la lista abbia elementi o meno, una volta fatta la lettura la
         // progress bar deve interrompersi
         ProgressBar progressBar = findViewById(R.id.activity_completed_task_detail_progress);
         progressBar.setVisibility(View.GONE);
+
+        if (elements == 0) {
+            emptyListLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyListLayout.setVisibility(View.GONE);
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.unison.appartment.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -31,8 +33,6 @@ public class UserHomeListFragment extends Fragment {
 
     private UserHomeViewModel viewModel;
 
-    private List<UserHome> userHomes;
-
     private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
@@ -44,7 +44,6 @@ public class UserHomeListFragment extends Fragment {
     public UserHomeListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static UserHomeListFragment newInstance(int columnCount) {
         UserHomeListFragment fragment = new UserHomeListFragment();
@@ -61,11 +60,12 @@ public class UserHomeListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
         viewModel = ViewModelProviders.of(getActivity()).get(UserHomeViewModel.class);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_userhome_list, container, false);
 
@@ -80,6 +80,7 @@ public class UserHomeListFragment extends Fragment {
             }
 
             myAdapter = new MyUserHomeRecyclerViewAdapter(mListener);
+            // FIXME questo qui deve rimanere scommentato?
             /*myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -95,7 +96,7 @@ public class UserHomeListFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnHomeListFragmentInteractionListener) {
             mListener = (OnHomeListFragmentInteractionListener) context;

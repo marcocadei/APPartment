@@ -30,9 +30,7 @@ import java.util.List;
  */
 public class RewardListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
 
     private RewardViewModel viewModel;
@@ -48,13 +46,12 @@ public class RewardListFragment extends Fragment {
     public RewardListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static RewardListFragment newInstance(int columnCount) {
         RewardListFragment fragment = new RewardListFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_COLUMN_COUNT, columnCount);
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
         return fragment;
     }
 

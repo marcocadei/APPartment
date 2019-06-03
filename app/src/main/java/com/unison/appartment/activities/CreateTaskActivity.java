@@ -1,7 +1,6 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
@@ -10,12 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.DoneFragment;
@@ -24,11 +20,14 @@ import com.unison.appartment.fragments.UserPickerFragment;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.UncompletedTask;
+import com.unison.appartment.utils.KeyboardUtils;
 
 /**
  * Classe che rappresenta l'Activity per creare un nuovo UncompletedTask
  */
-public class CreateTaskActivity extends AppCompatActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
+public class CreateTaskActivity extends FormActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
+
+    public final static String EXTRA_TASK_DATA = "taskData";
 
     private final static String BUNDLE_KEY_ASSIGNED_USER_ID = "assignedUserId";
     private final static String BUNDLE_KEY_ASSIGNED_USER_NAME = "assignedUserName";
@@ -37,6 +36,9 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
     private EditText inputDescription;
     private EditText inputPoints;
     private EditText inputAssignedUser;
+    private TextInputLayout layoutName;
+    private TextInputLayout layoutDescription;
+    private TextInputLayout layoutPoints;
 
     private String assignedUserId;
     private String assignedUserName;
@@ -46,7 +48,13 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
 
-        // Supporto per la toolbar
+        // Modifica dell'activity di destinazione a cui andare quando si chiude il dialog di errore
+        this.errorDialogDestinationActivity = MainActivity.class;
+
+        /*
+        Impostazione del comportamento della freccia presente sulla toolbar
+        (alla pressione l'activity viene terminata).
+         */
         Toolbar toolbar = findViewById(R.id.activity_create_task_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -60,10 +68,13 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
         inputDescription = findViewById(R.id.activity_create_task_input_description_value);
         inputPoints = findViewById(R.id.activity_create_task_input_points_value);
         inputAssignedUser = findViewById(R.id.activity_create_task_input_assigned_user_value);
+        layoutName = findViewById(R.id.activity_create_task_input_name);
+        layoutDescription = findViewById(R.id.activity_create_task_input_description);
+        layoutPoints = findViewById(R.id.activity_create_task_input_points);
 
         // Se provengo dall'activity di dettaglio di un'attività completata allora ho già delle informazioni
         Intent creationIntent = getIntent();
-        CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(DoneFragment.EXTRA_COMPLETEDTASK_OBJECT);
+        CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(EXTRA_TASK_DATA);
         if (completedTask != null) {
             inputName.setText(completedTask.getName());
             inputDescription.setText(completedTask.getLastDescription());
@@ -77,11 +88,33 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
             }
         });
 
+        inputName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutName);
+            }
+        });
+        inputDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutDescription);
+            }
+        });
+        inputPoints.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutPoints);
+            }
+        });
+
         FloatingActionButton floatFinish = findViewById(R.id.activity_create_task_float_finish);
         floatFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createTask();
+                KeyboardUtils.hideKeyboard(CreateTaskActivity.this);
+                if (checkInput()) {
+                    createTask();
+                }
             }
         });
     }
@@ -100,6 +133,38 @@ public class CreateTaskActivity extends AppCompatActivity implements UserPickerF
 
         assignedUserId = savedInstanceState.getString(BUNDLE_KEY_ASSIGNED_USER_ID);
         assignedUserName = savedInstanceState.getString(BUNDLE_KEY_ASSIGNED_USER_NAME);
+    }
+
+    @Override
+    protected boolean checkInput() {
+        resetErrorMessage(layoutName);
+        resetErrorMessage(layoutDescription);
+        resetErrorMessage(layoutPoints);
+
+        inputName.setText(inputName.getText().toString().trim());
+        inputDescription.setText(inputDescription.getText().toString().trim());
+
+        String nameValue = inputName.getText().toString();
+        String descriptionValue = inputDescription.getText().toString();
+        String pointsValue = inputPoints.getText().toString();
+
+        boolean result = true;
+
+        // Controllo che i campi non siano stati lasciati vuoti
+        if (nameValue.trim().length() == 0) {
+            layoutName.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        }
+        if (descriptionValue.trim().length() == 0) {
+            layoutDescription.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        }
+        if (pointsValue.trim().length() == 0) {
+            layoutPoints.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        }
+
+        return result;
     }
 
     public void createTask() {

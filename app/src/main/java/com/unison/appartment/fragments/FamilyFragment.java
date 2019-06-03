@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,18 +23,14 @@ import com.unison.appartment.model.User;
  */
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
 
-    public final static String EXTRA_MEMBER_OBJECT = "memberObject";
-
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
     public FamilyFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static FamilyFragment newInstance(String param1, String param2) {
-        FamilyFragment fragment = new FamilyFragment();
-        return fragment;
+    public static FamilyFragment newInstance() {
+        return new FamilyFragment();
     }
 
     @Override
@@ -42,7 +39,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_family, container, false);
@@ -51,7 +48,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
@@ -63,7 +60,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     @Override
     public void onFamilyMemberListFragmentOpenMember(HomeUser member) {
         Intent i = new Intent(getActivity(), FamilyMemberDetailActivity.class);
-        i.putExtra(EXTRA_MEMBER_OBJECT, member);
+        i.putExtra(FamilyMemberDetailActivity.EXTRA_MEMBER_OBJECT, member);
         startActivity(i);
     }
 

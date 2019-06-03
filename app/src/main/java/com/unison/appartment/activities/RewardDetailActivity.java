@@ -23,12 +23,12 @@ import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
 
-import java.util.Locale;
-
 /**
  * Classe che rappresenta l'Activity con il dettaglio del Reward
  */
 public class RewardDetailActivity extends AppCompatActivity {
+
+    public final static String EXTRA_REWARD_OBJECT = "rewardObject";
 
     private final static String BUNDLE_KEY_REWARD = "reward";
 
@@ -63,7 +63,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        reward = (Reward) creationIntent.getSerializableExtra(RewardsFragment.EXTRA_REWARD_OBJECT);
+        reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
 
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
@@ -71,6 +71,10 @@ public class RewardDetailActivity extends AppCompatActivity {
 
         textName.setText(reward.getName());
         textPoints.setText(String.valueOf(reward.getPoints()));
+        textDescription.setText(reward.getDescription());
+
+        /* Vecchia gestione della descrizione (che poteva essere facoltativa)
+
         // Viene gestito il caso in cui la descrizione sia vuota
         String shownDescription = reward.getDescription();
         if (shownDescription == null || shownDescription.isEmpty()) {
@@ -78,6 +82,7 @@ public class RewardDetailActivity extends AppCompatActivity {
             textDescription.setTypeface(null, Typeface.ITALIC);
         }
         textDescription.setText(shownDescription);
+        */
 
         if (reward.isRequested()) {
             TextView textReservationTitle = findViewById(R.id.activity_reward_detail_text_reservation_title);

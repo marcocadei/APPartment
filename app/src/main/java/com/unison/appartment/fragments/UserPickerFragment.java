@@ -39,7 +39,7 @@ public class UserPickerFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_userpicker_list, container, false);
         getDialog().setTitle(R.string.fragment_userpicker_text_title);

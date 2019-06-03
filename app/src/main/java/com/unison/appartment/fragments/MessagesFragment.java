@@ -3,6 +3,8 @@ package com.unison.appartment.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
@@ -36,10 +38,8 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     public MessagesFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
     public static MessagesFragment newInstance() {
-        MessagesFragment fragment = new MessagesFragment();
-        return fragment;
+        return new MessagesFragment();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_messages, container, false);
@@ -59,7 +59,7 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

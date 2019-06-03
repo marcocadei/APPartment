@@ -2,6 +2,8 @@ package com.unison.appartment.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -28,6 +30,7 @@ import java.util.List;
  * Fragment che rappresenta una lista di Post
  */
 public class PostListFragment extends Fragment {
+
     // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
@@ -49,7 +52,6 @@ public class PostListFragment extends Fragment {
     @SuppressWarnings("unused")
     public static PostListFragment newInstance(int columnCount) {
         PostListFragment fragment = new PostListFragment();
-        // Parametri del fragment
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -59,15 +61,16 @@ public class PostListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Quando il fragment è creato recupero i parametri
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        
         viewModel = ViewModelProviders.of(getActivity()).get(PostViewModel.class);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
@@ -107,7 +110,7 @@ public class PostListFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof OnPostListFragmentInteractionListener) {
             listener = (OnPostListFragmentInteractionListener) getParentFragment();

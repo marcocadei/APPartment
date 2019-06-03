@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -30,6 +29,8 @@ import java.util.Date;
  * Classe che rappresenta l'Activity con il dettaglio del UncompletedTask
  */
 public class TaskDetailActivity extends AppCompatActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
+
+    public final static String EXTRA_TASK_OBJECT = "taskObject";
 
     private final static String BUNDLE_KEY_TASK = "task";
 
@@ -58,7 +59,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        task = (UncompletedTask) creationIntent.getSerializableExtra(TodoFragment.EXTRA_TASK_OBJECT);
+        task = (UncompletedTask) creationIntent.getSerializableExtra(EXTRA_TASK_OBJECT);
 
         TextView textName = findViewById(R.id.activity_task_detail_name);
         TextView textPoints = findViewById(R.id.activity_task_detail_points_value);
@@ -67,13 +68,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
 
         textName.setText(task.getName());
         textPoints.setText(String.valueOf(task.getPoints()));
-        // Viene gestito il caso in cui la descrizione sia vuota
-        String shownDescription = task.getDescription();
-        if (shownDescription == null || shownDescription.isEmpty()) {
-            shownDescription = getString(R.string.general_no_description_available);
-            textDescription.setTypeface(null, Typeface.ITALIC);
-        }
-        textDescription.setText(shownDescription);
+        textDescription.setText(task.getDescription());
         textCreationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(task.getCreationDate())));
 
         if (task.isAssigned()) {

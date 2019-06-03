@@ -19,7 +19,6 @@ public class Reward implements Serializable {
     @Exclude
     private String id;
     private String name;
-    @Nullable
     private String description;
     private int points;
     @Nullable
@@ -44,7 +43,7 @@ public class Reward implements Serializable {
         this.points = points;
     }
 
-    public Reward(String name, String description, int points, String reservationId) {
+    public Reward(String name, String description, int points, @Nullable String reservationId) {
         this(name, description, points);
         this.reservationId = reservationId;
     }
@@ -78,12 +77,11 @@ public class Reward implements Serializable {
         this.name = name;
     }
 
-    @Nullable
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(@Nullable String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -118,12 +116,13 @@ public class Reward implements Serializable {
         Reward reward = (Reward) o;
         return points == reward.points &&
                 name.equals(reward.name) &&
-                Objects.equals(description, reward.description) &&
-                Objects.equals(reservationId, reward.reservationId);
+                description.equals(reward.description) &&
+                Objects.equals(reservationId, reward.reservationId) &&
+                Objects.equals(reservationName, reward.reservationName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, points, reservationId);
+        return Objects.hash(name, description, points, reservationId, reservationName);
     }
 }

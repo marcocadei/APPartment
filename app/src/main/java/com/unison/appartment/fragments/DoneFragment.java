@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,24 +26,21 @@ import com.unison.appartment.viewmodel.TodoTaskViewModel;
 
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
 
-    public final static String EXTRA_COMPLETEDTASK_OBJECT = "completedTaskObject";
-    private static final int DETAIL_COMPLETED_TASK_REQUEST_CODE = 1;
+    private final static int DETAIL_COMPLETED_TASK_REQUEST_CODE = 1;
 
-    private TextView emptyTodoListTitle;
-    private TextView emptyTodoListText;
-    private TabLayout tabLayout;
     private final static int ALL_COMPLETEDTASKS_POSITION = 0;
     private final static int RECENT_COMPLETEDTASKS_POSITION = 1;
 
-    // Ultima voce selezionata nella bottom navigation
+    // Ultima voce selezionata nei tab
     private int lastPosition = ALL_COMPLETEDTASKS_POSITION;
-    // Voce attualmente selezionata nella bottom navigation
+    // Voce attualmente selezionata nei tab
     private int currentPosition = ALL_COMPLETEDTASKS_POSITION;
+
+    private View emptyListLayout;
 
     // Questo ViewModel è necessario perché a partire da un'attività completata è possibile crearne
     // una nuova
     private TodoTaskViewModel viewModel;
-
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -50,13 +48,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     public DoneFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment RewardsFragment.
-     */
-    public static DoneFragment newInstance(String param1, String param2) {
+    public static DoneFragment newInstance() {
        return new DoneFragment();
     }
 
@@ -67,12 +59,13 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_done, container, false);
-        emptyTodoListTitle = myView.findViewById(R.id.fragment_done_empty_completedtask_list_title);
-        emptyTodoListText = myView.findViewById(R.id.fragment_done_empty_completedtask_list_text);
-        tabLayout = myView.findViewById(R.id.fragment_done_tabs);
+
+        emptyListLayout = myView.findViewById(R.id.fragment_done_layout_empty_list);
+        TabLayout tabLayout = myView.findViewById(R.id.fragment_done_tabs);
         updateFragmentContent(tabLayout.getSelectedTabPosition());
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -82,7 +75,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                // TODO
             }
 
             @Override
@@ -90,12 +83,12 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
             }
         });
-        // Inflate the layout for this fragment
+
         return myView;
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
@@ -104,7 +97,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         super.onDetach();
     }
 
-    public void updateFragmentContent(int position) {
+    private void updateFragmentContent(int position) {
         switch (position) {
             default:
             case ALL_COMPLETEDTASKS_POSITION:
@@ -139,7 +132,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     @Override
     public void onAllCompletedTasksListFragmentInteraction(CompletedTask completedTask) {
         Intent i = new Intent(getActivity(), CompletedTaskDetailActivity.class);
-        i.putExtra(EXTRA_COMPLETEDTASK_OBJECT, completedTask);
+        i.putExtra(CompletedTaskDetailActivity.EXTRA_COMPLETED_TASK_OBJECT, completedTask);
         startActivityForResult(i, DETAIL_COMPLETED_TASK_REQUEST_CODE);
     }
 
@@ -162,11 +155,9 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
         // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
         if (elements == 0) {
-            emptyTodoListTitle.setVisibility(View.VISIBLE);
-            emptyTodoListText.setVisibility(View.VISIBLE);
+            emptyListLayout.setVisibility(View.VISIBLE);
         } else {
-            emptyTodoListTitle.setVisibility(View.GONE);
-            emptyTodoListText.setVisibility(View.GONE);
+            emptyListLayout.setVisibility(View.GONE);
         }
     }
 }
