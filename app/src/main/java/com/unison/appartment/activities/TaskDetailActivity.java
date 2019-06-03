@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -67,13 +66,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
 
         textName.setText(task.getName());
         textPoints.setText(String.valueOf(task.getPoints()));
-        // Viene gestito il caso in cui la descrizione sia vuota
-        String shownDescription = task.getDescription();
-        if (shownDescription == null || shownDescription.isEmpty()) {
-            shownDescription = getString(R.string.general_no_description_available);
-            textDescription.setTypeface(null, Typeface.ITALIC);
-        }
-        textDescription.setText(shownDescription);
+        textDescription.setText(task.getDescription());
         textCreationDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(task.getCreationDate())));
 
         if (task.isAssigned()) {
