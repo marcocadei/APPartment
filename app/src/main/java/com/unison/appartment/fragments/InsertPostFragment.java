@@ -133,7 +133,7 @@ public class InsertPostFragment extends Fragment {
                         btnSendText.setEnabled(false);
                         btnSendImg.setEnabled(false);
                         // Scrivo nel campo di testo che è in corso la registrazione
-                        inputText.setText(getResources().getString(R.string.fragment_insert_post_text_recording));
+                        inputText.setText(R.string.fragment_insert_post_text_recording);
                         startRecording();
                     }
                 }

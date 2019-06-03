@@ -62,15 +62,15 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         TextView points = findViewById(R.id.activity_family_member_detail_text_points_value);
         TextView role = findViewById(R.id.activity_family_member_detail_text_role_value);
 
-        TextView earnedPoints = findViewById(R.id.activity_family_member_detail_total_points_earned_value);
-        TextView earnedMoney = findViewById(R.id.activity_family_member_detail_total_money_earned_value);
-        TextView publishedMessages = findViewById(R.id.activity_family_member_detail_total_published_messages_value);
-        TextView publishedImages = findViewById(R.id.activity_family_member_detail_total_published_images_value);
-        TextView publishedAudio = findViewById(R.id.activity_family_member_detail_total_published_audio_value);
-        TextView claimedRewards = findViewById(R.id.activity_family_member_detail_total_claimed_rewards_value);
-        TextView completedTasks = findViewById(R.id.activity_family_member_detail_total_completed_tasks_value);
-        TextView rejectedTasks = findViewById(R.id.activity_family_member_detail_total_rejected_tasks_value);
-        earnedPoints.setText(String.valueOf(member.getPoints()));
+        TextView earnedPoints = findViewById(R.id.activity_family_member_detail_text_total_points_value);
+        TextView earnedMoney = findViewById(R.id.activity_family_member_detail_text_earned_money_value);
+        TextView publishedMessages = findViewById(R.id.activity_family_member_detail_text_text_posts_value);
+        TextView publishedImages = findViewById(R.id.activity_family_member_detail_text_image_posts_value);
+        TextView publishedAudio = findViewById(R.id.activity_family_member_detail_text_audio_posts_value);
+        TextView claimedRewards = findViewById(R.id.activity_family_member_detail_text_claimed_rewards_value);
+        TextView completedTasks = findViewById(R.id.activity_family_member_detail_text_completed_tasks_value);
+        TextView rejectedTasks = findViewById(R.id.activity_family_member_detail_text_rejected_tasks_value);
+        earnedPoints.setText(String.valueOf(member.getTotalEarnedPoints()));
         earnedMoney.setText(String.valueOf(member.getEarnedMoney()));
         publishedMessages.setText(String.valueOf(member.getTextPosts()));
         publishedImages.setText(String.valueOf(member.getImagePosts()));

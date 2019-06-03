@@ -6,7 +6,7 @@
     <ImageView
         android:id="@+id/fragment_todo_img_check"
         style="@style/Component.ImageView.ListItemIcon"
-        android:contentDescription="@string/fragment_todo_img_check"
+        android:contentDescription="@string/caption_ic_check"
         android:src="@drawable/ic_check_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
