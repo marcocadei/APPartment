@@ -105,9 +105,9 @@ public class RewardDetailActivity extends AppCompatActivity {
             if (reward.isRequested()) {
                 btnReserve.setEnabled(false);
                 if (reward.getReservationId().equals(userId)) {
-                    btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_requested));
+                    btnReserve.setText(R.string.activity_reward_detail_btn_reserve_reward_requested);
                 } else {
-                    btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_unavailable));
+                    btnReserve.setText(R.string.activity_reward_detail_btn_reserve_reward_unavailable);
                 }
             } else {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +162,7 @@ public class RewardDetailActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                btnReserve.setText(getString(R.string.activity_reward_detail_btn_reserve_reward_available_masters));
+                btnReserve.setText(R.string.activity_reward_detail_btn_reserve_reward_available_masters);
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
