@@ -109,6 +109,12 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="Component.Layout.StatItem">
+        <item name="android:paddingEnd">@dimen/margin_large</item>
+        <item name="android:paddingStart">@dimen/margin_large</item>
+        <item name="android:paddingTop">@dimen/margin_small</item>
+    </style>
+
     <style name="Component.AppBarWithBackButton">
         <item name="android:fitsSystemWindows">true</item>
         <item name="liftOnScroll">false</item>
