@@ -167,10 +167,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // FIXME Aggiungere qui invocazione alla activity di settings
-            case R.id.activity_main_toolbar_settings:
-                // Log.d(this.getLocalClassName(), "Premuto ingraggio");
-                return true;
+            // FIXME Aggiungere gli altri pulsanti
 
             case R.id.activity_main_toolbar_profile: {
                 Intent i = new Intent(this, UserProfileActivity.class);
