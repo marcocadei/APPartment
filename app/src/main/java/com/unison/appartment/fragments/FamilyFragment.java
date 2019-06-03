@@ -23,8 +23,6 @@ import com.unison.appartment.model.User;
  */
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
 
-    public final static String EXTRA_MEMBER_OBJECT = "memberObject";
-
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
@@ -62,7 +60,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     @Override
     public void onFamilyMemberListFragmentOpenMember(HomeUser member) {
         Intent i = new Intent(getActivity(), FamilyMemberDetailActivity.class);
-        i.putExtra(EXTRA_MEMBER_OBJECT, member);
+        i.putExtra(FamilyMemberDetailActivity.EXTRA_MEMBER_OBJECT, member);
         startActivity(i);
     }
 

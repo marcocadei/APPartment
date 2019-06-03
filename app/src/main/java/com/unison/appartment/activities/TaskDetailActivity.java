@@ -30,6 +30,8 @@ import java.util.Date;
  */
 public class TaskDetailActivity extends AppCompatActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
 
+    public final static String EXTRA_TASK_OBJECT = "taskObject";
+
     private final static String BUNDLE_KEY_TASK = "task";
 
     private UncompletedTask task;
@@ -57,7 +59,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        task = (UncompletedTask) creationIntent.getSerializableExtra(TodoFragment.EXTRA_TASK_OBJECT);
+        task = (UncompletedTask) creationIntent.getSerializableExtra(EXTRA_TASK_OBJECT);
 
         TextView textName = findViewById(R.id.activity_task_detail_name);
         TextView textPoints = findViewById(R.id.activity_task_detail_points_value);

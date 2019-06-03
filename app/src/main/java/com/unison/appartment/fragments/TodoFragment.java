@@ -31,7 +31,6 @@ import com.unison.appartment.state.Appartment;
  */
 public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 
-    public final static String EXTRA_TASK_OBJECT = "taskObject";
     public final static String EXTRA_NEW_TASK = "newTask";
     public final static String EXTRA_TASK_ID = "taskId";
     public final static String EXTRA_USER_NAME = "userName";
@@ -154,7 +153,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     @Override
     public void onTodoListFragmentOpenTask(UncompletedTask uncompletedTask) {
         Intent i = new Intent(getActivity(), TaskDetailActivity.class);
-        i.putExtra(EXTRA_TASK_OBJECT, uncompletedTask);
+        i.putExtra(TaskDetailActivity.EXTRA_TASK_OBJECT, uncompletedTask);
         startActivityForResult(i, DETAIL_TASK_REQUEST_CODE);
     }
 

@@ -28,6 +28,8 @@ import com.unison.appartment.state.Appartment;
  */
 public class RewardDetailActivity extends AppCompatActivity {
 
+    public final static String EXTRA_REWARD_OBJECT = "rewardObject";
+
     private final static String BUNDLE_KEY_REWARD = "reward";
 
     private final static int EDIT_REWARD_REQUEST_CODE = 101;
@@ -61,7 +63,7 @@ public class RewardDetailActivity extends AppCompatActivity {
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        reward = (Reward) creationIntent.getSerializableExtra(RewardsFragment.EXTRA_REWARD_OBJECT);
+        reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
 
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);

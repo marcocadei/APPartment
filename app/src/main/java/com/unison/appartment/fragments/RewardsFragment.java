@@ -27,8 +27,6 @@ import com.unison.appartment.state.Appartment;
 
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
-    // FIXME poi probabilmente con la lettura dal db questo diventerà un REWARD_ID o REWARD_NAME
-    public final static String EXTRA_REWARD_OBJECT = "rewardObject";
     public final static String EXTRA_NEW_REWARD = "newReward";
     public final static String EXTRA_REWARD_ID = "rewardId";
     public final static String EXTRA_USER_NAME = "userName";
@@ -150,7 +148,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     @Override
     public void onRewardListFragmentInteraction(Reward item) {
         Intent i = new Intent(getActivity(), RewardDetailActivity.class);
-        i.putExtra(EXTRA_REWARD_OBJECT, item);
+        i.putExtra(RewardDetailActivity.EXTRA_REWARD_OBJECT, item);
         startActivityForResult(i, DETAIL_REWARD_REQUEST_CODE);
     }
 
