@@ -45,8 +45,7 @@ public class CompletionListFragment extends Fragment {
 
     @SuppressWarnings("unused")
     public static CompletionListFragment newInstance(int columnCount) {
-        CompletionListFragment fragment = new CompletionListFragment();
-        return fragment;
+        return new CompletionListFragment();
     }
 
     @Override

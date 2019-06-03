@@ -3,6 +3,7 @@ package com.unison.appartment.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -64,7 +65,7 @@ public class FamilyMemberListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_family_member_list, container, false);
 
@@ -93,7 +94,7 @@ public class FamilyMemberListFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof OnFamilyMemberListFragmentInteractionListener) {
             listener = (OnFamilyMemberListFragmentInteractionListener) getParentFragment();

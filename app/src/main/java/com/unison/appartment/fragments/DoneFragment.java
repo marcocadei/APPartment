@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -67,7 +68,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View myView = inflater.inflate(R.layout.fragment_done, container, false);
         emptyTodoListTitle = myView.findViewById(R.id.fragment_done_empty_completedtask_list_title);
@@ -95,7 +96,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

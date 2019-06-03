@@ -3,6 +3,7 @@ package com.unison.appartment.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -23,8 +24,8 @@ import com.unison.appartment.viewmodel.CompletedTaskViewModel;
 
 import java.util.List;
 
-
 public class AllCompletedTasksListFragment extends Fragment {
+
     // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
@@ -63,7 +64,7 @@ public class AllCompletedTasksListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completedtask_list, container, false);
 
@@ -94,7 +95,7 @@ public class AllCompletedTasksListFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof OnAllCompletedTasksListFragmentInteractionListener) {
             listener = (OnAllCompletedTasksListFragmentInteractionListener) getParentFragment();
