@@ -50,13 +50,16 @@ public class FamilyMemberListFragment extends Fragment {
     @SuppressWarnings("unused")
     public static FamilyMemberListFragment newInstance(int columnCount) {
         FamilyMemberListFragment fragment = new FamilyMemberListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Quando il fragment è creato recupero i parametri
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }

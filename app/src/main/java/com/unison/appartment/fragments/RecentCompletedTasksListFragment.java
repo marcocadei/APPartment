@@ -26,6 +26,7 @@ import java.util.List;
 
 
 public class RecentCompletedTasksListFragment extends Fragment {
+
     // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
@@ -56,10 +57,11 @@ public class RecentCompletedTasksListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Quando il fragment è creato recupero i parametri
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
         viewModel = ViewModelProviders.of(getActivity()).get(CompletedTaskViewModel.class);
     }
 

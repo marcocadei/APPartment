@@ -57,10 +57,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     public TodoFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static TodoFragment newInstance(String param1, String param2) {
-        TodoFragment fragment = new TodoFragment();
-        return fragment;
+    public static TodoFragment newInstance() {
+        return new TodoFragment();
     }
 
     @Override

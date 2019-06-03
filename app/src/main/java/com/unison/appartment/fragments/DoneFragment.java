@@ -35,9 +35,9 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     private final static int ALL_COMPLETEDTASKS_POSITION = 0;
     private final static int RECENT_COMPLETEDTASKS_POSITION = 1;
 
-    // Ultima voce selezionata nella bottom navigation
+    // Ultima voce selezionata nei tab
     private int lastPosition = ALL_COMPLETEDTASKS_POSITION;
-    // Voce attualmente selezionata nella bottom navigation
+    // Voce attualmente selezionata nei tab
     private int currentPosition = ALL_COMPLETEDTASKS_POSITION;
 
     // Questo ViewModel è necessario perché a partire da un'attività completata è possibile crearne
@@ -51,13 +51,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     public DoneFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment RewardsFragment.
-     */
-    public static DoneFragment newInstance(String param1, String param2) {
+    public static DoneFragment newInstance() {
        return new DoneFragment();
     }
 
@@ -83,7 +77,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                // TODO
             }
 
             @Override
@@ -105,7 +99,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         super.onDetach();
     }
 
-    public void updateFragmentContent(int position) {
+    private void updateFragmentContent(int position) {
         switch (position) {
             default:
             case ALL_COMPLETEDTASKS_POSITION:

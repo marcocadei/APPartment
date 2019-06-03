@@ -3,6 +3,7 @@ package com.unison.appartment.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -25,9 +26,7 @@ import java.util.List;
 
 public class CompletionListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
 
     private CompletionViewModel viewModel;
@@ -45,7 +44,11 @@ public class CompletionListFragment extends Fragment {
 
     @SuppressWarnings("unused")
     public static CompletionListFragment newInstance(int columnCount) {
-        return new CompletionListFragment();
+        CompletionListFragment fragment = new CompletionListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class CompletionListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completion_list, container, false);
 
@@ -91,7 +94,7 @@ public class CompletionListFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnCompletionListFragmentInteractionListener) {
             listener = (OnCompletionListFragmentInteractionListener) context;
@@ -106,7 +109,7 @@ public class CompletionListFragment extends Fragment {
         super.onDetach();
     }
 
-    public void readCompletions() {
+    private void readCompletions() {
         LiveData<List<Completion>> rewardLiveData = viewModel.getCompletionLiveData();
         rewardLiveData.observe(getViewLifecycleOwner(), new Observer<List<Completion>>() {
             @Override

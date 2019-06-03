@@ -33,8 +33,6 @@ public class UserHomeListFragment extends Fragment {
 
     private UserHomeViewModel viewModel;
 
-    private List<UserHome> userHomes;
-
     private ListAdapter myAdapter;
     private RecyclerView myRecyclerView;
 
@@ -46,7 +44,6 @@ public class UserHomeListFragment extends Fragment {
     public UserHomeListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static UserHomeListFragment newInstance(int columnCount) {
         UserHomeListFragment fragment = new UserHomeListFragment();
@@ -63,6 +60,7 @@ public class UserHomeListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
         viewModel = ViewModelProviders.of(getActivity()).get(UserHomeViewModel.class);
     }
 

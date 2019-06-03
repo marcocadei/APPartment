@@ -30,6 +30,7 @@ import java.util.List;
  * Fragment che rappresenta una lista di Post
  */
 public class PostListFragment extends Fragment {
+
     // Numero di colonne della lista
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
@@ -51,7 +52,6 @@ public class PostListFragment extends Fragment {
     @SuppressWarnings("unused")
     public static PostListFragment newInstance(int columnCount) {
         PostListFragment fragment = new PostListFragment();
-        // Parametri del fragment
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -61,10 +61,11 @@ public class PostListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Quando il fragment è creato recupero i parametri
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        
         viewModel = ViewModelProviders.of(getActivity()).get(PostViewModel.class);
     }
 

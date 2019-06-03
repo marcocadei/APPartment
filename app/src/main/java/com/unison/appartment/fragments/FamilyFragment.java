@@ -31,10 +31,8 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     public FamilyFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static FamilyFragment newInstance(String param1, String param2) {
-        FamilyFragment fragment = new FamilyFragment();
-        return fragment;
+    public static FamilyFragment newInstance() {
+        return new FamilyFragment();
     }
 
     @Override

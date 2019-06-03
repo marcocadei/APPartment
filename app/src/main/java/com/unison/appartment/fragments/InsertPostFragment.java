@@ -66,8 +66,7 @@ public class InsertPostFragment extends Fragment {
      * @return A new instance of fragment InsertPostFragment.
      */
     public static InsertPostFragment newInstance() {
-        InsertPostFragment fragment = new InsertPostFragment();
-        return fragment;
+        return new InsertPostFragment();
     }
 
     @Override

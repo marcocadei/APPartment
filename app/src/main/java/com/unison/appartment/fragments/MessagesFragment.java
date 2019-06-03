@@ -38,10 +38,8 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
     public MessagesFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
     public static MessagesFragment newInstance() {
-        MessagesFragment fragment = new MessagesFragment();
-        return fragment;
+        return new MessagesFragment();
     }
 
     @Override

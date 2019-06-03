@@ -56,10 +56,11 @@ public class AllCompletedTasksListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Quando il fragment è creato recupero i parametri
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
         viewModel = ViewModelProviders.of(getActivity()).get(CompletedTaskViewModel.class);
     }
 
