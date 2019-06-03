@@ -46,7 +46,15 @@
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
     <string name="desc_homes_homename_password_repeat">Ripeti password della casa</string>
+    <string name="desc_homeusers_homename_uid_audioposts">Messaggi vocali pubblicati</string>
+    <string name="desc_homeusers_homename_uid_claimedrewards">Premi ottenuti</string>
+    <string name="desc_homeusers_homename_uid_completedtasks">Attività completate</string>
+    <string name="desc_homeusers_homename_uid_earnedmoney">Soldi guadagnati</string>
+    <string name="desc_homeusers_homename_uid_imageposts">Immagini pubblicate</string>
     <string name="desc_homeusers_homename_uid_nickname">Nickname</string>
+    <string name="desc_homeusers_homename_uid_rejectedtasks">Attività rifiutate</string>
+    <string name="desc_homeusers_homename_uid_textposts">Messaggi testuali pubblicati</string>
+    <string name="desc_homeusers_homename_uid_totalearnedpoints">Punti totali guadagnati</string>
     <string name="desc_rewards_homename_rewardid_description">Descrizione</string>
     <string name="desc_rewards_homename_rewardid_name">Nome</string>
     <string name="desc_rewards_homename_rewardid_points">Punti</string>
@@ -82,16 +90,23 @@
     <string name="caption_app_logo">Logo di APPartment</string>
     <string name="caption_ic_account_circle">Icona di un utente generico</string>
     <string name="caption_ic_arrow">Icona di una freccia</string>
+    <string name="caption_ic_attach_money">Simbolo del dollaro</string>
+    <string name="caption_ic_audiotrack">Icona di una nota musicale</string>
     <string name="caption_ic_card_giftcard">Icona di un premio</string>
-    <string name="caption_ic_check">Icona di un segno di spunta</string>
+    <string name="caption_ic_check">Simbolo di spunta</string>
+    <string name="caption_ic_clear">Icona di una croce</string>
     <string name="caption_ic_home">Icona di una casa</string>
     <string name="caption_ic_hourglass">Icona di una clessidra</string>
+    <string name="caption_ic_message">Icona di un messaggio di testo</string>
     <string name="caption_ic_person_add">Icona di nuovo utente</string>
+    <string name="caption_ic_photo">Icona di un\'immagine generica</string>
     <string name="caption_ic_play_arrow">Simbolo di play</string>
+    <string name="caption_ic_star">Icona di una stella</string>
     <string name="caption_profile_pic">Foto profilo dell\'utente</string>
 
     <!-- Legate ad una specifica activity -->
 
+    <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
     <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
@@ -107,7 +122,7 @@
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
     <string name="activity_family_member_detail_points_name">Punti:</string>
-    <string name="activity_family_member_detail_text_achievement_title">Obiettivi raggiunti</string>
+    <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_image_detail_img">Immagine del post aperta</string>
     <string name="activity_join_home_progress_check_description">Per favore attendi, è in corso la verifica delle credenziali</string>
@@ -197,23 +212,10 @@
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
-    <string name="fragment_todo_empty_todo_list">Non c\'é nessuna attivita da svolgere!</string>
-    <string name="fragment_todo_empty_todo_list_title">Non c\'é nulla qui :(</string>
-    <string name="fragment_todo_img_check">Simbolo di spunta</string>
-    <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
-
+    <string name="activity_family_member_detail_role_name">Ruolo:</string>
     <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
     <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
-    <string name="activity_family_member_detail_role_name">Ruolo:</string>
-    <string name="activity_family_member_detail_total_points_earned_label">Punti guadagnati:</string>
-    <string name="activity_family_member_detail_total_money_earned_label">Soldi guadagnati:</string>
-    <string name="activity_family_member_detail_total_published_messages_label">Messaggi pubblicati:</string>
-    <string name="activity_family_member_detail_total_published_images_label">Immagini pubblicate:</string>
-    <string name="activity_family_member_detail_total_published_audio_label">Audio pubblicati:</string>
-    <string name="activity_family_member_detail_total_claimed_rewards_label">Premi ottenuti:</string>
-    <string name="activity_family_member_detail_total_completed_tasks_label">Attività completate:</string>
-    <string name="activity_family_member_detail_total_rejected_tasks_label">Attività rifiutate:</string>
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
