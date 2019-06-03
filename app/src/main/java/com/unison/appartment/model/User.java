@@ -2,6 +2,7 @@ package com.unison.appartment.model;
 
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.Exclude;
 import com.unison.appartment.R;
 import com.unison.appartment.state.MyApplication;
 import com.unison.appartment.utils.DateUtils;
@@ -99,6 +100,7 @@ public class User implements Serializable {
         this.image = image;
     }
 
+    @Exclude
     public String getGenderString() {
         String[] genderValues = MyApplication.getAppContext().getResources().getStringArray(R.array.desc_users_uid_gender_values);
         return genderValues[this.getGender()];
