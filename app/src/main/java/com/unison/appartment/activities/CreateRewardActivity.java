@@ -109,6 +109,7 @@ public class CreateRewardActivity extends FormActivity {
         resetErrorMessage(layoutPoints);
 
         inputName.setText(inputName.getText().toString().trim());
+        inputDescription.setText(inputDescription.getText().toString().trim());
 
         String nameValue = inputName.getText().toString();
         String descriptionValue = inputDescription.getText().toString();
