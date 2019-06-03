@@ -201,7 +201,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="activity_completed_task_detail_btn_create_task">Crea</string>
+    <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
     <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
     <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
