@@ -48,8 +48,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     private static final int ADD_TASK_REQUEST_CODE = 1;
     private static final int DETAIL_TASK_REQUEST_CODE = 2;
 
-    private TextView emptyTodoListTitle;
-    private TextView emptyTodoListText;
+    private View emptyListLayout;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -72,8 +71,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_todo, container, false);
 
-        emptyTodoListTitle = myView.findViewById(R.id.fragment_todo_empty_todo_list_title);
-        emptyTodoListText = myView.findViewById(R.id.fragment_todo_empty_todo_list_text);
+        emptyListLayout = myView.findViewById(R.id.fragment_todo_layout_empty_list);
 
         final FloatingActionButton floatAddTask = myView.findViewById(R.id.fragment_todo_float_add_task);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
@@ -169,11 +167,9 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
 
         // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
         if (elements == 0) {
-            emptyTodoListTitle.setVisibility(View.VISIBLE);
-            emptyTodoListText.setVisibility(View.VISIBLE);
+            emptyListLayout.setVisibility(View.VISIBLE);
         } else {
-            emptyTodoListTitle.setVisibility(View.GONE);
-            emptyTodoListText.setVisibility(View.GONE);
+            emptyListLayout.setVisibility(View.GONE);
         }
     }
 }

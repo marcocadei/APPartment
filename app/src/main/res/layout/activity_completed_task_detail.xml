@@ -159,13 +159,33 @@
                 android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:textSize="@dimen/text_extra_large"
-                app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detal_fragment_completion_list"
+                app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_layout_empty_list"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_layout_profile" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_completed_task_detail_layout_empty_list"
+                app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_text_completions_title"
+                app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_fragment_completion_list"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                style="@style/Component.Layout.NestedScrollViewFixedElement">
+
+                <TextView
+                    android:id="@+id/activity_completed_task_detail_empty_list_text"
+                    style="@style/Component.TextView.MultiLine.EmptyListAdditionalText"
+                    android:text="@string/activity_completed_task_detail_empty_list_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/activity_completed_task_detal_fragment_completion_list"
+                android:id="@+id/activity_completed_task_detail_fragment_completion_list"
                 android:name="com.unison.appartment.fragments.CompletionListFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -173,7 +193,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_completed_task_detail_text_completions_title"
+                app:layout_constraintTop_toBottomOf="@+id/activity_completed_task_detail_layout_empty_list"
                 tools:layout="@layout/fragment_completion_list" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

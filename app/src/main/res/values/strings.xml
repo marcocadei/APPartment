@@ -11,10 +11,11 @@
 
     <string name="app_name">APPartment</string>
 
-    <string name="general_points_name">Punti</string>
+    <string name="general_empty_list">Non c\'è nulla qui :(</string>
     <string name="general_members_name">Membri</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
     <string name="general_ok_button">OK</string>
+    <string name="general_points_name">Punti</string>
 
     <plurals name="general_item_selected">
         <item quantity="one">%d elemento selezionato</item>
@@ -58,10 +59,10 @@
     <string name="desc_users_uid_age">Età</string>
     <string name="desc_users_uid_birthdate">Data di nascita</string>
     <string name="desc_users_uid_email">Email</string>
-    <string name="desc_users_uid_name">Nickname</string>
     <string name="desc_users_uid_gender">Genere</string>
     <string name="desc_users_uid_gender_value_female">Femmina</string>
     <string name="desc_users_uid_gender_value_male">Maschio</string>
+    <string name="desc_users_uid_name">Nickname</string>
     <string name="desc_users_uid_password">Password</string>
     <string name="desc_users_uid_password_repeat">Ripeti password</string>
 
@@ -82,15 +83,17 @@
     <string name="caption_ic_account_circle">Icona di un utente generico</string>
     <string name="caption_ic_arrow">Icona di una freccia</string>
     <string name="caption_ic_card_giftcard">Icona di un premio</string>
+    <string name="caption_ic_check">Icona di un segno di spunta</string>
     <string name="caption_ic_home">Icona di una casa</string>
     <string name="caption_ic_hourglass">Icona di una clessidra</string>
     <string name="caption_ic_person_add">Icona di nuovo utente</string>
     <string name="caption_ic_play_arrow">Simbolo di play</string>
-    <string name="caption_ic_check">Icona di un segno di spunta</string>
     <string name="caption_profile_pic">Foto profilo dell\'utente</string>
 
     <!-- Legate ad una specifica activity -->
 
+    <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
+    <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
     <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
     <string name="activity_create_home_progress_title">Creazione casa</string>
     <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
@@ -150,7 +153,7 @@
     <string name="activity_task_detail_title">Dettaglio attività</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
-    <string name="activity_user_profile_empty_homes_list">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
+    <string name="activity_user_profile_empty_list_text">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
     <string name="activity_user_profile_progress_description">Recupero dati casa in corso</string>
     <string name="activity_user_profile_progress_title">Accesso</string>
     <string name="activity_user_profile_text_homelist_title">Le mie case</string>
@@ -160,6 +163,11 @@
     <string name="dialog_firebase_error_message" tools:ignore="Typos">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
+    <string name="fragment_done_empty_completedtask_list_text">Non c\'é nessuna attivita completata!</string>
+    <string name="fragment_done_empty_completedtask_list_title">Non c\'é nulla qui :(</string>
+    <string name="fragment_done_empty_list_text">Nessuna attività completata registrata.</string>
+    <string name="fragment_done_tab_all">TUTTE</string>
+    <string name="fragment_done_tab_recent">RECENTI</string>
     <string name="fragment_image_post_img">Immagine del post</string>
     <string name="fragment_insert_post_btn_audio_suggestion">Tieni premuto il bottone e poi rilascialo per registrare un audio</string>
     <string name="fragment_insert_post_hint_post">Testo del messaggio</string>
@@ -167,7 +175,7 @@
     <string name="fragment_insert_post_img_send_img_description">Bottone di invio immagine</string>
     <string name="fragment_insert_post_img_send_text_description">Bottone di invio testo</string>
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
-    <string name="fragment_messages_empty_homes_list">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
+    <string name="fragment_messages_empty_list_text">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
     <string name="fragment_messages_post_options_delete">Elimina</string>
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
@@ -178,6 +186,8 @@
     <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
     <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
     <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
+    <string name="fragment_rewards_empty_list_text">Attualmente non ci sono premi disponibili.</string>
+    <string name="fragment_todo_empty_list_text">Non c\'è nessuna attività da svolgere.</string>
     <string name="fragment_todo_text_assigned_user">Assegnato a: %1$s</string>
     <string name="fragment_todo_text_assigned_user_self">Assegnato a: me stesso</string>
     <string name="fragment_todo_text_status_pending_row_1">Attesa</string>
@@ -185,22 +195,12 @@
     <string name="fragment_todo_text_status_requested_row_1">Conferma</string>
     <string name="fragment_todo_text_status_requested_row_2">richiesta</string>
     <string name="fragment_userpicker_text_title">Membri della casa</string>
-    <string name="fragment_done_tab_all">TUTTE</string>
-    <string name="fragment_done_tab_recent">RECENTI</string>
-    <string name="fragment_done_empty_completedtask_list_title">Non c\'é nulla qui :(</string>
-    <string name="fragment_done_empty_completedtask_list_text">Non c\'é nessuna attivita completata!</string>
-    <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
 
     <!-- FIXME ancora da riallineare -->
     <string name="fragment_todo_empty_todo_list">Non c\'é nessuna attivita da svolgere!</string>
     <string name="fragment_todo_empty_todo_list_title">Non c\'é nulla qui :(</string>
     <string name="fragment_todo_img_check">Simbolo di spunta</string>
 
-    <!-- TODO rimuovere -->
-    <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="activity_completed_task_detail_btn_create_task">Crea</string>
     <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
     <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
@@ -214,5 +214,8 @@
     <string name="activity_family_member_detail_total_claimed_rewards_label">Premi ottenuti:</string>
     <string name="activity_family_member_detail_total_completed_tasks_label">Attività completate:</string>
     <string name="activity_family_member_detail_total_rejected_tasks_label">Attività rifiutate:</string>
+
+    <!-- TODO rimuovere -->
+    <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
 
 </resources>

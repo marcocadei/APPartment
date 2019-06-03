@@ -30,11 +30,31 @@
         android:name="com.unison.appartment.fragments.MoneyRewardFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/fragment_rewards_fragment_reward_list"
+        app:layout_constraintBottom_toTopOf="@id/fragment_rewards_layout_empty_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_rewards_progress_container"
         tools:layout="@layout/fragment_money_reward" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_rewards_layout_empty_list"
+        app:layout_constraintTop_toBottomOf="@id/fragment_rewards_fragment_money_reward"
+        app:layout_constraintBottom_toTopOf="@id/fragment_rewards_fragment_reward_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        style="@style/Component.Layout.NestedScrollViewFixedElement">
+
+        <TextView
+            android:id="@+id/fragment_rewards_empty_list_text"
+            style="@style/Component.TextView.MultiLine.EmptyListAdditionalText"
+            android:text="@string/fragment_rewards_empty_list_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <fragment
         android:id="@+id/fragment_rewards_fragment_reward_list"
@@ -44,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_rewards_fragment_money_reward"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_rewards_layout_empty_list"
         tools:layout="@layout/fragment_reward_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

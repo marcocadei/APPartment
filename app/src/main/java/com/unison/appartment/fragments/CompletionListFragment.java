@@ -115,7 +115,7 @@ public class CompletionListFragment extends Fragment {
             @Override
             public void onChanged(List<Completion> completions) {
                 myAdapter.submitList(completions);
-                listener.onRewardListElementsLoaded(completions.size());
+                listener.onCompletionListElementsLoaded(completions.size());
             }
         });
     }
@@ -126,6 +126,6 @@ public class CompletionListFragment extends Fragment {
      * che a sua volta può comunicare con altri fragment
      */
     public interface OnCompletionListFragmentInteractionListener {
-        void onRewardListElementsLoaded(long elements);
+        void onCompletionListElementsLoaded(long elements);
     }
 }

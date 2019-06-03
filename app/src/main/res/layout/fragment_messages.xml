@@ -48,14 +48,12 @@
 
         <TextView
             android:id="@+id/fragment_messages_empty_list_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_messages_empty_homes_list"
+            style="@style/Component.TextView.MultiLine.EmptyListAdditionalText"
+            android:text="@string/fragment_messages_empty_list_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -29,9 +29,6 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     public final static String EXTRA_COMPLETEDTASK_OBJECT = "completedTaskObject";
     private static final int DETAIL_COMPLETED_TASK_REQUEST_CODE = 1;
 
-    private TextView emptyTodoListTitle;
-    private TextView emptyTodoListText;
-    private TabLayout tabLayout;
     private final static int ALL_COMPLETEDTASKS_POSITION = 0;
     private final static int RECENT_COMPLETEDTASKS_POSITION = 1;
 
@@ -40,10 +37,11 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     // Voce attualmente selezionata nei tab
     private int currentPosition = ALL_COMPLETEDTASKS_POSITION;
 
+    private View emptyListLayout;
+
     // Questo ViewModel è necessario perché a partire da un'attività completata è possibile crearne
     // una nuova
     private TodoTaskViewModel viewModel;
-
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -64,10 +62,11 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_done, container, false);
-        emptyTodoListTitle = myView.findViewById(R.id.fragment_done_empty_completedtask_list_title);
-        emptyTodoListText = myView.findViewById(R.id.fragment_done_empty_completedtask_list_text);
-        tabLayout = myView.findViewById(R.id.fragment_done_tabs);
+
+        emptyListLayout = myView.findViewById(R.id.fragment_done_layout_empty_list);
+        TabLayout tabLayout = myView.findViewById(R.id.fragment_done_tabs);
         updateFragmentContent(tabLayout.getSelectedTabPosition());
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -85,7 +84,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
             }
         });
-        // Inflate the layout for this fragment
+
         return myView;
     }
 
@@ -157,11 +156,9 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
         // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
         if (elements == 0) {
-            emptyTodoListTitle.setVisibility(View.VISIBLE);
-            emptyTodoListText.setVisibility(View.VISIBLE);
+            emptyListLayout.setVisibility(View.VISIBLE);
         } else {
-            emptyTodoListTitle.setVisibility(View.GONE);
-            emptyTodoListText.setVisibility(View.GONE);
+            emptyListLayout.setVisibility(View.GONE);
         }
     }
 }

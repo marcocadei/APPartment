@@ -243,6 +243,21 @@
         <item name="android:drawablePadding">@dimen/margin_small</item>
     </style>
 
+    <style name="Component.TextView.MultiLine.EmptyListTitle">
+        <item name="android:gravity">top</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="layout_constraintVertical_bias">0</item>
+        <item name="android:text">@string/general_empty_list</item>
+        <item name="android:textSize">@dimen/text_title</item>
+    </style>
+
+    <style name="Component.TextView.MultiLine.EmptyListAdditionalText">
+        <item name="android:gravity">top</item>
+        <item name="layout_constraintVertical_bias">0</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
     <style name="Component.Button">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>

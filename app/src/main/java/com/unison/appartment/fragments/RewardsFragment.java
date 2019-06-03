@@ -42,6 +42,8 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     private static final int ADD_REWARD_REQUEST_CODE = 1;
     private static final int DETAIL_REWARD_REQUEST_CODE = 2;
 
+    private View emptyListLayout;
+
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
@@ -68,6 +70,8 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
+
+        emptyListLayout = view.findViewById(R.id.fragment_rewards_layout_empty_list);
 
         FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
@@ -156,6 +160,13 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
         // progress bar deve interrompersi
         ProgressBar progressBar = getView().findViewById(R.id.fragment_rewards_progress);
         progressBar.setVisibility(View.GONE);
+
+        // Se gli elementi sono 0 allora mostro un testo che lo indichi all'utente
+        if (elements == 0) {
+            emptyListLayout.setVisibility(View.VISIBLE);
+        } else {
+            emptyListLayout.setVisibility(View.GONE);
+        }
     }
 
 }
