@@ -37,6 +37,8 @@ import com.unison.appartment.utils.DateUtils;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.User;
+
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -126,10 +128,10 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 Glide.with(imgPhoto.getContext()).load(selectedImage).apply(RequestOptions.circleCropTransform()).into(imgPhoto);
                 imgPhoto.setVisibility(View.VISIBLE);
             }
-            /* Il "+1" serve perchè gli indice dei bottoni del RadioGroup sono 1 e 2, non 0 e 1
+            /*
+                Il "+1" serve perchè gli indice dei bottoni del RadioGroup sono 1 e 2, non 0 e 1
                 in quanto c'è anche il titolo al suo interno (che ha indice 0)
             */
-
             inputGender.check(inputGender.getChildAt(user.getGender() + 1).getId());
         }
 
@@ -195,7 +197,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                             getString(R.string.activity_signup_signup_description));
                     progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
-                    newUser = createUser();
+                    newUser = createUser(user);
                     // Salvataggio delle informazioni in Auth
                     auth.signUp(newUser, authListener);
                 }
@@ -318,8 +320,10 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         return result;
     }
 
-    private User createUser() {
+    private User createUser(final User oldUser) {
         // Precondizione: Tutti i campi della form sono corretti
+
+        User newUser;
 
         // Recupero i valori dei campi della form
         String email = inputEmail.getText().toString();
@@ -336,7 +340,17 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 break;
         }
 
-        return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
+        // Se sto modificando lo user allora ho anche il campo id, che voglio mantenere uguale
+        if (oldUser != null) {
+            newUser = new User(oldUser.getId(), email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
+        } else {
+            newUser = new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
+        }
+
+        Intent i = new Intent();
+        i.putExtra(UserProfileActivity.EXTRA_NEW_USER, newUser);
+        setResult(Activity.RESULT_OK, i);
+        finish();
     }
 
     @Override

@@ -48,6 +48,7 @@ import java.util.Map;
 public class UserProfileActivity extends ActivityWithDialogs implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
     private final static int EDIT_USER_REQUEST_CODE = 101;
+    public final static String EXTRA_NEW_USER = "newUser";
 
     private Auth auth;
     private DatabaseReader databaseReader;
