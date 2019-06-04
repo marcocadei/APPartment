@@ -47,12 +47,16 @@ import java.util.Map;
  */
 public class UserProfileActivity extends ActivityWithDialogs implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
+    private final static int EDIT_USER_REQUEST_CODE = 101;
+
     private Auth auth;
     private DatabaseReader databaseReader;
 
     private View emptyListLayout;
     private TransitionImageView imgProfile;
     private ImageView imgDefault;
+
+    private User currentUser = Appartment.getInstance().getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         TextView textAge = findViewById(R.id.activity_user_profile_text_age_value);
 
         // Carico i dati dell'utente loggato
-        final User currentUser = Appartment.getInstance().getUser();
+        //currentUser = Appartment.getInstance().getUser();
         textName.setText(currentUser.getName());
         textEmail.setText(currentUser.getEmail());
         textGender.setText(currentUser.getGenderString());
@@ -153,10 +157,16 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
             case R.id.activity_user_profile_toolbar_logout:
                 // FIXME da cambiare usando la nostra FirebaseAuth
                 com.google.firebase.auth.FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(this, EnterActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                Intent i1 = new Intent(this, EnterActivity.class);
+                i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i1);
                 finish();
+                return true;
+
+            case R.id.activity_user_profile_toolbar_edit:
+                Intent i2 = new Intent(this, SignUpActivity.class);
+                i2.putExtra(SignUpActivity.EXTRA_USER_DATA, currentUser);
+                startActivityForResult(i2, EDIT_USER_REQUEST_CODE);
                 return true;
 
             default:
