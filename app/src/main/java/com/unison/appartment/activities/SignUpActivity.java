@@ -120,8 +120,11 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
             inputPassword.setEnabled(false);
             inputRepeatPassword.setText(user.getPassword());
             inputRepeatPassword.setEnabled(false);
-            // TODO bel formato per la data
-            inputBirthdate.setText(user.getBirthdate());
+            try {
+                inputBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(user.getBirthdate())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             inputNickname.setText(user.getName());
             if(user.getImage() != null) {
                 selectedImage = user.getImage();
