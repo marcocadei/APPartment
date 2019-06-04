@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -54,6 +55,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
 
     private final static int MIN_USER_PASSWORD_LENGTH = 6;
 
+    public final static String EXTRA_USER_DATA = "userData";
+
     private Date birthdate;
     private String selectedImage;
     // Utente che verrà creato in questa activity
@@ -62,6 +65,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private Auth auth;
     private DatabaseWriter databaseWriter;
 
+    private TextView txtTitle;
+    private ImageView imgTitle;
     private EditText inputEmail;
     private EditText inputPassword;
     private EditText inputRepeatPassword;
@@ -85,6 +90,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         auth = new FirebaseAuth();
         databaseWriter = new FirebaseDatabaseWriter();
 
+        txtTitle = findViewById(R.id.activity_signup_text_title);
+        imgTitle = findViewById(R.id.activity_signup_img_title);
         inputEmail = findViewById(R.id.activity_signup_input_email_value);
         inputPassword = findViewById(R.id.activity_signup_input_password_value);
         inputRepeatPassword = findViewById(R.id.activity_signup_input_repeat_password_value);
@@ -97,6 +104,34 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         layoutBirthdate = findViewById(R.id.activity_signup_input_birthdate);
         layoutNickname = findViewById(R.id.activity_signup_input_nickname);
         imgPhoto = findViewById(R.id.activity_signup_img_photo);
+
+        Intent i = getIntent();
+        final User user = (User) i.getSerializableExtra(EXTRA_USER_DATA);
+        if (user != null) {
+            // Imposto il titolo opportunamente se devo modificare e non creare un utente
+            // toolbar.setTitle(R.string.activity_create_reward_title_edit);
+            txtTitle.setText(R.string.activity_signup_title_edit);
+            imgTitle.setImageResource(R.drawable.ic_person);
+            inputEmail.setText(user.getEmail()); // Rendere immodificabile
+            inputEmail.setEnabled(false);
+            inputPassword.setText(user.getPassword());
+            inputPassword.setEnabled(false);
+            inputRepeatPassword.setText(user.getPassword());
+            inputRepeatPassword.setEnabled(false);
+            // TODO bel formato per la data
+            inputBirthdate.setText(user.getBirthdate());
+            inputNickname.setText(user.getName());
+            if(user.getImage() != null) {
+                selectedImage = user.getImage();
+                Glide.with(imgPhoto.getContext()).load(selectedImage).apply(RequestOptions.circleCropTransform()).into(imgPhoto);
+                imgPhoto.setVisibility(View.VISIBLE);
+            }
+            /* Il "+1" serve perchè gli indice dei bottoni del RadioGroup sono 1 e 2, non 0 e 1
+                in quanto c'è anche il titolo al suo interno (che ha indice 0)
+            */
+
+            inputGender.check(inputGender.getChildAt(user.getGender() + 1).getId());
+        }
 
         /*
         I listener sono duplicati anche se fanno la stessa cosa poiché la view che prende il focus
