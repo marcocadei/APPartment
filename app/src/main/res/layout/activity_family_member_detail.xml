@@ -37,11 +37,13 @@
                 app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_achievement_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/margin_small"
                 style="@style/Component.Layout.NestedScrollViewFixedElement">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/activity_family_member_detail_layout_header"
                     style="@style/Component.Layout.Header"
+                    android:layout_marginBottom="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
