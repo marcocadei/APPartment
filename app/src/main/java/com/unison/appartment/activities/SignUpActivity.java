@@ -2,6 +2,7 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -106,21 +108,44 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         layoutBirthdate = findViewById(R.id.activity_signup_input_birthdate);
         layoutNickname = findViewById(R.id.activity_signup_input_nickname);
         imgPhoto = findViewById(R.id.activity_signup_img_photo);
+        FloatingActionButton floatFinish = findViewById(R.id.activity_signup_float_finish);
 
         Intent i = getIntent();
         final User user = (User) i.getSerializableExtra(EXTRA_USER_DATA);
         if (user != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un utente
             txtTitle.setText(R.string.activity_signup_title_edit);
-            imgTitle.setImageResource(R.drawable.ic_person);
+            imgTitle.setImageDrawable(getDrawable(R.drawable.ic_person));
+
+            /*
+            Visualizzazione della toolbar (che normalmente in questa activity non è presente) ed
+            impostazione del comportamento della freccia presente sulla toolbar
+            (alla pressione l'activity viene terminata).
+             */
+            AppBarLayout appbar = findViewById(R.id.activity_signup_appbar);
+            appbar.setVisibility(View.VISIBLE);
+            Toolbar toolbar = findViewById(R.id.activity_signup_toolbar);
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+            /*
+            Nota: I campi non visualizzati vengono riempiti ugualmente con il valore corretto per
+            assicurare che i controlli sulla form eseguiti in checkInput diano esito positivo.
+             */
             inputEmail.setText(user.getEmail());
-            inputEmail.setEnabled(false);
+            layoutEmail.setVisibility(View.GONE);
             inputPassword.setText(user.getPassword());
-            inputPassword.setEnabled(false);
+            layoutPassword.setVisibility(View.GONE);
             inputRepeatPassword.setText(user.getPassword());
-            inputRepeatPassword.setEnabled(false);
+            layoutRepeatPassword.setVisibility(View.GONE);
             try {
-                inputBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(user.getBirthdate())));
+                birthdate = DateUtils.parseDateWithStandardLocale(user.getBirthdate());
+                inputBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(birthdate));
             } catch (ParseException e) {
                 /*
                 Questa eccezione non si può mai verificare se si assume che nel database la data è
@@ -139,6 +164,47 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 in quanto c'è anche il titolo al suo interno (che ha indice 0)
             */
             inputGender.check(inputGender.getChildAt(user.getGender() + 1).getId());
+
+            floatFinish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    KeyboardUtils.hideKeyboard(SignUpActivity.this);
+                    if (checkInput()) {
+                        progressDialog = FirebaseProgressDialogFragment.newInstance(
+                                getString(R.string.activity_signup_edit_title),
+                                getString(R.string.activity_signup_edit_description));
+                        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+
+                        /*
+                        Qui si utilizza la stessa funzione createUser definita per la creazione del
+                        nuovo oggetto User in fase di registrazione, che funziona come previsto in
+                        quanto anche i campi nascosti all'utente sono popolati con il loro valore
+                        corretto.
+                         */
+                        newUser = createUser();
+                        // Scrittura dei nuovi dati nel db
+                        databaseWriter.writeUser(newUser, auth.getCurrentUserUid(), dbUserEditWriterListener);
+                    }
+                }
+            });
+        }
+        else {
+            floatFinish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    KeyboardUtils.hideKeyboard(SignUpActivity.this);
+                    if (checkInput()) {
+                        progressDialog = FirebaseProgressDialogFragment.newInstance(
+                                getString(R.string.activity_signup_signup_title),
+                                getString(R.string.activity_signup_signup_description));
+                        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+
+                        newUser = createUser();
+                        // Salvataggio delle informazioni in Auth
+                        auth.signUp(newUser, authListener);
+                    }
+                }
+            });
         }
 
         /*
@@ -189,24 +255,6 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"),
                         RESULT_LOAD_IMAGE);
-            }
-        });
-
-        FloatingActionButton floatFinish = findViewById(R.id.activity_signup_float_finish);
-        floatFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                KeyboardUtils.hideKeyboard(SignUpActivity.this);
-                if (checkInput()) {
-                    progressDialog = FirebaseProgressDialogFragment.newInstance(
-                            getString(R.string.activity_signup_signup_title),
-                            getString(R.string.activity_signup_signup_description));
-                    progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
-
-                    newUser = createUser();
-                    // Salvataggio delle informazioni in Auth
-                    auth.signUp(newUser, authListener);
-                }
             }
         });
 
@@ -345,11 +393,6 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         }
 
         return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
-
-//        Intent i = new Intent();
-//        i.putExtra(UserProfileActivity.EXTRA_NEW_USER, newUser);
-//        setResult(Activity.RESULT_OK, i);
-//        finish();
     }
 
     @Override
@@ -379,8 +422,33 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         DatePickerFragment.newInstance(year, month, day, this).show(getSupportFragmentManager(), DatePickerFragment.TAG_DATE_PICKER);
     }
 
+    // Listener processo di aggiornamento di un utente già esistente
+    final DatabaseWriterListener dbUserEditWriterListener = new DatabaseWriterListener() {
+        @Override
+        public void onWriteSuccess() {
+            Appartment.getInstance().setUser(newUser);
+            Intent i = new Intent();
+            i.putExtra(UserProfileActivity.EXTRA_NEW_USER, newUser);
+            setResult(Activity.RESULT_OK, i);
+            finish();
+            dismissProgress();
+        }
+
+        @Override
+        public void onWriteFail(Exception exception) {
+            try {
+                throw exception;
+            } catch (Exception e) {
+                // (DatabaseException se si verifica una violazione delle regole di sicurezza)
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
+
     // Listener processo di scrittura nel database del nuovo utente
-    final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {
+    final DatabaseWriterListener dbNewUserWriterListener = new DatabaseWriterListener() {
         @Override
         public void onWriteSuccess() {
             Appartment.getInstance().setUser(newUser);
@@ -405,7 +473,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     final AuthListener authListener =  new AuthListener() {
         @Override
         public void onSuccess() {
-            databaseWriter.writeUser(newUser, auth.getCurrentUserUid(), databaseWriterListener);
+            databaseWriter.writeUser(newUser, auth.getCurrentUserUid(), dbNewUserWriterListener);
         }
 
         @Override

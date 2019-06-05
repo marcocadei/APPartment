@@ -1,10 +1,12 @@
 package com.unison.appartment.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
@@ -56,8 +58,10 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private View emptyListLayout;
     private TransitionImageView imgProfile;
     private ImageView imgDefault;
-
-    private User currentUser;
+    private TextView textName;
+    private TextView textGender;
+    private TextView textBirthdate;
+    private TextView textAge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,16 +86,17 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         emptyListLayout = findViewById(R.id.activity_user_profile_layout_empty_list);
         imgProfile = findViewById(R.id.activity_user_profile_img_profile);
         imgDefault = findViewById(R.id.activity_user_profile_img_profile_default);
-        TextView textName = findViewById(R.id.activity_user_profile_text_name);
+        textName = findViewById(R.id.activity_user_profile_text_name);
+        textGender = findViewById(R.id.activity_user_profile_text_gender_value);
+        textBirthdate = findViewById(R.id.activity_user_profile_text_birthdate_value);
+        textAge = findViewById(R.id.activity_user_profile_text_age_value);
         TextView textEmail = findViewById(R.id.activity_user_profile_text_email);
-        TextView textGender = findViewById(R.id.activity_user_profile_text_gender_value);
-        TextView textBirthdate = findViewById(R.id.activity_user_profile_text_birthdate_value);
-        TextView textAge = findViewById(R.id.activity_user_profile_text_age_value);
 
         // Carico i dati dell'utente loggato
-        currentUser = Appartment.getInstance().getUser();
-        textName.setText(currentUser.getName());
+        final User currentUser = Appartment.getInstance().getUser();
+
         textEmail.setText(currentUser.getEmail());
+        textName.setText(currentUser.getName());
         textGender.setText(currentUser.getGenderString());
         try {
             String standardBirthDate = currentUser.getBirthdate();
@@ -107,23 +112,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         }
 
         if (currentUser.getImage() != null) {
-            imgDefault.setVisibility(View.INVISIBLE);
-            imgProfile.setVisibility(View.VISIBLE);
-            Glide.with(imgProfile.getContext()).load(currentUser.getImage()).placeholder(R.drawable.scaled_ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
-            imgProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(UserProfileActivity.this, ImageDetailActivity.class);
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            UserProfileActivity.this, imgProfile, ViewCompat.getTransitionName(imgProfile));
-                    // Animazione apertura immagine tonda
-                    getWindow().setSharedElementEnterTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
-                    getWindow().setSharedElementExitTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
-                    i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, Appartment.getInstance().getUser().getImage());
-                    i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
-                    startActivity(i, options.toBundle());
-                }
-            });
+            updateImage(currentUser.getImage());
         }
 
         MaterialButton btnJoin = findViewById(R.id.activity_user_profile_btn_join);
@@ -168,12 +157,49 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
 
             case R.id.activity_user_profile_toolbar_edit:
                 i = new Intent(this, SignUpActivity.class);
-                i.putExtra(SignUpActivity.EXTRA_USER_DATA, currentUser);
+                i.putExtra(SignUpActivity.EXTRA_USER_DATA, Appartment.getInstance().getUser());
                 startActivityForResult(i, EDIT_USER_REQUEST_CODE);
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_USER_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                /*
+                Se i dati dell'utente sono stati aggiornati, la scrittura nel database è GIÀ
+                avvenuta quando torno a questa activity, quindi devo solo aggiornare i dati che
+                sono visualizzati.
+                 */
+                User newUserData = (User) data.getSerializableExtra(EXTRA_NEW_USER);
+                textName.setText(newUserData.getName());
+                textGender.setText(newUserData.getGenderString());
+                try {
+                    String standardBirthDate = newUserData.getBirthdate();
+                    textBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(standardBirthDate)));
+                    textAge.setText(String.valueOf(newUserData.getAge()));
+                }
+                catch (ParseException e) {
+                    /*
+                    Questa eccezione non si può mai verificare se si assume che nel database la data è
+                    sempre salvata nel formato corretto.
+                     */
+                    Log.e(getClass().getCanonicalName(), e.getMessage());
+                }
+                if (newUserData.getImage() != null) {
+                    updateImage(newUserData.getImage());
+                }
+            }
+            /*
+            Se il controllo precedente ha dato risultato false, vuol dire che
+            l'utente non è stato modificato (può accadere se l'utente preme il tasto back
+            dall'activity di modifica) e quindi non faccio nulla.
+             */
         }
     }
 
@@ -222,6 +248,26 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         if (elements == 0) {
             emptyListLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void updateImage(String imageUri) {
+        imgDefault.setVisibility(View.INVISIBLE);
+        imgProfile.setVisibility(View.VISIBLE);
+        Glide.with(imgProfile.getContext()).load(imageUri).placeholder(R.drawable.scaled_ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UserProfileActivity.this, ImageDetailActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        UserProfileActivity.this, imgProfile, ViewCompat.getTransitionName(imgProfile));
+                // Animazione apertura immagine tonda
+                getWindow().setSharedElementEnterTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
+                getWindow().setSharedElementExitTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
+                i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, Appartment.getInstance().getUser().getImage());
+                i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
+                startActivity(i, options.toBundle());
+            }
+        });
     }
 
     // Listener processo di lettura nel database della casa in cui si vuole entrare
