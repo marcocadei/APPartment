@@ -6,21 +6,20 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.button.MaterialButton;
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.FamilyFragment;
-import com.unison.appartment.fragments.RewardsFragment;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
-import com.unison.appartment.model.User;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.ImageUtils;
 
@@ -32,6 +31,10 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
     public final static String EXTRA_MEMBER_OBJECT = "memberObject";
 
     private HomeUser member;
+
+    private View layoutButtons;
+    private MaterialButton btnUpgrade;
+    private MaterialButton btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,10 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         String[] roles = getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
 
         // Recupero il riferimento agli elementi dell'interfaccia
+        layoutButtons = findViewById(R.id.activity_family_member_detail_layout_buttons);
+        btnDelete = findViewById(R.id.activity_family_member_detail_btn_delete);
+        btnUpgrade = findViewById(R.id.activity_family_member_detail_btn_upgrade);
+
         final ImageView image = findViewById(R.id.activity_family_member_detail_img_profile);
         final ImageView imgDefault = findViewById(R.id.activity_family_member_detail_img_profile_default);
         TextView name = findViewById(R.id.activity_family_member_detail_text_name);
@@ -104,5 +111,88 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
                 }
             });
         }
+
+        int loggedUserRole = Appartment.getInstance().getUserHome().getRole();
+        String loggedUserUid = new FirebaseAuth().getCurrentUserUid();
+
+        if (loggedUserRole == Home.ROLE_OWNER) {
+            // Il proprietario può eliminare e upgradare/downgradare tutti quanti
+            // (non può però modificarsi il proprio ruolo)
+            if (!member.getUserId().equals(loggedUserUid)) {
+                layoutButtons.setVisibility(View.VISIBLE);
+                btnDelete.setVisibility(View.VISIBLE);
+                btnDelete.setText(R.string.activity_family_member_detail_btn_delete_masters);
+                btnUpgrade.setVisibility(View.VISIBLE);
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO elimina altro utente
+                    }
+                });
+                if (member.getRole() == Home.ROLE_SLAVE) {
+                    btnUpgrade.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Upgrade slave -> master
+                            sendChangeRoleData(member.getUserId(), Home.ROLE_MASTER);
+                        }
+                    });
+                }
+                else {
+                    btnUpgrade.setText(R.string.activity_family_member_detail_btn_upgrade_action_downgrade);
+                    btnUpgrade.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Downgrade master -> slave
+                            sendChangeRoleData(member.getUserId(), Home.ROLE_SLAVE);
+                        }
+                    });
+                }
+            }
+        }
+
+        if (loggedUserRole == Home.ROLE_MASTER) {
+            // I master possono eliminare e upgradare i collaboratori
+            if (member.getRole() == Home.ROLE_SLAVE) {
+                layoutButtons.setVisibility(View.VISIBLE);
+                btnDelete.setVisibility(View.VISIBLE);
+                btnDelete.setText(R.string.activity_family_member_detail_btn_delete_masters);
+                btnUpgrade.setVisibility(View.VISIBLE);
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO elimina altro utente
+                    }
+                });
+                btnUpgrade.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Upgrade slave -> master
+                        sendChangeRoleData(member.getUserId(), Home.ROLE_MASTER);
+                    }
+                });
+            }
+        }
+
+        if (member.getUserId().equals(loggedUserUid)) {
+            // L'utente che visualizza il suo profilo vede il tasto per uscire dalla casa
+            layoutButtons.setVisibility(View.VISIBLE);
+            btnDelete.setVisibility(View.VISIBLE);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO elimina me stesso (gestire diversamente a seconda ruolo!)
+                }
+            });
+        }
+    }
+
+    private void sendChangeRoleData(String userId, int newRole) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(FamilyFragment.EXTRA_OPERATION_TYPE, FamilyFragment.OPERATION_CHANGE_ROLE);
+        returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
+        returnIntent.putExtra(FamilyFragment.EXTRA_NEW_ROLE, newRole);
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 }

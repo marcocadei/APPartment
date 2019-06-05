@@ -526,9 +526,10 @@
         android:visibility="gone">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/activity_family_member_detail_btn_edit"
+            android:id="@+id/activity_family_member_detail_btn_upgrade"
             style="@style/Component.Button"
-            android:text="@string/activity_family_member_detail_btn_edit"
+            android:text="@string/activity_family_member_detail_btn_upgrade_action_upgrade"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_btn_delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -539,10 +540,11 @@
             style="@style/Component.Button"
             android:backgroundTint="@android:color/holo_red_dark"
             android:text="@string/activity_family_member_detail_btn_delete"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_btn_edit" />
+            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_btn_upgrade" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

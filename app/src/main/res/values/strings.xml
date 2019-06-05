@@ -120,8 +120,10 @@
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
-    <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
-    <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
+    <string name="activity_family_member_detail_btn_delete">Esci dalla casa</string>
+    <string name="activity_family_member_detail_btn_delete_masters">Rimuovi dalla casa</string>
+    <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Upgrade</string>
+    <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Downgrade</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_image_detail_img">Immagine del post aperta</string>

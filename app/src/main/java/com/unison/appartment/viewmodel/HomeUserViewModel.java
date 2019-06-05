@@ -21,4 +21,8 @@ public class HomeUserViewModel extends ViewModel {
     public LiveData<List<HomeUser>> getHomeUserLiveData() {
         return repository.getHomeUserLiveData();
     }
+
+    public void changeRole(String userId, int newRole) {
+        repository.changeRole(userId, newRole);
+    }
 }
