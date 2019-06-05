@@ -25,4 +25,8 @@ public class HomeUserViewModel extends ViewModel {
     public void changeRole(String userId, int newRole) {
         repository.changeRole(userId, newRole);
     }
+
+    public void leaveHome(String userId) {
+        repository.leaveHome(userId);
+    }
 }

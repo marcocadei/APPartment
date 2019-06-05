@@ -28,6 +28,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     public final static String EXTRA_NEW_ROLE = "newRole";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_CHANGE_ROLE = 0;
+    public final static int OPERATION_REMOVE_USER = 1;
 
     private static final int MEMBER_DETAIL_REQUEST_CODE = 1;
 
@@ -76,6 +77,10 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_CHANGE_ROLE:
                         listFragment.changeRole(data.getStringExtra(EXTRA_USER_ID), data.getIntExtra(EXTRA_NEW_ROLE, -1));
+                        break;
+
+                    case OPERATION_REMOVE_USER:
+                        listFragment.leaveHome(data.getStringExtra(EXTRA_USER_ID));
                         break;
 
                     default:

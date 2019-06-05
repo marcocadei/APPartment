@@ -113,7 +113,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         }
 
         int loggedUserRole = Appartment.getInstance().getUserHome().getRole();
-        String loggedUserUid = new FirebaseAuth().getCurrentUserUid();
+        final String loggedUserUid = new FirebaseAuth().getCurrentUserUid();
 
         if (loggedUserRole == Home.ROLE_OWNER) {
             // Il proprietario può eliminare e upgradare/downgradare tutti quanti
@@ -182,6 +182,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // TODO elimina me stesso (gestire diversamente a seconda ruolo!)
+//                    sendRemoveUserData(loggedUserUid);
                 }
             });
         }
@@ -192,6 +193,14 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         returnIntent.putExtra(FamilyFragment.EXTRA_OPERATION_TYPE, FamilyFragment.OPERATION_CHANGE_ROLE);
         returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(FamilyFragment.EXTRA_NEW_ROLE, newRole);
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void sendRemoveUserData(String userId) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(FamilyFragment.EXTRA_OPERATION_TYPE, FamilyFragment.OPERATION_REMOVE_USER);
+        returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
         setResult(RESULT_OK, returnIntent);
         finish();
     }

@@ -128,6 +128,10 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.changeRole(userId, newRole);
     }
 
+    public void leaveHome(String userId) {
+        viewModel.leaveHome(userId);
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity
