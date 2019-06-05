@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.unison.appartment.R;
 import com.unison.appartment.activities.FamilyMemberDetailActivity;
@@ -52,6 +53,13 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View myView = inflater.inflate(R.layout.fragment_family, container, false);
+
+        TextView textMembers = myView.findViewById(R.id.fragment_family_text_members);
+        textMembers.setText(getString(R.string.fragment_family_text_members, 0));
+        /*
+        Nota: Il numero di membri all'inizio viene impostato a 0 solo per non visualizzare la
+        format string finché non si carica la lista.
+         */
 
         return myView;
     }
@@ -104,5 +112,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         // progress bar deve interrompersi
         ProgressBar progressBar = getView().findViewById(R.id.fragment_family_progress);
         progressBar.setVisibility(View.GONE);
+        TextView textMembers = getView().findViewById(R.id.fragment_family_text_members);
+        textMembers.setText(getString(R.string.fragment_family_text_members, elements));
     }
 }

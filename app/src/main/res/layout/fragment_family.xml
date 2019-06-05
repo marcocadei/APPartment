@@ -35,7 +35,22 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/Component.Layout">
-        
+
+            <TextView
+                android:id="@+id/fragment_family_text_members"
+                style="@style/Component.TextView.SingleLine.ListItemTitle"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_marginBottom="@dimen/margin_extra_small"
+                android:text="@string/fragment_family_text_members"
+                android:textSize="@dimen/text_large"
+                android:gravity="start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/fragment_family_member_list" />
+
             <fragment
                 android:id="@+id/fragment_family_member_list"
                 android:name="com.unison.appartment.fragments.FamilyMemberListFragment"
@@ -43,8 +58,8 @@
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_charts"
+                app:layout_constraintTop_toBottomOf="@id/fragment_family_text_members"
+                app:layout_constraintBottom_toTopOf="@id/fragment_charts"
                 tools:layout="@layout/fragment_family_member_list" />
 
             <fragment
@@ -55,7 +70,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_family_member_list"
+                app:layout_constraintTop_toBottomOf="@id/fragment_family_member_list"
                 tools:layout="@layout/fragment_charts"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
