@@ -150,9 +150,12 @@
     <string name="activity_signin_progress_title">Accesso</string>
     <string name="activity_signin_text_title">Accedi ad APPartment</string>
     <string name="activity_signup_btn_photo">Seleziona un\'immagine</string>
+    <string name="activity_signup_edit_description">Per favore attendi, è in corso l\'aggiornamento del profilo</string>
+    <string name="activity_signup_edit_title">Aggiornamento dati</string>
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
     <string name="activity_signup_signup_title">Registrazione</string>
     <string name="activity_signup_text_title">Registrati ad APPartment</string>
+    <string name="activity_signup_title_edit">Modifica profilo utente</string>
     <string name="activity_task_detail_btn_assign">Prenota attività</string>
     <string name="activity_task_detail_btn_assign_masters">Assegna attività</string>
     <string name="activity_task_detail_btn_cancel_completion">Annulla completamento</string>
