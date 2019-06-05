@@ -30,6 +30,7 @@
     <string name="error_not_enough_points">Non hai abbastanza punti per richiedere questo premio!</string>
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
     <string name="form_error_duplicate_homename">Esiste già una casa con questo nome</string>
+    <string name="form_error_duplicate_nickname">Questo nickname è già utilizzato all\'interno della casa</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
     <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
@@ -121,7 +122,6 @@
     <string name="activity_enter_btn_signup">Registrati</string>
     <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
     <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
-    <string name="activity_family_member_detail_points_name">Punti:</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_image_detail_img">Immagine del post aperta</string>
@@ -143,7 +143,7 @@
     <string name="activity_reward_detail_btn_reserve_reward_available_masters">Ottieni premio</string>
     <string name="activity_reward_detail_btn_reserve_reward_requested">Premio richiesto</string>
     <string name="activity_reward_detail_btn_reserve_reward_unavailable">Premio non disponibile</string>
-    <string name="activity_reward_detail_text_reservation_title">Questo premio è stato richiesto da:</string>
+    <string name="activity_reward_detail_text_reservation_title">Questo premio è stato richiesto da</string>
     <string name="activity_reward_detail_title">Dettaglio premio</string>
     <string name="activity_reward_detail_toolbar_edit">Modifica premio</string>
     <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
@@ -167,7 +167,7 @@
     <string name="activity_task_detail_btn_delete">Elimina attività</string>
     <string name="activity_task_detail_btn_switch">Cambia assegnamento</string>
     <string name="activity_task_detail_btn_unassign">Rimuovi assegnamento</string>
-    <string name="activity_task_detail_text_assigned_user_title">Questa attività è stata assegnata a:</string>
+    <string name="activity_task_detail_text_assigned_user_title">Questa attività è stata assegnata a</string>
     <string name="activity_task_detail_title">Dettaglio attività</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
@@ -215,7 +215,6 @@
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
-    <string name="activity_family_member_detail_role_name">Ruolo:</string>
     <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
     <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
