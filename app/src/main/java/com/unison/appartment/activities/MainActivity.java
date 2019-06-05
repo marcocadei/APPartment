@@ -12,14 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.DoneFragment;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.services.AppartmentService;
 import com.unison.appartment.fragments.FamilyFragment;
 import com.unison.appartment.fragments.MessagesFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
-
+import com.unison.appartment.state.Appartment;
 
 /**
  * Classe che rappresenta l'Activity principale di una Home
@@ -147,9 +149,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
         }
-        lastPosition = currentPosition;
         try {
             ft.replace(R.id.activity_main_fragment_container, (Fragment) fragment.newInstance());
+            /*
+            Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
+            fragment o provengo da quel fragment l'options menu deve essere cambiato.
+             */
+            if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
+                invalidateOptionsMenu();
+            }
+            lastPosition = currentPosition;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -160,7 +169,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main_toolbar, menu);
+        menu.clear();
+
+        if (currentPosition == POSITION_FAMILY && Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_OWNER) {
+            /*
+            Nel family fragment il proprietario della casa visualizza nell'options menù un'icona
+            aggiuntiva che gli permette di modificare i dati della casa.
+             */
+            getMenuInflater().inflate(R.menu.activity_main_toolbar_extended, menu);
+        }
+        else {
+            getMenuInflater().inflate(R.menu.activity_main_toolbar, menu);
+        }
         return true;
     }
 
@@ -178,6 +198,11 @@ public class MainActivity extends AppCompatActivity {
                 // Fermo il servizio che mantiene aggiornato lo stato
                 Intent intent = new Intent(this, AppartmentService.class);
                 stopService(intent);
+                return true;
+            }
+
+            case R.id.activity_main_toolbar_edit_home_data: {
+                // TODO
                 return true;
             }
 
