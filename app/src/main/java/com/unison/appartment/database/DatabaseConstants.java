@@ -11,7 +11,6 @@ public class DatabaseConstants {
 
     // Case
     public final static String HOMES = "homes";
-    public final static String HOMES_HOMENAME_MEMBERS = "members";
     public final static String HOMES_HOMENAME_PASSWORD = "password";
 
     // Utenti di una casa
