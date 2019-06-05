@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.Resources;
+import android.text.format.DateFormat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +15,8 @@ import android.widget.TextView;
 
 import com.unison.appartment.R;
 import com.unison.appartment.model.Completion;
-import com.unison.appartment.utils.DateUtils;
 
 import java.util.Date;
-
 
 public class MyCompletionRecyclerViewAdapter extends ListAdapter<Completion, MyCompletionRecyclerViewAdapter.ViewHolderCompletion> {
 
@@ -37,8 +36,12 @@ public class MyCompletionRecyclerViewAdapter extends ListAdapter<Completion, MyC
         final Completion completion = getItem(position);
         Resources res = holder.itemView.getResources();
 
+        java.text.DateFormat dateFormat = DateFormat.getDateFormat(holder.itemView.getContext());
+        java.text.DateFormat timeFormat = DateFormat.getTimeFormat(holder.itemView.getContext());
+        Date timestamp = new Date(completion.getCompletionDate());
+        holder.completionDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
+
         holder.completionUser.setText(completion.getUser());
-        holder.completionDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(completion.getCompletionDate())));
         holder.textStatusUpper.setText(String.valueOf(completion.getPoints()));
         holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
         holder.textStatusLower.setText(R.string.general_points_name);
