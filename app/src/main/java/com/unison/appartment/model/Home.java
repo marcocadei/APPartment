@@ -8,6 +8,8 @@ import java.io.Serializable;
  * Classe che rappresenta una casa
  */
 public class Home implements Serializable {
+
+    public final static int DEFAULT_CONVERSION_FACTOR = 50;
     // Quando una casa è creata ha un membro (il creatore stesso)
     public final static int DEFAULT_MEMBERS = 1;
 
@@ -16,8 +18,6 @@ public class Home implements Serializable {
     public final static int ROLE_SLAVE = 2;
 
     private final static String ATTRIBUTE_CONVERSION_FACTOR = "conversion-factor";
-
-    private final static int DEFAULT_CONVERSION_FACTOR = 50;
 
     private String name;
     private String password;
@@ -30,6 +30,10 @@ public class Home implements Serializable {
 
     public Home(String name, String password) {
         this(name, password, DEFAULT_CONVERSION_FACTOR, DEFAULT_MEMBERS);
+    }
+
+    public Home(String name, String password, int conversionFactor) {
+        this(name, password, conversionFactor, DEFAULT_MEMBERS);
     }
 
     public Home(String name, String password, int conversionFactor, int members) {

@@ -64,9 +64,9 @@
                 android:id="@+id/activity_create_home_input_homename"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/desc_homes_homename_name"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_password"
-                app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_password"
-                app:layout_constraintStart_toStartOf="@id/activity_create_home_input_password"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_conversion_factor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_layout_title">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -76,13 +76,31 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_home_input_conversion_factor"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/desc_homes_homename_conversionfactor"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_homename">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_home_input_conversion_factor_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:maxLength="9"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_password"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/desc_homes_homename_password"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_repeat_password"
-                app:layout_constraintEnd_toEndOf="@id/activity_create_home_input_repeat_password"
-                app:layout_constraintStart_toStartOf="@id/activity_create_home_input_repeat_password"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_homename">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_conversion_factor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_home_input_password_value"

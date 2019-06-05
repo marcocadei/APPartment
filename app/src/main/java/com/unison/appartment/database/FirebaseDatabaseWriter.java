@@ -122,6 +122,16 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
     }
 
     @Override
+    public void writeHome(Home home, DatabaseWriterListener listener) {
+        String homePath = DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + home.getName();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(homePath, home);
+
+        write(childUpdates, listener);
+    }
+
+    @Override
     public void writeJoinHome(final String homeName, final int homeMembers, final String uid,
                               final HomeUser homeUser, final UserHome userHome,
                               final DatabaseWriterListener listener) {

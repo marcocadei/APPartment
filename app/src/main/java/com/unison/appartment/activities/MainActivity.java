@@ -1,11 +1,13 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -202,7 +204,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case R.id.activity_main_toolbar_edit_home_data: {
-                // TODO
+                Intent i = new Intent(this, CreateHomeActivity.class);
+                i.putExtra(CreateHomeActivity.EXTRA_HOME_DATA, Appartment.getInstance().getHome());
+                startActivity(i);
+                /*
+                Questo non è uno startActivityForResult perché qui non devo far nulla con
+                eventuali dati che mi vengono restituiti dall'activity chiamata. L'unica cosa che
+                deve essere fatta è l'aggiornamento della casa salvata nello stato ma questa
+                operazione è già fatta in CreateHomeActivity.
+                 */
                 return true;
             }
 

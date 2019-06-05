@@ -2,9 +2,12 @@ package com.unison.appartment.activities;
 
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +35,8 @@ import java.util.Map;
  */
 public class CreateHomeActivity extends FormActivity {
 
+    public final static String EXTRA_HOME_DATA = "homeData";
+
     private static final int MIN_HOME_PASSWORD_LENGTH = 6;
 
     private Auth auth;
@@ -39,10 +44,12 @@ public class CreateHomeActivity extends FormActivity {
     private DatabaseWriter databaseWriter;
 
     private EditText inputHomeName;
+    private EditText inputConversionFactor;
     private EditText inputPassword;
     private EditText inputRepeatPassword;
     private EditText inputNickname;
     private TextInputLayout layoutHomeName;
+    private TextInputLayout layoutConversionFactor;
     private TextInputLayout layoutPassword;
     private TextInputLayout layoutRepeatPassword;
     private TextInputLayout layoutNickname;
@@ -70,20 +77,83 @@ public class CreateHomeActivity extends FormActivity {
         this.errorDialogDestinationActivity = UserProfileActivity.class;
 
         inputHomeName = findViewById(R.id.activity_create_home_input_homename_value);
+        inputConversionFactor = findViewById(R.id.activity_create_home_input_conversion_factor_value);
         inputPassword = findViewById(R.id.activity_create_home_input_password_value);
         inputRepeatPassword = findViewById(R.id.activity_create_home_input_repeat_password_value);
         inputNickname = findViewById(R.id.activity_create_home_input_repeat_nickname_value);
         layoutHomeName = findViewById(R.id.activity_create_home_input_homename);
+        layoutConversionFactor = findViewById(R.id.activity_create_home_input_conversion_factor);
         layoutPassword = findViewById(R.id.activity_create_home_input_password);
         layoutRepeatPassword = findViewById(R.id.activity_create_home_input_repeat_password);
         layoutNickname = findViewById(R.id.activity_create_home_input_nickname);
+        FloatingActionButton floatNext = findViewById(R.id.activity_create_home_float_next);
 
         inputNickname.setText(Appartment.getInstance().getUser().getName());
+        inputConversionFactor.setText(String.valueOf(Home.DEFAULT_CONVERSION_FACTOR));
+
+        Intent i = getIntent();
+        final Home home = (Home) i.getSerializableExtra(EXTRA_HOME_DATA);
+        if (home != null) {
+            // Imposto il titolo opportunamente se devo modificare e non creare un premio
+            toolbar.setTitle(R.string.activity_create_home_text_title_edit);
+            TextView textTitle = findViewById(R.id.activity_create_home_text_title);
+            textTitle.setText(R.string.activity_create_home_text_title_edit);
+            TextView textRoleInfo = findViewById(R.id.activity_create_home_text_role_info);
+            textRoleInfo.setVisibility(View.GONE);
+            layoutHomeName.setVisibility(View.GONE);
+            inputHomeName.setText(home.getName());
+            layoutConversionFactor.setVisibility(View.VISIBLE);
+            inputConversionFactor.setText(String.valueOf(home.getConversionFactor()));
+//            layoutPassword.setVisibility(View.GONE);
+//            inputPassword.setText(home.getPassword());
+//            layoutRepeatPassword.setVisibility(View.GONE);
+//            inputRepeatPassword.setText(home.getPassword());
+            layoutNickname.setVisibility(View.GONE);
+
+            // Gestione click sul bottone per completare la modifica
+            floatNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    KeyboardUtils.hideKeyboard(CreateHomeActivity.this);
+                    if (checkInput()) {
+                        progressDialog = FirebaseProgressDialogFragment.newInstance(
+                                getString(R.string.activity_create_home_edit_progress_title),
+                                getString(R.string.activity_create_home_edit_progress_description));
+                        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+                        // Scrivo i dati aggiornati nel db
+                        databaseWriter.writeHome(createHome(), dbHomeEditWriterListener);
+                    }
+                }
+            });
+        }
+        else {
+            // Gestione click sul bottone per completare l'inserimento
+            floatNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    KeyboardUtils.hideKeyboard(CreateHomeActivity.this);
+                    if (checkInput()) {
+                        progressDialog = FirebaseProgressDialogFragment.newInstance(
+                                getString(R.string.activity_create_home_progress_title),
+                                getString(R.string.activity_create_home_progress_description));
+                        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+                        // Se i controlli locali vanno a buon fine controllo che la casa esista
+                        databaseReader.retrieveHome(inputHomeName.getText().toString(), databaseReaderListener);
+                    }
+                }
+            });
+        }
 
         inputHomeName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) resetErrorMessage(layoutHomeName);
+            }
+        });
+        inputConversionFactor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) resetErrorMessage(layoutConversionFactor);
             }
         });
         inputPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -104,27 +174,11 @@ public class CreateHomeActivity extends FormActivity {
                 if (hasFocus) resetErrorMessage(layoutNickname);
             }
         });
-
-        // Gestione click sul bottone per completare l'inserimento
-        FloatingActionButton floatNext = findViewById(R.id.activity_create_home_float_next);
-        floatNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                KeyboardUtils.hideKeyboard(CreateHomeActivity.this);
-                if (checkInput()) {
-                    progressDialog = FirebaseProgressDialogFragment.newInstance(
-                            getString(R.string.activity_create_home_progress_title),
-                            getString(R.string.activity_create_home_progress_description));
-                    progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
-                    // Se i controlli locali vanno a buon fine controllo che la casa esista
-                    databaseReader.retrieveHome(inputHomeName.getText().toString(), databaseReaderListener);
-                }
-            }
-        });
     }
 
     protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
+        resetErrorMessage(layoutConversionFactor);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);
         resetErrorMessage(layoutNickname);
@@ -133,19 +187,31 @@ public class CreateHomeActivity extends FormActivity {
         inputNickname.setText(inputNickname.getText().toString().trim());
 
         String homeNameValue = inputHomeName.getText().toString();
+        String conversionFactorValue = inputConversionFactor.getText().toString();
         String passwordValue = inputPassword.getText().toString();
         String repeatPasswordValue = inputRepeatPassword.getText().toString();
         String nicknameValue = inputNickname.getText().toString();
 
         boolean result = true;
 
-        // Controllo che i campi "nome casa" e "nickname" non siano stati lasciati vuoti
+        // Controllo che i campi "nome casa", "nickname" e "conversion factor" non siano stati lasciati vuoti
         if (homeNameValue.trim().length() == 0) {
             layoutHomeName.setError(getString(R.string.form_error_missing_value));
             result = false;
         }
         if (nicknameValue.trim().length() == 0) {
             layoutNickname.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        }
+        if (conversionFactorValue.trim().length() == 0) {
+            layoutConversionFactor.setError(getString(R.string.form_error_missing_value));
+            result = false;
+        }
+
+        // Controllo che il fattore di conversione impostato sia maggiore di 0
+        if (Integer.parseInt(conversionFactorValue) <= 0) {
+            layoutConversionFactor.setError(null);
+            layoutConversionFactor.setError(getString(R.string.form_error_nonzero_required));
             result = false;
         }
 
@@ -184,8 +250,9 @@ public class CreateHomeActivity extends FormActivity {
 
         String homeName = inputHomeName.getText().toString();
         String password = inputPassword.getText().toString();
+        int conversionFactor = Integer.parseInt(inputConversionFactor.getText().toString());
 
-        return new Home(homeName, password);
+        return new Home(homeName, password, conversionFactor);
     }
 
     private HomeUser createHomeUser() {
@@ -203,6 +270,28 @@ public class CreateHomeActivity extends FormActivity {
 
         return new UserHome(homeName, Home.ROLE_OWNER);
     }
+
+    // Listener processo di aggiornamento di una casa già esistente
+    final DatabaseWriterListener dbHomeEditWriterListener = new DatabaseWriterListener() {
+        @Override
+        public void onWriteSuccess() {
+            Appartment.getInstance().setHome(createHome());
+            finish();
+            dismissProgress();
+        }
+
+        @Override
+        public void onWriteFail(Exception exception) {
+            try {
+                throw exception;
+            } catch (Exception e) {
+                // (DatabaseException se si verifica una violazione delle regole di sicurezza)
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
 
     // Listener processo di scrittura nel database dei record necessari per registrare la creazione di una casa
     final DatabaseWriterListener databaseWriterListener = new DatabaseWriterListener() {

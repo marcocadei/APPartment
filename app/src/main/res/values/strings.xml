@@ -112,11 +112,14 @@
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
+    <string name="activity_create_home_edit_progress_description">Per favore attendi, è in corso l\'aggiornamento dei dati</string>
+    <string name="activity_create_home_edit_progress_title">Modifica dati</string>
     <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
     <string name="activity_create_home_progress_title">Creazione casa</string>
     <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
     <string name="activity_create_home_text_title">Crea una nuova casa</string>
+    <string name="activity_create_home_text_title_edit">Modifica dati casa</string>
     <string name="activity_create_reward_title_edit">Modifica premio</string>
     <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
