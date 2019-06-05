@@ -8,6 +8,8 @@ import androidx.core.view.ViewCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -186,6 +188,36 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /*
+        L'options menù contiene il solo tasto di modifica, che è visualizzato solo se è soddisfatta
+        ALMENO UNA delle seguenti condizioni:
+        - l'utente loggato è un master e sta visualizzando i dettagli di uno slave;
+        - l'utente loggato è il proprietario;
+        - l'utente loggato sta visualizzando i dettagli di sé stesso.
+         */
+        String loggedUserId = new FirebaseAuth().getCurrentUserUid();
+        int loggedUserRole = Appartment.getInstance().getHomeUser(loggedUserId).getRole();
+        if (loggedUserRole == Home.ROLE_OWNER || (loggedUserRole == Home.ROLE_MASTER && member.getRole() == Home.ROLE_SLAVE)
+                || loggedUserId.equals(member.getUserId())) {
+            getMenuInflater().inflate(R.menu.activity_family_member_detail_toolbar, menu);
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.activity_family_member_detail_toolbar_edit) {
+//            Intent i = new Intent(this, CreateRewardActivity.class);
+//            i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
+//            startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
+//            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void sendChangeRoleData(String userId, int newRole) {

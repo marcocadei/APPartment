@@ -122,10 +122,11 @@
     <string name="activity_enter_btn_signup">Registrati</string>
     <string name="activity_family_member_detail_btn_delete">Esci dalla casa</string>
     <string name="activity_family_member_detail_btn_delete_masters">Rimuovi dalla casa</string>
-    <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Upgrade</string>
     <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Downgrade</string>
+    <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Upgrade</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
+    <string name="activity_family_member_detail_toolbar_edit">Modifica nickname</string>
     <string name="activity_image_detail_img">Immagine del post aperta</string>
     <string name="activity_join_home_progress_check_description">Per favore attendi, è in corso la verifica delle credenziali</string>
     <string name="activity_join_home_progress_check_title">Verifica credenziali</string>
