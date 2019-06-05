@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
         final MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(selectedBottomNavigationMenuItemId);
         updateActivityContent(selectedBottomNavigationMenuItem);
+        bottomNavigation.setSelectedItemId(selectedBottomNavigationMenuItem.getItemId());
 
         // Imposto il ViewPager
         pager = findViewById(R.id.activity_main_fragment_container);
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 updateActivityContent(bottomNavigation.getMenu().getItem(position));
+                bottomNavigation.setSelectedItemId(bottomNavigation.getMenu().getItem(position).getItemId());
             }
 
             @Override
@@ -110,10 +112,25 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 // Quando viene selezionata dal menù nella bottom navigation la stessa sezione in cui si è già
                 // il fragment non deve essere ricaricato (non viene fatto nulla).
-                if (menuItem.getItemId() != selectedBottomNavigationMenuItemId) {
                     updateActivityContent(menuItem);
-                }
-                selectedBottomNavigationMenuItemId = menuItem.getItemId();
+                    switch (menuItem.getItemId()) {
+                        case R.id.activity_main_bottom_navigation_messages:
+                            pager.setCurrentItem(POSITION_MESSAGES, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_family:
+                            pager.setCurrentItem(POSITION_FAMILY, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_todo:
+                            pager.setCurrentItem(POSITION_TODO, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_done:
+                            pager.setCurrentItem(POSITION_DONE, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_rewards:
+                            pager.setCurrentItem(POSITION_REWARDS, true);
+                            break;
+
+                    }
                 return true;
             }
         });
@@ -128,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
     private void updateActivityContent(MenuItem menuItem) {
         toolbar.setTitle(menuItem.getTitle());
         toolbar.setLogo(menuItem.getIcon());
-        bottomNavigation.setSelectedItemId(menuItem.getItemId());
     }
 
 
