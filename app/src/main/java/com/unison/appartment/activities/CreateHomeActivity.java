@@ -1,10 +1,12 @@
 package com.unison.appartment.activities;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -94,7 +96,6 @@ public class CreateHomeActivity extends FormActivity {
         Intent i = getIntent();
         final Home home = (Home) i.getSerializableExtra(EXTRA_HOME_DATA);
         if (home != null) {
-            // Imposto il titolo opportunamente se devo modificare e non creare un premio
             toolbar.setTitle(R.string.activity_create_home_text_title_edit);
             TextView textTitle = findViewById(R.id.activity_create_home_text_title);
             textTitle.setText(R.string.activity_create_home_text_title_edit);
@@ -104,11 +105,37 @@ public class CreateHomeActivity extends FormActivity {
             inputHomeName.setText(home.getName());
             layoutConversionFactor.setVisibility(View.VISIBLE);
             inputConversionFactor.setText(String.valueOf(home.getConversionFactor()));
-//            layoutPassword.setVisibility(View.GONE);
-//            inputPassword.setText(home.getPassword());
-//            layoutRepeatPassword.setVisibility(View.GONE);
-//            inputRepeatPassword.setText(home.getPassword());
             layoutNickname.setVisibility(View.GONE);
+
+            final String originalPassword = home.getPassword();
+            layoutPassword.setVisibility(View.GONE);
+            inputPassword.setText(originalPassword);
+            layoutRepeatPassword.setVisibility(View.GONE);
+            inputRepeatPassword.setText(originalPassword);
+            final TextView textPasswordInfo = findViewById(R.id.activity_create_home_text_password_info);
+            textPasswordInfo.setVisibility(View.GONE);
+            View layoutSwitch = findViewById(R.id.activity_create_home_layout_switch);
+            layoutSwitch.setVisibility(View.VISIBLE);
+            SwitchCompat switchPassword = findViewById(R.id.activity_create_home_switch_password);
+            switchPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        textPasswordInfo.setVisibility(View.VISIBLE);
+                        layoutPassword.setVisibility(View.VISIBLE);
+                        inputPassword.setText(null);
+                        layoutRepeatPassword.setVisibility(View.VISIBLE);
+                        inputRepeatPassword.setText(null);
+                    }
+                    else {
+                        textPasswordInfo.setVisibility(View.GONE);
+                        layoutPassword.setVisibility(View.GONE);
+                        inputPassword.setText(originalPassword);
+                        layoutRepeatPassword.setVisibility(View.GONE);
+                        inputRepeatPassword.setText(originalPassword);
+                    }
+                }
+            });
 
             // Gestione click sul bottone per completare la modifica
             floatNext.setOnClickListener(new View.OnClickListener() {
