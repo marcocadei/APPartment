@@ -11,7 +11,6 @@ public class DatabaseConstants {
 
     // Case
     public final static String HOMES = "homes";
-    public final static String HOMES_HOMENAME_MEMBERS = "members";
     public final static String HOMES_HOMENAME_PASSWORD = "password";
 
     // Utenti di una casa
@@ -19,6 +18,7 @@ public class DatabaseConstants {
     public final static String HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS = "claimed-rewards";
     public final static String HOMEUSERS_HOMENAME_UID_COMPLETEDTASKS = "completed-tasks";
     public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
+    public final static String HOMEUSERS_HOMENAME_UID_ROLE = "role";
     public final static String HOMEUSERS_HOMENAME_UID_TOTALEARNEDPOINTS = "total-earned-points";
 
     // Premi
@@ -45,6 +45,7 @@ public class DatabaseConstants {
 
     // Case di un utente
     public final static String USERHOMES = "user-homes";
+    public final static String USERHOMES_UID_HOMENAME_ROLE = "role";
 
     // Utenti
     public final static String USERS = "users";

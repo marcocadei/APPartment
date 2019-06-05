@@ -1,6 +1,7 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,14 +19,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.DoneFragment;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.services.AppartmentService;
 import com.unison.appartment.fragments.FamilyFragment;
 import com.unison.appartment.fragments.MessagesFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
-
+import com.unison.appartment.state.Appartment;
 
 /**
  * Classe che rappresenta l'Activity principale di una Home
@@ -147,10 +151,29 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(menuItem.getIcon());
     }
 
+  // FIXME Residuo del codice per modificare la toolbar - DA AGGIUSTARE!
+            /*
+            Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
+            fragment o provengo da quel fragment l'options menu deve essere cambiato.
+             */
+            // if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
+            //    invalidateOptionsMenu();
+            // }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main_toolbar, menu);
+        menu.clear();
+
+        if (currentPosition == POSITION_FAMILY && Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_OWNER) {
+            /*
+            Nel family fragment il proprietario della casa visualizza nell'options menù un'icona
+            aggiuntiva che gli permette di modificare i dati della casa.
+             */
+            getMenuInflater().inflate(R.menu.activity_main_toolbar_extended, menu);
+        }
+        else {
+            getMenuInflater().inflate(R.menu.activity_main_toolbar, menu);
+        }
         return true;
     }
 
@@ -168,6 +191,19 @@ public class MainActivity extends AppCompatActivity {
                 // Fermo il servizio che mantiene aggiornato lo stato
                 Intent intent = new Intent(this, AppartmentService.class);
                 stopService(intent);
+                return true;
+            }
+
+            case R.id.activity_main_toolbar_edit_home_data: {
+                Intent i = new Intent(this, CreateHomeActivity.class);
+                i.putExtra(CreateHomeActivity.EXTRA_HOME_DATA, Appartment.getInstance().getHome());
+                startActivity(i);
+                /*
+                Questo non è uno startActivityForResult perché qui non devo far nulla con
+                eventuali dati che mi vengono restituiti dall'activity chiamata. L'unica cosa che
+                deve essere fatta è l'aggiornamento della casa salvata nello stato ma questa
+                operazione è già fatta in CreateHomeActivity.
+                 */
                 return true;
             }
 
@@ -218,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     nextFragment = RewardsFragment.newInstance();
                     break;
                 default:
-                    // ERRORE qui non deve entrare mai
+                    // FIXME ERRORE qui non deve entrare mai
                     nextFragment = null;
             }
             return nextFragment;

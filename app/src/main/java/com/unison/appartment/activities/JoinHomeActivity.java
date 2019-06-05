@@ -245,8 +245,8 @@ public class JoinHomeActivity extends FormActivity {
             }
             else {
                 // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
-                databaseWriter.writeJoinHome(inputHomeName.getText().toString(), home.getMembers(),
-                        auth.getCurrentUserUid(), createHomeUser(), createUserHome(), databaseWriterListener);
+                databaseWriter.writeJoinHome(inputHomeName.getText().toString(), auth.getCurrentUserUid(),
+                        createHomeUser(), createUserHome(), databaseWriterListener);
             }
         }
 

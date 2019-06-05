@@ -17,6 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_family_member_detail_toolbar"
             style="@style/Component.ToolbarWithBackButton"
+            app:menu="@menu/activity_family_member_detail_toolbar"
             app:title="@string/activity_family_member_detail_title" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -37,11 +38,13 @@
                 app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_achievement_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/margin_small"
                 style="@style/Component.Layout.NestedScrollViewFixedElement">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/activity_family_member_detail_layout_header"
                     style="@style/Component.Layout.Header"
+                    android:layout_marginBottom="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -51,14 +54,14 @@
                         android:id="@+id/activity_family_member_detail_img_profile"
                         style="@style/Component.ImageView.ProfileImage"
                         android:visibility="invisible"
-                        android:contentDescription="@string/caption_profile_pic"
                         android:scaleType="centerCrop"
+                        app:tiv_rounding="1"
                         android:transitionName="@string/transition_open_image"
+                        android:contentDescription="@string/caption_profile_pic"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_name"
+                        app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_layout_attributes"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tiv_rounding="1" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/activity_family_member_detail_img_profile_default"
@@ -74,93 +77,84 @@
                         android:tint="@color/colorPrimaryDark"
                         app:srcCompat="@drawable/ic_person" />
 
-                    <TextView
-                        android:id="@+id/activity_family_member_detail_text_name"
-                        style="@style/Component.TextView.MultiLine.ObjectTitle"
-                        android:text="@string/placeholder_text"
-                        android:layout_marginStart="@dimen/margin_small"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_points"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/activity_family_member_detail_layout_points"
+                        android:id="@+id/activity_family_member_detail_layout_attributes"
                         style="@style/Component.Layout"
                         android:layout_width="0dp"
                         android:layout_marginStart="@dimen/margin_small"
-                        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_role"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
-                        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_name">
+                        app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
-                            android:id="@+id/activity_family_member_detail_text_points_name"
+                            android:id="@+id/activity_family_member_detail_text_name"
                             style="@style/Component.TextView.SingleLine.PointsName"
                             android:gravity="start"
-                            android:text="@string/activity_family_member_detail_points_name"
+                            android:text="@string/placeholder_text"
+                            android:textStyle="bold"
                             android:textSize="@dimen/text_extra_large"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintHorizontal_bias="0"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_points_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_points_title"
+                            style="@style/Component.TextView.SingleLine.PointsName"
+                            android:gravity="start"
+                            android:text="@string/general_points_name"
+                            android:textStyle="bold"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_name"
                             app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_points_value"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="parent" />
+                            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_role_title" />
 
                         <TextView
                             android:id="@+id/activity_family_member_detail_text_points_value"
                             style="@style/Component.TextView.SingleLine.PointsValue"
                             android:gravity="start"
                             android:text="@string/placeholder_number"
-                            android:textSize="@dimen/text_extra_large"
+                            android:textSize="@dimen/text_medium"
                             android:layout_marginStart="@dimen/margin_small"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_points_title"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_points_name"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/activity_family_member_detail_layout_role"
-                        style="@style/Component.Layout"
-                        android:layout_width="0dp"
-                        android:layout_marginStart="@dimen/margin_small"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
-                        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_points">
+                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_points_title"
+                            app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_points_title" />
 
                         <TextView
-                            android:id="@+id/activity_family_member_detail_text_role_name"
+                            android:id="@+id/activity_family_member_detail_text_role_title"
                             style="@style/Component.TextView.SingleLine.PointsName"
                             android:gravity="start"
-                            android:text="@string/activity_family_member_detail_role_name"
-                            android:textSize="@dimen/text_extra_large"
+                            android:text="@string/desc_userhomes_uid_homename_role"
+                            android:textStyle="bold"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintHorizontal_bias="0"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_role_value"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="parent" />
+                            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_points_title" />
 
                         <TextView
                             android:id="@+id/activity_family_member_detail_text_role_value"
                             style="@style/Component.TextView.SingleLine.PointsValue"
                             android:gravity="start"
                             android:text="@string/placeholder_text"
-                            android:textSize="@dimen/text_extra_large"
+                            android:textSize="@dimen/text_medium"
                             android:layout_marginStart="@dimen/margin_small"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_role_title"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_role_name"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_role_title"
+                            app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_role_title" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
+                
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -533,9 +527,10 @@
         android:visibility="gone">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/activity_family_member_detail_btn_edit"
+            android:id="@+id/activity_family_member_detail_btn_upgrade"
             style="@style/Component.Button"
-            android:text="@string/activity_family_member_detail_btn_edit"
+            android:text="@string/activity_family_member_detail_btn_upgrade_action_upgrade"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_btn_delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -546,10 +541,11 @@
             style="@style/Component.Button"
             android:backgroundTint="@android:color/holo_red_dark"
             android:text="@string/activity_family_member_detail_btn_delete"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_btn_edit" />
+            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_btn_upgrade" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

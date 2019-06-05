@@ -30,6 +30,7 @@
     <string name="error_not_enough_points">Non hai abbastanza punti per richiedere questo premio!</string>
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
     <string name="form_error_duplicate_homename">Esiste già una casa con questo nome</string>
+    <string name="form_error_duplicate_nickname">Questo nickname è già utilizzato all\'interno della casa</string>
     <string name="form_error_home_already_joined">Sei già membro di questa casa</string>
     <string name="form_error_incorrect_email">Specificare un indirizzo email corretto</string>
     <string name="form_error_incorrect_password">Password non corretta</string>
@@ -39,10 +40,12 @@
     <string name="form_error_missing_value">Specificare un valore</string>
     <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
     <string name="form_error_nonexistent_home">Non esiste alcuna casa con questo nome</string>
+    <string name="form_error_nonzero_required">Specificare un valore diverso da 0</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
 
     <!-- Descrizioni dei campi del database -->
 
+    <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
     <string name="desc_homes_homename_password_repeat">Ripeti password della casa</string>
@@ -109,21 +112,27 @@
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
+    <string name="activity_create_home_edit_progress_description">Per favore attendi, è in corso l\'aggiornamento dei dati</string>
+    <string name="activity_create_home_edit_progress_title">Modifica dati</string>
     <string name="activity_create_home_progress_description">Per favore attendi, è in corso la creazione della casa</string>
     <string name="activity_create_home_progress_title">Creazione casa</string>
     <string name="activity_create_home_text_password_info">La password della casa dovrà essere utilizzata dai nuovi membri per unirsi alla tua casa.</string>
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
+    <string name="activity_create_home_text_switch">Cambia password</string>
     <string name="activity_create_home_text_title">Crea una nuova casa</string>
+    <string name="activity_create_home_text_title_edit">Modifica dati casa</string>
     <string name="activity_create_reward_title_edit">Modifica premio</string>
     <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
-    <string name="activity_family_member_detail_btn_delete">Elimina membro</string>
-    <string name="activity_family_member_detail_btn_edit">Modifica dati</string>
-    <string name="activity_family_member_detail_points_name">Punti:</string>
+    <string name="activity_family_member_detail_btn_delete">Esci dalla casa</string>
+    <string name="activity_family_member_detail_btn_delete_masters">Rimuovi dalla casa</string>
+    <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Effettua downgrade ruolo</string>
+    <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Effettua upgrade ruolo</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
+    <string name="activity_family_member_detail_toolbar_edit">Modifica nickname</string>
     <string name="activity_image_detail_img">Immagine del post aperta</string>
     <string name="activity_join_home_progress_check_description">Per favore attendi, è in corso la verifica delle credenziali</string>
     <string name="activity_join_home_progress_check_title">Verifica credenziali</string>
@@ -134,6 +143,7 @@
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
+    <string name="activity_main_toolbar_edit_home_data">Modifica dati casa</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
     <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta</string>
@@ -143,7 +153,7 @@
     <string name="activity_reward_detail_btn_reserve_reward_available_masters">Ottieni premio</string>
     <string name="activity_reward_detail_btn_reserve_reward_requested">Premio richiesto</string>
     <string name="activity_reward_detail_btn_reserve_reward_unavailable">Premio non disponibile</string>
-    <string name="activity_reward_detail_text_reservation_title">Questo premio è stato richiesto da:</string>
+    <string name="activity_reward_detail_text_reservation_title">Questo premio è stato richiesto da</string>
     <string name="activity_reward_detail_title">Dettaglio premio</string>
     <string name="activity_reward_detail_toolbar_edit">Modifica premio</string>
     <string name="activity_signin_progress_description">Per favore attendi, è in corso l\'accesso</string>
@@ -167,7 +177,7 @@
     <string name="activity_task_detail_btn_delete">Elimina attività</string>
     <string name="activity_task_detail_btn_switch">Cambia assegnamento</string>
     <string name="activity_task_detail_btn_unassign">Rimuovi assegnamento</string>
-    <string name="activity_task_detail_text_assigned_user_title">Questa attività è stata assegnata a:</string>
+    <string name="activity_task_detail_text_assigned_user_title">Questa attività è stata assegnata a</string>
     <string name="activity_task_detail_title">Dettaglio attività</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
@@ -186,6 +196,7 @@
     <string name="fragment_done_empty_list_text">Nessuna attività completata registrata.</string>
     <string name="fragment_done_tab_all">TUTTE</string>
     <string name="fragment_done_tab_recent">RECENTI</string>
+    <string name="fragment_family_text_members">%d utenti in questa casa</string>
     <string name="fragment_image_post_img">Immagine del post</string>
     <string name="fragment_insert_post_btn_audio_suggestion">Tieni premuto il bottone e poi rilascialo per registrare un audio</string>
     <string name="fragment_insert_post_hint_post">Testo del messaggio</string>
@@ -215,7 +226,6 @@
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
-    <string name="activity_family_member_detail_role_name">Ruolo:</string>
     <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
     <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
