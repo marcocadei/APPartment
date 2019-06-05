@@ -82,7 +82,7 @@
                 android:id="@+id/activity_signup_input_repeat_password"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/desc_users_uid_password_repeat"
-                app:layout_constraintBottom_toTopOf="@+id/activity_signup_input_birthdate"
+                app:layout_constraintBottom_toTopOf="@+id/activity_signup_input_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_password">
@@ -95,34 +95,34 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_signup_input_birthdate"
+                android:id="@+id/activity_signup_input_nickname"
                 style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/desc_users_uid_birthdate"
-                app:layout_constraintBottom_toTopOf="@id/activity_signup_input_nickname"
+                android:hint="@string/desc_homeusers_homename_uid_nickname"
+                app:layout_constraintBottom_toTopOf="@id/activity_signup_input_birthdate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_repeat_password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_signup_input_nickname_value"
+                    style="@style/CustomFormTextFieldInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_signup_input_birthdate"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/desc_users_uid_birthdate"
+                app:layout_constraintBottom_toTopOf="@id/activity_signup_layout_select_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_nickname">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signup_input_birthdate_value"
                     style="@style/CustomFormTextFieldInput"
                     android:longClickable="false"
                     android:focusable="false"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_signup_input_nickname"
-                style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/desc_homeusers_homename_uid_nickname"
-                app:layout_constraintBottom_toTopOf="@id/activity_signup_layout_select_img"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_signup_input_birthdate">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/activity_signup_input_nickname_value"
-                    style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +134,7 @@
                 android:layout_marginBottom="@dimen/margin_extra_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_signup_input_nickname"
+                app:layout_constraintTop_toBottomOf="@id/activity_signup_input_birthdate"
                 app:layout_constraintBottom_toTopOf="@id/activity_signup_radio_gender">
 
                 <ImageView
