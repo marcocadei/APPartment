@@ -40,10 +40,12 @@
     <string name="form_error_missing_value">Specificare un valore</string>
     <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
     <string name="form_error_nonexistent_home">Non esiste alcuna casa con questo nome</string>
+    <string name="form_error_nonzero_required">Specificare un valore diverso da 0</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
 
     <!-- Descrizioni dei campi del database -->
 
+    <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
     <string name="desc_homes_homename_password_repeat">Ripeti password della casa</string>
@@ -122,8 +124,8 @@
     <string name="activity_enter_btn_signup">Registrati</string>
     <string name="activity_family_member_detail_btn_delete">Esci dalla casa</string>
     <string name="activity_family_member_detail_btn_delete_masters">Rimuovi dalla casa</string>
-    <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Downgrade</string>
-    <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Upgrade</string>
+    <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Effettua downgrade ruolo</string>
+    <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Effettua upgrade ruolo</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_family_member_detail_toolbar_edit">Modifica nickname</string>
@@ -137,6 +139,7 @@
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
+    <string name="activity_main_toolbar_edit_home_data">Modifica dati casa</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
     <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta</string>
