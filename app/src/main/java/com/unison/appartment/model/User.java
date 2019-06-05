@@ -23,8 +23,6 @@ public class User implements Serializable {
     public final static int GENDER_MALE = 0;
     public final static int GENDER_FEMALE = 1;
 
-    @Exclude
-    private String id;
     private String email;
     private String password;
     private String name;
@@ -36,16 +34,6 @@ public class User implements Serializable {
     public User (){
     }
 
-    public User(String id, String email, String password, String name, String birthdate, int gender, @Nullable String image) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.birthdate = birthdate;
-        this.gender = gender;
-        this.image = image;
-    }
-
     public User(String email, String password, String name, String birthdate, int gender, @Nullable String image) {
         this.email = email;
         this.password = password;
@@ -53,14 +41,6 @@ public class User implements Serializable {
         this.birthdate = birthdate;
         this.gender = gender;
         this.image = image;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmail() {

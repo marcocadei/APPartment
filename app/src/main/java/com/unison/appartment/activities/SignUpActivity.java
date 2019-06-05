@@ -111,10 +111,9 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         final User user = (User) i.getSerializableExtra(EXTRA_USER_DATA);
         if (user != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un utente
-            // toolbar.setTitle(R.string.activity_create_reward_title_edit);
             txtTitle.setText(R.string.activity_signup_title_edit);
             imgTitle.setImageResource(R.drawable.ic_person);
-            inputEmail.setText(user.getEmail()); // Rendere immodificabile
+            inputEmail.setText(user.getEmail());
             inputEmail.setEnabled(false);
             inputPassword.setText(user.getPassword());
             inputPassword.setEnabled(false);
@@ -123,10 +122,14 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
             try {
                 inputBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(DateUtils.parseDateWithStandardLocale(user.getBirthdate())));
             } catch (ParseException e) {
-                e.printStackTrace();
+                /*
+                Questa eccezione non si può mai verificare se si assume che nel database la data è
+                sempre salvata nel formato corretto.
+                 */
+                Log.e(getClass().getCanonicalName(), e.getMessage());
             }
             inputNickname.setText(user.getName());
-            if(user.getImage() != null) {
+            if (user.getImage() != null) {
                 selectedImage = user.getImage();
                 Glide.with(imgPhoto.getContext()).load(selectedImage).apply(RequestOptions.circleCropTransform()).into(imgPhoto);
                 imgPhoto.setVisibility(View.VISIBLE);
@@ -200,7 +203,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                             getString(R.string.activity_signup_signup_description));
                     progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
-                    newUser = createUser(user);
+                    newUser = createUser();
                     // Salvataggio delle informazioni in Auth
                     auth.signUp(newUser, authListener);
                 }
@@ -323,10 +326,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         return result;
     }
 
-    private User createUser(final User oldUser) {
+    private User createUser() {
         // Precondizione: Tutti i campi della form sono corretti
-
-        User newUser;
 
         // Recupero i valori dei campi della form
         String email = inputEmail.getText().toString();
@@ -343,17 +344,12 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 break;
         }
 
-        // Se sto modificando lo user allora ho anche il campo id, che voglio mantenere uguale
-        if (oldUser != null) {
-            newUser = new User(oldUser.getId(), email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
-        } else {
-            newUser = new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
-        }
+        return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
 
-        Intent i = new Intent();
-        i.putExtra(UserProfileActivity.EXTRA_NEW_USER, newUser);
-        setResult(Activity.RESULT_OK, i);
-        finish();
+//        Intent i = new Intent();
+//        i.putExtra(UserProfileActivity.EXTRA_NEW_USER, newUser);
+//        setResult(Activity.RESULT_OK, i);
+//        finish();
     }
 
     @Override
