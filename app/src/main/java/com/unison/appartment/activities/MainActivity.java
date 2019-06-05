@@ -5,11 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -50,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private int selectedBottomNavigationMenuItemId;
 
     private Toolbar toolbar;
+    private Menu optionsMenu;
+    private BottomNavigationView bottomNavigation;
+    private ViewPager pager;
+    private PagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // Le voci della bottom navigation sono un menù
         // Alla creazione dell'activity vengono impostati titolo e logo della toolbar in base alla voce
         // selezionata del menù alla prima apertura
-        BottomNavigationView bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
+        bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
         if (savedInstanceState != null) {
             selectedBottomNavigationMenuItemId = savedInstanceState.getInt(BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM);
         } else {
@@ -78,16 +87,54 @@ public class MainActivity extends AppCompatActivity {
         }
         final MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(selectedBottomNavigationMenuItemId);
         updateActivityContent(selectedBottomNavigationMenuItem);
+        bottomNavigation.setSelectedItemId(selectedBottomNavigationMenuItem.getItemId());
+
+        // Imposto il ViewPager
+        pager = findViewById(R.id.activity_main_fragment_container);
+        pagerAdapter = new FragmentSlidePagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateActivityContent(bottomNavigation.getMenu().getItem(position));
+                bottomNavigation.setSelectedItemId(bottomNavigation.getMenu().getItem(position).getItemId());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 // Quando viene selezionata dal menù nella bottom navigation la stessa sezione in cui si è già
                 // il fragment non deve essere ricaricato (non viene fatto nulla).
-                if (menuItem.getItemId() != selectedBottomNavigationMenuItemId) {
                     updateActivityContent(menuItem);
-                }
-                selectedBottomNavigationMenuItemId = menuItem.getItemId();
+                    switch (menuItem.getItemId()) {
+                        case R.id.activity_main_bottom_navigation_messages:
+                            pager.setCurrentItem(POSITION_MESSAGES, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_family:
+                            pager.setCurrentItem(POSITION_FAMILY, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_todo:
+                            pager.setCurrentItem(POSITION_TODO, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_done:
+                            pager.setCurrentItem(POSITION_DONE, true);
+                            break;
+                        case R.id.activity_main_bottom_navigation_rewards:
+                            pager.setCurrentItem(POSITION_REWARDS, true);
+                            break;
+
+                    }
                 return true;
             }
         });
@@ -102,72 +149,16 @@ public class MainActivity extends AppCompatActivity {
     private void updateActivityContent(MenuItem menuItem) {
         toolbar.setTitle(menuItem.getTitle());
         toolbar.setLogo(menuItem.getIcon());
-        switchToFragment(menuItem.getItemId());
     }
 
-    /**
-     * Metodo per sostituire il fragment corrente con quello corretto in base alla voce selezionata nella
-     * bottom navigation
-     *
-     * @param menuItemId L'id della voce del menù selezionata nella bottom navigation
-     */
-    private void switchToFragment(int menuItemId){
-        switch (menuItemId) {
-            case R.id.activity_main_bottom_navigation_messages:
-                currentPosition = POSITION_MESSAGES;
-                switchToFragment(MessagesFragment.class);
-                break;
-            case R.id.activity_main_bottom_navigation_family:
-                currentPosition = POSITION_FAMILY;
-                switchToFragment(FamilyFragment.class);
-                break;
-            case R.id.activity_main_bottom_navigation_todo:
-                currentPosition = POSITION_TODO;
-                switchToFragment(TodoFragment.class);
-                break;
-            case R.id.activity_main_bottom_navigation_done:
-                currentPosition = POSITION_DONE;
-                switchToFragment(DoneFragment.class);
-                break;
-            case R.id.activity_main_bottom_navigation_rewards:
-                currentPosition = POSITION_REWARDS;
-                switchToFragment(RewardsFragment.class);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Metodo per sostituire il il fragment corrente con quello nuovo in base alla voce selezionata nella
-     * bottom navigation
-     *
-     * @param fragment La classe del fragment che andrà a sostituire quello corrente
-     */
-    private void switchToFragment(Class fragment) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (currentPosition > lastPosition) {
-            ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        } else {
-            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
-        }
-        try {
-            ft.replace(R.id.activity_main_fragment_container, (Fragment) fragment.newInstance());
+  // FIXME Residuo del codice per modificare la toolbar - DA AGGIUSTARE!
             /*
             Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
             fragment o provengo da quel fragment l'options menu deve essere cambiato.
              */
-            if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
-                invalidateOptionsMenu();
-            }
-            lastPosition = currentPosition;
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        ft.commit();
-    }
+            // if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
+            //    invalidateOptionsMenu();
+            // }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -236,5 +227,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+    private class FragmentSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public FragmentSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment nextFragment;
+            switch(position) {
+                case POSITION_MESSAGES:
+                    nextFragment = MessagesFragment.newInstance();
+                    break;
+                case POSITION_FAMILY:
+                    nextFragment = FamilyFragment.newInstance();
+                    break;
+                case POSITION_TODO:
+                    nextFragment = TodoFragment.newInstance();
+                    break;
+                case POSITION_DONE:
+                    nextFragment = DoneFragment.newInstance();
+                    break;
+                case POSITION_REWARDS:
+                    nextFragment = RewardsFragment.newInstance();
+                    break;
+                default:
+                    // FIXME ERRORE qui non deve entrare mai
+                    nextFragment = null;
+            }
+            return nextFragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 5;
+        }
     }
 }
