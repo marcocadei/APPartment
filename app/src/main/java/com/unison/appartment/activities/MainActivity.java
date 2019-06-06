@@ -25,6 +25,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.state.Appartment;
+import com.unison.appartment.utils.KeyboardUtils;
 
 /**
  * Classe che rappresenta l'Activity principale di una Home
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigation.setSelectedItemId(bottomNavigation.getMenu().getItem(position).getItemId());
                 lastPosition = currentPosition;
                 currentPosition = position;
+                // Nella navigazione tra i fragment voglio che la tastiera sparisca
+                KeyboardUtils.hideKeyboard(MainActivity.this);
                 /*
                 Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
                 fragment o provengo da quel fragment l'options menu deve essere cambiato.
