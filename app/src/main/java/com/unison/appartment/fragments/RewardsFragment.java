@@ -90,7 +90,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                                 .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
                         listFragment.refresh();
                         View snackbarView = getActivity().findViewById(R.id.fragment_rewards);
-                        Snackbar.make(snackbarView, getString(R.string.fragment_rewards_float_add_suggestion),
+                        Snackbar.make(snackbarView, getString(R.string.snackbar_downgrade_error_message),
                                 Snackbar.LENGTH_LONG).show();
                     } else {
                         Intent i = new Intent(getContext(), CreateRewardActivity.class);

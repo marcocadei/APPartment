@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateTaskActivity;
 import com.unison.appartment.activities.TaskDetailActivity;
@@ -84,8 +85,18 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
             floatAddTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), CreateTaskActivity.class);
-                    startActivityForResult(i, ADD_TASK_REQUEST_CODE);
+                    if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                        floatAddTask.hide();
+                        TodoListFragment listFragment = (TodoListFragment) getChildFragmentManager()
+                                .findFragmentById(R.id.fragment_todo_todolist);
+                        listFragment.refresh();
+                        View snackbarView = getActivity().findViewById(R.id.fragment_todo);
+                        Snackbar.make(snackbarView, getString(R.string.snackbar_downgrade_error_message),
+                                Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Intent i = new Intent(getActivity(), CreateTaskActivity.class);
+                        startActivityForResult(i, ADD_TASK_REQUEST_CODE);
+                    }
                 }
             });
         }

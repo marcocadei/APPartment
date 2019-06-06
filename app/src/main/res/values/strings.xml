@@ -42,6 +42,7 @@
     <string name="form_error_nonexistent_home">Non esiste alcuna casa con questo nome</string>
     <string name="form_error_nonzero_required">Specificare un valore diverso da 0</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
+    <string name="snackbar_downgrade_error_message">Non disponi più dei permessi necessari!</string>
 
     <!-- Descrizioni dei campi del database -->
 
@@ -216,7 +217,6 @@
     <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
     <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
     <string name="fragment_rewards_empty_list_text">Attualmente non ci sono premi disponibili.</string>
-    <string name="fragment_rewards_float_add_suggestion">Non disponi più dei permessi necessari!</string>
     <string name="fragment_todo_empty_list_text">Non c\'è nessuna attività da svolgere.</string>
     <string name="fragment_todo_text_assigned_user">Assegnato a: %1$s</string>
     <string name="fragment_todo_text_assigned_user_self">Assegnato a: me stesso</string>
