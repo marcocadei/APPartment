@@ -32,6 +32,7 @@
 
             <ImageView
                 android:id="@+id/fragment_image_post_img"
+                android:adjustViewBounds="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

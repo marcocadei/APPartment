@@ -19,12 +19,14 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.state.Appartment;
+import com.unison.appartment.state.MyApplication;
 
 import java.io.IOException;
 import java.util.Date;
@@ -75,9 +77,9 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         java.text.DateFormat dateFormat = DateFormat.getDateFormat(holder.itemView.getContext());
         java.text.DateFormat timeFormat = DateFormat.getTimeFormat(holder.itemView.getContext());
         Date timestamp;
-        Resources res = holder.itemView.getContext().getResources();
-        int role = Appartment.getInstance().getUserHome().getRole();
-        String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
+        final Resources res = holder.itemView.getContext().getResources();
+        final int role = Appartment.getInstance().getUserHome().getRole();
+        final String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
 
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
@@ -97,7 +99,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                     holderTextPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
+                            final PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
                             //inflating menu from xml resource
                             popup.inflate(R.menu.fragment_messages_post_options);
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -105,7 +107,13 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            listener.deletePost(textPostItem);
+                                            if (role == Home.ROLE_SLAVE && !textPostItem.getAuthor().equals(nickname)) {
+                                                holderTextPost.textPostOptions.setVisibility(View.GONE);
+                                                notifyDataSetChanged();
+                                                listener.onDowngrade();
+                                            } else {
+                                                listener.deletePost(textPostItem);
+                                            }
                                             return true;
                                         default:
                                             return false;
@@ -129,6 +137,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 // recyclerView andrebbe a scatti
                 Glide.with(holderImagePost.imagePostImg.getContext())
                         .load(imagePostItem.getContent())
+                        .fitCenter()
                         .into(holderImagePost.imagePostImg);
                 holderImagePost.imagePostSender.setText(imagePostItem.getAuthor());
                 timestamp = new Date(imagePostItem.getTimestamp());
@@ -158,7 +167,13 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            listener.deletePost(imagePostItem);
+                                            if (role == Home.ROLE_SLAVE && !imagePostItem.getAuthor().equals(nickname)) {
+                                                holderImagePost.imagePostOptions.setVisibility(View.GONE);
+                                                notifyDataSetChanged();
+                                                listener.onDowngrade();
+                                            } else {
+                                                listener.deletePost(imagePostItem);
+                                            }
                                             return true;
                                         default:
                                             return false;
@@ -212,7 +227,13 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            listener.deletePost(audioPostItem);
+                                            if (role == Home.ROLE_SLAVE && !audioPostItem.getAuthor().equals(nickname)) {
+                                                holderAudioPost.audioPostOptions.setVisibility(View.GONE);
+                                                notifyDataSetChanged();
+                                                listener.onDowngrade();
+                                            } else {
+                                                listener.deletePost(audioPostItem);
+                                            }
                                             return true;
                                         default:
                                             return false;

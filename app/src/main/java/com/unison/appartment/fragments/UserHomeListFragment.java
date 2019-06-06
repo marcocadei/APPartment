@@ -80,7 +80,11 @@ public class UserHomeListFragment extends Fragment {
             }
 
             myAdapter = new MyUserHomeRecyclerViewAdapter(mListener);
-            // FIXME questo qui deve rimanere scommentato?
+            /*
+            Observer commentato perché tanto per aggiungere/togliere un elemento
+            alla lista delle case bisogna necessariamente cambiare activity e quando si ritorna
+            si visualizza la lista completa.
+             */
             /*myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {

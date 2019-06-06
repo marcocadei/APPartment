@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateRewardActivity;
 import com.unison.appartment.activities.RewardDetailActivity;
@@ -28,7 +29,7 @@ import com.unison.appartment.state.Appartment;
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
     public final static String EXTRA_NEW_REWARD = "newReward";
-    public final static String EXTRA_REWARD_ID = "rewardId";
+    public final static String EXTRA_REWARD_DATA = "rewardData";
     public final static String EXTRA_USER_NAME = "userName";
     public final static String EXTRA_USER_ID = "userId";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
@@ -71,7 +72,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
 
         emptyListLayout = view.findViewById(R.id.fragment_rewards_layout_empty_list);
 
-        FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
+        final FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
             // Se l'utente è uno slave, non viene visualizzato il bottone per aggiungere un nuovo premio.
             floatAdd.hide();
@@ -83,8 +84,18 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             floatAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getContext(), CreateRewardActivity.class);
-                    startActivityForResult(i, ADD_REWARD_REQUEST_CODE);
+                    if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                        floatAdd.hide();
+                        RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
+                                .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
+                        listFragment.refresh();
+                        View snackbarView = getActivity().findViewById(R.id.fragment_rewards);
+                        Snackbar.make(snackbarView, getString(R.string.snackbar_downgrade_error_message),
+                                Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Intent i = new Intent(getContext(), CreateRewardActivity.class);
+                        startActivityForResult(i, ADD_REWARD_REQUEST_CODE);
+                    }
                 }
             });
         }
@@ -107,24 +118,27 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             if (resultCode == RewardDetailActivity.RESULT_OK) {
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_DELETE:
-                        // FIXME per ora la cancelRequest è inutile perchè il delete cancella già tutto il nodo, però
-                        // in futuro vogliamo che con il cancel l'utente venga notificato o qualcos'altro
-                        // Se si decide di lasciare il cancel perché serve, farsi mandare un altro extra
-                        // per controllare se il premio è stato richiesto
-                        listFragment.cancelRequest(data.getStringExtra(EXTRA_REWARD_ID));
-                        listFragment.deleteReward(data.getStringExtra(EXTRA_REWARD_ID));
+                        Reward rewardToDelete = (Reward)data.getSerializableExtra(EXTRA_REWARD_DATA);
+                        if (rewardToDelete.isRequested()) {
+                            listFragment.cancelRequest(rewardToDelete);
+                        }
+                        listFragment.deleteReward(rewardToDelete.getId());
                         break;
                     case OPERATION_RESERVE:
-                        listFragment.requestReward(data.getStringExtra(EXTRA_REWARD_ID),
+                        listFragment.requestReward((Reward)data.getSerializableExtra(EXTRA_REWARD_DATA),
                                 data.getStringExtra(EXTRA_USER_ID),
                                 data.getStringExtra(EXTRA_USER_NAME));
                         break;
                     case OPERATION_CANCEL:
-                        listFragment.cancelRequest(data.getStringExtra(EXTRA_REWARD_ID));
+                        listFragment.cancelRequest((Reward)data.getSerializableExtra(EXTRA_REWARD_DATA));
                         break;
                     case OPERATION_CONFIRM:
-                        listFragment.confirmRequest((Reward)data.getSerializableExtra(EXTRA_REWARD_ID),
-                                data.getStringExtra(EXTRA_USER_ID));
+                        Reward rewardToConfirm = (Reward)data.getSerializableExtra(EXTRA_REWARD_DATA);
+                        if (!rewardToConfirm.isRequested()) {
+                            listFragment.requestReward(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID),
+                                    data.getStringExtra(EXTRA_USER_NAME));
+                        }
+                        listFragment.confirmRequest(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID));
                         break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");

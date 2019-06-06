@@ -175,7 +175,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
             });
 
             if (task.isAssigned()) {
-                if (task.getAssignedUserId().equals(userId)) {
+                if (task.getAssignedUserId().equals(userId) && !task.isMarked()) {
                     /*
                     [Caso B] Il task è assegnato al master loggato (e non è marcato come completato,
                     dal momento che questo stato non ha senso per i master): in questo caso vengono

@@ -1,20 +1,16 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,6 +25,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.state.Appartment;
+import com.unison.appartment.utils.KeyboardUtils;
 
 /**
  * Classe che rappresenta l'Activity principale di una Home
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setSelectedItemId(selectedBottomNavigationMenuItem.getItemId());
 
         // Imposto il ViewPager
-        pager = findViewById(R.id.activity_main_fragment_container);
+        pager = findViewById(R.id.activity_main_viewpager);
         pagerAdapter = new FragmentSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -104,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigation.setSelectedItemId(bottomNavigation.getMenu().getItem(position).getItemId());
                 lastPosition = currentPosition;
                 currentPosition = position;
+                // Nella navigazione tra i fragment voglio che la tastiera sparisca
+                KeyboardUtils.hideKeyboard(MainActivity.this);
                 /*
                 Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
                 fragment o provengo da quel fragment l'options menu deve essere cambiato.

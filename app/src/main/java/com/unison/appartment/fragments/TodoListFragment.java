@@ -127,6 +127,10 @@ public class TodoListFragment extends Fragment {
         });
     }
 
+    public void refresh() {
+        myAdapter.notifyDataSetChanged();
+    }
+
     public void addTask(UncompletedTask newUncompletedTask) {
         viewModel.addTask(newUncompletedTask);
     }

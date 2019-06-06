@@ -2,7 +2,6 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -183,11 +182,19 @@ public class JoinHomeActivity extends FormActivity {
             Appartment appState = Appartment.getInstance();
             appState.setHome(home);
             appState.setUserHome(createUserHome());
-            databaseReader.retrieveHomeUsers(home.getName(), auth.getCurrentUserUid(),  dbReaderHomeUserListener);
+
+            Map<String, HomeUser> homeUsers = appState.getHomeUsers();
+            homeUsers.put(auth.getCurrentUserUid(), createHomeUser());
+            appState.setHomeUsers(homeUsers);
+
+            moveToNextActivity(MainActivity.class);
+            dismissProgress();
         }
 
         @Override
         public void onWriteFail(Exception exception) {
+            Appartment.getInstance().resetHomeUsers();
+
             try {
                 throw exception;
             }
@@ -215,9 +222,38 @@ public class JoinHomeActivity extends FormActivity {
     final DatabaseReaderListener dbReaderHomeUserListener = new DatabaseReaderListener() {
         @Override
         public void onReadSuccess(String key, Object object) {
-            Appartment.getInstance().setHomeUsers((Map<String, HomeUser>)object);
-            moveToNextActivity(MainActivity.class);
-            dismissProgress();
+            Map<String, HomeUser> homeUsers = (Map<String, HomeUser>) object;
+            boolean duplicateNickname = false;
+            boolean duplicateUid = false;
+            String insertedNickname = inputNickname.getText().toString();
+            for (Map.Entry<String, HomeUser> entry : homeUsers.entrySet()) {
+                if (insertedNickname.equals(entry.getValue().getNickname())) {
+                    // Lo username inserito corrisponde a quello di un altro utente
+                    layoutNickname.setError(getString(R.string.form_error_duplicate_nickname));
+                    dismissProgress();
+                    duplicateNickname = true;
+                    break;
+                }
+                if (auth.getCurrentUserUid().equals(entry.getKey())) {
+                    // L'utente ha specificato una casa di cui è già membro
+                    layoutHomeName.setError(getString(R.string.form_error_home_already_joined));
+                    dismissProgress();
+                    duplicateUid = true;
+                    break;
+                }
+            }
+            if (!duplicateNickname && !duplicateUid) {
+                /*
+                Salvo gli HomeUsers letti nello stato; bisogna però tenere presente che:
+                - manca ancora l'utente che sto scrivendo nel db;
+                - non so se la scrittura andrà a buon fine.
+                 */
+                Appartment.getInstance().setHomeUsers(homeUsers);
+
+                // Tutti i dati sono corretti, posso passare alla scrittura dei nuovi dati nel db
+                databaseWriter.writeJoinHome(inputHomeName.getText().toString(),
+                        auth.getCurrentUserUid(), createHomeUser(), createUserHome(), databaseWriterListener);
+            }
         }
 
         @Override
@@ -244,9 +280,8 @@ public class JoinHomeActivity extends FormActivity {
                 dismissProgress();
             }
             else {
-                // Credenziali corrette, posso passare alla scrittura dei nuovi dati nel db
-                databaseWriter.writeJoinHome(inputHomeName.getText().toString(), auth.getCurrentUserUid(),
-                        createHomeUser(), createUserHome(), databaseWriterListener);
+                // Credenziali corrette, passo alla verifica dei nickname dei membri della casa
+                databaseReader.retrieveHomeUsers(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
             }
         }
 
@@ -259,12 +294,12 @@ public class JoinHomeActivity extends FormActivity {
 
         @Override
         public void onReadCancelled(DatabaseError databaseError) {
-                /*
-                onCancelled viene invocato solo se si verifica un errore a lato server oppure se
-                le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
-                In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
-                la situazione non può essere risolta dall'utente.
-                 */
+            /*
+            onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+            le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+            In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+            la situazione non può essere risolta dall'utente.
+             */
             showErrorDialog();
         }
     };

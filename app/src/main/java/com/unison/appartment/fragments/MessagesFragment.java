@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentListener;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
@@ -118,5 +119,11 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         PostListFragment pf = (PostListFragment)getChildFragmentManager()
                 .findFragmentById(R.id.fragment_messages_fragment_list_post);
         pf.deletePost(post);
+    }
+
+    public void onDowngrade() {
+        View snackbarView = getActivity().findViewById(R.id.fragment_messages);
+        Snackbar.make(snackbarView, getString(R.string.snackbar_downgrade_error_message),
+                Snackbar.LENGTH_LONG).show();
     }
 }
