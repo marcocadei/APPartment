@@ -141,12 +141,12 @@ public class RewardListFragment extends Fragment {
         viewModel.editReward(reward);
     }
 
-    public void requestReward(String rewardId, String userId, String userName){
-        viewModel.requestReward(rewardId, userId, userName);
+    public void requestReward(Reward reward, String userId, String userName){
+        viewModel.requestReward(reward, userId, userName);
     }
 
-    public void cancelRequest(String rewardId){
-        viewModel.cancelRequest(rewardId);
+    public void cancelRequest(Reward reward){
+        viewModel.cancelRequest(reward);
     }
 
     public void confirmRequest(Reward reward, String userId) {

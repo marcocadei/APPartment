@@ -29,7 +29,7 @@ import com.unison.appartment.state.Appartment;
 public class RewardsFragment extends Fragment implements RewardListFragment.OnRewardListFragmentInteractionListener {
 
     public final static String EXTRA_NEW_REWARD = "newReward";
-    public final static String EXTRA_REWARD_ID = "rewardId";
+    public final static String EXTRA_REWARD_DATA = "rewardData";
     public final static String EXTRA_USER_NAME = "userName";
     public final static String EXTRA_USER_ID = "userId";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
@@ -122,20 +122,27 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                         // in futuro vogliamo che con il cancel l'utente venga notificato o qualcos'altro
                         // Se si decide di lasciare il cancel perché serve, farsi mandare un altro extra
                         // per controllare se il premio è stato richiesto
-                        listFragment.cancelRequest(data.getStringExtra(EXTRA_REWARD_ID));
-                        listFragment.deleteReward(data.getStringExtra(EXTRA_REWARD_ID));
+                        Reward rewardToDelete = (Reward)data.getSerializableExtra(EXTRA_REWARD_DATA);
+                        if (rewardToDelete.isRequested()) {
+                            listFragment.cancelRequest(rewardToDelete);
+                        }
+                        listFragment.deleteReward(rewardToDelete.getId());
                         break;
                     case OPERATION_RESERVE:
-                        listFragment.requestReward(data.getStringExtra(EXTRA_REWARD_ID),
+                        listFragment.requestReward((Reward)data.getSerializableExtra(EXTRA_REWARD_DATA),
                                 data.getStringExtra(EXTRA_USER_ID),
                                 data.getStringExtra(EXTRA_USER_NAME));
                         break;
                     case OPERATION_CANCEL:
-                        listFragment.cancelRequest(data.getStringExtra(EXTRA_REWARD_ID));
+                        listFragment.cancelRequest((Reward)data.getSerializableExtra(EXTRA_REWARD_DATA));
                         break;
                     case OPERATION_CONFIRM:
-                        listFragment.confirmRequest((Reward)data.getSerializableExtra(EXTRA_REWARD_ID),
-                                data.getStringExtra(EXTRA_USER_ID));
+                        Reward rewardToConfirm = (Reward)data.getSerializableExtra(EXTRA_REWARD_DATA);
+                        if (!rewardToConfirm.isRequested()) {
+                            listFragment.requestReward(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID),
+                                    data.getStringExtra(EXTRA_USER_NAME));
+                        }
+                        listFragment.confirmRequest(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID));
                         break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");

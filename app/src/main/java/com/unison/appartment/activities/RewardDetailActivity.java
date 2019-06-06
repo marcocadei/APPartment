@@ -242,8 +242,9 @@ public class RewardDetailActivity extends AppCompatActivity {
     private void sendConfirmRequestData(String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CONFIRM);
-        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward);
+        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
+        returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
         setResult(RESULT_OK, returnIntent);
         finish();
     }
@@ -251,7 +252,7 @@ public class RewardDetailActivity extends AppCompatActivity {
     private void sendMakeRequestData(String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_RESERVE);
-        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
+        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
         setResult(RESULT_OK, returnIntent);
@@ -261,7 +262,7 @@ public class RewardDetailActivity extends AppCompatActivity {
     private void sendCancelRequestData() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CANCEL);
-        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
+        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
         setResult(RESULT_OK, returnIntent);
         finish();
     }
@@ -269,7 +270,7 @@ public class RewardDetailActivity extends AppCompatActivity {
     private void sendDeleteData() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_DELETE);
-        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_ID, reward.getId());
+        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
         setResult(RESULT_OK, returnIntent);
         finish();
     }
