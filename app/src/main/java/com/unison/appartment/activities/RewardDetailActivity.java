@@ -136,7 +136,9 @@ public class RewardDetailActivity extends AppCompatActivity {
             MaterialButton btnConfirm = findViewById(R.id.activity_reward_detail_btn_confirm_reservation);
             MaterialButton btnCancel = findViewById(R.id.activity_reward_detail_btn_cancel_reservation);
             MaterialButton btnDelete = findViewById(R.id.activity_reward_detail_btn_delete);
+            TextView textInfo = findViewById(R.id.activity_reward_detail_text_info);
 
+            textInfo.setVisibility(View.GONE);
             btnDelete.setVisibility(View.VISIBLE);
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

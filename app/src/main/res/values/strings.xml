@@ -154,6 +154,7 @@
     <string name="activity_reward_detail_btn_reserve_reward_available_masters">Ottieni premio</string>
     <string name="activity_reward_detail_btn_reserve_reward_requested">Premio richiesto</string>
     <string name="activity_reward_detail_btn_reserve_reward_unavailable">Premio non disponibile</string>
+    <string name="activity_reward_detail_text_info" tools:ignore="Typos">I punti ti verranno sottratti al momento della richiesta.\nIn caso di annullamento, ti verranno riaccreditati.</string>
     <string name="activity_reward_detail_text_reservation_title">Questo premio è stato richiesto da</string>
     <string name="activity_reward_detail_title">Dettaglio premio</string>
     <string name="activity_reward_detail_toolbar_edit">Modifica premio</string>
