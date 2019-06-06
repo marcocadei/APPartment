@@ -125,6 +125,10 @@ public class RewardListFragment extends Fragment {
         });
     }
 
+    public void refresh() {
+        myAdapter.notifyDataSetChanged();
+    }
+
     public void addReward(Reward newReward) {
         viewModel.addReward(newReward);
     }

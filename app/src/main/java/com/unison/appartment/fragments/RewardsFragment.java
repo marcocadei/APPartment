@@ -86,7 +86,9 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                 public void onClick(View v) {
                     if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
                         floatAdd.hide();
-
+                        RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
+                                .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
+                        listFragment.refresh();
                         View snackbarView = getActivity().findViewById(R.id.fragment_rewards);
                         Snackbar.make(snackbarView, getString(R.string.fragment_rewards_float_add_suggestion),
                                 Snackbar.LENGTH_LONG).show();
