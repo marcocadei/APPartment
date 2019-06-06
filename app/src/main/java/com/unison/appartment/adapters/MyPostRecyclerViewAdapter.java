@@ -19,12 +19,14 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.state.Appartment;
+import com.unison.appartment.state.MyApplication;
 
 import java.io.IOException;
 import java.util.Date;
@@ -75,7 +77,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         java.text.DateFormat dateFormat = DateFormat.getDateFormat(holder.itemView.getContext());
         java.text.DateFormat timeFormat = DateFormat.getTimeFormat(holder.itemView.getContext());
         Date timestamp;
-        Resources res = holder.itemView.getContext().getResources();
+        final Resources res = holder.itemView.getContext().getResources();
         int role = Appartment.getInstance().getUserHome().getRole();
         String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
 
@@ -97,7 +99,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                     holderTextPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
+                            final PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
                             //inflating menu from xml resource
                             popup.inflate(R.menu.fragment_messages_post_options);
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -105,7 +107,13 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            listener.deletePost(textPostItem);
+                                            if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                                                holderTextPost.textPostOptions.setVisibility(View.GONE);
+                                                notifyDataSetChanged();
+                                                listener.onDowngrade();
+                                            } else {
+                                                listener.deletePost(textPostItem);
+                                            }
                                             return true;
                                         default:
                                             return false;
@@ -158,7 +166,13 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            listener.deletePost(imagePostItem);
+                                            if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                                                holderImagePost.imagePostOptions.setVisibility(View.GONE);
+                                                notifyDataSetChanged();
+                                                listener.onDowngrade();
+                                            } else {
+                                                listener.deletePost(imagePostItem);
+                                            }
                                             return true;
                                         default:
                                             return false;
@@ -212,7 +226,13 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            listener.deletePost(audioPostItem);
+                                            if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                                                holderAudioPost.audioPostOptions.setVisibility(View.GONE);
+                                                notifyDataSetChanged();
+                                                listener.onDowngrade();
+                                            } else {
+                                                listener.deletePost(audioPostItem);
+                                            }
                                             return true;
                                         default:
                                             return false;

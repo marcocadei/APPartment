@@ -186,5 +186,7 @@ public class PostListFragment extends Fragment {
         void loading(boolean loading);
 
         void deletePost(Post post);
+
+        void onDowngrade();
     }
 }
