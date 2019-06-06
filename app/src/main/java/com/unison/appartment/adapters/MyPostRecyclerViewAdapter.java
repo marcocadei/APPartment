@@ -78,8 +78,8 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         java.text.DateFormat timeFormat = DateFormat.getTimeFormat(holder.itemView.getContext());
         Date timestamp;
         final Resources res = holder.itemView.getContext().getResources();
-        int role = Appartment.getInstance().getUserHome().getRole();
-        String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
+        final int role = Appartment.getInstance().getUserHome().getRole();
+        final String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
 
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
@@ -107,7 +107,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                                            if (role == Home.ROLE_SLAVE && !textPostItem.getAuthor().equals(nickname)) {
                                                 holderTextPost.textPostOptions.setVisibility(View.GONE);
                                                 notifyDataSetChanged();
                                                 listener.onDowngrade();
@@ -166,7 +166,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                                            if (role == Home.ROLE_SLAVE && !imagePostItem.getAuthor().equals(nickname)) {
                                                 holderImagePost.imagePostOptions.setVisibility(View.GONE);
                                                 notifyDataSetChanged();
                                                 listener.onDowngrade();
@@ -226,7 +226,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                                 public boolean onMenuItemClick(MenuItem item) {
                                     switch(item.getItemId()) {
                                         case R.id.fragment_messages_post_options_delete:
-                                            if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                                            if (role == Home.ROLE_SLAVE && !audioPostItem.getAuthor().equals(nickname)) {
                                                 holderAudioPost.audioPostOptions.setVisibility(View.GONE);
                                                 notifyDataSetChanged();
                                                 listener.onDowngrade();
