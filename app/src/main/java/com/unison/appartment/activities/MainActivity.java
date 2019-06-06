@@ -102,6 +102,15 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 updateActivityContent(bottomNavigation.getMenu().getItem(position));
                 bottomNavigation.setSelectedItemId(bottomNavigation.getMenu().getItem(position).getItemId());
+                lastPosition = currentPosition;
+                currentPosition = position;
+                /*
+                Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
+                fragment o provengo da quel fragment l'options menu deve essere cambiato.
+                 */
+                 if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
+                    invalidateOptionsMenu();
+                 }
             }
 
             @Override
@@ -109,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -133,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.activity_main_bottom_navigation_rewards:
                             pager.setCurrentItem(POSITION_REWARDS, true);
                             break;
-
                     }
                 return true;
             }
@@ -150,15 +157,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(menuItem.getTitle());
         toolbar.setLogo(menuItem.getIcon());
     }
-
-  // FIXME Residuo del codice per modificare la toolbar - DA AGGIUSTARE!
-            /*
-            Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
-            fragment o provengo da quel fragment l'options menu deve essere cambiato.
-             */
-            // if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
-            //    invalidateOptionsMenu();
-            // }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -262,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 5;
+            return bottomNavigation.getMenu().size();
         }
     }
 }
