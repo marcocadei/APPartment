@@ -1,20 +1,16 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -90,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setSelectedItemId(selectedBottomNavigationMenuItem.getItemId());
 
         // Imposto il ViewPager
-        pager = findViewById(R.id.activity_main_fragment_container);
+        pager = findViewById(R.id.activity_main_viewpager);
         pagerAdapter = new FragmentSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
