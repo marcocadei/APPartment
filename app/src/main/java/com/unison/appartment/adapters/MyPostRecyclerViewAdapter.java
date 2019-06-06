@@ -137,6 +137,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 // recyclerView andrebbe a scatti
                 Glide.with(holderImagePost.imagePostImg.getContext())
                         .load(imagePostItem.getContent())
+                        .fitCenter()
                         .into(holderImagePost.imagePostImg);
                 holderImagePost.imagePostSender.setText(imagePostItem.getAuthor());
                 timestamp = new Date(imagePostItem.getTimestamp());
