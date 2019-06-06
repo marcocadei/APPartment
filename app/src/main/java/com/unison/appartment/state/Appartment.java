@@ -152,6 +152,13 @@ public class Appartment {
         return homeUsers.get(uid);
     }
 
+    public Map<String, HomeUser> getHomeUsers() {
+        if (homeUsers == null) {
+            homeUsers = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOMEUSER_KEY), new TypeToken<HashMap<String, HomeUser>>() { }.getType());
+        }
+        return homeUsers;
+    }
+
     public List<HomeUser> getHomeUsersList() {
         return new ArrayList<>(homeUsers.values());
     }
