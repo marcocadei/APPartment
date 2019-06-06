@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirect page</title>
+</head>
+
+<body>
+<div style="visibility: hidden">
+    <form name="aspnetForm" method="post" action="https://wwwservizi.regione.emilia-romagna.it/generatore/default.aspx" id="aspnetForm">
+        <fieldset id="fldCalcola">
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE1MDA1OTc4MjQPZBYCZg9kFgQCAQ9kFgICAQ9kFgJmDxYCHgRUZXh0BVBHZW5lcmF0b3JlIGRpIG51bWVyaSBjYXN1YWxpICZtZGFzaDsgRS1SIElsIHBvcnRhbGUgZGVsbGEgUmVnaW9uZSBFbWlsaWEtUm9tYWduYWQCBQ9kFgQCBg8WAh8ABRxHZW5lcmF0b3JlIGRpIG51bWVyaSBjYXN1YWxpZAIMD2QWAgIDD2QWAmYPZBYKAgMPZBYCAgIPDxYCHgdFbmFibGVkZ2RkAgUPZBYCAgIPDxYCHwFnZGQCBw9kFgICAg8PFgIfAWdkZAIJDxAPZBYCHgV0aXRsZQUGc2NlbHRhZGRkAg0PZBYCAgIPDxYCHwFnZGQYAgUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFHmN0bDAwJGNwaENvbnRlbnV0byRjaGtEaXN0aW5jdAUjY3RsMDAkY3BoQ29udGVudXRvJG12d051bWVyaUNhc3VhbGkPD2RmZLQrwxXiYHv4F6dm4xW+qjX9H0z9" />
+            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="E742DF13" />
+            <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWCgLGvJTrAwKYp5fECQLgxcXoCwLS8JmHBQLNp566CwLMp566CwLyv97BDAL3qcrcAwL4zI3ZCwKF3++8B+6xZi3H14Qt7g84uq1Uvyenf4Ah" />
+            <input name="ctl00$cphContenuto$etbMin$txtetbMin" type="text" value="1" maxlength="10" id="ctl00_cphContenuto_etbMin_txtetbMin" />
+            <input name="ctl00$cphContenuto$etbMax$txtetbMax" type="text" value="6" maxlength="10" id="ctl00_cphContenuto_etbMax_txtetbMax" />
+            <input name="ctl00$cphContenuto$etbPerc$txtetbPerc" type="text" value="1" maxlength="3" id="ctl00_cphContenuto_etbPerc_txtetbPerc" />
+            <select name="ctl00$cphContenuto$ddlScelta" id="ctl00_cphContenuto_ddlScelta" title="scelta">
+                <option selected="selected" value="1">Esatti</option>
+            </select>
+            <input id="ctl00_cphContenuto_chkDistinct" type="checkbox" name="ctl00$cphContenuto$chkDistinct" checked="checked" />
+            <input name="ctl00$cphContenuto$etbSeed$txtetbSeed" type="text" maxlength="10" id="ctl00_cphContenuto_etbSeed_txtetbSeed" value="444" />
+            <input type="submit" name="ctl00$cphContenuto$btnGenera" value="Genera" id="ctl00_cphContenuto_btnGenera" />
+        </fieldset>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        var seedLength = Math.floor(Math.random() * 7) + 4;
+        $("#ctl00_cphContenuto_etbSeed_txtetbSeed").attr("value", Math.random().toString(10).substring(2, seedLength));
+        $(document).ready(function() {
+            $("#ctl00_cphContenuto_btnGenera").click();
+        });
+    </script>
+</div>
+</body>
+</html>
