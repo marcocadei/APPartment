@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateRewardActivity;
 import com.unison.appartment.activities.RewardDetailActivity;
@@ -71,7 +72,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
 
         emptyListLayout = view.findViewById(R.id.fragment_rewards_layout_empty_list);
 
-        FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
+        final FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
             // Se l'utente è uno slave, non viene visualizzato il bottone per aggiungere un nuovo premio.
             floatAdd.hide();
@@ -83,8 +84,16 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             floatAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getContext(), CreateRewardActivity.class);
-                    startActivityForResult(i, ADD_REWARD_REQUEST_CODE);
+                    if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+                        floatAdd.hide();
+
+                        View snackbarView = getActivity().findViewById(R.id.fragment_rewards);
+                        Snackbar.make(snackbarView, getString(R.string.fragment_rewards_float_add_suggestion),
+                                Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Intent i = new Intent(getContext(), CreateRewardActivity.class);
+                        startActivityForResult(i, ADD_REWARD_REQUEST_CODE);
+                    }
                 }
             });
         }
