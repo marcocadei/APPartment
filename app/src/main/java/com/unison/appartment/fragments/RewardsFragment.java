@@ -41,6 +41,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
     private static final int DETAIL_REWARD_REQUEST_CODE = 2;
 
     private View emptyListLayout;
+    private FloatingActionButton floatAdd;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -71,7 +72,15 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
 
         emptyListLayout = view.findViewById(R.id.fragment_rewards_layout_empty_list);
 
-        FloatingActionButton floatAdd = view.findViewById(R.id.fragments_reward_float_add);
+        floatAdd = view.findViewById(R.id.fragments_reward_float_add);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
             // Se l'utente è uno slave, non viene visualizzato il bottone per aggiungere un nuovo premio.
             floatAdd.hide();
@@ -88,8 +97,6 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                 }
             });
         }
-
-        return view;
     }
 
     @Override
