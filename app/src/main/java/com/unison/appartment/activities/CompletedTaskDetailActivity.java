@@ -15,10 +15,12 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.unison.appartment.R;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.CompletionListFragment;
 import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.model.CompletedTask;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.DateUtils;
 
@@ -76,14 +78,18 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
         textCompletionDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(completedTask.getLastCompletionDate())));
 
         MaterialButton btnCreate = findViewById(R.id.activity_completed_task_detail_btn_create);
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(CompletedTaskDetailActivity.this, CreateTaskActivity.class);
-                i.putExtra(CreateTaskActivity.EXTRA_TASK_DATA, completedTask);
-                startActivityForResult(i, ADD_TASK_REQUEST_CODE);
-            }
-        });
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
+            btnCreate.setVisibility(View.GONE);
+        } else {
+            btnCreate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(CompletedTaskDetailActivity.this, CreateTaskActivity.class);
+                    i.putExtra(CreateTaskActivity.EXTRA_TASK_DATA, completedTask);
+                    startActivityForResult(i, ADD_TASK_REQUEST_CODE);
+                }
+            });
+        }
     }
 
     @Override
