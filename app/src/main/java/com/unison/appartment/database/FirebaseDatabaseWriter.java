@@ -46,7 +46,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
                 });
     }
 
-    public void writeUser(final User newUser, final String uid, final DatabaseWriterListener listener) {
+    public void writeUser(final User newUser, final User oldUser, final String uid, final DatabaseWriterListener listener) {
         // Quando scrivo un utente nel database devo primare caricare la foto nel firebase storage
         // poi ottenere un URL a quella foto e salvare quello all'interno del realtime database
         // Tutto questo è fatto se l'utente ha selezionato una foto
@@ -75,6 +75,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
 
                     // UUID genera un nome univoco per il file che sto caricando
                     final StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.USER_IMAGES+ UUID.randomUUID().toString());
+                    final String imageStoragePath = userImageRef.getPath();
                     UploadTask uploadTask = userImageRef.putBytes(data);
 
                     // Codice della guida per ottenere l'URL di download del media appena caricato
@@ -92,6 +93,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
                             if (task.isSuccessful()) {
                                 String userPhotoUrl = task.getResult().toString();
                                 newUser.setImage(userPhotoUrl);
+                                newUser.setImageStoragePath(imageStoragePath);
                                 writeUserAfterUpdate(newUser, uid, listener);
                             } else {
                                 listener.onWriteFail(task.getException());
