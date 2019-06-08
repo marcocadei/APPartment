@@ -25,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.unison.appartment.database.DatabaseConstants;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.StorageConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.Post;
@@ -36,10 +37,14 @@ import com.unison.appartment.utils.ImageUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class PostRepository {
+    // Riferimento al nodo root del database
+    private DatabaseReference rootRef;
     // Nodo del database a cui sono interessato
     private DatabaseReference postRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
@@ -47,14 +52,25 @@ public class PostRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<Post>> postLiveData;
 
+    private String homeName;
+    private String currentUserUid;
+    private String postPath;
+    private String homeUserPath;
+
     private MutableLiveData<Boolean> loading;
 
     public PostRepository() {
+        homeName = Appartment.getInstance().getHome().getName();
+        currentUserUid = new FirebaseAuth().getCurrentUserUid();
+        postPath = DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS +
+                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName();
+        homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR + currentUserUid;
+
+        // Riferimento al nodo root del database
+        rootRef = FirebaseDatabase.getInstance().getReference();
         // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
-        postRef =
-                FirebaseDatabase.getInstance().getReference(
-                        DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS +
-                                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        postRef = FirebaseDatabase.getInstance().getReference(postPath);
         Query orderedPosts = postRef.orderByChild(DatabaseConstants.POSTS_HOMENAME_POSTID_TIMESTAMP);
         liveData = new FirebaseQueryLiveData(orderedPosts);
         postLiveData = Transformations.map(liveData, new PostRepository.Deserializer());
@@ -169,25 +185,64 @@ public class PostRepository {
     }
 
     private void addUpdatedPost(Post newPost) {
+        Map<String, Object> childUpdates = new HashMap<>();
+
         String key = postRef.push().getKey();
         newPost.setId(key);
         newPost.setTimestamp((-1) * newPost.getTimestamp());
-        postRef.child(key).setValue(newPost).addOnCompleteListener(new OnCompleteListener<Void>() {
+        childUpdates.put(postPath + DatabaseConstants.SEPARATOR +  key, newPost);
+
+        // Aggiorno le statistiche
+        switch (newPost.getType()){
+            case Post.TEXT_POST:
+                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_TEXTPOSTS,
+                        Appartment.getInstance().getHomeUser(currentUserUid).getTextPosts() + 1);
+                break;
+            case Post.IMAGE_POST:
+                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_IMAGEPOSTS,
+                        Appartment.getInstance().getHomeUser(currentUserUid).getImagePosts() + 1);
+                break;
+            case Post.AUDIO_POST:
+                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_AUDIOPOSTS,
+                        Appartment.getInstance().getHomeUser(currentUserUid).getAudioPosts() + 1);
+                break;
+        }
+        rootRef.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                // Segnalo la fine del caricamento
                 loading.setValue(false);
             }
         });
     }
 
     public void deletePost(Post post) {
+        Map<String, Object> childUpdates = new HashMap<>();
+
         // Elimino anche il media memorizzato nello storage associato al post, se c'è
         if (post.getStoragePath() != null) {
             StorageReference postRef = FirebaseStorage.getInstance().getReference(post.getStoragePath());
             postRef.delete();
         }
-        postRef.child(post.getId()).removeValue();
+
+        // Rimuovo il post settando il suo valore a null
+        childUpdates.put(postPath + DatabaseConstants.SEPARATOR +  post.getId(), null);
+        //        postRef.child(post.getId()).removeValue();
+        // Aggiorno le statistiche
+        switch (post.getType()){
+            case Post.TEXT_POST:
+                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_TEXTPOSTS,
+                        Appartment.getInstance().getHomeUser(currentUserUid).getTextPosts() - 1);
+                break;
+            case Post.IMAGE_POST:
+                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_IMAGEPOSTS,
+                        Appartment.getInstance().getHomeUser(currentUserUid).getImagePosts() - 1);
+                break;
+            case Post.AUDIO_POST:
+                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_AUDIOPOSTS,
+                        Appartment.getInstance().getHomeUser(currentUserUid).getAudioPosts() - 1);
+                break;
+        }
+        rootRef.updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Post>> {
