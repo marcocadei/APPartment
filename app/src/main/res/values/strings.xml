@@ -167,6 +167,7 @@
     <string name="activity_signup_edit_title">Aggiornamento dati</string>
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
     <string name="activity_signup_signup_title">Registrazione</string>
+    <string name="activity_signup_text_image_info">L\'immagine è opzionale</string>
     <string name="activity_signup_text_title">Registrati ad APPartment</string>
     <string name="activity_signup_title_edit">Modifica profilo utente</string>
     <string name="activity_task_detail_btn_assign">Prenota attività</string>

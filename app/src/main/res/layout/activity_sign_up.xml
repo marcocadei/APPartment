@@ -151,7 +151,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_signup_input_birthdate"
-                app:layout_constraintBottom_toTopOf="@id/activity_signup_radio_gender">
+                app:layout_constraintBottom_toTopOf="@id/activity_sign_up_text_image_info">
 
                 <ImageView
                     android:id="@+id/activity_signup_img_photo"
@@ -177,6 +177,16 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/activity_sign_up_text_image_info"
+                style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
+                android:drawableStart="@drawable/ic_info_outline_color_6a1b9a"
+                android:text="@string/activity_signup_text_image_info"
+                app:layout_constraintBottom_toTopOf="@id/activity_signup_radio_gender"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_signup_layout_select_img" />
+
             <RadioGroup
                 android:id="@+id/activity_signup_radio_gender"
                 style="@style/CustomFormTextFieldLayout"
@@ -184,7 +194,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_signup_layout_select_img">
+                app:layout_constraintTop_toBottomOf="@+id/activity_sign_up_text_image_info">
 
                 <TextView
                     android:id="@+id/activity_signup_text_radio_gender"
