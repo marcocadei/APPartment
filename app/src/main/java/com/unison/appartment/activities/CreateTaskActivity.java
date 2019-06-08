@@ -15,7 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.R;
-import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.fragments.UserPickerFragment;
 import com.unison.appartment.model.CompletedTask;

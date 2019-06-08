@@ -1,10 +1,12 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -37,6 +39,10 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
     private final static String BUNDLE_KEY_TASK = "task";
 
     private final static int EDIT_TASK_REQUEST_CODE = 101;
+
+    public final static int RESULT_OK = 200;
+    public final static int RESULT_EDITED = 201;
+    public final static int RESULT_NOT_EDITED = 202;
 
     private UncompletedTask task;
 
@@ -326,6 +332,23 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_TASK_REQUEST_CODE) {
+            Intent returnIntent = new Intent();
+            if (resultCode == Activity.RESULT_OK) {
+                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+                setResult(RESULT_EDITED, returnIntent);
+            } else {
+                // Necessario impostare questo resultCode perché altrimenti il default è OK e non
+                // riesco a capire cosa è successo
+                setResult(RESULT_NOT_EDITED, returnIntent);
+            }
+            finish();
+        }
     }
 
     private void sendAssignData(String userId) {

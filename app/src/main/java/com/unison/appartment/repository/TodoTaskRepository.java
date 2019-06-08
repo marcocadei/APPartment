@@ -1,5 +1,6 @@
 package com.unison.appartment.repository;
 
+
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -53,6 +54,11 @@ public class TodoTaskRepository {
         newUncompletedTask.setId(key);
         newUncompletedTask.setCreationDate((-1) * newUncompletedTask.getCreationDate());
         uncompletedTasksRef.child(key).setValue(newUncompletedTask);
+    }
+
+    public void editTask(UncompletedTask newUncompletedTask) {
+        newUncompletedTask.setCreationDate((-1) * newUncompletedTask.getCreationDate());
+        uncompletedTasksRef.child(newUncompletedTask.getId()).setValue(newUncompletedTask);
     }
 
     public void deleteTask(String id){
