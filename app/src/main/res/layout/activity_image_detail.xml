@@ -19,11 +19,14 @@
         tools:src="@tools:sample/avatars"
         android:visibility="gone"/>
 
+    <!-- Con questi attributi l'immagine si apre a tutto schermo ma viene leggermente tagliata -->
+    <!--android:layout_width="wrap_content" -->
+    <!--android:layout_height="wrap_content"-->
     <com.appeaser.imagetransitionlibrary.TransitionImageView
         android:id="@+id/activity_image_detail_img_round"
         app:tiv_rounding="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:scaleType="centerCrop"
         android:transitionName="@string/transition_open_image"
         android:contentDescription="@string/activity_image_detail_img"
