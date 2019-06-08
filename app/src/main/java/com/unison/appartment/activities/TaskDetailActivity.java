@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -295,6 +296,21 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         super.onRestoreInstanceState(savedInstanceState);
 
         task = (UncompletedTask) savedInstanceState.getSerializable(BUNDLE_KEY_TASK);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /*
+        L'options menù contiene il solo tasto di modifica, che è visualizzato solo se sono soddisfatte
+        entrambe le seguenti condizioni:
+        - l'utente loggato è un master o il proprietario della casa;
+        - il task di cui sono visualizzati i dettagli non è ancora stato marcato come completato
+         */
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE && !task.isMarked()) {
+            getMenuInflater().inflate(R.menu.activity_task_detail_toolbar, menu);
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void sendAssignData(String userId) {

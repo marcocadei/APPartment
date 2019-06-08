@@ -181,6 +181,7 @@
     <string name="activity_task_detail_btn_unassign">Rimuovi assegnamento</string>
     <string name="activity_task_detail_text_assigned_user_title">Questa attività è stata assegnata a</string>
     <string name="activity_task_detail_title">Dettaglio attività</string>
+    <string name="activity_task_detail_toolbar_edit">Modifica attività</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
     <string name="activity_user_profile_empty_list_text">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
