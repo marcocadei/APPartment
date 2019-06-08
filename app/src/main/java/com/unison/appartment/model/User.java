@@ -23,6 +23,7 @@ public class User implements Serializable {
     public final static int GENDER_MALE = 0;
     public final static int GENDER_FEMALE = 1;
 
+    private String imageStoragePath;
     private String email;
     private String password;
     private String name;
@@ -41,6 +42,24 @@ public class User implements Serializable {
         this.birthdate = birthdate;
         this.gender = gender;
         this.image = image;
+    }
+
+    public User(String email, String password, String name, String birthdate, int gender, @Nullable String image, String imageStoragePath) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.birthdate = birthdate;
+        this.gender = gender;
+        this.image = image;
+        this.imageStoragePath = imageStoragePath;
+    }
+
+    public String getImageStoragePath() {
+        return imageStoragePath;
+    }
+
+    public void setImageStoragePath(String imageStoragePath) {
+        this.imageStoragePath = imageStoragePath;
     }
 
     public String getEmail() {

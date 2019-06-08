@@ -46,11 +46,15 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
                 });
     }
 
-    public void writeUser(final User newUser, final String uid, final DatabaseWriterListener listener) {
+    public void writeUser(final User newUser, final User oldUser, final String uid, final DatabaseWriterListener listener) {
         // Quando scrivo un utente nel database devo primare caricare la foto nel firebase storage
         // poi ottenere un URL a quella foto e salvare quello all'interno del realtime database
         // Tutto questo è fatto se l'utente ha selezionato una foto
         if (newUser.getImage() != null) {
+            // Se l'utente aveva già un'immagine allora elimino quella vecchia
+            if (oldUser.getImage() != null) {
+                FirebaseStorage.getInstance().getReference(oldUser.getImageStoragePath()).delete();
+            }
             /*
             Il codice è strutturato in questo modo perchéla foto caricata sullo storage di firebase veniva
             ruotata di 90° quando scattata in modalità portrait. Questo è dovuto al fatto che molti telefoni
@@ -75,6 +79,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
 
                     // UUID genera un nome univoco per il file che sto caricando
                     final StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child(StorageConstants.USER_IMAGES+ UUID.randomUUID().toString());
+                    final String imageStoragePath = userImageRef.getPath();
                     UploadTask uploadTask = userImageRef.putBytes(data);
 
                     // Codice della guida per ottenere l'URL di download del media appena caricato
@@ -92,6 +97,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
                             if (task.isSuccessful()) {
                                 String userPhotoUrl = task.getResult().toString();
                                 newUser.setImage(userPhotoUrl);
+                                newUser.setImageStoragePath(imageStoragePath);
                                 writeUserAfterUpdate(newUser, uid, listener);
                             } else {
                                 listener.onWriteFail(task.getException());

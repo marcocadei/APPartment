@@ -183,7 +183,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                          */
                         newUser = createUser();
                         // Scrittura dei nuovi dati nel db
-                        databaseWriter.writeUser(newUser, auth.getCurrentUserUid(), dbUserEditWriterListener);
+                        databaseWriter.writeUser(newUser, user, auth.getCurrentUserUid(), dbUserEditWriterListener);
                     }
                 }
             });
@@ -473,7 +473,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     final AuthListener authListener =  new AuthListener() {
         @Override
         public void onSuccess() {
-            databaseWriter.writeUser(newUser, auth.getCurrentUserUid(), dbNewUserWriterListener);
+            databaseWriter.writeUser(newUser, null, auth.getCurrentUserUid(), dbNewUserWriterListener);
         }
 
         @Override
