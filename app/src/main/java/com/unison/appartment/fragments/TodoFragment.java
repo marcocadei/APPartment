@@ -147,6 +147,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }
+            } else if (resultCode == TaskDetailActivity.RESULT_EDITED) {
+                listFragment.editTask((UncompletedTask)data.getSerializableExtra(EXTRA_NEW_TASK));
             }
         }
     }

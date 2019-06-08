@@ -9,12 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.R;
-import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.fragments.UserPickerFragment;
 import com.unison.appartment.model.CompletedTask;
@@ -28,10 +28,12 @@ import com.unison.appartment.utils.KeyboardUtils;
 public class CreateTaskActivity extends FormActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
 
     public final static String EXTRA_TASK_DATA = "taskData";
+    public final static String EXTRA_EDIT_TASK_DATA = "editTaskData";
 
     private final static String BUNDLE_KEY_ASSIGNED_USER_ID = "assignedUserId";
     private final static String BUNDLE_KEY_ASSIGNED_USER_NAME = "assignedUserName";
 
+    private TextView txtTitle;
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -64,6 +66,7 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
             }
         });
 
+        txtTitle = findViewById(R.id.activity_create_task_text_title);
         inputName = findViewById(R.id.activity_create_task_input_name_value);
         inputDescription = findViewById(R.id.activity_create_task_input_description_value);
         inputPoints = findViewById(R.id.activity_create_task_input_points_value);
@@ -79,6 +82,20 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
             inputName.setText(completedTask.getName());
             inputDescription.setText(completedTask.getLastDescription());
             inputPoints.setText(String.valueOf(completedTask.getLastPoints()));
+        }
+
+        final UncompletedTask uncompletedTask = (UncompletedTask) creationIntent.getSerializableExtra(EXTRA_EDIT_TASK_DATA);
+        if (uncompletedTask != null) {
+            // Imposto il titolo opportunamente se devo modificare e non creare un premio
+            toolbar.setTitle(R.string.activity_create_task_title_edit);
+            txtTitle.setText(R.string.activity_create_task_title_edit);
+            inputName.setText(uncompletedTask.getName());
+            inputDescription.setText(uncompletedTask.getDescription());
+            inputPoints.setText(String.valueOf(uncompletedTask.getPoints()));
+            // Quando modifico un task non do la possibilità di cambiare anche l'assegnamento perché
+            // questo può già essere cambiato nella schermata di dettaglio, tramite i bottoni messi
+            // a disposizione
+            inputAssignedUser.setVisibility(View.GONE);
         }
 
         inputAssignedUser.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +130,7 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
             public void onClick(View v) {
                 KeyboardUtils.hideKeyboard(CreateTaskActivity.this);
                 if (checkInput()) {
-                    createTask();
+                    createTask(uncompletedTask);
                 }
             }
         });
@@ -175,16 +192,32 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
         return result;
     }
 
-    public void createTask() {
-        UncompletedTask newUncompletedTask = new UncompletedTask(
-                inputName.getText().toString(),
-                inputDescription.getText().toString(),
-                Integer.valueOf(inputPoints.getText().toString()),
-                System.currentTimeMillis(), // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
-                assignedUserId,
-                assignedUserName,
-                false
-        );
+    public void createTask(UncompletedTask uncompletedTask) {
+        UncompletedTask newUncompletedTask;
+        // Se sto modificando il task allora ho anche il campo id, che voglio mantenere uguale
+        if (uncompletedTask != null) {
+            newUncompletedTask = new UncompletedTask(
+                    uncompletedTask.getId(),
+                    inputName.getText().toString(),
+                    inputDescription.getText().toString(),
+                    Integer.valueOf(inputPoints.getText().toString()),
+                    uncompletedTask.getCreationDate(),
+                    uncompletedTask.getAssignedUserId(),
+                    uncompletedTask.getAssignedUserName(),
+                    uncompletedTask.isMarked()
+            );
+        } else {
+            newUncompletedTask = new UncompletedTask(
+                    inputName.getText().toString(),
+                    inputDescription.getText().toString(),
+                    Integer.valueOf(inputPoints.getText().toString()),
+                    System.currentTimeMillis(), // La data viene salvata in un formato indipendente dalla lingua utilizzata nel device
+                    assignedUserId,
+                    assignedUserName,
+                    false
+            );
+        }
+
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, newUncompletedTask);
         setResult(Activity.RESULT_OK,returnIntent);

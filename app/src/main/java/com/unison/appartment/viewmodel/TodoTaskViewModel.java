@@ -26,6 +26,10 @@ public class TodoTaskViewModel extends ViewModel {
         repository.addTask(newUncompletedTask);
     }
 
+    public void editTask(UncompletedTask newUncompletedTask) {
+        repository.editTask(newUncompletedTask);
+    }
+
     public void deleteTask(String id) {
         repository.deleteTask(id);
     }

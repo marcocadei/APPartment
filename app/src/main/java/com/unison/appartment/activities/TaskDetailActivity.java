@@ -1,14 +1,18 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,6 +37,12 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
     public final static String EXTRA_TASK_OBJECT = "taskObject";
 
     private final static String BUNDLE_KEY_TASK = "task";
+
+    private final static int EDIT_TASK_REQUEST_CODE = 101;
+
+    public final static int RESULT_OK = 200;
+    public final static int RESULT_EDITED = 201;
+    public final static int RESULT_NOT_EDITED = 202;
 
     private UncompletedTask task;
 
@@ -295,6 +305,50 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         super.onRestoreInstanceState(savedInstanceState);
 
         task = (UncompletedTask) savedInstanceState.getSerializable(BUNDLE_KEY_TASK);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /*
+        L'options menù contiene il solo tasto di modifica, che è visualizzato solo se sono soddisfatte
+        entrambe le seguenti condizioni:
+        - l'utente loggato è un master o il proprietario della casa;
+        - il task di cui sono visualizzati i dettagli non è ancora stato marcato come completato
+         */
+        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE && !task.isMarked()) {
+            getMenuInflater().inflate(R.menu.activity_task_detail_toolbar, menu);
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.activity_task_detail_toolbar_edit) {
+            Intent i = new Intent(this, CreateTaskActivity.class);
+            i.putExtra(CreateTaskActivity.EXTRA_EDIT_TASK_DATA, task);
+            startActivityForResult(i, EDIT_TASK_REQUEST_CODE);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_TASK_REQUEST_CODE) {
+            Intent returnIntent = new Intent();
+            if (resultCode == Activity.RESULT_OK) {
+                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+                setResult(RESULT_EDITED, returnIntent);
+            } else {
+                // Necessario impostare questo resultCode perché altrimenti il default è OK e non
+                // riesco a capire cosa è successo
+                setResult(RESULT_NOT_EDITED, returnIntent);
+            }
+            finish();
+        }
     }
 
     private void sendAssignData(String userId) {

@@ -135,6 +135,10 @@ public class TodoListFragment extends Fragment {
         viewModel.addTask(newUncompletedTask);
     }
 
+    public void editTask(UncompletedTask newUncompletedTask) {
+        viewModel.editTask(newUncompletedTask);
+    }
+
     public void deleteTask(String id) {
         viewModel.deleteTask(id);
     }

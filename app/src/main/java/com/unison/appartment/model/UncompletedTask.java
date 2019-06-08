@@ -46,6 +46,17 @@ public class UncompletedTask implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public UncompletedTask(String id, String name, String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.points = points;
+        this.creationDate = creationDate;
+        this.assignedUserId = assignedUserId;
+        this.assignedUserName = assignedUserName;
+        this.marked = marked;
+    }
+
     public UncompletedTask(String name, String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked) {
         this.name = name;
         this.description = description;
