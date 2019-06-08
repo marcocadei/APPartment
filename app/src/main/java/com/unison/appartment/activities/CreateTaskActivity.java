@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,10 +29,12 @@ import com.unison.appartment.utils.KeyboardUtils;
 public class CreateTaskActivity extends FormActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
 
     public final static String EXTRA_TASK_DATA = "taskData";
+    public final static String EXTRA_EDIT_TASK_DATA = "editTaskData";
 
     private final static String BUNDLE_KEY_ASSIGNED_USER_ID = "assignedUserId";
     private final static String BUNDLE_KEY_ASSIGNED_USER_NAME = "assignedUserName";
 
+    private TextView txtTitle;
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -64,6 +67,7 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
             }
         });
 
+        txtTitle = findViewById(R.id.activity_create_task_text_title);
         inputName = findViewById(R.id.activity_create_task_input_name_value);
         inputDescription = findViewById(R.id.activity_create_task_input_description_value);
         inputPoints = findViewById(R.id.activity_create_task_input_points_value);
@@ -79,6 +83,20 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
             inputName.setText(completedTask.getName());
             inputDescription.setText(completedTask.getLastDescription());
             inputPoints.setText(String.valueOf(completedTask.getLastPoints()));
+        }
+
+        UncompletedTask uncompletedTask = (UncompletedTask) creationIntent.getSerializableExtra(EXTRA_EDIT_TASK_DATA);
+        if (uncompletedTask != null) {
+            // Imposto il titolo opportunamente se devo modificare e non creare un premio
+            toolbar.setTitle(R.string.activity_create_task_title_edit);
+            txtTitle.setText(R.string.activity_create_task_title_edit);
+            inputName.setText(uncompletedTask.getName());
+            inputDescription.setText(uncompletedTask.getDescription());
+            inputPoints.setText(String.valueOf(uncompletedTask.getPoints()));
+            // Quando modifico un task non do la possibilità di cambiare anche l'assegnamento perché
+            // questo può già essere cambiato nella schermata di dettaglio, tramite i bottoni messi
+            // a disposizione
+            inputAssignedUser.setVisibility(View.GONE);
         }
 
         inputAssignedUser.setOnClickListener(new View.OnClickListener() {

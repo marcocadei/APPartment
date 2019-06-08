@@ -125,6 +125,7 @@
     <string name="activity_create_reward_title_edit">Modifica premio</string>
     <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
+    <string name="activity_create_task_title_edit">Modifica attività</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
     <string name="activity_family_member_detail_btn_delete">Esci dalla casa</string>

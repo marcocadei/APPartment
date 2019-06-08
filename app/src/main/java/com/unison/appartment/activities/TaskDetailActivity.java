@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,6 +35,8 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
     public final static String EXTRA_TASK_OBJECT = "taskObject";
 
     private final static String BUNDLE_KEY_TASK = "task";
+
+    private final static int EDIT_TASK_REQUEST_CODE = 101;
 
     private UncompletedTask task;
 
@@ -311,6 +314,18 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
             return true;
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.activity_task_detail_toolbar_edit) {
+            Intent i = new Intent(this, CreateTaskActivity.class);
+            i.putExtra(CreateTaskActivity.EXTRA_EDIT_TASK_DATA, task);
+            startActivityForResult(i, EDIT_TASK_REQUEST_CODE);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void sendAssignData(String userId) {
