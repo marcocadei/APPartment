@@ -253,7 +253,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private void updateImage(String imageUri) {
         imgDefault.setVisibility(View.INVISIBLE);
         imgProfile.setVisibility(View.VISIBLE);
-        Glide.with(imgProfile.getContext()).load(imageUri).placeholder(R.drawable.scaled_ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        Glide.with(imgProfile.getContext()).load(imageUri).placeholder(R.drawable.ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
