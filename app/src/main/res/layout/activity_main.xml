@@ -24,7 +24,38 @@
             app:title="@string/placeholder_text"
             app:titleMarginStart="32dp"
             app:titleTextColor="@color/colorPrimaryText"
-            app:menu="@menu/activity_main_toolbar" />
+            app:menu="@menu/activity_main_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fragment_reward_layout_points"
+                style="@style/Component.Layout.Points"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end">
+
+                <TextView
+                    android:id="@+id/activity_main_text_points_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    android:textColor="@color/colorPrimaryText"
+                    app:layout_constraintBottom_toTopOf="@id/activity_main_text_points_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_main_text_points_name"
+                    style="@style/Component.TextView.SingleLine.PointsName"
+                    android:text="@string/general_points_name"
+                    android:textColor="@color/colorPrimaryText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/activity_main_text_points_value"
+                    app:layout_constraintStart_toStartOf="@id/activity_main_text_points_value"
+                    app:layout_constraintTop_toBottomOf="@id/activity_main_text_points_value" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

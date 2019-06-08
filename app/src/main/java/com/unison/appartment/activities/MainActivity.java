@@ -6,18 +6,24 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.model.Home;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.services.AppartmentService;
 import com.unison.appartment.fragments.FamilyFragment;
 import com.unison.appartment.fragments.MessagesFragment;
@@ -26,6 +32,9 @@ import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.KeyboardUtils;
+import com.unison.appartment.viewmodel.HomeUserViewModel;
+
+import java.util.List;
 
 /**
  * Classe che rappresenta l'Activity principale di una Home
@@ -48,14 +57,19 @@ public class MainActivity extends AppCompatActivity {
     private int currentPosition = POSITION_MESSAGES;
 
     private static final String BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM = "selectedBottomMenuItem";
+    private static final String BUNDLE_KEY_OLD_POINTS_VALUE = "oldPointsValue";
 
     private int selectedBottomNavigationMenuItemId;
 
     private Toolbar toolbar;
+    private TextView userPoints;
+    private HomeUserViewModel viewModel;
     private Menu optionsMenu;
     private BottomNavigationView bottomNavigation;
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
+
+    private int oldPointsValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         // Supporto per la toolbar
         toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
+        userPoints = toolbar.findViewById(R.id.activity_main_text_points_value);
+        viewModel = ViewModelProviders.of(this).get(HomeUserViewModel.class);
+        readHomeUser();
 
         // Le voci della bottom navigation sono un menù
         // Alla creazione dell'activity vengono impostati titolo e logo della toolbar in base alla voce
@@ -146,6 +163,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void readHomeUser() {
+        LiveData<List<HomeUser>> rewardLiveData = viewModel.getHomeUserLiveData();
+        final String userId = new FirebaseAuth().getCurrentUserUid();
+        rewardLiveData.observe(this, new Observer<List<HomeUser>>() {
+            @Override
+            public void onChanged(List<HomeUser> homeUsers) {
+                for(HomeUser homeUser : homeUsers) {
+                    if (homeUser.getUserId().equals(userId)) {
+                        // Animazione dei punti dal valore precedente a quello corrente
+                        int oldPoints = oldPointsValue;
+                        int newPoints = homeUser.getPoints();
+                        ValueAnimator animator = ValueAnimator.ofInt(oldPoints, newPoints);
+                        animator.setDuration(1000);
+                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                userPoints.setText(animation.getAnimatedValue().toString());
+                            }
+                        });
+                        animator.start();
+                        oldPointsValue = newPoints;
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
     /**
      * Metodo per aggiornare il contenuto dell'activity, ovvero la toolbar e il fragment centrale,
      * in base alla voce selezionata nella bottom navigation
@@ -212,7 +256,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt(BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM, selectedBottomNavigationMenuItemId);
+        outState.putInt(BUNDLE_KEY_OLD_POINTS_VALUE, oldPointsValue);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        oldPointsValue = savedInstanceState.getInt(BUNDLE_KEY_OLD_POINTS_VALUE);
     }
 
     /**
