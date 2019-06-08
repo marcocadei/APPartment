@@ -52,7 +52,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
         // Tutto questo è fatto se l'utente ha selezionato una foto
         if (newUser.getImage() != null) {
             // Se l'utente aveva già un'immagine allora elimino quella vecchia
-            if (oldUser.getImage() != null) {
+            if (oldUser.getImageStoragePath() != null) {
                 FirebaseStorage.getInstance().getReference(oldUser.getImageStoragePath()).delete();
             }
             /*
