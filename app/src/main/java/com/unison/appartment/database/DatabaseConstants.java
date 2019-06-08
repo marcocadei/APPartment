@@ -23,6 +23,7 @@ public class DatabaseConstants {
     public final static String HOMEUSERS_HOMENAME_UID_TEXTPOSTS = "text-posts";
     public final static String HOMEUSERS_HOMENAME_UID_IMAGEPOSTS = "image-posts";
     public final static String HOMEUSERS_HOMENAME_UID_AUDIOPOSTS = "audio-posts";
+    public final static String HOMEUSERS_HOMENAME_UID_REJECTEDTASKS = "rejected-tasks";
 
     // Premi
     public final static String REWARDS = "rewards";
