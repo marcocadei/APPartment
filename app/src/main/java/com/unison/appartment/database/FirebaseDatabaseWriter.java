@@ -51,6 +51,10 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
         // poi ottenere un URL a quella foto e salvare quello all'interno del realtime database
         // Tutto questo è fatto se l'utente ha selezionato una foto
         if (newUser.getImage() != null) {
+            // Se l'utente aveva già un'immagine allora elimino quella vecchia
+            if (oldUser.getImage() != null) {
+                FirebaseStorage.getInstance().getReference(oldUser.getImageStoragePath()).delete();
+            }
             /*
             Il codice è strutturato in questo modo perchéla foto caricata sullo storage di firebase veniva
             ruotata di 90° quando scattata in modalità portrait. Questo è dovuto al fatto che molti telefoni
