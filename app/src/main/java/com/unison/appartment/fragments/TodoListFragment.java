@@ -155,8 +155,8 @@ public class TodoListFragment extends Fragment {
         viewModel.markTask(taskId, userId, userName);
     }
 
-    public void cancelCompletion(String taskId) {
-        viewModel.cancelCompletion(taskId);
+    public void cancelCompletion(String taskId, String userId) {
+        viewModel.cancelCompletion(taskId, userId);
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {

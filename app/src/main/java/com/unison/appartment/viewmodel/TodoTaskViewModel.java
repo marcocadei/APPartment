@@ -46,8 +46,8 @@ public class TodoTaskViewModel extends ViewModel {
         repository.markTask(taskId, userId, userName);
     }
 
-    public void cancelCompletion(String taskId) {
-        repository.cancelCompletion(taskId);
+    public void cancelCompletion(String taskId, String userId) {
+        repository.cancelCompletion(taskId, userId);
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {

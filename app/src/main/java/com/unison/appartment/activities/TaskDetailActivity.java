@@ -383,6 +383,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_UNMARK);
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, task.getAssignedUserId());
         setResult(RESULT_OK, returnIntent);
         finish();
     }

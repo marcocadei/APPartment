@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.model.Completion;
 import com.unison.appartment.model.HomeUser;
@@ -33,12 +34,14 @@ public class TodoTaskRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<UncompletedTask>> taskLiveData;
 
+    String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
+            DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName();
+
     public TodoTaskRepository() {
         // Riferimento al nodo root del database
         rootRef = FirebaseDatabase.getInstance().getReference();
         // Riferimento al nodo del database a cui sono interessato
-        uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
-                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(uncompletedTaskPath);
         Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
         liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
@@ -87,8 +90,19 @@ public class TodoTaskRepository {
         uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
     }
 
-    public void cancelCompletion(String taskId) {
-        uncompletedTasksRef.child(taskId).child(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED).setValue(false);
+    public void cancelCompletion(String taskId, String userId) {
+        Map<String, Object> childUpdates = new HashMap<>();
+
+        String homeName = Appartment.getInstance().getHome().getName();
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR + userId;
+
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_REJECTEDTASKS,
+                Appartment.getInstance().getHomeUser(userId).getRejectedTasks() + 1);
+        // Il task non è più marked, ma rimane assegnato
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + taskId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
+        rootRef.updateChildren(childUpdates);
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {
