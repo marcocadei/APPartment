@@ -213,16 +213,6 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
                 getString(R.string.desc_homeusers_homename_uid_completedtasks_icon),
                 getString(R.string.desc_homeusers_homename_uid_rejectedtasks_icon)
         };
-        // Recupero il riferimento alle icone usate per mostrare le statistiche
-        // Nel grafico a radar non mostrerò le etichette (sono troppo lunghe), ma le icone
-        Drawable iconTotalEarnedPoints = getDrawable(R.drawable.ic_star_border);
-        Drawable iconEarnedMoney = getDrawable(R.drawable.ic_attach_money);
-        Drawable iconTextPosts = getDrawable(R.drawable.ic_message);
-        Drawable iconImagePosts = getDrawable(R.drawable.ic_photo_size_select_actual);
-        Drawable iconAudioPosts = getDrawable(R.drawable.ic_audiotrack);
-        Drawable iconClaimedRewards = getDrawable(R.drawable.ic_card_giftcard);
-        Drawable iconCompletedTasks = getDrawable(R.drawable.ic_check);
-        Drawable iconRejectedTasks = getDrawable(R.drawable.ic_clear);
         // Creo i dati come il grafico se li aspetta
         // Mettere qui i drawables come suggerito in https://stackoverflow.com/questions/44863021 non funge
         List<RadarEntry> entries = new ArrayList<>();
