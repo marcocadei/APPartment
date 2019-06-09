@@ -173,7 +173,7 @@
             <com.github.mikephil.charting.charts.RadarChart
                 android:id="@+id/activity_family_member_detail_chart"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="370dp"
                 app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_total_points"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
