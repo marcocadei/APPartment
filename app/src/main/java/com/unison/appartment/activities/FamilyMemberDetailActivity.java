@@ -242,7 +242,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         chart.getYAxis().setEnabled(false);
         chart.animateXY(1000, 1000);
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-        chart.getXAxis().setTextSize(80);
+        chart.getXAxis().setTextSize(20f);
         chart.getXAxis().setTypeface(ResourcesCompat.getFont(this, R.font.material_icons));
         chart.invalidate();
     }
