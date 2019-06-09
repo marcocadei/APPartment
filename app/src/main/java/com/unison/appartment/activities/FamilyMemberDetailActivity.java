@@ -202,14 +202,14 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         // Nomi delle statistiche
         // Le stringhe originali sono troppo lunghe quindi il grafico viene bruttissimo
         final String[] labels = new String[]{
-                getString(R.string.desc_homeusers_homename_uid_totalearnedpoints),
-                getString(R.string.desc_homeusers_homename_uid_earnedmoney),
-                getString(R.string.desc_homeusers_homename_uid_textposts),
-                getString(R.string.desc_homeusers_homename_uid_imageposts),
-                getString(R.string.desc_homeusers_homename_uid_audioposts),
-                getString(R.string.desc_homeusers_homename_uid_claimedrewards),
-                getString(R.string.desc_homeusers_homename_uid_completedtasks),
-                getString(R.string.desc_homeusers_homename_uid_rejectedtasks)
+                getString(R.string.desc_homeusers_homename_uid_totalearnedpoints_icon),
+                getString(R.string.desc_homeusers_homename_uid_earnedmoney_icon),
+                getString(R.string.desc_homeusers_homename_uid_textposts_icon),
+                getString(R.string.desc_homeusers_homename_uid_imageposts_icon),
+                getString(R.string.desc_homeusers_homename_uid_audioposts_icon),
+                getString(R.string.desc_homeusers_homename_uid_claimedrewards_icon),
+                getString(R.string.desc_homeusers_homename_uid_completedtasks_icon),
+                getString(R.string.desc_homeusers_homename_uid_rejectedtasks_icon)
         };
         // Recupero il riferimento alle icone usate per mostrare le statistiche
         // Nel grafico a radar non mostrerò le etichette (sono troppo lunghe), ma le icone
