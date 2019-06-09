@@ -60,14 +60,14 @@
     <string name="desc_homeusers_homename_uid_totalearnedpoints">Punti totali guadagnati</string>
 
     <!-- Icone associate alle statistiche -->
-    <string name="desc_homeusers_homename_uid_audioposts_icon">\u266A</string>
-    <string name="desc_homeusers_homename_uid_claimedrewards_icon">\u1F38</string>
-    <string name="desc_homeusers_homename_uid_completedtasks_icon">\u1F5F8</string>
-    <string name="desc_homeusers_homename_uid_earnedmoney_icon">\u0024</string>
-    <string name="desc_homeusers_homename_uid_imageposts_icon">\u1F5BB</string>
-    <string name="desc_homeusers_homename_uid_rejectedtasks_icon">\u10102</string>
-    <string name="desc_homeusers_homename_uid_textposts_icon">\u1F5B9</string>
-    <string name="desc_homeusers_homename_uid_totalearnedpoints_icon">\u2606</string>
+    <string name="desc_homeusers_homename_uid_audioposts_icon">&#x266a;</string>
+    <string name="desc_homeusers_homename_uid_claimedrewards_icon">	&#x2655;</string>
+    <string name="desc_homeusers_homename_uid_completedtasks_icon">	&#x2714;</string>
+    <string name="desc_homeusers_homename_uid_earnedmoney_icon">&#x0024;</string>
+    <string name="desc_homeusers_homename_uid_imageposts_icon">&#x263c;</string>
+    <string name="desc_homeusers_homename_uid_rejectedtasks_icon">&#x2718;</string>
+    <string name="desc_homeusers_homename_uid_textposts_icon">&#x2709;</string>
+    <string name="desc_homeusers_homename_uid_totalearnedpoints_icon">&#x2606;</string>
 
     <string name="desc_homeusers_homename_uid_nickname">Nickname</string>
     <string name="desc_rewards_homename_rewardid_description">Descrizione</string>

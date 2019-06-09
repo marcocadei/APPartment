@@ -248,6 +248,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         chart.getYAxis().setEnabled(false);
         chart.animateXY(1000, 1000);
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        chart.getXAxis().setTextSize(100);
         chart.invalidate();
     }
 
