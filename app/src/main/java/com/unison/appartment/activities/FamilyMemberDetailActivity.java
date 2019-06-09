@@ -3,9 +3,11 @@ package com.unison.appartment.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -248,7 +250,8 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         chart.getYAxis().setEnabled(false);
         chart.animateXY(1000, 1000);
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-        chart.getXAxis().setTextSize(100);
+        chart.getXAxis().setTextSize(80);
+        chart.getXAxis().setTypeface(ResourcesCompat.getFont(this, R.font.material_icons));
         chart.invalidate();
     }
 
