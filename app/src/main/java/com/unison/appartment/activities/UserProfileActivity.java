@@ -261,8 +261,8 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         UserProfileActivity.this, imgProfile, ViewCompat.getTransitionName(imgProfile));
                 // Animazione apertura immagine tonda
-                getWindow().setSharedElementEnterTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
-                getWindow().setSharedElementExitTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
+                /*getWindow().setSharedElementEnterTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));
+                getWindow().setSharedElementExitTransition(TransitionInflater.from(UserProfileActivity.this).inflateTransition(R.transition.itl_image_transition));*/
                 i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, Appartment.getInstance().getUser().getImage());
                 i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
                 startActivity(i, options.toBundle());

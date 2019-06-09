@@ -105,8 +105,8 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             FamilyMemberDetailActivity.this, image, ViewCompat.getTransitionName(image));
                     // Animazione apertura immagine tonda
-                    getWindow().setSharedElementEnterTransition(TransitionInflater.from(FamilyMemberDetailActivity.this).inflateTransition(R.transition.itl_image_transition));
-                    getWindow().setSharedElementExitTransition(TransitionInflater.from(FamilyMemberDetailActivity.this).inflateTransition(R.transition.itl_image_transition));
+                    /*getWindow().setSharedElementEnterTransition(TransitionInflater.from(FamilyMemberDetailActivity.this).inflateTransition(R.transition.itl_image_transition));
+                    getWindow().setSharedElementExitTransition(TransitionInflater.from(FamilyMemberDetailActivity.this).inflateTransition(R.transition.itl_image_transition));*/
                     i.putExtra(ImageDetailActivity.EXTRA_IMAGE_URI, member.getImage());
                     i.putExtra(ImageDetailActivity.EXTRA_IMAGE_TYPE, ImageUtils.IMAGE_TYPE_ROUND);
                     startActivity(i, options.toBundle());
