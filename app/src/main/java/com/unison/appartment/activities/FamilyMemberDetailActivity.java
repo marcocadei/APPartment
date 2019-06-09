@@ -204,7 +204,7 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         // Nomi delle statistiche
         // Le stringhe originali sono troppo lunghe quindi il grafico viene bruttissimo
         final String[] labels = new String[]{
-                getString(R.string.desc_homeusers_homename_uid_totalearnedpoints_icon),
+                /*getString(R.string.desc_homeusers_homename_uid_totalearnedpoints_icon),*/
                 getString(R.string.desc_homeusers_homename_uid_earnedmoney_icon),
                 getString(R.string.desc_homeusers_homename_uid_textposts_icon),
                 getString(R.string.desc_homeusers_homename_uid_imageposts_icon),
@@ -216,7 +216,9 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         // Creo i dati come il grafico se li aspetta
         // Mettere qui i drawables come suggerito in https://stackoverflow.com/questions/44863021 non funge
         List<RadarEntry> entries = new ArrayList<>();
-        entries.add(new RadarEntry(member.getTotalEarnedPoints()));
+        // I punti crescono troppo rapidamente rispetto a tutti gli altri valori, rovinando così
+        // la visualizzazione. Pertanto non vengono aggiunti al radar
+        /*entries.add(new RadarEntry(member.getTotalEarnedPoints()));*/
         entries.add(new RadarEntry(member.getEarnedMoney()));
         entries.add(new RadarEntry(member.getTextPosts()));
         entries.add(new RadarEntry(member.getImagePosts()));
