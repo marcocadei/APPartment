@@ -216,33 +216,13 @@ public class PostRepository {
     }
 
     public void deletePost(Post post) {
-        Map<String, Object> childUpdates = new HashMap<>();
-
         // Elimino anche il media memorizzato nello storage associato al post, se c'è
         if (post.getStoragePath() != null) {
             StorageReference postRef = FirebaseStorage.getInstance().getReference(post.getStoragePath());
             postRef.delete();
         }
 
-        // Rimuovo il post settando il suo valore a null
-        childUpdates.put(postPath + DatabaseConstants.SEPARATOR +  post.getId(), null);
-        //        postRef.child(post.getId()).removeValue();
-        // Aggiorno le statistiche
-        switch (post.getType()){
-            case Post.TEXT_POST:
-                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_TEXTPOSTS,
-                        Appartment.getInstance().getHomeUser(currentUserUid).getTextPosts() - 1);
-                break;
-            case Post.IMAGE_POST:
-                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_IMAGEPOSTS,
-                        Appartment.getInstance().getHomeUser(currentUserUid).getImagePosts() - 1);
-                break;
-            case Post.AUDIO_POST:
-                childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_AUDIOPOSTS,
-                        Appartment.getInstance().getHomeUser(currentUserUid).getAudioPosts() - 1);
-                break;
-        }
-        rootRef.updateChildren(childUpdates);
+        postRef.child(post.getId()).removeValue();
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Post>> {
