@@ -32,6 +32,7 @@ import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
+import com.unison.appartment.services.AppartmentService;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.R;
@@ -73,7 +74,11 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
 
         // Precondizione: Quando si entra in questa activity l'oggetto User di Appartment è già settato
 
-        // Quando entro in quest activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
+        // Fermo il servizio che mantiene aggiornato lo stato
+        Intent intent = new Intent(this, AppartmentService.class);
+        stopService(intent);
+
+        // Quando entro in questa activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
         Appartment appState = Appartment.getInstance();
         appState.resetHome();
         appState.resetHomeUsers();
