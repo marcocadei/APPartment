@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -129,8 +130,8 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.changeRole(userId, newRole);
     }
 
-    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks) {
-        viewModel.leaveHome(userId, requestedRewards, assignedTasks);
+    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks, @Nullable String newOwnerId) {
+        viewModel.leaveHome(userId, requestedRewards, assignedTasks, newOwnerId);
     }
 
     /**

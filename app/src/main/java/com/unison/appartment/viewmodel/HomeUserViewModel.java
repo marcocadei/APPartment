@@ -1,6 +1,7 @@
 package com.unison.appartment.viewmodel;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -27,7 +28,7 @@ public class HomeUserViewModel extends ViewModel {
         repository.changeRole(userId, newRole);
     }
 
-    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks) {
-        repository.leaveHome(userId, requestedRewards, assignedTasks);
+    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks, @Nullable String newOwnerId) {
+        repository.leaveHome(userId, requestedRewards, assignedTasks, newOwnerId);
     }
 }

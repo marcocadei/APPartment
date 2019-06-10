@@ -31,12 +31,14 @@ import java.util.Set;
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
 
     public final static String EXTRA_USER_ID = "userId";
+    public final static String EXTRA_NEW_OWNER_ID = "newOwnerId";
     public final static String EXTRA_REQUESTED_REWARDS = "requestedRewards";
     public final static String EXTRA_ASSIGNED_TASKS = "assignedTasks";
     public final static String EXTRA_NEW_ROLE = "newRole";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_CHANGE_ROLE = 0;
     public final static int OPERATION_REMOVE_USER = 1;
+    public final static int OPERATION_REMOVE_HOME = 2;
 
     private static final int MEMBER_DETAIL_REQUEST_CODE = 1;
 
@@ -95,19 +97,22 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                         break;
 
                     case OPERATION_REMOVE_USER:
-                        boolean isDeletingSelf = false;
-                        if (data.getStringExtra(EXTRA_USER_ID).equals(new FirebaseAuth().getCurrentUserUid())) {
-                            isDeletingSelf = true;
-                        }
+                        boolean isDeletingSelf = data.getStringExtra(EXTRA_USER_ID).equals(new FirebaseAuth().getCurrentUserUid());
                         listFragment.leaveHome(data.getStringExtra(EXTRA_USER_ID),
-                                (Set<String>)data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
-                                (Set<String>)data.getSerializableExtra(EXTRA_ASSIGNED_TASKS));
+                                (Set<String>) data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
+                                (Set<String>) data.getSerializableExtra(EXTRA_ASSIGNED_TASKS),
+                                data.getStringExtra(EXTRA_NEW_OWNER_ID));
                         if (isDeletingSelf) {
                             Intent i = new Intent(getActivity(), UserProfileActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                             getActivity().finish();
                         }
+                        break;
+
+                    case OPERATION_REMOVE_HOME:
+                        // TODO ancora da realizzare (ricordarsi anche qui di kickare l'utente loggato)
+                        Log.d(getClass().getCanonicalName(), "Rimozione casa");
                         break;
 
                     default:

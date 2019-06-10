@@ -3,6 +3,7 @@ package com.unison.appartment.repository;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
@@ -16,6 +17,7 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
@@ -67,7 +69,7 @@ public class HomeUserRepository {
         rootRef.updateChildren(childUpdates);
     }
 
-    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks) {
+    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks, @Nullable String newOwnerId) {
         String homeName = Appartment.getInstance().getHome().getName();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + userId;
@@ -92,6 +94,18 @@ public class HomeUserRepository {
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
+        }
+
+        if (newOwnerId != null) {
+            String newOwnerHomeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
+                    homeName + DatabaseConstants.SEPARATOR + newOwnerId + DatabaseConstants.SEPARATOR +
+                    DatabaseConstants.HOMEUSERS_HOMENAME_UID_ROLE;
+            String newOwnerUserHomePath = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR +
+                    newOwnerId + DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
+                    DatabaseConstants.USERHOMES_UID_HOMENAME_ROLE;
+
+            childUpdates.put(newOwnerHomeUserPath, Home.ROLE_OWNER);
+            childUpdates.put(newOwnerUserHomePath, Home.ROLE_OWNER);
         }
 
         rootRef.updateChildren(childUpdates);

@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,9 +43,13 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
     public final static String EXTRA_MEMBER_OBJECT = "memberObject";
 
     private final static String BUNDLE_KEY_DELETED_USER_ID = "deletedUserId";
+    private final static String BUNDLE_KEY_NEW_OWNER_ID = "newOwnerId";
+
+    private final static String NO_MEMBERS_LEFT = "noMembersLeft";
 
     private HomeUser member;
     private String deletedUserId;
+    private String newOwnerId;
 
     private DatabaseReader databaseReader;
 
@@ -134,7 +137,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
             });
         }
 
-        int loggedUserRole = Appartment.getInstance().getUserHome().getRole();
+        final int loggedUserRole = Appartment.getInstance().getUserHome().getRole();
         final String loggedUserUid = new FirebaseAuth().getCurrentUserUid();
 
         if (loggedUserRole == Home.ROLE_OWNER) {
@@ -207,8 +210,11 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO elimina me stesso (gestire diversamente a seconda ruolo!)
-
+                    // Eliminazione dell'utente attualmente loggato
+                    // Se si tratta del proprietario viene determinato il nuovo proprietario fra gli altri membri
+                    if (loggedUserRole == Home.ROLE_OWNER) {
+                        newOwnerId = getNewOwnerId();
+                    }
                     deletedUserId = loggedUserUid;
                     showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_self);
                 }
@@ -219,6 +225,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(BUNDLE_KEY_DELETED_USER_ID, deletedUserId);
+        outState.putString(BUNDLE_KEY_NEW_OWNER_ID, newOwnerId);
 
         super.onSaveInstanceState(outState);
     }
@@ -228,6 +235,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         super.onRestoreInstanceState(savedInstanceState);
 
         deletedUserId = savedInstanceState.getString(BUNDLE_KEY_DELETED_USER_ID);
+        newOwnerId = savedInstanceState.getString(BUNDLE_KEY_NEW_OWNER_ID);
     }
 
     @Override
@@ -282,11 +290,48 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
     private void sendRemoveUserData(String userId, HashSet<String> requestedRewards, HashSet<String> assignedTasks) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(FamilyFragment.EXTRA_OPERATION_TYPE, FamilyFragment.OPERATION_REMOVE_USER);
+        if (newOwnerId != null) {
+            if (newOwnerId.equals(NO_MEMBERS_LEFT)) {
+                returnIntent.putExtra(FamilyFragment.EXTRA_OPERATION_TYPE, FamilyFragment.OPERATION_REMOVE_HOME);
+            }
+            else {
+                returnIntent.putExtra(FamilyFragment.EXTRA_NEW_OWNER_ID, newOwnerId);
+            }
+        }
         returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS, requestedRewards);
         returnIntent.putExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS, assignedTasks);
         setResult(RESULT_OK, returnIntent);
         finish();
+    }
+
+    private String getNewOwnerId() {
+        Map<String, HomeUser> homeUsers = Appartment.getInstance().getHomeUsers();
+
+        /*
+        Se il proprietario è l'ultimo membro rimasto nella casa, anziché eliminare l'utente in sé
+        devo eliminare l'intera casa.
+         */
+        if (homeUsers.size() == 1) {
+            return NO_MEMBERS_LEFT;
+        }
+
+        HomeUser bestMaster = null;
+        HomeUser bestSlave = null;
+        for (HomeUser homeUser : homeUsers.values()) {
+            if (homeUser.getRole() == Home.ROLE_SLAVE) {
+                if (bestSlave == null || bestSlave.getPoints() < homeUser.getPoints()) {
+                    bestSlave = homeUser;
+                }
+            }
+            if (homeUser.getRole() == Home.ROLE_MASTER) {
+                if (bestMaster == null || bestMaster.getPoints() < homeUser.getPoints()) {
+                    bestMaster = homeUser;
+                }
+            }
+        }
+
+        return bestMaster != null ? bestMaster.getUserId() : bestSlave.getUserId();
     }
 
     final DatabaseReaderListener dbReaderListener = new DatabaseReaderListener() {
@@ -310,10 +355,8 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
 
         @Override
         public void onReadCancelled(DatabaseError databaseError) {
-            // TODO Se si entra qui c'è un errore
             showErrorDialog();
             dismissProgress();
-            Log.e("zzzzz", "readCanceled");
         }
     };
 
