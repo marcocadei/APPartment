@@ -11,6 +11,8 @@
 
     <string name="app_name">APPartment</string>
 
+    <string name="general_cancel_button">ANNULLA</string>
+    <string name="general_continue_button">PROCEDI</string>
     <string name="general_empty_list">Non c\'è nulla qui :(</string>
     <string name="general_members_name">Membri</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
@@ -132,6 +134,8 @@
     <string name="activity_family_member_detail_btn_delete_masters">Rimuovi dalla casa</string>
     <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Effettua downgrade ruolo</string>
     <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Effettua upgrade ruolo</string>
+    <string name="activity_family_member_detail_deletion_description">Per favore attendi, è in corso la raccolta delle informazioni necessarie</string>
+    <string name="activity_family_member_detail_deletion_title">Raccolta informazioni</string>
     <string name="activity_family_member_detail_emilia_romagna">Lancia un dado</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
@@ -194,6 +198,8 @@
     <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
+    <string name="dialog_delete_home_user_confirmation_message_other">Sei sicuro di voler rimuovere l\'utente dalla casa? Tutti i suoi dati saranno eliminati.</string>
+    <string name="dialog_delete_home_user_confirmation_message_self">Sei sicuro di voler lasciare la casa? Tutti i tuoi dati saranno eliminati.</string>
     <string name="dialog_firebase_error_message" tools:ignore="Typos">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>

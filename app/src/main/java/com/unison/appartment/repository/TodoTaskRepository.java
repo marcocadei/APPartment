@@ -34,14 +34,12 @@ public class TodoTaskRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<UncompletedTask>> taskLiveData;
 
-    String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
-            DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName();
-
     public TodoTaskRepository() {
         // Riferimento al nodo root del database
         rootRef = FirebaseDatabase.getInstance().getReference();
         // Riferimento al nodo del database a cui sono interessato
-        uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(uncompletedTaskPath);
+        uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
         liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
@@ -69,31 +67,66 @@ public class TodoTaskRepository {
     }
 
     public void assignTask(String taskId, String userId, String userName) {
+        String homeName = Appartment.getInstance().getHome().getName();
+        String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
+                taskId;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR +
+                taskId;
+
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
-        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
-        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR +DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
+        // Aggiungo l'id del task assegnato ai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, true);
+        rootRef.updateChildren(childUpdates);
     }
 
-    public void removeAssignment(String taskId) {
+    public void removeAssignment(String taskId, String assignedUserId) {
+        String homeName = Appartment.getInstance().getHome().getName();
+        String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
+                taskId;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR + assignedUserId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR +
+                taskId;
+
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
-        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
-        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        // Tolgo l'id del task assegnato dai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, null);
+        rootRef.updateChildren(childUpdates);
     }
 
     public void markTask(String taskId, String userId, String userName) {
+        String homeName = Appartment.getInstance().getHome().getName();
+        String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
+                taskId;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR +
+                taskId;
+
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
-        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
-        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, true);
-        uncompletedTasksRef.child(taskId).updateChildren(childUpdates);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, true);
+        // Aggiungo l'id del task assegnato ai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, true);
+        rootRef.updateChildren(childUpdates);
     }
 
     public void cancelCompletion(String taskId, String userId) {
         Map<String, Object> childUpdates = new HashMap<>();
 
         String homeName = Appartment.getInstance().getHome().getName();
+        String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + homeName;
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + userId;
 
@@ -116,6 +149,10 @@ public class TodoTaskRepository {
                 DatabaseConstants.SEPARATOR + task.getName();
         String completionPath = DatabaseConstants.COMPLETIONS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + task.getName();
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR + assignedUserId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR +
+                task.getId();
 
         // Aggiornamento di uncompleted-tasks
         childUpdates.put(uncompletedTaskPath, null);
@@ -138,6 +175,9 @@ public class TodoTaskRepository {
         Completion completion = new Completion(Appartment.getInstance().getHomeUser(assignedUserId).getNickname(), task.getPoints(), (-1) * completionDate);
         String key = rootRef.child(completionPath).push().getKey();
         childUpdates.put(completionPath + DatabaseConstants.SEPARATOR + key, completion);
+
+        // Aggiornamento del riferimento al task confermato
+        childUpdates.put(homeUserRefPath, null);
 
         rootRef.updateChildren(childUpdates);
     }

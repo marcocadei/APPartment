@@ -228,10 +228,6 @@ public class MainActivity extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
-
-                // Fermo il servizio che mantiene aggiornato lo stato
-                Intent intent = new Intent(this, AppartmentService.class);
-                stopService(intent);
                 return true;
             }
 

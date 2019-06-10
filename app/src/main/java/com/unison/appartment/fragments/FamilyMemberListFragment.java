@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -24,6 +25,7 @@ import com.unison.appartment.model.User;
 import com.unison.appartment.viewmodel.HomeUserViewModel;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Fragment che rappresenta la lista dei membri di una famiglia
@@ -128,8 +130,8 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.changeRole(userId, newRole);
     }
 
-    public void leaveHome(String userId) {
-        viewModel.leaveHome(userId);
+    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks, @Nullable String newOwnerId) {
+        viewModel.leaveHome(userId, requestedRewards, assignedTasks, newOwnerId);
     }
 
     /**
