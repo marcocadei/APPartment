@@ -25,6 +25,12 @@ public class DatabaseConstants {
     public final static String HOMEUSERS_HOMENAME_UID_AUDIOPOSTS = "audio-posts";
     public final static String HOMEUSERS_HOMENAME_UID_REJECTEDTASKS = "rejected-tasks";
 
+    // Riferimenti ad altri oggetti degli utenti di una casa
+    // Vengono mantenuti perché alla cancellazione dell'utente dalla casa devo
+    // sapere quali altri dati resettare
+    public final static String HOMEUSERSREFS = "home-users-refs";
+    public final static String HOMEUSERSREFS_HOMENAME_UID_REWARDS = "rewards";
+
     // Premi
     public final static String REWARDS = "rewards";
     public static final String REWARDS_HOMENAME_REWARDID_NAME = "name";
