@@ -276,7 +276,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         public void onReadSuccess(String key, Object object) {
             Home home = (Home) object;
             Appartment.getInstance().setHome(home);
-            databaseReader.retrieveHomeUsers(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
+            databaseReader.retrieveHomeUsers(home.getName(), dbReaderHomeUserListener);
         }
 
         @Override

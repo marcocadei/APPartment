@@ -1,5 +1,7 @@
 package com.unison.appartment.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class HomeUserRepository {
 
@@ -50,7 +53,6 @@ public class HomeUserRepository {
     }
 
     public void changeRole(String userId, int newRole) {
-        Map<String, Object> childUpdates = new HashMap<>();
         String homeName = Appartment.getInstance().getHome().getName();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
@@ -58,66 +60,41 @@ public class HomeUserRepository {
         String userHomePath = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + userId +
                 DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
                 DatabaseConstants.USERHOMES_UID_HOMENAME_ROLE;
+
+        Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(homeUserPath, newRole);
         childUpdates.put(userHomePath, newRole);
         rootRef.updateChildren(childUpdates);
     }
 
-    public void leaveHome(String userId) {
-//        String homeName = Appartment.getInstance().getHome().getName();
-//        int homeMembers = Appartment.getInstance().getHome().getMembers();
-//        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
-//                DatabaseConstants.SEPARATOR + userId;
-//        String homePath = DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + homeName +
-//                DatabaseConstants.SEPARATOR + DatabaseConstants.HOMES_HOMENAME_MEMBERS;
-//
-//        final Map<String, Object> childUpdates = new HashMap<>();
-//        childUpdates.put(homeUserPath, null);
-//        childUpdates.put(homePath, homeMembers - 1);
-//
-//        rootRef.child(DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR + homeName)
-//                .orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID).equalTo(userId)
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot reward: dataSnapshot.getChildren()) {
-//                            Log.e("zzz", reward.getValue(Reward.class).getName());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
+    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks) {
+        String homeName = Appartment.getInstance().getHome().getName();
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR + userId;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR + userId;
+        String userHomePath = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + userId +
+                DatabaseConstants.SEPARATOR + homeName;
+        String baseRewardPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR;
+        String baseTaskPath = DatabaseConstants.UNCOMPLETEDTASKS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR;
 
-//        rootRef.runTransaction(new Transaction.Handler() {
-//            @NonNull
-//            @Override
-//            public Transaction.Result doTransaction(final @NonNull MutableData mutableData) {
-//
-//                rootRef.updateChildren(childUpdates);
-//                rootRef.child(DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR + homeName)
-//                        .orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID).equalTo(userId)
-//                        .addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                return Transaction.success(mutableData);
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                                return Transaction.abort();
-//                            }
-//                        });
-//            }
-//
-//            @Override
-//            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
-//
-//            }
-//        });
+        final Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(homeUserPath, null);
+        childUpdates.put(homeUserRefPath, null);
+        childUpdates.put(userHomePath, null);
+        for (String rewardId : requestedRewards) {
+            childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
+            childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
+        }
+        for (String taskId : assignedTasks) {
+            childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+            childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+            childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
+        }
 
+        rootRef.updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<HomeUser>> {

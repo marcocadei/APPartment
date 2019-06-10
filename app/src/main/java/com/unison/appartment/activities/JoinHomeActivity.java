@@ -281,7 +281,7 @@ public class JoinHomeActivity extends FormActivity {
             }
             else {
                 // Credenziali corrette, passo alla verifica dei nickname dei membri della casa
-                databaseReader.retrieveHomeUsers(home.getName(), auth.getCurrentUserUid(), dbReaderHomeUserListener);
+                databaseReader.retrieveHomeUsers(home.getName(), dbReaderHomeUserListener);
             }
         }
 

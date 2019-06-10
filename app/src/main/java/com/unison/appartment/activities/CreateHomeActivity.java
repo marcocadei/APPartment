@@ -327,7 +327,7 @@ public class CreateHomeActivity extends FormActivity {
             Appartment appState = Appartment.getInstance();
             appState.setHome(createHome());
             appState.setUserHome(createUserHome());
-            databaseReader.retrieveHomeUsers(createHome().getName(), auth.getCurrentUserUid(),  dbReaderHomeUserListener);
+            databaseReader.retrieveHomeUsers(createHome().getName(), dbReaderHomeUserListener);
         }
 
         @Override

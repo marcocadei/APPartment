@@ -24,6 +24,7 @@ import com.unison.appartment.model.User;
 import com.unison.appartment.viewmodel.HomeUserViewModel;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Fragment che rappresenta la lista dei membri di una famiglia
@@ -128,8 +129,8 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.changeRole(userId, newRole);
     }
 
-    public void leaveHome(String userId) {
-        viewModel.leaveHome(userId);
+    public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks) {
+        viewModel.leaveHome(userId, requestedRewards, assignedTasks);
     }
 
     /**

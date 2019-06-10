@@ -1,13 +1,13 @@
 package com.unison.appartment.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,22 +17,36 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.R;
+import com.unison.appartment.database.DatabaseConstants;
+import com.unison.appartment.database.DatabaseReader;
+import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.database.FirebaseDatabaseReader;
 import com.unison.appartment.fragments.FamilyFragment;
+import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.ImageUtils;
 
+import java.util.HashSet;
+import java.util.Map;
+
 /**
  * Classe che rappresenta l'Activity con il dettaglio di un membro della famiglia
  */
-public class FamilyMemberDetailActivity extends AppCompatActivity {
+public class FamilyMemberDetailActivity extends ActivityWithDialogs {
 
     public final static String EXTRA_MEMBER_OBJECT = "memberObject";
 
+    private final static String BUNDLE_KEY_DELETED_USER_ID = "deletedUserId";
+
     private HomeUser member;
+    private String deletedUserId;
+
+    private DatabaseReader databaseReader;
 
     private View layoutButtons;
     private MaterialButton btnUpgrade;
@@ -42,6 +56,10 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_member_detail);
+
+        this.errorDialogDestinationActivity = MainActivity.class;
+
+        databaseReader = new FirebaseDatabaseReader();
 
         /*
         Impostazione del comportamento della freccia presente sulla toolbar
@@ -184,10 +202,32 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // TODO elimina me stesso (gestire diversamente a seconda ruolo!)
-//                    sendRemoveUserData(loggedUserUid);
+
+                    progressDialog = FirebaseProgressDialogFragment.newInstance(
+                            getString(R.string.activity_family_member_detail_deletion_title),
+                            getString(R.string.activity_family_member_detail_deletion_description));
+                    progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+
+                    // Lettura dei riferimenti a task e premi da resettare
+                    deletedUserId = loggedUserUid;
+                    databaseReader.retrieveHomeUserRefs(Appartment.getInstance().getHome().getName(), loggedUserUid, dbReaderListener);
                 }
             });
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(BUNDLE_KEY_DELETED_USER_ID, deletedUserId);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        deletedUserId = savedInstanceState.getString(BUNDLE_KEY_DELETED_USER_ID);
     }
 
     @Override
@@ -230,14 +270,45 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
         returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(FamilyFragment.EXTRA_NEW_ROLE, newRole);
         setResult(RESULT_OK, returnIntent);
+        dismissProgress();
         finish();
     }
 
-    private void sendRemoveUserData(String userId) {
+    private void sendRemoveUserData(String userId, HashSet<String> requestedRewards, HashSet<String> assignedTasks) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(FamilyFragment.EXTRA_OPERATION_TYPE, FamilyFragment.OPERATION_REMOVE_USER);
         returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
+        returnIntent.putExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS, requestedRewards);
+        returnIntent.putExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS, assignedTasks);
         setResult(RESULT_OK, returnIntent);
         finish();
     }
+
+    final DatabaseReaderListener dbReaderListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(String key, Object object) {
+            Map<String, HashSet<String>> homeUserRefs = (Map<String, HashSet<String>>) object;
+            HashSet<String> requestedRewards = homeUserRefs.get(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS);
+            HashSet<String> assignedTasks = homeUserRefs.get(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS);
+            sendRemoveUserData(deletedUserId, requestedRewards, assignedTasks);
+        }
+
+        @Override
+        public void onReadEmpty() {
+            /*
+            Se la lettura non ha restituito nessun riferimento a task assegnati o premi prenotati,
+            posso semplicemente procedere con l'eliminazione dell'utente senza dovermi preoccupare
+            di modificare anche dei nodi in /rewards o /tasks.
+             */
+            sendRemoveUserData(deletedUserId, new HashSet<String>(), new HashSet<String>());
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+            // TODO Se si entra qui c'è un errore
+            showErrorDialog();
+            dismissProgress();
+            Log.e("zzzzz", "readCanceled");
+        }
+    };
 }

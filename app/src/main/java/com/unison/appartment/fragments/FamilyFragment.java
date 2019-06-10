@@ -18,7 +18,11 @@ import android.widget.TextView;
 
 import com.unison.appartment.R;
 import com.unison.appartment.activities.FamilyMemberDetailActivity;
+import com.unison.appartment.activities.UserProfileActivity;
 import com.unison.appartment.model.HomeUser;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Fragment che contiene la lista dei membri di una famiglia e le relative statistiche
@@ -26,6 +30,8 @@ import com.unison.appartment.model.HomeUser;
 public class FamilyFragment extends Fragment implements FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener{
 
     public final static String EXTRA_USER_ID = "userId";
+    public final static String EXTRA_REQUESTED_REWARDS = "requestedRewards";
+    public final static String EXTRA_ASSIGNED_TASKS = "assignedTasks";
     public final static String EXTRA_NEW_ROLE = "newRole";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_CHANGE_ROLE = 0;
@@ -88,7 +94,13 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                         break;
 
                     case OPERATION_REMOVE_USER:
-                        listFragment.leaveHome(data.getStringExtra(EXTRA_USER_ID));
+                        listFragment.leaveHome(data.getStringExtra(EXTRA_USER_ID),
+                                (Set<String>)data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
+                                (Set<String>)data.getSerializableExtra(EXTRA_ASSIGNED_TASKS));
+                        Intent i = new Intent(getActivity(), UserProfileActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        getActivity().finish();
                         break;
 
                     default:
