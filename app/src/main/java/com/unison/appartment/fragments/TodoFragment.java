@@ -33,6 +33,7 @@ import com.unison.appartment.state.Appartment;
 public class TodoFragment extends Fragment implements TodoListFragment.OnTodoListFragmentInteractionListener {
 
     public final static String EXTRA_NEW_TASK = "newTask";
+    public final static String EXTRA_TASK_DATA = "taskData";
     public final static String EXTRA_TASK_ID = "taskId";
     public final static String EXTRA_USER_NAME = "userName";
     public final static String EXTRA_USER_ID = "userId";
@@ -120,17 +121,25 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
             if (resultCode == TaskDetailActivity.RESULT_OK) {
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_DELETE:
-                        // FIXME così come pensato per il RewardsFragment, prima di fare la delete
-                        // annullare il mark-as-complete e annullare anche l'assegnamento all'utente
-                        listFragment.deleteTask(data.getStringExtra(EXTRA_TASK_ID));
+                        String taskId = data.getStringExtra(EXTRA_TASK_ID);
+                        String assignedUserId = data.getStringExtra(EXTRA_USER_ID);
+                        if (assignedUserId != null) {
+                            listFragment.removeAssignment(taskId, assignedUserId);
+                        }
+                        listFragment.deleteTask(taskId);
                         break;
                     case OPERATION_ASSIGN:
-                        listFragment.assignTask(data.getStringExtra(EXTRA_TASK_ID),
+                        UncompletedTask task = (UncompletedTask) data.getSerializableExtra(EXTRA_TASK_DATA);
+                        if (task.isAssigned()) {
+                            listFragment.removeAssignment(task.getId(), task.getAssignedUserId());
+                        }
+                        listFragment.assignTask(task.getId(),
                                 data.getStringExtra(EXTRA_USER_ID),
                                 data.getStringExtra(EXTRA_USER_NAME));
                         break;
                     case OPERATION_REMOVE_ASSIGNMENT:
-                        listFragment.removeAssignment(data.getStringExtra(EXTRA_TASK_ID));
+                        listFragment.removeAssignment(data.getStringExtra(EXTRA_TASK_ID),
+                                data.getStringExtra(EXTRA_USER_ID));
                         break;
                     case OPERATION_MARK_AS_COMPLETED:
                         listFragment.markTask(data.getStringExtra(EXTRA_TASK_ID),
