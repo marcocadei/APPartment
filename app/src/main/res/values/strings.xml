@@ -132,6 +132,7 @@
     <string name="activity_family_member_detail_btn_delete_masters">Rimuovi dalla casa</string>
     <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Effettua downgrade ruolo</string>
     <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Effettua upgrade ruolo</string>
+    <string name="activity_family_member_detail_emilia_romagna">Lancia un dado</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_family_member_detail_toolbar_edit">Modifica nickname</string>

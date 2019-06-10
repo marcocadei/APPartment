@@ -217,6 +217,10 @@ public class FamilyMemberDetailActivity extends AppCompatActivity {
 //            startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
 //            return true;
         }
+        else if (item.getItemId() == R.id.activity_family_member_detail_emilia_romagna) {
+            Intent i = new Intent(this, WebActivity.class);
+            startActivity(i);
+        }
         return super.onOptionsItemSelected(item);
     }
 
