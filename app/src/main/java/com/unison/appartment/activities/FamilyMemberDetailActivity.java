@@ -24,6 +24,7 @@ import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.FirebaseDatabaseReader;
+import com.unison.appartment.fragments.DeleteHomeUserConfirmationDialogFragment;
 import com.unison.appartment.fragments.FamilyFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
@@ -37,7 +38,7 @@ import java.util.Map;
 /**
  * Classe che rappresenta l'Activity con il dettaglio di un membro della famiglia
  */
-public class FamilyMemberDetailActivity extends ActivityWithDialogs {
+public class FamilyMemberDetailActivity extends ActivityWithDialogs implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
 
     public final static String EXTRA_MEMBER_OBJECT = "memberObject";
 
@@ -203,14 +204,9 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs {
                 public void onClick(View v) {
                     // TODO elimina me stesso (gestire diversamente a seconda ruolo!)
 
-                    progressDialog = FirebaseProgressDialogFragment.newInstance(
-                            getString(R.string.activity_family_member_detail_deletion_title),
-                            getString(R.string.activity_family_member_detail_deletion_description));
-                    progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
-
-                    // Lettura dei riferimenti a task e premi da resettare
                     deletedUserId = loggedUserUid;
-                    databaseReader.retrieveHomeUserRefs(Appartment.getInstance().getHome().getName(), loggedUserUid, dbReaderListener);
+                    DeleteHomeUserConfirmationDialogFragment dialog = new DeleteHomeUserConfirmationDialogFragment();
+                    dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
                 }
             });
         }
@@ -311,4 +307,15 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs {
             Log.e("zzzzz", "readCanceled");
         }
     };
+
+    @Override
+    public void onConfirm() {
+        progressDialog = FirebaseProgressDialogFragment.newInstance(
+                getString(R.string.activity_family_member_detail_deletion_title),
+                getString(R.string.activity_family_member_detail_deletion_description));
+        progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
+
+        // Lettura dei riferimenti a task e premi da resettare
+        databaseReader.retrieveHomeUserRefs(Appartment.getInstance().getHome().getName(), deletedUserId, dbReaderListener);
+    }
 }
