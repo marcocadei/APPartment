@@ -137,6 +137,7 @@ public class CreateHomeActivity extends FormActivity {
                 }
             });
 
+            floatNext.setImageDrawable(getDrawable(R.drawable.ic_check));
             // Gestione click sul bottone per completare la modifica
             floatNext.setOnClickListener(new View.OnClickListener() {
                 @Override
