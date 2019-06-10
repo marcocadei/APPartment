@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.FamilyMemberDetailActivity;
 import com.unison.appartment.activities.UserProfileActivity;
+import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.HomeUser;
 
 import java.util.HashSet;
@@ -94,13 +95,19 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                         break;
 
                     case OPERATION_REMOVE_USER:
+                        boolean isDeletingSelf = false;
+                        if (data.getStringExtra(EXTRA_USER_ID).equals(new FirebaseAuth().getCurrentUserUid())) {
+                            isDeletingSelf = true;
+                        }
                         listFragment.leaveHome(data.getStringExtra(EXTRA_USER_ID),
                                 (Set<String>)data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
                                 (Set<String>)data.getSerializableExtra(EXTRA_ASSIGNED_TASKS));
-                        Intent i = new Intent(getActivity(), UserProfileActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        getActivity().finish();
+                        if (isDeletingSelf) {
+                            Intent i = new Intent(getActivity(), UserProfileActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                            getActivity().finish();
+                        }
                         break;
 
                     default:

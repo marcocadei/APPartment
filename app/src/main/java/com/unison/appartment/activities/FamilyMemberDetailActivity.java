@@ -1,6 +1,7 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
@@ -147,7 +148,9 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO elimina altro utente
+                        // Eliminazione di uno slave o di un master
+                        deletedUserId = member.getUserId();
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other);
                     }
                 });
                 if (member.getRole() == Home.ROLE_SLAVE) {
@@ -205,8 +208,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                     // TODO elimina me stesso (gestire diversamente a seconda ruolo!)
 
                     deletedUserId = loggedUserUid;
-                    DeleteHomeUserConfirmationDialogFragment dialog = new DeleteHomeUserConfirmationDialogFragment();
-                    dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
+                    showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_self);
                 }
             });
         }
@@ -258,6 +260,11 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDeleteConfirmationDialog(@StringRes int message) {
+        DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(message);
+        dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
     }
 
     private void sendChangeRoleData(String userId, int newRole) {

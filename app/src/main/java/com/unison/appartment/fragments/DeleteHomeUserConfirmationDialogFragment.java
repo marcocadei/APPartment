@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
 
 import com.unison.appartment.R;
@@ -15,6 +16,9 @@ import com.unison.appartment.R;
 public class DeleteHomeUserConfirmationDialogFragment extends DialogFragment {
 
     public final static String TAG_CONFIRMATION_DIALOG = "confirmationDialog";
+
+    private final static int BUNDLE_CAPACITY = 1;
+    private final static String BUNDLE_KEY_MESSAGE = "message";
 
     public interface ConfirmationDialogInterface {
         void onConfirm();
@@ -34,11 +38,20 @@ public class DeleteHomeUserConfirmationDialogFragment extends DialogFragment {
         super.onDetach();
     }
 
+    public static DeleteHomeUserConfirmationDialogFragment newInstance(@StringRes int message) {
+        Bundle args = new Bundle(BUNDLE_CAPACITY);
+        args.putInt(BUNDLE_KEY_MESSAGE, message);
+
+        DeleteHomeUserConfirmationDialogFragment fragment = new DeleteHomeUserConfirmationDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.dialog_delete_home_user_confirmation_message)
+        builder.setMessage(getArguments().getInt(BUNDLE_KEY_MESSAGE))
                 .setPositiveButton(R.string.general_continue_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onConfirm();
