@@ -185,7 +185,9 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO elimina altro utente
+                        // Eliminazione di uno slave o di un master
+                        deletedUserId = member.getUserId();
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other);
                     }
                 });
                 btnUpgrade.setOnClickListener(new View.OnClickListener() {
