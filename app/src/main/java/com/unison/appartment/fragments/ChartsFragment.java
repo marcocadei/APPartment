@@ -1,6 +1,7 @@
 package com.unison.appartment.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,8 +27,10 @@ import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.unison.appartment.R;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.mpandroidchart.ChartItem;
 import com.unison.appartment.mpandroidchart.PieChartItem;
+import com.unison.appartment.state.Appartment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,28 +65,20 @@ public class ChartsFragment extends Fragment {
         ListView chartListView = view.findViewById(R.id.fragment_charts_list);
 
         ArrayList<ChartItem> chartItems = new ArrayList<>();
-        // Torta
+        // TODO riempire array di colori come in PieChartActivity (app esempio)
+        // Torta con i task completati
         List<PieEntry> entries = new ArrayList<>();
-        // I punti crescono troppo rapidamente rispetto a tutti gli altri valori, rovinando così
-        // la visualizzazione. Pertanto non vengono aggiunti al radar
-        /*entries.add(new RadarEntry(member.getTotalEarnedPoints()));*/
-        entries.add(new PieEntry(3f, "a"));
-        entries.add(new PieEntry(4f, "b"));
-        entries.add(new PieEntry(1f, "c"));
+        for(HomeUser homeUser : Appartment.getInstance().getHomeUsers().values()) {
+            entries.add(new PieEntry(homeUser.getCompletedTasks(), homeUser.getNickname()));
+        }
         PieDataSet pieDataSet = new PieDataSet(entries, "");
         pieDataSet.setSliceSpace(2f);
         pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        pieDataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        pieDataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         PieData pieData = new PieData(pieDataSet);
-        chartItems.add(new PieChartItem(pieData, getContext()));
-        entries = new ArrayList<>();
-        entries.add(new PieEntry(13f, "ano"));
-        entries.add(new PieEntry(14f, "bocca"));
-        entries.add(new PieEntry(11f, "cculo"));
-        PieDataSet pieDataSet2 = new PieDataSet(entries, "");
-        pieDataSet2.setSliceSpace(2f);
-        pieDataSet2.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        PieData pieData2 = new PieData(pieDataSet2);
-        chartItems.add(new PieChartItem(pieData2, getContext()));
+        pieData.setValueTextColor(Color.BLACK);
+        chartItems.add(new PieChartItem(pieData, getContext(), "Task\ncompletati"));
 
         chartListView.setAdapter(new ChartAdapter(getContext(), 0, chartItems));
 
