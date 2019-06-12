@@ -36,7 +36,6 @@ import com.unison.appartment.utils.ImageUtils;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Classe che rappresenta l'Activity con il dettaglio di un membro della famiglia
