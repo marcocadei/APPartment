@@ -32,7 +32,7 @@ public class CompletionRepository {
                         DatabaseConstants.SEPARATOR + DatabaseConstants.COMPLETIONS +
                                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName() +
                                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getCurrentCompletedTaskName());
-        Query orderedCompletions = completionRef.orderByChild(DatabaseConstants.COMPLETIONS_HOMENAME_TASKID_COMPLETIONDATE);
+        Query orderedCompletions = completionRef.orderByChild(DatabaseConstants.COMPLETIONS_HOMENAME_TASKNAME_COMPLETIONDATE);
         liveData = new FirebaseQueryLiveData(orderedCompletions);
         completionLiveData = Transformations.map(liveData, new CompletionRepository.Deserializer());
     }
@@ -40,6 +40,10 @@ public class CompletionRepository {
     @NonNull
     public LiveData<List<Completion>> getCompletionLiveData() {
         return completionLiveData;
+    }
+
+    public void clearHistory() {
+        completionRef.removeValue();
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Completion>> {

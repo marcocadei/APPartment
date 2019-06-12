@@ -96,7 +96,9 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
             btnDeleteHistory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    CompletionListFragment listFragment = (CompletionListFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.activity_completed_task_detail_fragment_completion_list);
+                    listFragment.clearHistory();
                 }
             });
             btnDeleteTask.setOnClickListener(new View.OnClickListener() {
