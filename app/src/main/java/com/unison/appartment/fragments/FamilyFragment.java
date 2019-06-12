@@ -1,6 +1,5 @@
 package com.unison.appartment.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import com.unison.appartment.activities.UserProfileActivity;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.HomeUser;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -91,7 +89,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         if (requestCode == MEMBER_DETAIL_REQUEST_CODE) {
             FamilyMemberListFragment listFragment = (FamilyMemberListFragment) getChildFragmentManager()
                     .findFragmentById(R.id.fragment_family_member_list);
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == FamilyMemberDetailActivity.RESULT_OK) {
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_CHANGE_ROLE:
                         listFragment.changeRole(data.getStringExtra(EXTRA_USER_ID), data.getIntExtra(EXTRA_NEW_ROLE, -1));
