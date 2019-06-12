@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -98,8 +97,6 @@ public class EditHomeUserActivity extends FormActivity {
                         progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
                         // Lettura dei riferimenti a task e premi a cui va aggiornato il nickname
-                        Log.e("zzzz HOMENAME", Appartment.getInstance().getHome().getName());
-                        Log.e("zzzz USERID", userId);
                         databaseReader.retrieveHomeUserRefs(Appartment.getInstance().getHome().getName(), userId, dbReaderListener);
                     }
                     else {
@@ -177,15 +174,8 @@ public class EditHomeUserActivity extends FormActivity {
     final DatabaseReaderListener dbReaderListener = new DatabaseReaderListener() {
         @Override
         public void onReadSuccess(String key, Object object) {
-            Log.e("zzzz READ SUCCESS", "read success");
             Map<String, HashSet<String>> homeUserRefs = (Map<String, HashSet<String>>) object;
             HashSet<String> requestedRewards = homeUserRefs.get(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS);
-            if (requestedRewards == null) {
-                Log.e("zzzz MAP IS NULL", "REQREW NULL");
-            }
-            else {
-                Log.e("zzzz MAP OK", String.valueOf(requestedRewards.size()));
-            }
             HashSet<String> assignedTasks = homeUserRefs.get(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS);
             returnNewHomeUserData(userId, requestedRewards, assignedTasks);
         }
