@@ -138,6 +138,10 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.deleteHome();
     }
 
+    public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, String newNickname) {
+        viewModel.changeNickname(userId, requestedRewards, assignedTasks, newNickname);
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity

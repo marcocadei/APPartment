@@ -342,7 +342,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
             result = false;
         }
 
-        // Controllo che la data scelta non si a successiva alla data odierna
+        // Controllo che la data scelta non sia successiva alla data odierna
         Date today = new Date();
         if (birthdate != null) {
             if (birthdate.compareTo(today) > 0) {
