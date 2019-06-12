@@ -111,8 +111,11 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                         break;
 
                     case OPERATION_REMOVE_HOME:
-                        // TODO ancora da realizzare (ricordarsi anche qui di kickare l'utente loggato)
-                        Log.d(getClass().getCanonicalName(), "Rimozione casa");
+                        listFragment.deleteHome();
+                        Intent i = new Intent(getActivity(), UserProfileActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        getActivity().finish();
                         break;
 
                     default:
