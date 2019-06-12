@@ -7,6 +7,7 @@ public class DatabaseConstants {
 
     // Post
     public final static String POSTS = "posts";
+    public final static String POSTS_HOMENAME_POSTID_AUTHOR = "author";
     public final static String POSTS_HOMENAME_POSTID_TIMESTAMP = "timestamp";
 
     // Case
@@ -30,6 +31,7 @@ public class DatabaseConstants {
     // Vengono mantenuti perché alla cancellazione dell'utente dalla casa devo
     // sapere quali altri dati resettare
     public final static String HOMEUSERSREFS = "home-users-refs";
+    public final static String HOMEUSERSREFS_HOMENAME_UID_POSTS = "posts";
     public final static String HOMEUSERSREFS_HOMENAME_UID_REWARDS = "rewards";
     public final static String HOMEUSERSREFS_HOMENAME_UID_TASKS = "tasks";
 

@@ -30,6 +30,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
 
     public final static String EXTRA_USER_ID = "userId";
     public final static String EXTRA_NEW_OWNER_ID = "newOwnerId";
+    public final static String EXTRA_OWN_POSTS = "ownPosts";
     public final static String EXTRA_REQUESTED_REWARDS = "requestedRewards";
     public final static String EXTRA_ASSIGNED_TASKS = "assignedTasks";
     public final static String EXTRA_NEW_ROLE = "newRole";
@@ -120,6 +121,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                 listFragment.changeNickname(data.getStringExtra(EXTRA_USER_ID),
                         (Set<String>) data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
                         (Set<String>) data.getSerializableExtra(EXTRA_ASSIGNED_TASKS),
+                        (Set<String>) data.getSerializableExtra(EXTRA_OWN_POSTS),
                         data.getStringExtra(EXTRA_NEW_NICKNAME));
             }
         }

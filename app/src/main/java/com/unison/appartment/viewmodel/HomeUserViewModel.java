@@ -36,7 +36,7 @@ public class HomeUserViewModel extends ViewModel {
         repository.deleteHome();
     }
 
-    public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, String newNickname) {
-        repository.changeNickname(userId, requestedRewards, assignedTasks, newNickname);
+    public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, Set<String> ownPosts, String newNickname) {
+        repository.changeNickname(userId, requestedRewards, assignedTasks, ownPosts, newNickname);
     }
 }

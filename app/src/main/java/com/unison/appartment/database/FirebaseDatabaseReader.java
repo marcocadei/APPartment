@@ -103,20 +103,29 @@ public class FirebaseDatabaseReader implements DatabaseReader {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     Map<String, HashSet<String>> map = new HashMap<>();
+                    HashSet<String> ownPosts = new HashSet<>();
                     HashSet<String> requestedRewards = new HashSet<>();
                     HashSet<String> assignedTasks = new HashSet<>();
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        if (data.getKey().equals(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS)) {
-                            for (DataSnapshot rewardId : data.getChildren()) {
-                                requestedRewards.add(rewardId.getKey());
-                            }
-                        }
-                        else {
-                            for (DataSnapshot taskId : data.getChildren()) {
-                                assignedTasks.add(taskId.getKey());
-                            }
+                        switch (data.getKey()) {
+                            case DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS:
+                                for (DataSnapshot rewardId : data.getChildren()) {
+                                    requestedRewards.add(rewardId.getKey());
+                                }
+                                break;
+                            case DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS:
+                                for (DataSnapshot taskId : data.getChildren()) {
+                                    assignedTasks.add(taskId.getKey());
+                                }
+                                break;
+                            case DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_POSTS:
+                                for (DataSnapshot postId : data.getChildren()) {
+                                    ownPosts.add(postId.getKey());
+                                }
+                                break;
                         }
                     }
+                    map.put(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_POSTS, ownPosts);
                     map.put(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS, requestedRewards);
                     map.put(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS, assignedTasks);
                     listener.onReadSuccess(dataSnapshot.getKey(), map);

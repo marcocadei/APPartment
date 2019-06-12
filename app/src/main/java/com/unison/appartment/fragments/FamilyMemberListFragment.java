@@ -138,8 +138,8 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.deleteHome();
     }
 
-    public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, String newNickname) {
-        viewModel.changeNickname(userId, requestedRewards, assignedTasks, newNickname);
+    public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, Set<String> ownPosts, String newNickname) {
+        viewModel.changeNickname(userId, requestedRewards, assignedTasks, ownPosts, newNickname);
     }
 
     /**
