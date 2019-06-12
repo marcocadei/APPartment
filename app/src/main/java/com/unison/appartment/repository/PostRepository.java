@@ -52,20 +52,23 @@ public class PostRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<Post>> postLiveData;
 
-    private String homeName;
     private String currentUserUid;
     private String postPath;
     private String homeUserPath;
+    private String homeUserRefPath;
 
     private MutableLiveData<Boolean> loading;
 
     public PostRepository() {
-        homeName = Appartment.getInstance().getHome().getName();
+        String homeName = Appartment.getInstance().getHome().getName();
         currentUserUid = new FirebaseAuth().getCurrentUserUid();
         postPath = DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS +
                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName();
         homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + currentUserUid;
+        homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR + currentUserUid + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_POSTS;
 
         // Riferimento al nodo root del database
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -207,6 +210,10 @@ public class PostRepository {
                         Appartment.getInstance().getHomeUser(currentUserUid).getAudioPosts() + 1);
                 break;
         }
+
+        // Salvo il riferimento al post in home-users-refs
+        childUpdates.put(homeUserRefPath + DatabaseConstants.SEPARATOR + key, true);
+
         rootRef.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -222,7 +229,12 @@ public class PostRepository {
             postRef.delete();
         }
 
-        postRef.child(post.getId()).removeValue();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(postPath + DatabaseConstants.SEPARATOR + post.getId(), null);
+        // Rimuovo il riferimento al post da home-users-refs
+        childUpdates.put(homeUserRefPath + DatabaseConstants.SEPARATOR + post.getId(), null);
+
+        rootRef.updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Post>> {

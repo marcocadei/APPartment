@@ -30,6 +30,7 @@ public class DatabaseConstants {
     // Vengono mantenuti perché alla cancellazione dell'utente dalla casa devo
     // sapere quali altri dati resettare
     public final static String HOMEUSERSREFS = "home-users-refs";
+    public final static String HOMEUSERSREFS_HOMENAME_UID_POSTS = "posts";
     public final static String HOMEUSERSREFS_HOMENAME_UID_REWARDS = "rewards";
     public final static String HOMEUSERSREFS_HOMENAME_UID_TASKS = "tasks";
 
