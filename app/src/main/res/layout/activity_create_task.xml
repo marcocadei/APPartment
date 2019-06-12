@@ -72,6 +72,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_task_input_name_value"
+                    android:maxLength="32"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -104,6 +105,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_task_input_description_value"
+                    android:maxLength="256"
                     android:inputType="textMultiLine|text"
                     style="@style/CustomFormTextFieldInput" />
 

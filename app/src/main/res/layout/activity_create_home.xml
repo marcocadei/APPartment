@@ -71,6 +71,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_home_input_homename_value"
+                    android:maxLength="64"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -105,6 +106,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_home_input_password_value"
                     style="@style/CustomFormTextFieldInput"
+                    android:maxLength="256"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -121,6 +123,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_home_input_repeat_password_value"
                     style="@style/CustomFormTextFieldInput"
+                    android:maxLength="256"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -136,6 +139,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_home_input_repeat_nickname_value"
+                    android:maxLength="32"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
