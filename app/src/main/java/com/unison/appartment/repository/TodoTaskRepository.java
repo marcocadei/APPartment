@@ -54,7 +54,25 @@ public class TodoTaskRepository {
         String key = uncompletedTasksRef.push().getKey();
         newUncompletedTask.setId(key);
         newUncompletedTask.setCreationDate((-1) * newUncompletedTask.getCreationDate());
-        uncompletedTasksRef.child(key).setValue(newUncompletedTask);
+
+        if (newUncompletedTask.isAssigned()) {
+            // Se il task è stato già assegnato ad un utente in fase di creazione, bisogna
+            // scrivere anche il riferimento in /home-users-refs.
+            Map<String, Object> childUpdates = new HashMap<>();
+            String homeName = Appartment.getInstance().getHome().getName();
+            childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS + DatabaseConstants.SEPARATOR +
+                            homeName + DatabaseConstants.SEPARATOR + key,
+                    newUncompletedTask);
+            childUpdates.put(DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                            homeName + DatabaseConstants.SEPARATOR +
+                            newUncompletedTask.getAssignedUserId() + DatabaseConstants.SEPARATOR +
+                            DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR + key,
+                    true);
+            rootRef.updateChildren(childUpdates);
+        }
+        else {
+            uncompletedTasksRef.child(key).setValue(newUncompletedTask);
+        }
     }
 
     public void editTask(UncompletedTask newUncompletedTask) {
@@ -78,7 +96,7 @@ public class TodoTaskRepository {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
-        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR +DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
         // Aggiungo l'id del task assegnato ai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, true);
         rootRef.updateChildren(childUpdates);
