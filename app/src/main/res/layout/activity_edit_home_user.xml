@@ -66,7 +66,7 @@
                 android:hint="@string/desc_homeusers_homename_uid_nickname"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_edit_home_user_text_info"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_edit_home_user_layout_title">
 
@@ -76,6 +76,18 @@
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Nota: Il drawableStart è creato appositamente già colorato poiché su alcuni
+             dispositivi anche definendo l'attributo android:Tint l'immagine non viene ricolorata. -->
+            <TextView
+                android:id="@+id/activity_edit_home_user_text_info"
+                style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
+                android:drawableStart="@drawable/ic_info_outline_color_6a1b9a"
+                android:text="@string/activity_edit_home_user_text_info"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_edit_home_user_input_nickname" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
