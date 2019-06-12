@@ -114,7 +114,7 @@
                     <TextView
                         android:id="@+id/activity_completed_task_detail_text_description_title"
                         style="@style/Component.TextView.MultiLine.AttributeTitle"
-                        android:text="@string/activity_completed_task_detail_text_description_title"
+                        android:text="@string/desc_completedtasks_homename_taskid_lastdescription"
                         app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_description_value"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +132,7 @@
                     <TextView
                         android:id="@+id/activity_completed_task_detail_text_completion_date_title"
                         style="@style/Component.TextView.MultiLine.AttributeTitle"
-                        android:text="@string/activity_completed_task_detail_text_last_completion_date"
+                        android:text="@string/desc_completedtasks_homename_taskid_lastcompletiondate"
                         app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_text_completion_date_value"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

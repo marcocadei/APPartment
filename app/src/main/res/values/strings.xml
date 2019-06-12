@@ -48,6 +48,8 @@
 
     <!-- Descrizioni dei campi del database -->
 
+    <string name="desc_completedtasks_homename_taskid_lastcompletiondate">Data di ultimo completamento</string>
+    <string name="desc_completedtasks_homename_taskid_lastdescription">Ultima descrizione</string>
     <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
@@ -114,6 +116,7 @@
 
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
+    <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
     <string name="activity_create_home_edit_progress_description">Per favore attendi, è in corso l\'aggiornamento dei dati</string>
     <string name="activity_create_home_edit_progress_title">Modifica dati</string>
@@ -239,9 +242,6 @@
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
-    <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
-    <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
-    <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
