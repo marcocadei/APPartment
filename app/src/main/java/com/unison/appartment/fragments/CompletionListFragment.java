@@ -120,6 +120,10 @@ public class CompletionListFragment extends Fragment {
         });
     }
 
+    public void clearHistory() {
+        viewModel.clearHistory();
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity

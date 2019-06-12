@@ -24,7 +24,6 @@ import com.unison.appartment.fragments.AllCompletedTasksListFragment.OnAllComple
 
 import java.util.List;
 
-
 public class RecentCompletedTasksListFragment extends Fragment {
 
     // Numero di colonne della lista
@@ -111,6 +110,10 @@ public class RecentCompletedTasksListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
+    }
+
+    public void deleteCompletedTask(String taskName) {
+        viewModel.deleteCompletedTask(taskName);
     }
 
     private void readCompletedTasks() {

@@ -31,11 +31,13 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
     public final static String EXTRA_COMPLETED_TASK_OBJECT = "completedTaskObject";
 
     private static final int ADD_TASK_REQUEST_CODE = 101;
+
     public final static int RESULT_OK = 200;
     public final static int RESULT_CREATED = 201;
     public final static int RESULT_NOT_CREATED = 202;
 
     private View emptyListLayout;
+    private MaterialButton btnDeleteHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +79,34 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
         textDescription.setText(completedTask.getLastDescription());
         textCompletionDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(completedTask.getLastCompletionDate())));
 
-        MaterialButton btnCreate = findViewById(R.id.activity_completed_task_detail_btn_create);
+        btnDeleteHistory = findViewById(R.id.activity_completed_task_detail_btn_delete_history);
+        View layoutButtons = findViewById(R.id.activity_completed_task_detail_layout_buttons);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
-            btnCreate.setVisibility(View.GONE);
+            layoutButtons.setVisibility(View.GONE);
         } else {
+            MaterialButton btnCreate = findViewById(R.id.activity_completed_task_detail_btn_create);
+            MaterialButton btnDeleteTask = findViewById(R.id.activity_completed_task_detail_btn_delete_task);
+
             btnCreate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(CompletedTaskDetailActivity.this, CreateTaskActivity.class);
                     i.putExtra(CreateTaskActivity.EXTRA_TASK_DATA, completedTask);
                     startActivityForResult(i, ADD_TASK_REQUEST_CODE);
+                }
+            });
+            btnDeleteHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CompletionListFragment listFragment = (CompletionListFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.activity_completed_task_detail_fragment_completion_list);
+                    listFragment.clearHistory();
+                }
+            });
+            btnDeleteTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendDeleteData(completedTask.getName());
                 }
             });
         }
@@ -109,6 +129,14 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
         }
     }
 
+    private void sendDeleteData(String taskName) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(DoneFragment.EXTRA_OPERATION_TYPE, DoneFragment.OPERATION_DELETE);
+        returnIntent.putExtra(DoneFragment.EXTRA_TASK_NAME, taskName);
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
     @Override
     public void onCompletionListElementsLoaded(long elements) {
         // Sia che la lista abbia elementi o meno, una volta fatta la lettura la
@@ -118,9 +146,11 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
 
         if (elements == 0) {
             emptyListLayout.setVisibility(View.VISIBLE);
+            btnDeleteHistory.setVisibility(View.GONE);
         }
         else {
             emptyListLayout.setVisibility(View.GONE);
+            btnDeleteHistory.setVisibility(View.VISIBLE);
         }
     }
 }

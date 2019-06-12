@@ -2,7 +2,6 @@ package com.unison.appartment.repository;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,10 +14,16 @@ import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.state.Appartment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import androidx.arch.core.util.Function;
 
 public class CompletedTaskRepository {
+
+    // Riferimento al nodo root del database
+    private DatabaseReference rootRef;
     // Nodo del database a cui sono interessato
     private DatabaseReference completedTaskRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
@@ -28,17 +33,17 @@ public class CompletedTaskRepository {
     private LiveData<List<CompletedTask>> recentCompletedTaskLiveData;
 
     public CompletedTaskRepository() {
-        // Riferimento al nodo del Database interessato (i task non completati della casa corrente)
-        completedTaskRef =
-                FirebaseDatabase.getInstance().getReference(
-                        DatabaseConstants.SEPARATOR + DatabaseConstants.COMPLETEDTASKS +
-                                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-        Query orderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKID_NAME);
+        // Riferimento al nodo root del database
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        // Riferimento al nodo del Database interessato (i task completati della casa corrente)
+        completedTaskRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.COMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        Query orderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKNAME_NAME);
         liveData = new FirebaseQueryLiveData(orderedCompletedTasks);
         completedTaskLiveData = Transformations.map(liveData, new CompletedTaskRepository.Deserializer());
 
         // Task completati recenti
-        Query recentOrderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKID_LASTCOMPLETIONDATE);
+        Query recentOrderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKNAME_LASTCOMPLETIONDATE);
         liveData = new FirebaseQueryLiveData(recentOrderedCompletedTasks);
         recentCompletedTaskLiveData = Transformations.map(liveData, new CompletedTaskRepository.Deserializer());
     }
@@ -51,6 +56,20 @@ public class CompletedTaskRepository {
     @NonNull
     public LiveData<List<CompletedTask>> getRecentCompletedTaskLiveData() {
         return recentCompletedTaskLiveData;
+    }
+
+    public void deleteCompletedTask(String taskName) {
+        String completedTaskPath = DatabaseConstants.COMPLETEDTASKS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                taskName;
+        String completionPath = DatabaseConstants.COMPLETIONS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                taskName;
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(completedTaskPath, null);
+        childUpdates.put(completionPath, null);
+        rootRef.updateChildren(childUpdates);
     }
 
     private class Deserializer implements Function<DataSnapshot, List<CompletedTask>> {

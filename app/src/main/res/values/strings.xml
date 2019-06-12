@@ -48,8 +48,8 @@
 
     <!-- Descrizioni dei campi del database -->
 
-    <string name="desc_completedtasks_homename_taskid_lastcompletiondate">Data di ultimo completamento</string>
-    <string name="desc_completedtasks_homename_taskid_lastdescription">Ultima descrizione</string>
+    <string name="desc_completedtasks_homename_taskname_lastcompletiondate">Data di ultimo completamento</string>
+    <string name="desc_completedtasks_homename_taskname_lastdescription">Ultima descrizione</string>
     <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
@@ -115,6 +115,8 @@
     <!-- Legate ad una specifica activity -->
 
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
+    <string name="activity_completed_task_detail_btn_delete_history">Pulisci cronologia</string>
+    <string name="activity_completed_task_detail_btn_delete_task">Elimina dalle attività completate</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
