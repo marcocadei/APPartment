@@ -7,6 +7,7 @@ public class DatabaseConstants {
 
     // Post
     public final static String POSTS = "posts";
+    public final static String POSTS_HOMENAME_POSTID_AUTHOR = "author";
     public final static String POSTS_HOMENAME_POSTID_TIMESTAMP = "timestamp";
 
     // Case

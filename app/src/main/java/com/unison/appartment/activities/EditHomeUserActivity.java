@@ -154,9 +154,10 @@ public class EditHomeUserActivity extends FormActivity {
         return result;
     }
 
-    private void returnNewHomeUserData(String userId, HashSet<String> requestedRewards, HashSet<String> assignedTasks) {
+    private void returnNewHomeUserData(String userId, HashSet<String> requestedRewards, HashSet<String> assignedTasks, HashSet<String> ownPosts) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
+        returnIntent.putExtra(FamilyFragment.EXTRA_OWN_POSTS, ownPosts);
         returnIntent.putExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS, requestedRewards);
         returnIntent.putExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS, assignedTasks);
         returnIntent.putExtra(FamilyFragment.EXTRA_NEW_NICKNAME, inputNickname.getText().toString());
@@ -175,9 +176,10 @@ public class EditHomeUserActivity extends FormActivity {
         @Override
         public void onReadSuccess(String key, Object object) {
             Map<String, HashSet<String>> homeUserRefs = (Map<String, HashSet<String>>) object;
+            HashSet<String> ownPosts = homeUserRefs.get(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_POSTS);
             HashSet<String> requestedRewards = homeUserRefs.get(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS);
             HashSet<String> assignedTasks = homeUserRefs.get(DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS);
-            returnNewHomeUserData(userId, requestedRewards, assignedTasks);
+            returnNewHomeUserData(userId, requestedRewards, assignedTasks, ownPosts);
         }
 
         @Override
@@ -187,7 +189,8 @@ public class EditHomeUserActivity extends FormActivity {
             posso semplicemente procedere senza dovermi preoccupare di modificare anche dei nodi
             in /rewards o /tasks.
              */
-            returnNewHomeUserData(userId, new HashSet<String>(), new HashSet<String>());
+            HashSet<String> emptyHashSet = new HashSet<>();
+            returnNewHomeUserData(userId, emptyHashSet, emptyHashSet, emptyHashSet);
         }
 
         @Override
