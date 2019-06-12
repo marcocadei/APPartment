@@ -26,4 +26,8 @@ public class CompletedTaskViewModel extends ViewModel {
     public LiveData<List<CompletedTask>> getRecentCompletedTaskLiveData() {
         return repository.getRecentCompletedTaskLiveData();
     }
+
+    public void deleteCompletedTask(String taskName) {
+        repository.deleteCompletedTask(taskName);
+    }
 }

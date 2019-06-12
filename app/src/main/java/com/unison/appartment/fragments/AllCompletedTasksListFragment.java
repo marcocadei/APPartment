@@ -123,6 +123,10 @@ public class AllCompletedTasksListFragment extends Fragment {
         });
     }
 
+    public void deleteCompletedTask(String taskName) {
+        viewModel.deleteCompletedTask(taskName);
+    }
+
     public interface OnAllCompletedTasksListFragmentInteractionListener {
         void onAllCompletedTasksListFragmentInteraction(CompletedTask completedTask);
         void onAllCompletedTasksListElementsLoaded(int elements);

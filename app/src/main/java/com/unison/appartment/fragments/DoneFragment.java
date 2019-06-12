@@ -26,6 +26,10 @@ import com.unison.appartment.viewmodel.TodoTaskViewModel;
 
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
 
+    public final static String EXTRA_TASK_NAME = "taskName";
+    public final static String EXTRA_OPERATION_TYPE = "operationType";
+    public final static int OPERATION_DELETE = 0;
+
     private final static int DETAIL_COMPLETED_TASK_REQUEST_CODE = 1;
 
     private final static int ALL_COMPLETEDTASKS_POSITION = 0;
@@ -142,6 +146,22 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         if (requestCode == DETAIL_COMPLETED_TASK_REQUEST_CODE) {
             if (resultCode == CompletedTaskDetailActivity.RESULT_CREATED) {
                 viewModel.addTask((UncompletedTask) data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+            }
+            else if (resultCode == CompletedTaskDetailActivity.RESULT_OK) {
+                if (data.getIntExtra(EXTRA_OPERATION_TYPE, -1) == OPERATION_DELETE) {
+                    // FIXME codice completamente da ristrutturare se si eliminano i tab
+                    // (Se invece si lasciano i tab cambiare i due CompletedTasksListFragment mettendo
+                    // un'interfaccia o una superclasse comune perché così il codice fa schifo)
+
+                    Fragment listFragment = getChildFragmentManager().findFragmentById(R.id.fragment_done_fragment_done_list);
+                    String taskName = data.getStringExtra(EXTRA_TASK_NAME);
+                    if (currentPosition == ALL_COMPLETEDTASKS_POSITION) {
+                        ((AllCompletedTasksListFragment) listFragment).deleteCompletedTask(taskName);
+                    }
+                    else {
+                        ((RecentCompletedTasksListFragment) listFragment).deleteCompletedTask(taskName);
+                    }
+                }
             }
         }
     }

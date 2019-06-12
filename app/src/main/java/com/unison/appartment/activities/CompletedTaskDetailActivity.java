@@ -31,6 +31,7 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
     public final static String EXTRA_COMPLETED_TASK_OBJECT = "completedTaskObject";
 
     private static final int ADD_TASK_REQUEST_CODE = 101;
+
     public final static int RESULT_OK = 200;
     public final static int RESULT_CREATED = 201;
     public final static int RESULT_NOT_CREATED = 202;
@@ -105,7 +106,7 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
             btnDeleteTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    sendDeleteData(completedTask.getName());
                 }
             });
         }
@@ -126,6 +127,14 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
             }
             finish();
         }
+    }
+
+    private void sendDeleteData(String taskName) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(DoneFragment.EXTRA_OPERATION_TYPE, DoneFragment.OPERATION_DELETE);
+        returnIntent.putExtra(DoneFragment.EXTRA_TASK_NAME, taskName);
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 
     @Override
