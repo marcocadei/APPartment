@@ -410,12 +410,12 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
     @Override
     public void onListFragmentInteraction(HomeUser item) {
         DialogFragment fragment = (DialogFragment) getSupportFragmentManager().findFragmentByTag(UserPickerFragment.TAG_USER_PICKER);
-        if (fragment != null) {
+        try {
             fragment.dismiss();
             sendAssignData(item.getUserId());
         }
-        else {
-            Log.e(getClass().getCanonicalName(), new NullPointerException().getMessage());
+        catch (NullPointerException e) {
+            Log.e(getClass().getCanonicalName(), e.getMessage());
         }
     }
 }
