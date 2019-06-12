@@ -2,7 +2,6 @@ package com.unison.appartment.repository;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,12 +32,12 @@ public class CompletedTaskRepository {
                 FirebaseDatabase.getInstance().getReference(
                         DatabaseConstants.SEPARATOR + DatabaseConstants.COMPLETEDTASKS +
                                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-        Query orderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKID_NAME);
+        Query orderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKNAME_NAME);
         liveData = new FirebaseQueryLiveData(orderedCompletedTasks);
         completedTaskLiveData = Transformations.map(liveData, new CompletedTaskRepository.Deserializer());
 
         // Task completati recenti
-        Query recentOrderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKID_LASTCOMPLETIONDATE);
+        Query recentOrderedCompletedTasks = completedTaskRef.orderByChild(DatabaseConstants.COMPLETEDTASKS_HOMENAME_TASKNAME_LASTCOMPLETIONDATE);
         liveData = new FirebaseQueryLiveData(recentOrderedCompletedTasks);
         recentCompletedTaskLiveData = Transformations.map(liveData, new CompletedTaskRepository.Deserializer());
     }
