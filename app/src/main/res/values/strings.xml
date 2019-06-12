@@ -198,6 +198,7 @@
     <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
+    <string name="dialog_delete_home_user_confirmation_message_last">Sei sicuro di voler lasciare la casa? Poiché non ci sono altri utenti, alla tua uscita tutti i dati relativi a questa casa verranno eliminati in modo irreversibile.</string>
     <string name="dialog_delete_home_user_confirmation_message_other">Sei sicuro di voler rimuovere l\'utente dalla casa? Tutti i suoi dati saranno eliminati.</string>
     <string name="dialog_delete_home_user_confirmation_message_self">Sei sicuro di voler lasciare la casa? Tutti i tuoi dati saranno eliminati.</string>
     <string name="dialog_firebase_error_message" tools:ignore="Typos">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>

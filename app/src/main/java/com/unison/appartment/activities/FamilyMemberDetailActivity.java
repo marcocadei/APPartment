@@ -216,7 +216,12 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                         newOwnerId = getNewOwnerId();
                     }
                     deletedUserId = loggedUserUid;
-                    showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_self);
+                    if (newOwnerId != null && newOwnerId.equals(NO_MEMBERS_LEFT)) {
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_last);
+                    }
+                    else {
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_self);
+                    }
                 }
             });
         }
