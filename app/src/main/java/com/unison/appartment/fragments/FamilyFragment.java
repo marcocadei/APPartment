@@ -35,6 +35,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
     public final static String EXTRA_REQUESTED_REWARDS = "requestedRewards";
     public final static String EXTRA_ASSIGNED_TASKS = "assignedTasks";
     public final static String EXTRA_NEW_ROLE = "newRole";
+    public final static String EXTRA_NEW_NICKNAME = "newNickname";
     public final static String EXTRA_OPERATION_TYPE = "operationType";
     public final static int OPERATION_CHANGE_ROLE = 0;
     public final static int OPERATION_REMOVE_USER = 1;
@@ -116,6 +117,12 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                         break;
                 }
+            }
+            else if (resultCode == FamilyMemberDetailActivity.RESULT_EDITED) {
+                listFragment.changeNickname(data.getStringExtra(EXTRA_USER_ID),
+                        (Set<String>) data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
+                        (Set<String>) data.getSerializableExtra(EXTRA_ASSIGNED_TASKS),
+                        data.getStringExtra(EXTRA_NEW_NICKNAME));
             }
         }
     }

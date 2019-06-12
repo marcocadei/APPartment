@@ -1,11 +1,13 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,6 +36,7 @@ import com.unison.appartment.utils.ImageUtils;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Classe che rappresenta l'Activity con il dettaglio di un membro della famiglia
@@ -41,6 +44,12 @@ import java.util.Map;
 public class FamilyMemberDetailActivity extends ActivityWithDialogs implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
 
     public final static String EXTRA_MEMBER_OBJECT = "memberObject";
+
+    private final static int EDIT_HOMEUSER_REQUEST_CODE = 101;
+
+    public final static int RESULT_OK = 200;
+    public final static int RESULT_EDITED = 201;
+    public final static int RESULT_NOT_EDITED = 202;
 
     private final static String BUNDLE_KEY_DELETED_USER_ID = "deletedUserId";
     private final static String BUNDLE_KEY_NEW_OWNER_ID = "newOwnerId";
@@ -62,6 +71,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_member_detail);
 
+        // Modifica dell'activity di destinazione a cui andare quando si chiude il dialog di errore
         this.errorDialogDestinationActivity = MainActivity.class;
 
         databaseReader = new FirebaseDatabaseReader();
@@ -265,16 +275,36 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.activity_family_member_detail_toolbar_edit) {
-//            Intent i = new Intent(this, CreateRewardActivity.class);
-//            i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
-//            startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
-//            return true;
+            Intent i = new Intent(this, EditHomeUserActivity.class);
+            i.putExtra(EditHomeUserActivity.EXTRA_HOMEUSER_DATA, member);
+            startActivityForResult(i, EDIT_HOMEUSER_REQUEST_CODE);
+            return true;
         }
         else if (item.getItemId() == R.id.activity_family_member_detail_emilia_romagna) {
             Intent i = new Intent(this, WebActivity.class);
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_HOMEUSER_REQUEST_CODE) {
+            Intent returnIntent = new Intent();
+            if (resultCode == Activity.RESULT_OK) {
+                returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, data.getStringExtra(FamilyFragment.EXTRA_USER_ID));
+                returnIntent.putExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS, data.getSerializableExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS));
+                returnIntent.putExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS, data.getSerializableExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS));
+                returnIntent.putExtra(FamilyFragment.EXTRA_NEW_NICKNAME, data.getStringExtra(FamilyFragment.EXTRA_NEW_NICKNAME));
+                setResult(RESULT_EDITED, returnIntent);
+            } else {
+                // Necessario impostare questo resultCode perché altrimenti il default è OK e non
+                // riesco a capire cosa è successo
+                setResult(RESULT_NOT_EDITED, returnIntent);
+            }
+            finish();
+        }
     }
 
     private void showDeleteConfirmationDialog(@StringRes int message) {
@@ -288,7 +318,6 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(FamilyFragment.EXTRA_NEW_ROLE, newRole);
         setResult(RESULT_OK, returnIntent);
-        dismissProgress();
         finish();
     }
 
@@ -307,6 +336,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         returnIntent.putExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS, requestedRewards);
         returnIntent.putExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS, assignedTasks);
         setResult(RESULT_OK, returnIntent);
+        dismissProgress();
         finish();
     }
 
@@ -368,8 +398,8 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
     @Override
     public void onConfirm() {
         progressDialog = FirebaseProgressDialogFragment.newInstance(
-                getString(R.string.activity_family_member_detail_deletion_title),
-                getString(R.string.activity_family_member_detail_deletion_description));
+                getString(R.string.activity_family_member_detail_homeuserrefs_gathering_title),
+                getString(R.string.activity_family_member_detail_homeuserrefs_gathering_description));
         progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
 
         // Lettura dei riferimenti a task e premi da resettare

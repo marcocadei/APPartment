@@ -139,6 +139,29 @@ public class HomeUserRepository {
         rootRef.updateChildren(childUpdates);
     }
 
+    public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, String newNickname) {
+        String homeName = Appartment.getInstance().getHome().getName();
+        // FIXME completions da aggiungere?
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERS_HOMENAME_UID_NICKNAME;
+        // FIXME posts da aggiungere?
+        String baseRewardPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR;
+        String baseTaskPath = DatabaseConstants.UNCOMPLETEDTASKS + DatabaseConstants.SEPARATOR + homeName +
+                DatabaseConstants.SEPARATOR;
+
+        final Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(homeUserPath, newNickname);
+        for (String rewardId : requestedRewards) {
+            childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, newNickname);
+        }
+        for (String taskId : assignedTasks) {
+            childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, newNickname);
+        }
+        rootRef.updateChildren(childUpdates);
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<HomeUser>> {
         @Override
         public List<HomeUser> apply(DataSnapshot dataSnapshot) {
