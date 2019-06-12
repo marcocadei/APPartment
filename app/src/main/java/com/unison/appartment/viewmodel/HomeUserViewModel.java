@@ -31,4 +31,8 @@ public class HomeUserViewModel extends ViewModel {
     public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks, @Nullable String newOwnerId) {
         repository.leaveHome(userId, requestedRewards, assignedTasks, newOwnerId);
     }
+
+    public void deleteHome() {
+        repository.deleteHome();
+    }
 }

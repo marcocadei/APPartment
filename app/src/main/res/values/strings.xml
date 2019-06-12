@@ -48,6 +48,8 @@
 
     <!-- Descrizioni dei campi del database -->
 
+    <string name="desc_completedtasks_homename_taskid_lastcompletiondate">Data di ultimo completamento</string>
+    <string name="desc_completedtasks_homename_taskid_lastdescription">Ultima descrizione</string>
     <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
@@ -114,6 +116,7 @@
 
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
+    <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
     <string name="activity_create_home_edit_progress_description">Per favore attendi, è in corso l\'aggiornamento dei dati</string>
     <string name="activity_create_home_edit_progress_title">Modifica dati</string>
@@ -150,6 +153,7 @@
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
+    <string name="activity_main_toolbar_delete_home">Elimina casa</string>
     <string name="activity_main_toolbar_edit_home_data">Modifica dati casa</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
@@ -198,6 +202,8 @@
     <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
+    <string name="dialog_delete_home_confirmation_message">Tutti i dati relativi a questa casa e agli utenti che ne fanno parte verranno eliminati. Sei sicuro di voler procedere? Una volta rimossi, i dati non potranno più essere recuperati.</string>
+    <string name="dialog_delete_home_user_confirmation_message_last">Sei sicuro di voler lasciare la casa? Poiché non ci sono altri utenti, alla tua uscita tutti i dati relativi a questa casa verranno eliminati in modo irreversibile.</string>
     <string name="dialog_delete_home_user_confirmation_message_other">Sei sicuro di voler rimuovere l\'utente dalla casa? Tutti i suoi dati saranno eliminati.</string>
     <string name="dialog_delete_home_user_confirmation_message_self">Sei sicuro di voler lasciare la casa? Tutti i tuoi dati saranno eliminati.</string>
     <string name="dialog_firebase_error_message" tools:ignore="Typos">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
@@ -238,9 +244,6 @@
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
-    <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
-    <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
-    <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>

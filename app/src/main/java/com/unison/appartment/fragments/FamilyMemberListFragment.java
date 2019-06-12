@@ -134,6 +134,10 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.leaveHome(userId, requestedRewards, assignedTasks, newOwnerId);
     }
 
+    public void deleteHome() {
+        viewModel.deleteHome();
+    }
+
     /**
      * Questa interfaccia deve essere implementata dalle activity che contengono questo
      * fragment, per consentire al fragment di comunicare eventuali interazioni all'activity

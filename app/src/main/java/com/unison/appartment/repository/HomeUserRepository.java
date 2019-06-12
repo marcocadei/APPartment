@@ -111,6 +111,34 @@ public class HomeUserRepository {
         rootRef.updateChildren(childUpdates);
     }
 
+    public void deleteHome() {
+        String homeName = Appartment.getInstance().getHome().getName();
+        String completedTaskPath = DatabaseConstants.COMPLETEDTASKS + DatabaseConstants.SEPARATOR + homeName;
+        String completionPath = DatabaseConstants.COMPLETIONS + DatabaseConstants.SEPARATOR + homeName;
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR + homeName;
+        String homePath = DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + homeName;
+        String postPath = DatabaseConstants.POSTS + DatabaseConstants.SEPARATOR + homeName;
+        String rewardPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR + homeName;
+        String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS + DatabaseConstants.SEPARATOR + homeName;
+
+        final Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(completedTaskPath, null);
+        childUpdates.put(completionPath, null);
+        childUpdates.put(homeUserPath, null);
+        childUpdates.put(homeUserRefPath, null);
+        childUpdates.put(homePath, null);
+        childUpdates.put(postPath, null);
+        childUpdates.put(rewardPath, null);
+        childUpdates.put(uncompletedTaskPath, null);
+        for (HomeUser homeUser : Appartment.getInstance().getHomeUsers().values()) {
+            childUpdates.put(DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + homeUser.getUserId() +
+                    DatabaseConstants.SEPARATOR + homeName, null);
+        }
+
+        rootRef.updateChildren(childUpdates);
+    }
+
     private class Deserializer implements Function<DataSnapshot, List<HomeUser>> {
         @Override
         public List<HomeUser> apply(DataSnapshot dataSnapshot) {

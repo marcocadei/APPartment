@@ -103,16 +103,13 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                                 (Set<String>) data.getSerializableExtra(EXTRA_ASSIGNED_TASKS),
                                 data.getStringExtra(EXTRA_NEW_OWNER_ID));
                         if (isDeletingSelf) {
-                            Intent i = new Intent(getActivity(), UserProfileActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            getActivity().finish();
+                            kickOutOfHome();
                         }
                         break;
 
                     case OPERATION_REMOVE_HOME:
-                        // TODO ancora da realizzare (ricordarsi anche qui di kickare l'utente loggato)
-                        Log.d(getClass().getCanonicalName(), "Rimozione casa");
+                        listFragment.deleteHome();
+                        kickOutOfHome();
                         break;
 
                     default:
@@ -121,6 +118,20 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                 }
             }
         }
+    }
+
+    public void deleteHome() {
+        FamilyMemberListFragment listFragment = (FamilyMemberListFragment) getChildFragmentManager()
+                .findFragmentById(R.id.fragment_family_member_list);
+        listFragment.deleteHome();
+        kickOutOfHome();
+    }
+
+    private void kickOutOfHome() {
+        Intent i = new Intent(getActivity(), UserProfileActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        getActivity().finish();
     }
 
     @Override

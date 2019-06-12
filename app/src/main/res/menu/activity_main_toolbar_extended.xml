@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- Rispetto alla versione "base" del menù questa variante contiene anche il tasto che
-     permette al proprietario di modificare i dati della casa. -->
+    <!-- Rispetto alla versione "base" del menù questa variante contiene anche i tasi che
+     permettono al proprietario di modificare ed eliminare la casa. -->
+    <item android:id="@+id/activity_main_toolbar_delete_home"
+        android:title="@string/activity_main_toolbar_delete_home"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/activity_main_toolbar_edit_home_data"
         android:title="@string/activity_main_toolbar_edit_home_data"
         android:icon="@drawable/ic_edit"
