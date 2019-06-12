@@ -142,6 +142,18 @@ public class EditHomeUserActivity extends FormActivity {
             result = false;
         }
 
+        // Controllo che il nuovo nickname inserito non corrisponda a quello di un altro membro della casa
+        // (NB: Per questo controllo presuppongo che lo stato contenga sempre l'elenco aggiornato degli
+        // utenti della casa)
+        for (HomeUser homeUser : Appartment.getInstance().getHomeUsers().values()) {
+            if (nicknameValue.equals(homeUser.getNickname()) && !userId.equals(homeUser.getUserId())) {
+                // Lo username inserito corrisponde a quello di un altro utente
+                layoutNickname.setError(getString(R.string.form_error_duplicate_nickname));
+                result = false;
+                break;
+            }
+        }
+
         return result;
     }
 
