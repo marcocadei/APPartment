@@ -115,6 +115,8 @@
     <!-- Legate ad una specifica activity -->
 
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
+    <string name="activity_completed_task_detail_btn_delete_history">Pulisci cronologia</string>
+    <string name="activity_completed_task_detail_btn_delete_task">Elimina dalle attività completate</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
     <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>

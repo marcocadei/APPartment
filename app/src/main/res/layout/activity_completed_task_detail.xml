@@ -215,10 +215,30 @@
             android:id="@+id/activity_completed_task_detail_btn_create"
             style="@style/Component.Button"
             android:text="@string/activity_completed_task_detail_btn_create_task"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_btn_delete_history"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_completed_task_detail_btn_delete_history"
+            style="@style/Component.Button"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/activity_completed_task_detail_btn_delete_history"
+            app:layout_constraintBottom_toTopOf="@id/activity_completed_task_detail_btn_delete_task"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_btn_create" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_completed_task_detail_btn_delete_task"
+            style="@style/Component.Button"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/activity_completed_task_detail_btn_delete_task"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_completed_task_detail_btn_delete_history" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

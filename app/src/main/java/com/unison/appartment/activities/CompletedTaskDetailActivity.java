@@ -77,16 +77,32 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
         textDescription.setText(completedTask.getLastDescription());
         textCompletionDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(completedTask.getLastCompletionDate())));
 
-        MaterialButton btnCreate = findViewById(R.id.activity_completed_task_detail_btn_create);
+        View layoutButtons = findViewById(R.id.activity_completed_task_detail_layout_buttons);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
-            btnCreate.setVisibility(View.GONE);
+            layoutButtons.setVisibility(View.GONE);
         } else {
+            MaterialButton btnCreate = findViewById(R.id.activity_completed_task_detail_btn_create);
+            MaterialButton btnDeleteHistory = findViewById(R.id.activity_completed_task_detail_btn_delete_history);
+            MaterialButton btnDeleteTask = findViewById(R.id.activity_completed_task_detail_btn_delete_task);
+
             btnCreate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(CompletedTaskDetailActivity.this, CreateTaskActivity.class);
                     i.putExtra(CreateTaskActivity.EXTRA_TASK_DATA, completedTask);
                     startActivityForResult(i, ADD_TASK_REQUEST_CODE);
+                }
+            });
+            btnDeleteHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            btnDeleteTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
                 }
             });
         }
