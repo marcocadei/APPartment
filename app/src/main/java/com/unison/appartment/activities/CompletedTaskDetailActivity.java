@@ -36,6 +36,7 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
     public final static int RESULT_NOT_CREATED = 202;
 
     private View emptyListLayout;
+    private MaterialButton btnDeleteHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +78,12 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
         textDescription.setText(completedTask.getLastDescription());
         textCompletionDate.setText(DateUtils.formatDateWithCurrentDefaultLocale(new Date(completedTask.getLastCompletionDate())));
 
+        btnDeleteHistory = findViewById(R.id.activity_completed_task_detail_btn_delete_history);
         View layoutButtons = findViewById(R.id.activity_completed_task_detail_layout_buttons);
         if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() == Home.ROLE_SLAVE) {
             layoutButtons.setVisibility(View.GONE);
         } else {
             MaterialButton btnCreate = findViewById(R.id.activity_completed_task_detail_btn_create);
-            MaterialButton btnDeleteHistory = findViewById(R.id.activity_completed_task_detail_btn_delete_history);
             MaterialButton btnDeleteTask = findViewById(R.id.activity_completed_task_detail_btn_delete_task);
 
             btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -136,9 +137,11 @@ public class CompletedTaskDetailActivity extends AppCompatActivity implements Co
 
         if (elements == 0) {
             emptyListLayout.setVisibility(View.VISIBLE);
+            btnDeleteHistory.setVisibility(View.GONE);
         }
         else {
             emptyListLayout.setVisibility(View.GONE);
+            btnDeleteHistory.setVisibility(View.VISIBLE);
         }
     }
 }
