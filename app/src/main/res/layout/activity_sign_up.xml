@@ -74,6 +74,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signup_input_email_value"
                     style="@style/CustomFormTextFieldInput"
+                    android:maxLength="256"
                     android:inputType="textWebEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -89,6 +90,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signup_input_password_value"
+                    android:maxLength="256"
                     android:inputType="textPassword"
                     style="@style/CustomFormTextFieldInput" />
 
@@ -105,6 +107,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signup_input_repeat_password_value"
+                    android:maxLength="256"
                     android:inputType="textPassword"
                     style="@style/CustomFormTextFieldInput" />
 
@@ -121,6 +124,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signup_input_nickname_value"
+                    android:maxLength="32"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
