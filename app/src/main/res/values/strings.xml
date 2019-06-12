@@ -48,8 +48,8 @@
 
     <!-- Descrizioni dei campi del database -->
 
-    <string name="desc_completedtasks_homename_taskid_lastcompletiondate">Data di ultimo completamento</string>
-    <string name="desc_completedtasks_homename_taskid_lastdescription">Ultima descrizione</string>
+    <string name="desc_completedtasks_homename_taskname_lastcompletiondate">Data di ultimo completamento</string>
+    <string name="desc_completedtasks_homename_taskname_lastdescription">Ultima descrizione</string>
     <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
