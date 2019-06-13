@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ValueAnimator;
@@ -17,10 +16,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.fragments.DeleteHomeUserConfirmationDialogFragment;
 import com.unison.appartment.fragments.DoneFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
@@ -39,7 +40,7 @@ import java.util.List;
 /**
  * Classe che rappresenta l'Activity principale di una Home
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
 
     /*
     Costanti che indicano la posizione delle varie sezioni così come ordinate nella bottom
@@ -64,10 +65,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView userPoints;
     private HomeUserViewModel viewModel;
-    private Menu optionsMenu;
     private BottomNavigationView bottomNavigation;
     private ViewPager pager;
-    private PagerAdapter pagerAdapter;
+    private FragmentSlidePagerAdapter pagerAdapter;
 
     private int oldPointsValue = 0;
 
@@ -228,10 +228,6 @@ public class MainActivity extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
-
-                // Fermo il servizio che mantiene aggiornato lo stato
-                Intent intent = new Intent(this, AppartmentService.class);
-                stopService(intent);
                 return true;
             }
 
@@ -245,6 +241,12 @@ public class MainActivity extends AppCompatActivity {
                 deve essere fatta è l'aggiornamento della casa salvata nello stato ma questa
                 operazione è già fatta in CreateHomeActivity.
                  */
+                return true;
+            }
+
+            case R.id.activity_main_toolbar_delete_home: {
+                DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(R.string.dialog_delete_home_confirmation_message, R.string.general_delete_home_button);
+                dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
                 return true;
             }
 
@@ -277,9 +279,39 @@ public class MainActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
+    @Override
+    public void onConfirm() {
+        /*
+        Quando questo metodo è chiamato, il fragment attualmente visualizzato nella MainActivity è
+        NECESSARIAMENTE il FamilyFragment (altrimenti l'utente non avrebbe potuto visualizzare il
+        bottone nella toolbar che conduce a questo listener).
+         */
+        ((FamilyFragment) pagerAdapter.getCurrentFragment()).deleteHome();
+    }
+
     private class FragmentSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        private Fragment currentFragment;
+
         public FragmentSlidePagerAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+        public Fragment getCurrentFragment() {
+            return currentFragment;
+        }
+
+        /*
+        L'override di questo metodo è uno dei vari modi con cui è possibile ottenere il riferimento
+        al fragment attualmente visualizzato (serve per l'eliminazione della casa, in cui l'utente
+        preme un bottone nella toolbar della MainActivity e dev'essere invocato un metodo del
+        FamilyFragment).
+        Per alternative vedere https://stackoverflow.com/questions/18609261/getting-the-current-fragment-instance-in-the-viewpager
+         */
+        @Override
+        public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            currentFragment = ((Fragment) object);
+            super.setPrimaryItem(container, position, object);
         }
 
         @Override

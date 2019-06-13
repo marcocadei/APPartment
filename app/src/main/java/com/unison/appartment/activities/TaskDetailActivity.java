@@ -354,7 +354,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
     private void sendAssignData(String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_ASSIGN);
-        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
         returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
         setResult(RESULT_OK, returnIntent);
@@ -365,6 +365,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_REMOVE_ASSIGNMENT);
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, task.getAssignedUserId());
         setResult(RESULT_OK, returnIntent);
         finish();
     }
@@ -392,6 +393,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_DELETE);
         returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, task.getAssignedUserId());
         setResult(RESULT_OK, returnIntent);
         finish();
     }
@@ -408,12 +410,12 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
     @Override
     public void onListFragmentInteraction(HomeUser item) {
         DialogFragment fragment = (DialogFragment) getSupportFragmentManager().findFragmentByTag(UserPickerFragment.TAG_USER_PICKER);
-        if (fragment != null) {
+        try {
             fragment.dismiss();
             sendAssignData(item.getUserId());
         }
-        else {
-            Log.e(getClass().getCanonicalName(), new NullPointerException().getMessage());
+        catch (NullPointerException e) {
+            Log.e(getClass().getCanonicalName(), e.getMessage());
         }
     }
 }

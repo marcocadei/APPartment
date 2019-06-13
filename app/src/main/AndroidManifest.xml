@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.CompletedTaskDetailActivity"></activity>
+        <activity android:name=".activities.EditHomeUserActivity"></activity>
+        <activity android:name=".activities.WebActivity" />
+        <activity android:name=".activities.CompletedTaskDetailActivity" />
 
         <service
             android:name=".services.AppartmentService"

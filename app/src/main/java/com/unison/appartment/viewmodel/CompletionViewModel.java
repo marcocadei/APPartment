@@ -21,4 +21,8 @@ public class CompletionViewModel extends ViewModel {
     public LiveData<List<Completion>> getCompletionLiveData() {
         return repository.getCompletionLiveData();
     }
+
+    public void clearHistory() {
+        repository.clearHistory();
+    }
 }

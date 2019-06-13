@@ -72,6 +72,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_reward_input_name_value"
+                    android:maxLength="32"
                     style="@style/CustomFormTextFieldInput" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -105,6 +106,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_reward_input_description_value"
                     style="@style/CustomFormTextFieldInput"
+                    android:maxLength="256"
                     android:inputType="textCapSentences|textImeMultiLine"
                     android:imeOptions="actionDone" />
 

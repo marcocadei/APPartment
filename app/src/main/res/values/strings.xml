@@ -11,7 +11,12 @@
 
     <string name="app_name">APPartment</string>
 
-    <string name="general_empty_list">Non c\'è nulla qui :(</string>
+    <string name="general_cancel_button">ANNULLA</string>
+    <string name="general_continue_button">PROCEDI</string>
+    <string name="general_remove_button">RIMUOVI</string>
+    <string name="general_leave_home_button">LASCIA CASA</string>
+    <string name="general_delete_home_button">ELIMINA CASA</string>
+    <string name="general_empty_list">Non c\'è nulla qui</string>
     <string name="general_members_name">Membri</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
     <string name="general_ok_button">OK</string>
@@ -46,6 +51,8 @@
 
     <!-- Descrizioni dei campi del database -->
 
+    <string name="desc_completedtasks_homename_taskname_lastcompletiondate">Data di ultimo completamento</string>
+    <string name="desc_completedtasks_homename_taskname_lastdescription">Ultima descrizione</string>
     <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
@@ -122,7 +129,10 @@
     <!-- Legate ad una specifica activity -->
 
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
+    <string name="activity_completed_task_detail_btn_delete_history">Pulisci cronologia</string>
+    <string name="activity_completed_task_detail_btn_delete_task">Elimina dalle attività completate</string>
     <string name="activity_completed_task_detail_empty_list_text">Nessun completamento registrato nella cronologia.</string>
+    <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
     <string name="activity_completed_task_detail_title">Dettaglio attività completata</string>
     <string name="activity_create_home_edit_progress_description">Per favore attendi, è in corso l\'aggiornamento dei dati</string>
     <string name="activity_create_home_edit_progress_title">Modifica dati</string>
@@ -137,12 +147,18 @@
     <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_create_task_title_edit">Modifica attività</string>
+    <string name="activity_edit_home_user_text_info_picture">L\'immagine mostrata all\'interno della casa è la tua immagine profilo. Per cambiarla, torna al profilo e modifica i tuoi dati.</string>
+    <string name="activity_edit_home_user_text_info_update">Gli elementi nella cronologia delle attività completate non verranno aggiornati con il nuovo nickname.</string>
+    <string name="activity_edit_home_user_title">Modifica dati membro</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
     <string name="activity_family_member_detail_btn_delete">Esci dalla casa</string>
     <string name="activity_family_member_detail_btn_delete_masters">Rimuovi dalla casa</string>
     <string name="activity_family_member_detail_btn_upgrade_action_downgrade">Effettua downgrade ruolo</string>
     <string name="activity_family_member_detail_btn_upgrade_action_upgrade">Effettua upgrade ruolo</string>
+    <string name="activity_family_member_detail_emilia_romagna">Lancia un dado</string>
+    <string name="activity_family_member_detail_homeuserrefs_gathering_description">Per favore attendi, è in corso la raccolta delle informazioni necessarie</string>
+    <string name="activity_family_member_detail_homeuserrefs_gathering_title">Raccolta informazioni</string>
     <string name="activity_family_member_detail_text_achievement_title">Statistiche</string>
     <string name="activity_family_member_detail_title">Dettaglio membro</string>
     <string name="activity_family_member_detail_toolbar_edit">Modifica nickname</string>
@@ -156,11 +172,12 @@
     <string name="activity_main_bottom_navigation_messages">Bacheca</string>
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
+    <string name="activity_main_toolbar_delete_home">Elimina casa</string>
     <string name="activity_main_toolbar_edit_home_data">Modifica dati casa</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
-    <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta</string>
-    <string name="activity_reward_detail_btn_confirm_reservation">Conferma richiesta</string>
+    <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta premio</string>
+    <string name="activity_reward_detail_btn_confirm_reservation">Conferma richiesta premio</string>
     <string name="activity_reward_detail_btn_delete">Elimina premio</string>
     <string name="activity_reward_detail_btn_reserve_reward_available">Richiedi premio</string>
     <string name="activity_reward_detail_btn_reserve_reward_available_masters">Ottieni premio</string>
@@ -178,7 +195,7 @@
     <string name="activity_signup_edit_title">Aggiornamento dati</string>
     <string name="activity_signup_signup_description">Per favore attendi, è in corso la registrazione</string>
     <string name="activity_signup_signup_title">Registrazione</string>
-    <string name="activity_signup_text_image_info">L\'immagine è opzionale</string>
+    <string name="activity_signup_text_image_info">L\'immagine è opzionale.</string>
     <string name="activity_signup_text_title">Registrati ad APPartment</string>
     <string name="activity_signup_title_edit">Modifica profilo utente</string>
     <string name="activity_task_detail_btn_assign">Prenota attività</string>
@@ -204,6 +221,10 @@
     <string name="activity_user_profile_toolbar_edit">Modifica dati</string>
     <string name="activity_user_profile_toolbar_logout">Logout</string>
     <string name="activity_user_profile_toolbar_title">Profilo utente</string>
+    <string name="dialog_delete_home_confirmation_message">Tutti i dati relativi a questa casa e agli utenti che ne fanno parte verranno eliminati. Sei sicuro di voler procedere? Una volta rimossi, i dati non potranno più essere recuperati.</string>
+    <string name="dialog_delete_home_user_confirmation_message_last">Sei sicuro di voler lasciare la casa? Poiché non ci sono altri utenti, alla tua uscita tutti i dati relativi a questa casa verranno eliminati in modo irreversibile.</string>
+    <string name="dialog_delete_home_user_confirmation_message_other">Sei sicuro di voler rimuovere l\'utente dalla casa? Tutti i suoi dati saranno eliminati.</string>
+    <string name="dialog_delete_home_user_confirmation_message_self">Sei sicuro di voler lasciare la casa? Tutti i tuoi dati saranno eliminati.</string>
     <string name="dialog_firebase_error_message" tools:ignore="Typos">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
@@ -225,8 +246,8 @@
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
     <string name="fragment_post_datetime_format">%1$s %2$s</string>
-    <string name="fragment_reward_text_status_pending_row_1">Attesa</string>
-    <string name="fragment_reward_text_status_pending_row_2">conferma</string>
+    <string name="fragment_reward_text_status_pending_row_1">Conferma</string>
+    <string name="fragment_reward_text_status_pending_row_2">necessaria</string>
     <string name="fragment_reward_text_status_requested_row_1">Premio</string>
     <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
     <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
@@ -235,16 +256,15 @@
     <string name="fragment_todo_empty_list_text">Non c\'è nessuna attività da svolgere.</string>
     <string name="fragment_todo_text_assigned_user">Assegnato a: %1$s</string>
     <string name="fragment_todo_text_assigned_user_self">Assegnato a: me stesso</string>
-    <string name="fragment_todo_text_status_pending_row_1">Attesa</string>
-    <string name="fragment_todo_text_status_pending_row_2">conferma</string>
-    <string name="fragment_todo_text_status_requested_row_1">Conferma</string>
-    <string name="fragment_todo_text_status_requested_row_2">richiesta</string>
+    <string name="fragment_todo_text_status_pending_row_1">Conferma</string>
+    <string name="fragment_todo_text_status_pending_row_2">necessaria</string>
+    <string name="fragment_todo_text_status_requested_row_1">Attesa</string>
+    <string name="fragment_todo_text_status_requested_row_2">conferma</string>
+    <string name="fragment_todo_text_status_assigned_to_other_row_1">Attività</string>
+    <string name="fragment_todo_text_status_assigned_to_other_row_2">già assegnata</string>
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
-    <string name="activity_completed_task_detail_text_last_completion_date">Data di ultimo completamento</string>
-    <string name="activity_completed_task_detail_text_description_title">Ultima descrizione</string>
-    <string name="activity_completed_task_detail_text_completions_title">Cronologia completamenti</string>
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>

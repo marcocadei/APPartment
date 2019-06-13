@@ -67,12 +67,18 @@ public class RewardRepository {
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
                 userId;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                userId + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
+                DatabaseConstants.SEPARATOR + reward.getId();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, userId);
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, userName);
         // I punti diminuiscono di una quantità pari ai punti associati al premio ottenuto
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(userId).getPoints() - reward.getPoints());
+        // Aggiungo l'id del premio prenotato ai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, true);
         rootRef.updateChildren(childUpdates);
     }
 
@@ -84,11 +90,18 @@ public class RewardRepository {
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
                 reward.getReservationId();
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                reward.getReservationId() + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
+                DatabaseConstants.SEPARATOR + reward.getId();
 
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
         // Vengono riaggiunti i punti all'utente che aveva eseguito la richiesta
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints());
+        // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, null);
         rootRef.updateChildren(childUpdates);
     }
 
@@ -104,9 +117,16 @@ public class RewardRepository {
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
                 Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
                 userId;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                userId + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
+                DatabaseConstants.SEPARATOR + reward.getId();
+
         childUpdates.put(rewardsPath, null);
         // I claimed rewards aumentano di uno
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Appartment.getInstance().getHomeUser(userId).getClaimedRewards() + 1);
+        // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, null);
         rootRef.updateChildren(childUpdates);
     }
 

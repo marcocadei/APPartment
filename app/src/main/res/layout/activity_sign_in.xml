@@ -57,6 +57,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signin_input_email_value"
+                    android:maxLength="256"
                     android:inputType="textEmailAddress"
                     style="@style/CustomFormTextFieldInput" />
 
@@ -74,6 +75,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_signin_input_password_value"
                     style="@style/CustomFormTextFieldInput"
+                    android:maxLength="256"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>

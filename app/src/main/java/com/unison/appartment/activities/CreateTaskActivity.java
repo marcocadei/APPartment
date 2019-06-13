@@ -33,7 +33,6 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
     private final static String BUNDLE_KEY_ASSIGNED_USER_ID = "assignedUserId";
     private final static String BUNDLE_KEY_ASSIGNED_USER_NAME = "assignedUserName";
 
-    private TextView txtTitle;
     private EditText inputName;
     private EditText inputDescription;
     private EditText inputPoints;
@@ -66,7 +65,7 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
             }
         });
 
-        txtTitle = findViewById(R.id.activity_create_task_text_title);
+        TextView txtTitle = findViewById(R.id.activity_create_task_text_title);
         inputName = findViewById(R.id.activity_create_task_input_name_value);
         inputDescription = findViewById(R.id.activity_create_task_input_description_value);
         inputPoints = findViewById(R.id.activity_create_task_input_points_value);

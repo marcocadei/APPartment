@@ -7,6 +7,7 @@ public class DatabaseConstants {
 
     // Post
     public final static String POSTS = "posts";
+    public final static String POSTS_HOMENAME_POSTID_AUTHOR = "author";
     public final static String POSTS_HOMENAME_POSTID_TIMESTAMP = "timestamp";
 
     // Case
@@ -15,15 +16,24 @@ public class DatabaseConstants {
 
     // Utenti di una casa
     public final static String HOMEUSERS = "home-users";
+    public final static String HOMEUSERS_HOMENAME_UID_AUDIOPOSTS = "audio-posts";
     public final static String HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS = "claimed-rewards";
     public final static String HOMEUSERS_HOMENAME_UID_COMPLETEDTASKS = "completed-tasks";
-    public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
-    public final static String HOMEUSERS_HOMENAME_UID_ROLE = "role";
-    public final static String HOMEUSERS_HOMENAME_UID_TOTALEARNEDPOINTS = "total-earned-points";
-    public final static String HOMEUSERS_HOMENAME_UID_TEXTPOSTS = "text-posts";
     public final static String HOMEUSERS_HOMENAME_UID_IMAGEPOSTS = "image-posts";
-    public final static String HOMEUSERS_HOMENAME_UID_AUDIOPOSTS = "audio-posts";
+    public final static String HOMEUSERS_HOMENAME_UID_NICKNAME = "nickname";
+    public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
     public final static String HOMEUSERS_HOMENAME_UID_REJECTEDTASKS = "rejected-tasks";
+    public final static String HOMEUSERS_HOMENAME_UID_ROLE = "role";
+    public final static String HOMEUSERS_HOMENAME_UID_TEXTPOSTS = "text-posts";
+    public final static String HOMEUSERS_HOMENAME_UID_TOTALEARNEDPOINTS = "total-earned-points";
+
+    // Riferimenti ad altri oggetti degli utenti di una casa
+    // Vengono mantenuti perché alla cancellazione dell'utente dalla casa devo
+    // sapere quali altri dati resettare
+    public final static String HOMEUSERSREFS = "home-users-refs";
+    public final static String HOMEUSERSREFS_HOMENAME_UID_POSTS = "posts";
+    public final static String HOMEUSERSREFS_HOMENAME_UID_REWARDS = "rewards";
+    public final static String HOMEUSERSREFS_HOMENAME_UID_TASKS = "tasks";
 
     // Premi
     public final static String REWARDS = "rewards";
@@ -40,12 +50,12 @@ public class DatabaseConstants {
 
     // CompletedTask
     public final static String COMPLETEDTASKS = "completed-tasks";
-    public final static String COMPLETEDTASKS_HOMENAME_TASKID_LASTCOMPLETIONDATE = "last-completion-date";
-    public final static String COMPLETEDTASKS_HOMENAME_TASKID_NAME = "name";
+    public final static String COMPLETEDTASKS_HOMENAME_TASKNAME_LASTCOMPLETIONDATE = "last-completion-date";
+    public final static String COMPLETEDTASKS_HOMENAME_TASKNAME_NAME = "name";
 
     // Completions
     public final static String COMPLETIONS = "completions";
-    public final static String COMPLETIONS_HOMENAME_TASKID_COMPLETIONDATE = "completion-date";
+    public final static String COMPLETIONS_HOMENAME_TASKNAME_COMPLETIONDATE = "completion-date";
 
     // Case di un utente
     public final static String USERHOMES = "user-homes";

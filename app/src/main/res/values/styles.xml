@@ -44,11 +44,8 @@
 
     <style name="CustomAlertDialogTheme" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/colorPrimary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/CustomAlertPositiveButtonStyle</item>
-    </style>
-
-    <style name="CustomAlertPositiveButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
-        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomDatePickerPositiveButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/CustomDatePickerNegativeButtonStyle</item>
     </style>
 
     <!-- Layout definiti da noi per i vari componenti -->
