@@ -17,8 +17,9 @@ public class DeleteHomeUserConfirmationDialogFragment extends DialogFragment {
 
     public final static String TAG_CONFIRMATION_DIALOG = "confirmationDialog";
 
-    private final static int BUNDLE_CAPACITY = 1;
+    private final static int BUNDLE_CAPACITY = 2;
     private final static String BUNDLE_KEY_MESSAGE = "message";
+    private final static String BUNDLE_KEY_POSITIVE_BUTTON_STRING = "positiveButtonString";
 
     public interface ConfirmationDialogInterface {
         void onConfirm();
@@ -38,9 +39,10 @@ public class DeleteHomeUserConfirmationDialogFragment extends DialogFragment {
         super.onDetach();
     }
 
-    public static DeleteHomeUserConfirmationDialogFragment newInstance(@StringRes int message) {
+    public static DeleteHomeUserConfirmationDialogFragment newInstance(@StringRes int message, @StringRes int positiveButtonString) {
         Bundle args = new Bundle(BUNDLE_CAPACITY);
         args.putInt(BUNDLE_KEY_MESSAGE, message);
+        args.putInt(BUNDLE_KEY_POSITIVE_BUTTON_STRING, positiveButtonString);
 
         DeleteHomeUserConfirmationDialogFragment fragment = new DeleteHomeUserConfirmationDialogFragment();
         fragment.setArguments(args);
@@ -52,7 +54,7 @@ public class DeleteHomeUserConfirmationDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(getArguments().getInt(BUNDLE_KEY_MESSAGE))
-                .setPositiveButton(R.string.general_continue_button, new DialogInterface.OnClickListener() {
+                .setPositiveButton(getArguments().getInt(BUNDLE_KEY_POSITIVE_BUTTON_STRING), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onConfirm();
                     }
