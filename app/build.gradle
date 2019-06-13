@@ -45,6 +45,8 @@ dependencies {
     implementation 'com.appeaser.imagetransitionlibrary:imagetransitionlibrary:0.0.1'
     /* Libreria per serializzare su JSON */
     implementation 'com.google.code.gson:gson:2.8.5'
+    /* Libreria per i grafici */
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 }
 
 apply plugin: 'com.google.gms.google-services'

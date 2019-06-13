@@ -5,10 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +21,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.data.RadarData;
+import com.github.mikephil.charting.data.RadarDataSet;
+import com.github.mikephil.charting.data.RadarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.R;
@@ -34,6 +42,8 @@ import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.ImageUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -230,6 +240,53 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                 }
             });
         }
+
+        // Creo il grafico
+        RadarChart chart = findViewById(R.id.activity_family_member_detail_chart);
+        // Nomi delle statistiche
+        // Le stringhe originali sono troppo lunghe quindi il grafico viene bruttissimo
+        final String[] labels = new String[]{
+                /*getString(R.string.desc_homeusers_homename_uid_totalearnedpoints_icon),*/
+                getString(R.string.desc_homeusers_homename_uid_earnedmoney_icon),
+                getString(R.string.desc_homeusers_homename_uid_textposts_icon),
+                getString(R.string.desc_homeusers_homename_uid_imageposts_icon),
+                getString(R.string.desc_homeusers_homename_uid_audioposts_icon),
+                getString(R.string.desc_homeusers_homename_uid_claimedrewards_icon),
+                getString(R.string.desc_homeusers_homename_uid_completedtasks_icon),
+                getString(R.string.desc_homeusers_homename_uid_rejectedtasks_icon)
+        };
+        // Creo i dati come il grafico se li aspetta
+        // Mettere qui i drawables come suggerito in https://stackoverflow.com/questions/44863021 non funge
+        List<RadarEntry> entries = new ArrayList<>();
+        // I punti crescono troppo rapidamente rispetto a tutti gli altri valori, rovinando così
+        // la visualizzazione. Pertanto non vengono aggiunti al radar
+        /*entries.add(new RadarEntry(member.getTotalEarnedPoints()));*/
+        entries.add(new RadarEntry(member.getEarnedMoney()));
+        entries.add(new RadarEntry(member.getTextPosts()));
+        entries.add(new RadarEntry(member.getImagePosts()));
+        entries.add(new RadarEntry(member.getAudioPosts()));
+        entries.add(new RadarEntry(member.getClaimedRewards()));
+        entries.add(new RadarEntry(member.getCompletedTasks()));
+        entries.add(new RadarEntry(member.getRejectedTasks()));
+        RadarDataSet radarDataSet = new RadarDataSet(entries, "");
+        // Styling del dataset
+        radarDataSet.setColor(getColor(R.color.colorPrimary));
+        radarDataSet.setDrawFilled(true);
+        radarDataSet.setFillColor(getColor(R.color.colorPrimary));
+        radarDataSet.setHighlightEnabled(false);
+        radarDataSet.setDrawValues(false);
+
+        RadarData radarData = new RadarData(radarDataSet);
+        chart.setData(radarData);
+        // Styling del grafico
+        chart.getLegend().setEnabled(false);
+        chart.getDescription().setEnabled(false);
+        chart.getYAxis().setEnabled(false);
+        chart.animateXY(1000, 1000);
+        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        chart.getXAxis().setTextSize(20f);
+        chart.getXAxis().setTypeface(ResourcesCompat.getFont(this, R.font.material_icons));
+        chart.invalidate();
     }
 
     @Override

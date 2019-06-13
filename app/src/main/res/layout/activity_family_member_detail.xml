@@ -165,17 +165,27 @@
                 android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 android:textSize="@dimen/text_extra_large"
-                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_total_points"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_chart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_profile" />
+
+            <com.github.mikephil.charting.charts.RadarChart
+                android:id="@+id/activity_family_member_detail_chart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_total_points"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_achievement_title" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_family_member_detail_layout_stat_total_points"
                 app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_earned_money"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_achievement_title"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_chart"
                 style="@style/Component.Layout.StatItem">
 
                 <ImageView

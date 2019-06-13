@@ -62,10 +62,21 @@
     <string name="desc_homeusers_homename_uid_completedtasks">Attività completate</string>
     <string name="desc_homeusers_homename_uid_earnedmoney">Soldi guadagnati</string>
     <string name="desc_homeusers_homename_uid_imageposts">Immagini pubblicate</string>
-    <string name="desc_homeusers_homename_uid_nickname">Nickname</string>
     <string name="desc_homeusers_homename_uid_rejectedtasks">Attività rifiutate</string>
     <string name="desc_homeusers_homename_uid_textposts">Messaggi testuali pubblicati</string>
     <string name="desc_homeusers_homename_uid_totalearnedpoints">Punti totali guadagnati</string>
+
+    <!-- Icone associate alle statistiche -->
+    <string name="desc_homeusers_homename_uid_audioposts_icon">&#xe3a1;</string>
+    <string name="desc_homeusers_homename_uid_claimedrewards_icon">	&#xe8f6;</string>
+    <string name="desc_homeusers_homename_uid_completedtasks_icon">	&#xe5ca;</string>
+    <string name="desc_homeusers_homename_uid_earnedmoney_icon">&#xe227;</string>
+    <string name="desc_homeusers_homename_uid_imageposts_icon">&#xe3f4;</string>
+    <string name="desc_homeusers_homename_uid_rejectedtasks_icon">&#xe14c;</string>
+    <string name="desc_homeusers_homename_uid_textposts_icon">&#xe0c9;</string>
+    <string name="desc_homeusers_homename_uid_totalearnedpoints_icon">&#xe83a;</string>
+
+    <string name="desc_homeusers_homename_uid_nickname">Nickname</string>
     <string name="desc_rewards_homename_rewardid_description">Descrizione</string>
     <string name="desc_rewards_homename_rewardid_name">Nome</string>
     <string name="desc_rewards_homename_rewardid_points">Punti</string>
@@ -257,5 +268,10 @@
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
+    <string name="general_pie_chart_others">Altri</string>
+    <string name="pie_chart_tasks_title">Attività completate</string>
+    <string name="pie_chart_rewards_title">Premi ottenuti</string>
+    <string name="bar_chart_rewards_title">Punti attuali</string>
+    <string name="bar_chart_money_title">Soldi guadagnati</string>
 
 </resources>
