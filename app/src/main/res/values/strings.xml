@@ -133,7 +133,7 @@
     <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_create_task_title_edit">Modifica attività</string>
-    <string name="activity_edit_home_user_text_info">I messaggi già presenti in bacheca e gli elementi nella cronologia delle attività completate non verranno aggiornati con il nuovo nickname.</string>
+    <string name="activity_edit_home_user_text_info_update">Gli elementi nella cronologia delle attività completate non verranno aggiornati con il nuovo nickname.</string>
     <string name="activity_edit_home_user_title">Modifica dati membro</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
@@ -253,5 +253,6 @@
 
     <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
+    <string name="activity_edit_home_user_text_info_picture">L\'immagine mostrata all\'interno della casa è la tua immagine profilo. Puoi cambiarla uscendo dalla casa e modificando i dati del tuo profilo.</string>
 
 </resources>
