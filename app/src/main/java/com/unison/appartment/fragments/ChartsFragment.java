@@ -33,12 +33,19 @@ import com.unison.appartment.mpandroidchart.PieChartItem;
 import com.unison.appartment.state.Appartment;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Fragment che rappresenta un insieme di grafici
  */
 public class ChartsFragment extends Fragment {
+    private final static double PIE_MIN_PERCENTAGE_SHOWN = 0.05;
+    private final static double PIE_CUMULATED_PERCENTAGE_LIMIT = 0.9;
+
+    ArrayList<Integer> colors;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -54,6 +61,18 @@ public class ChartsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Colori utilizzati per i grafici
+        colors = new ArrayList<>();
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
     }
 
     @Override
@@ -65,23 +84,67 @@ public class ChartsFragment extends Fragment {
         ListView chartListView = view.findViewById(R.id.fragment_charts_list);
 
         ArrayList<ChartItem> chartItems = new ArrayList<>();
-        // TODO riempire array di colori come in PieChartActivity (app esempio)
+
         // Torta con i task completati
         List<PieEntry> entries = new ArrayList<>();
-        for(HomeUser homeUser : Appartment.getInstance().getHomeUsers().values()) {
-            entries.add(new PieEntry(homeUser.getCompletedTasks(), homeUser.getNickname()));
+
+        List<HomeUser> homeUsers = new ArrayList<>(Appartment.getInstance().getHomeUsers().values());
+        Collections.sort(homeUsers, new Comparator<HomeUser>() {
+            @Override
+            public int compare(HomeUser o1, HomeUser o2) {
+                return (int)Math.signum(Integer.compare(o2.getCompletedTasks(), o1.getCompletedTasks()));
+            }
+        });
+        int total = 0;
+        for(HomeUser homeUser : homeUsers) {
+            total += homeUser.getCompletedTasks();
         }
-        PieDataSet pieDataSet = new PieDataSet(entries, "");
-        pieDataSet.setSliceSpace(2f);
-        pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        pieDataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-        pieDataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-        PieData pieData = new PieData(pieDataSet);
-        pieData.setValueTextColor(Color.BLACK);
-        chartItems.add(new PieChartItem(pieData, getContext(), "Task\ncompletati"));
+
+        int cumulated = 0;
+        for(HomeUser homeUser : homeUsers) {
+            if (homeUser.getCompletedTasks() / (total * 1.0) >= PIE_MIN_PERCENTAGE_SHOWN) {
+                cumulated += homeUser.getCompletedTasks();
+                entries.add(new PieEntry(homeUser.getCompletedTasks(), homeUser.getNickname()));
+            }
+            if (cumulated / (total * 1.0) >= PIE_CUMULATED_PERCENTAGE_LIMIT) {
+                break;
+            }
+        }
+        if (total != cumulated) {
+            entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+        }
+        chartItems.add(new PieChartItem(createPieData(entries), getContext(), getString(R.string.pie_chart_tasks_title)));
+
+        // Torta con i premi completati
+        entries = new ArrayList<>();
+
+        Collections.sort(homeUsers, new Comparator<HomeUser>() {
+            @Override
+            public int compare(HomeUser o1, HomeUser o2) {
+                return (int)Math.signum(Integer.compare(o2.getClaimedRewards(), o1.getClaimedRewards()));
+            }
+        });
+        total = 0;
+        for(HomeUser homeUser : homeUsers) {
+            total += homeUser.getClaimedRewards();
+        }
+
+        cumulated = 0;
+        for(HomeUser homeUser : homeUsers) {
+            if (homeUser.getCompletedTasks() / (total * 1.0) >= PIE_MIN_PERCENTAGE_SHOWN) {
+                cumulated += homeUser.getClaimedRewards();
+                entries.add(new PieEntry(homeUser.getClaimedRewards(), homeUser.getNickname()));
+            }
+            if (cumulated / (total * 1.0) >= PIE_CUMULATED_PERCENTAGE_LIMIT) {
+                break;
+            }
+        }
+        if (total != cumulated) {
+            entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+        }
+        chartItems.add(new PieChartItem(createPieData(entries), getContext(), getString(R.string.pie_chart_rewards_title)));
 
         chartListView.setAdapter(new ChartAdapter(getContext(), 0, chartItems));
-
         return view;
     }
 
@@ -93,6 +156,22 @@ public class ChartsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private PieData createPieData(List<PieEntry> entries) {
+        PieDataSet pieDataSet = new PieDataSet(entries, "");
+        pieDataSet.setSliceSpace(2f);
+        pieDataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        pieDataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        pieDataSet.setColors(colors);
+        // Lunghezza delle stanghette
+        pieDataSet.setValueLinePart1Length(0.8f);
+        pieDataSet.setValueLinePart2Length(0.4f);
+
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setValueTextColor(Color.BLACK);
+
+        return pieData;
     }
 
     private class ChartAdapter extends ArrayAdapter<ChartItem> {

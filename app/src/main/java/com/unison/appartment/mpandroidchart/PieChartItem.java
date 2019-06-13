@@ -11,6 +11,7 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -23,13 +24,12 @@ import com.unison.appartment.R;
 public class PieChartItem extends ChartItem {
 
 //    private final Typeface mTf;
-    private final SpannableString mCenterText;
+    private final String title;
 
-    public PieChartItem(ChartData<?> cd, Context c, String centerText) {
+    public PieChartItem(ChartData<?> cd, Context c, String title) {
         super(cd);
 
-//        mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
-        mCenterText = generateCenterText(centerText);
+        this.title = title;
     }
 
     @Override
@@ -50,24 +50,21 @@ public class PieChartItem extends ChartItem {
             convertView = LayoutInflater.from(c).inflate(
                     R.layout.list_item_piechart, null);
             holder.chart = convertView.findViewById(R.id.chart);
+            holder.title = convertView.findViewById(R.id.chart_title);
 
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
+        // Titolo del grafico
+        holder.title.setText(title);
         // apply styling
         holder.chart.getDescription().setEnabled(false);
-        holder.chart.setHoleRadius(52f);
-        holder.chart.setTransparentCircleRadius(57f);
-        holder.chart.setCenterText(mCenterText);
-        holder.chart.setCenterTextSize(9f);
         holder.chart.setUsePercentValues(true);
-        holder.chart.setExtraOffsets(30, 10, 30, 10);
+        holder.chart.setExtraOffsets(30, 10, 30, 20);
         holder.chart.getLegend().setEnabled(false);
-        holder.chart.setDrawHoleEnabled(true);
-        holder.chart.setHoleColor(Color.TRANSPARENT);
+        holder.chart.setDrawHoleEnabled(false);
 
         mChartData.setValueFormatter(new PercentFormatter());
         mChartData.setValueTextSize(11f);
@@ -81,14 +78,9 @@ public class PieChartItem extends ChartItem {
         return convertView;
     }
 
-    private SpannableString generateCenterText(String centerText) {
-        SpannableString s = new SpannableString(centerText);
-        s.setSpan(new RelativeSizeSpan(1.7f), 0, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(Color.GRAY), 0, s.length(), 0);
-        return s;
-    }
 
     private static class ViewHolder {
         PieChart chart;
+        TextView title;
     }
 }
