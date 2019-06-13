@@ -23,12 +23,10 @@ import com.unison.appartment.R;
 
 public class PieChartItem extends ChartItem {
 
-//    private final Typeface mTf;
     private final String title;
 
     public PieChartItem(ChartData<?> cd, Context c, String title) {
         super(cd);
-
         this.title = title;
     }
 

@@ -39,7 +39,7 @@ public class HomeUser implements Serializable {
     @PropertyName(ATTRIBUTE_CLAIMED_REWARDS)
     private int claimedRewards;
     @PropertyName(ATTRIBUTE_EARNED_MONEY)
-    private int earnedMoney;
+    private float earnedMoney;
     @PropertyName(ATTRIBUTE_TEXT_POSTS)
     private int textPosts;
     @PropertyName(ATTRIBUTE_AUDIO_POSTS)
@@ -156,12 +156,12 @@ public class HomeUser implements Serializable {
     }
 
     @PropertyName(ATTRIBUTE_EARNED_MONEY)
-    public int getEarnedMoney() {
+    public float getEarnedMoney() {
         return earnedMoney;
     }
 
     @PropertyName(ATTRIBUTE_EARNED_MONEY)
-    public void setEarnedMoney(int earnedMoney) {
+    public void setEarnedMoney(float earnedMoney) {
         this.earnedMoney = earnedMoney;
     }
 

@@ -251,5 +251,7 @@
     <string name="general_pie_chart_others">Altri</string>
     <string name="pie_chart_tasks_title">Attività completate</string>
     <string name="pie_chart_rewards_title">Premi ottenuti</string>
+    <string name="bar_chart_rewards_title">Punti attuali</string>
+    <string name="bar_chart_money_title">Soldi guadagnati</string>
 
 </resources>

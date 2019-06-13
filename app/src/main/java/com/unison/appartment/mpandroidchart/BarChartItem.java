@@ -4,23 +4,37 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.ChartData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.unison.appartment.R;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class BarChartItem extends ChartItem {
 
-    private final Typeface mTf;
+    private String title;
+    private List<String> labels;
 
-    public BarChartItem(ChartData<?> cd, Context c) {
+    public BarChartItem(ChartData<?> cd, Context c, String title, List<String> labels) {
         super(cd);
-
-        mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
+        this.title = title;
+        this.labels = labels;
     }
 
     @Override
@@ -38,53 +52,85 @@ public class BarChartItem extends ChartItem {
 
             holder = new ViewHolder();
 
-            /*convertView = LayoutInflater.from(c).inflate(
+            convertView = LayoutInflater.from(c).inflate(
                     R.layout.list_item_barchart, null);
-            holder.chart = convertView.findViewById(R.id.chart);*/
+            holder.chart = convertView.findViewById(R.id.chart);
+            holder.title = convertView.findViewById(R.id.chart_title);
 
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
+        // Titolo del grafico
+        holder.title.setText(title);
         // apply styling
         holder.chart.getDescription().setEnabled(false);
+        holder.chart.getLegend().setEnabled(false);
         holder.chart.setDrawGridBackground(false);
         holder.chart.setDrawBarShadow(false);
 
-        XAxis xAxis = holder.chart.getXAxis();
+        /*XAxis xAxis = holder.chart.getXAxis();
         xAxis.setPosition(XAxisPosition.BOTTOM);
-        xAxis.setTypeface(mTf);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(true);
 
         YAxis leftAxis = holder.chart.getAxisLeft();
-        leftAxis.setTypeface(mTf);
         leftAxis.setLabelCount(5, false);
         leftAxis.setSpaceTop(20f);
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
         YAxis rightAxis = holder.chart.getAxisRight();
-        rightAxis.setTypeface(mTf);
         rightAxis.setLabelCount(5, false);
         rightAxis.setSpaceTop(20f);
         rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+*/
 
-        mChartData.setValueTypeface(mTf);
+        holder.chart.setDrawValueAboveBar(true);
+
+        // if more than 60 entries are displayed in the chart, no values will be
+        // drawn
+        holder.chart.setMaxVisibleValueCount(60);
+
+        // scaling can now only be done on x- and y-axis separately
+        holder.chart.setPinchZoom(false);
+
+        // draw shadows for each bar that show the maximum value
+        // chart.setDrawBarShadow(true);
+
+        holder.chart.setDrawGridBackground(false);
+
+        XAxis xl = holder.chart.getXAxis();
+        xl.setPosition(XAxisPosition.BOTTOM);
+        xl.setDrawAxisLine(true);
+        xl.setDrawGridLines(false);
+        xl.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xl.setLabelCount(labels.size());
+
+        YAxis yl = holder.chart.getAxisLeft();
+        yl.setDrawAxisLine(true);
+        yl.setDrawGridLines(true);
+        yl.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+        YAxis yr = holder.chart.getAxisRight();
+        yr.setDrawAxisLine(true);
+        yr.setDrawGridLines(false);
+        yr.setAxisMinimum(0f);
 
         // set data
         holder.chart.setData((BarData) mChartData);
+        holder.chart.getData().setValueTextSize(10f);
         holder.chart.setFitBars(true);
+        holder.chart.setExtraOffsets(0, 10, 0, 20);
+        holder.chart.animateY(1000);
+        holder.chart.invalidate();
 
-        // do not forget to refresh the chart
-//        holder.chart.invalidate();
-        holder.chart.animateY(700);
 
         return convertView;
     }
 
     private static class ViewHolder {
         BarChart chart;
+        TextView title;
     }
 }

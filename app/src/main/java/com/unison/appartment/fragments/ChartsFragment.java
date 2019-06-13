@@ -17,17 +17,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.ChartData;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.unison.appartment.R;
 import com.unison.appartment.model.HomeUser;
+import com.unison.appartment.mpandroidchart.BarChartItem;
 import com.unison.appartment.mpandroidchart.ChartItem;
 import com.unison.appartment.mpandroidchart.PieChartItem;
 import com.unison.appartment.state.Appartment;
@@ -143,6 +150,42 @@ public class ChartsFragment extends Fragment {
             entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
         }
         chartItems.add(new PieChartItem(createPieData(entries), getContext(), getString(R.string.pie_chart_rewards_title)));
+
+        // Grafico a barre coi punti
+        List<BarEntry> barEntries = new ArrayList<>();
+        int i = 0;
+        List<String> nicknames = new ArrayList<>();
+        for(HomeUser homeUser : Appartment.getInstance().getHomeUsers().values()) {
+            if (homeUser.getPoints() != 0) {
+                nicknames.add(homeUser.getNickname());
+                barEntries.add(new BarEntry(i++, (float)homeUser.getPoints()));
+            }
+        }
+        BarDataSet barDataSet = new BarDataSet(barEntries, "");
+        barDataSet.setColors(colors);
+        BarData barData = new BarData(barDataSet);
+        barData.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                return String.valueOf((int) value);
+            }
+        });
+        chartItems.add(new BarChartItem(barData, getContext(), getString(R.string.bar_chart_rewards_title), nicknames));
+
+        // Grafico a barre coi soldi
+        barEntries = new ArrayList<>();
+        i = 0;
+        nicknames = new ArrayList<>();
+        for(HomeUser homeUser : Appartment.getInstance().getHomeUsers().values()) {
+            if (homeUser.getEarnedMoney() != 0f) {
+                nicknames.add(homeUser.getNickname());
+                barEntries.add(new BarEntry(i++, homeUser.getEarnedMoney()));
+            }
+        }
+        barDataSet = new BarDataSet(barEntries, "");
+        barDataSet.setColors(colors);
+        barData = new BarData(barDataSet);
+        chartItems.add(new BarChartItem(barData, getContext(), getString(R.string.bar_chart_money_title), nicknames));
 
         chartListView.setAdapter(new ChartAdapter(getContext(), 0, chartItems));
         return view;
