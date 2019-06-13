@@ -50,7 +50,7 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
         Resetto le view ai valori di default (solo per i campi che non sono comunque resettati ad un
         altro valore) in modo che se il ViewHolder è stato riciclato non mi trovo risultati strani.
          */
-        holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check_circle, null));
+        holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check, null));
         holder.itemIcon.setColorFilter(res.getColor(R.color.colorPrimaryDark, null));
         holder.taskAssignedUser.setVisibility(View.GONE);
 
@@ -61,28 +61,30 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
         holder.textStatusLower.setText(R.string.general_points_name);
 
         if (uncompletedTask.isAssigned()) {
+            holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check_circle, null));
             if (uncompletedTask.getAssignedUserId().equals(new FirebaseAuth().getCurrentUserUid())) {
                 holder.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user_self));
-            }
-            else {
+            } else {
                 holder.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user, uncompletedTask.getAssignedUserName()));
+                holder.itemIcon.setColorFilter(res.getColor(R.color.darkGray, null));
+                holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_medium));
+                holder.textStatusUpper.setText(R.string.fragment_todo_text_status_assigned_to_other_row_1);
+                holder.textStatusLower.setText(R.string.fragment_todo_text_status_assigned_to_other_row_2);
             }
             holder.taskAssignedUser.setVisibility(View.VISIBLE);
+        }
 
-            if (uncompletedTask.isMarked()) {
-                holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
-                holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_medium));
-                if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+        if (uncompletedTask.isMarked()) {
+            holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_hourglass_empty, null));
+            holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_medium));
+            if (Appartment.getInstance().getUserHome().getRole() == Home.ROLE_SLAVE) {
+                if (uncompletedTask.getAssignedUserId().equals(new FirebaseAuth().getCurrentUserUid())) {
                     holder.textStatusUpper.setText(R.string.fragment_todo_text_status_requested_row_1);
                     holder.textStatusLower.setText(R.string.fragment_todo_text_status_requested_row_2);
                 }
-                else {
-                    holder.textStatusUpper.setText(R.string.fragment_todo_text_status_pending_row_1);
-                    holder.textStatusLower.setText(R.string.fragment_todo_text_status_pending_row_2);
-                }
-            }
-            else {
-                holder.itemIcon.setColorFilter(res.getColor(R.color.darkGray, null));
+            } else {
+                holder.textStatusUpper.setText(R.string.fragment_todo_text_status_pending_row_1);
+                holder.textStatusLower.setText(R.string.fragment_todo_text_status_pending_row_2);
             }
         }
 
@@ -125,6 +127,7 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
                     // Le proprietà possono cambiare, ma l'id rimane lo stesso
                     return oldUncompletedTask.getId().equals(newUncompletedTask.getId());
                 }
+
                 @Override
                 public boolean areContentsTheSame(
                         @NonNull UncompletedTask oldUncompletedTask, @NonNull UncompletedTask newUncompletedTask) {

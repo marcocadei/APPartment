@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ValueAnimator;
@@ -246,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
             }
 
             case R.id.activity_main_toolbar_delete_home: {
-                DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(R.string.dialog_delete_home_confirmation_message);
+                DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(R.string.dialog_delete_home_confirmation_message, R.string.general_delete_home_button);
                 dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
                 return true;
             }

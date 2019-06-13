@@ -158,7 +158,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                     public void onClick(View v) {
                         // Eliminazione di uno slave o di un master
                         deletedUserId = member.getUserId();
-                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other);
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other, R.string.general_remove_button);
                     }
                 });
                 if (member.getRole() == Home.ROLE_SLAVE) {
@@ -195,7 +195,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                     public void onClick(View v) {
                         // Eliminazione di uno slave o di un master
                         deletedUserId = member.getUserId();
-                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other);
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other, R.string.general_remove_button);
                     }
                 });
                 btnUpgrade.setOnClickListener(new View.OnClickListener() {
@@ -222,10 +222,10 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                     }
                     deletedUserId = loggedUserUid;
                     if (newOwnerId != null && newOwnerId.equals(NO_MEMBERS_LEFT)) {
-                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_last);
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_last, R.string.general_leave_home_button);
                     }
                     else {
-                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_self);
+                        showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_self, R.string.general_leave_home_button);
                     }
                 }
             });
@@ -303,8 +303,8 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         }
     }
 
-    private void showDeleteConfirmationDialog(@StringRes int message) {
-        DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(message);
+    private void showDeleteConfirmationDialog(@StringRes int message, @StringRes int positiveButtonString) {
+        DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(message, positiveButtonString);
         dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
     }
 

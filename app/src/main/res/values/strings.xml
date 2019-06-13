@@ -13,7 +13,10 @@
 
     <string name="general_cancel_button">ANNULLA</string>
     <string name="general_continue_button">PROCEDI</string>
-    <string name="general_empty_list">Non c\'è nulla qui :(</string>
+    <string name="general_remove_button">RIMUOVI</string>
+    <string name="general_leave_home_button">LASCIA CASA</string>
+    <string name="general_delete_home_button">ELIMINA CASA</string>
+    <string name="general_empty_list">Non c\'è nulla qui</string>
     <string name="general_members_name">Membri</string>
     <string name="general_no_description_available">Nessuna descrizione</string>
     <string name="general_ok_button">OK</string>
@@ -133,7 +136,8 @@
     <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
     <string name="activity_create_task_title_edit">Modifica attività</string>
-    <string name="activity_edit_home_user_text_info">I messaggi già presenti in bacheca e gli elementi nella cronologia delle attività completate non verranno aggiornati con il nuovo nickname.</string>
+    <string name="activity_edit_home_user_text_info_picture">L\'immagine mostrata all\'interno della casa è la tua immagine profilo. Per cambiarla, torna al profilo e modifica i tuoi dati.</string>
+    <string name="activity_edit_home_user_text_info_update">Gli elementi nella cronologia delle attività completate non verranno aggiornati con il nuovo nickname.</string>
     <string name="activity_edit_home_user_title">Modifica dati membro</string>
     <string name="activity_enter_btn_login">Accedi</string>
     <string name="activity_enter_btn_signup">Registrati</string>
@@ -161,8 +165,8 @@
     <string name="activity_main_toolbar_edit_home_data">Modifica dati casa</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
-    <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta</string>
-    <string name="activity_reward_detail_btn_confirm_reservation">Conferma richiesta</string>
+    <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta premio</string>
+    <string name="activity_reward_detail_btn_confirm_reservation">Conferma richiesta premio</string>
     <string name="activity_reward_detail_btn_delete">Elimina premio</string>
     <string name="activity_reward_detail_btn_reserve_reward_available">Richiedi premio</string>
     <string name="activity_reward_detail_btn_reserve_reward_available_masters">Ottieni premio</string>
@@ -231,8 +235,8 @@
     <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
     <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
     <string name="fragment_post_datetime_format">%1$s %2$s</string>
-    <string name="fragment_reward_text_status_pending_row_1">Attesa</string>
-    <string name="fragment_reward_text_status_pending_row_2">conferma</string>
+    <string name="fragment_reward_text_status_pending_row_1">Conferma</string>
+    <string name="fragment_reward_text_status_pending_row_2">necessaria</string>
     <string name="fragment_reward_text_status_requested_row_1">Premio</string>
     <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
     <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
@@ -241,10 +245,12 @@
     <string name="fragment_todo_empty_list_text">Non c\'è nessuna attività da svolgere.</string>
     <string name="fragment_todo_text_assigned_user">Assegnato a: %1$s</string>
     <string name="fragment_todo_text_assigned_user_self">Assegnato a: me stesso</string>
-    <string name="fragment_todo_text_status_pending_row_1">Attesa</string>
-    <string name="fragment_todo_text_status_pending_row_2">conferma</string>
-    <string name="fragment_todo_text_status_requested_row_1">Conferma</string>
-    <string name="fragment_todo_text_status_requested_row_2">richiesta</string>
+    <string name="fragment_todo_text_status_pending_row_1">Conferma</string>
+    <string name="fragment_todo_text_status_pending_row_2">necessaria</string>
+    <string name="fragment_todo_text_status_requested_row_1">Attesa</string>
+    <string name="fragment_todo_text_status_requested_row_2">conferma</string>
+    <string name="fragment_todo_text_status_assigned_to_other_row_1">Attività</string>
+    <string name="fragment_todo_text_status_assigned_to_other_row_2">già assegnata</string>
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
