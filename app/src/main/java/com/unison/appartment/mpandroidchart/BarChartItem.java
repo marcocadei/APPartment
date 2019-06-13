@@ -70,22 +70,6 @@ public class BarChartItem extends ChartItem {
         holder.chart.setDrawGridBackground(false);
         holder.chart.setDrawBarShadow(false);
 
-        /*XAxis xAxis = holder.chart.getXAxis();
-        xAxis.setPosition(XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(true);
-
-        YAxis leftAxis = holder.chart.getAxisLeft();
-        leftAxis.setLabelCount(5, false);
-        leftAxis.setSpaceTop(20f);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        YAxis rightAxis = holder.chart.getAxisRight();
-        rightAxis.setLabelCount(5, false);
-        rightAxis.setSpaceTop(20f);
-        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-*/
-
         holder.chart.setDrawValueAboveBar(true);
 
         // if more than 60 entries are displayed in the chart, no values will be

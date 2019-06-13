@@ -117,10 +117,12 @@ public class ChartsFragment extends Fragment {
                 break;
             }
         }
-        if (total != cumulated) {
-            entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+        if (entries.size() > 0) {
+            if (total != cumulated) {
+                entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+            }
+            chartItems.add(new PieChartItem(createPieData(entries), getContext(), getString(R.string.pie_chart_tasks_title)));
         }
-        chartItems.add(new PieChartItem(createPieData(entries), getContext(), getString(R.string.pie_chart_tasks_title)));
 
         // Torta con i premi completati
         entries = new ArrayList<>();
@@ -146,10 +148,12 @@ public class ChartsFragment extends Fragment {
                 break;
             }
         }
-        if (total != cumulated) {
-            entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+        if (entries.size() > 0) {
+            if (total != cumulated) {
+                entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+            }
+            chartItems.add(new PieChartItem(createPieData(entries), getContext(), getString(R.string.pie_chart_rewards_title)));
         }
-        chartItems.add(new PieChartItem(createPieData(entries), getContext(), getString(R.string.pie_chart_rewards_title)));
 
         // Grafico a barre coi punti
         List<BarEntry> barEntries = new ArrayList<>();
@@ -161,16 +165,18 @@ public class ChartsFragment extends Fragment {
                 barEntries.add(new BarEntry(i++, (float)homeUser.getPoints()));
             }
         }
-        BarDataSet barDataSet = new BarDataSet(barEntries, "");
-        barDataSet.setColors(colors);
-        BarData barData = new BarData(barDataSet);
-        barData.setValueFormatter(new IValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                return String.valueOf((int) value);
-            }
-        });
-        chartItems.add(new BarChartItem(barData, getContext(), getString(R.string.bar_chart_rewards_title), nicknames));
+        if (barEntries.size() > 0) {
+            BarDataSet barDataSet = new BarDataSet(barEntries, "");
+            barDataSet.setColors(colors);
+            BarData barData = new BarData(barDataSet);
+            barData.setValueFormatter(new IValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                    return String.valueOf((int) value);
+                }
+            });
+            chartItems.add(new BarChartItem(barData, getContext(), getString(R.string.bar_chart_rewards_title), nicknames));
+        }
 
         // Grafico a barre coi soldi
         barEntries = new ArrayList<>();
@@ -182,10 +188,12 @@ public class ChartsFragment extends Fragment {
                 barEntries.add(new BarEntry(i++, homeUser.getEarnedMoney()));
             }
         }
-        barDataSet = new BarDataSet(barEntries, "");
-        barDataSet.setColors(colors);
-        barData = new BarData(barDataSet);
-        chartItems.add(new BarChartItem(barData, getContext(), getString(R.string.bar_chart_money_title), nicknames));
+        if (barEntries.size() > 0) {
+            BarDataSet barDataSet = new BarDataSet(barEntries, "");
+            barDataSet.setColors(colors);
+            BarData barData = new BarData(barDataSet);
+            chartItems.add(new BarChartItem(barData, getContext(), getString(R.string.bar_chart_money_title), nicknames));
+        }
 
         chartListView.setAdapter(new ChartAdapter(getContext(), 0, chartItems));
         return view;
