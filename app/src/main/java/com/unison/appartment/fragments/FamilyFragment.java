@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.unison.appartment.R;
+import com.unison.appartment.activities.ChartActivity;
 import com.unison.appartment.activities.FamilyMemberDetailActivity;
 import com.unison.appartment.activities.UserProfileActivity;
 import com.unison.appartment.database.FirebaseAuth;
@@ -69,6 +71,15 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         Nota: Il numero di membri all'inizio viene impostato a 0 solo per non visualizzare la
         format string finché non si carica la lista.
          */
+
+        MaterialButton btnStats = myView.findViewById(R.id.fragment_family_btn_stats);
+        btnStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ChartActivity.class);
+                startActivity(i);
+            }
+        });
 
         return myView;
     }

@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         style="@style/Component.TextView.SingleLine.ListItemTitle"
         android:text="@string/placeholder_text"
+        android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintBottom_toTopOf="@id/chart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
