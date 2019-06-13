@@ -105,7 +105,7 @@ public class BarChartItem extends ChartItem {
         holder.chart.setData((BarData) mChartData);
         holder.chart.getData().setValueTextSize(10f);
         holder.chart.setFitBars(true);
-        holder.chart.setExtraOffsets(0, 10, 0, 20);
+        holder.chart.setExtraOffsets(0, 10, 30, 20);
         holder.chart.animateY(1000);
         holder.chart.invalidate();
 
