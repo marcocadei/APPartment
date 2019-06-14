@@ -286,6 +286,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         chart.getXAxis().setTextSize(20f);
         chart.getXAxis().setTypeface(ResourcesCompat.getFont(this, R.font.material_icons));
+        chart.setExtraOffsets(20, 20, 20, 20);
         chart.invalidate();
     }
 
