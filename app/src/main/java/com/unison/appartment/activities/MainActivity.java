@@ -295,6 +295,31 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
         ((FamilyFragment) pagerAdapter.getCurrentFragment()).deleteHome();
     }
 
+    @Override
+    protected void onPause() {
+        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        switch (currentPosition) {
+            case POSITION_MESSAGES:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_MESSAGES);
+                break;
+            case POSITION_TODO:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
+                break;
+            case POSITION_REWARDS:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_REWARDS);
+                break;
+            default:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
+                break;
+        }
+    }
+
     private class FragmentSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         private Fragment currentFragment;
@@ -316,7 +341,23 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
          */
         @Override
         public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            currentFragment = ((Fragment) object);
+            if (currentFragment == null || !currentFragment.equals(object)) {
+                currentFragment = ((Fragment) object);
+                switch (position) {
+                    case POSITION_MESSAGES:
+                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_MESSAGES);
+                        break;
+                    case POSITION_TODO:
+                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
+                        break;
+                    case POSITION_REWARDS:
+                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_REWARDS);
+                        break;
+                    default:
+                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
+                        break;
+                }
+            }
             super.setPrimaryItem(container, position, object);
         }
 

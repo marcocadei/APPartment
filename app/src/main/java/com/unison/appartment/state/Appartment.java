@@ -6,13 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
@@ -36,6 +31,15 @@ public class Appartment {
     private User user;
     private UserHome userHome;
     private Map<String, HomeUser> homeUsers;
+
+    // Variabile in cui è memorizzata la schermata attualmente visualizzata dall'utente
+    private byte currentScreen = SCREEN_ANYTHING_ELSE;
+
+    // Costanti varie utilizzate per indicare quale schermata è attualmente visualizzata dall'utente
+    public final static byte SCREEN_ANYTHING_ELSE = -1;
+    public final static byte SCREEN_MESSAGES = 0;
+    public final static byte SCREEN_TODO = 2;
+    public final static byte SCREEN_REWARDS = 4;
 
     // Questo mi serve perché quando apro un completed task voglio visualizzare la cronologia, ma
     // per far ciò nel database devo leggere il percorso completions/home-name/task-name quindi mi
@@ -168,5 +172,14 @@ public class Appartment {
         resetHome();
         resetUserHome();
         resetHomeUsers();
+    }
+
+    public void setCurrentScreen(byte currentScreen) {
+        this.currentScreen = currentScreen;
+        Log.e("zzzzz", String.valueOf(currentScreen));
+    }
+
+    public byte getCurrentScreen() {
+        return currentScreen;
     }
 }
