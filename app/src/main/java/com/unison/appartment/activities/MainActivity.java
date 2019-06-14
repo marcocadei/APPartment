@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.unison.appartment.fragments.MessagesFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
+import com.unison.appartment.services.NotificationService;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.viewmodel.HomeUserViewModel;
@@ -77,8 +79,12 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
         setContentView(R.layout.activity_main);
 
         // Avvio il servizio che mantiene aggiornato lo stato
-        Intent intent = new Intent(this, AppartmentService.class);
-        startService(intent);
+        Intent appartmentServiceIntent = new Intent(this, AppartmentService.class);
+        startService(appartmentServiceIntent);
+
+        // Avvio il servizio che gestisce le notifiche
+        Intent notificationServiceIntent = new Intent(this, NotificationService.class);
+        startService(notificationServiceIntent);
 
         // Precondizione: Quando si arriva in questa activity, TUTTI gli oggetti della classe
         // Appartment sono stati settati
