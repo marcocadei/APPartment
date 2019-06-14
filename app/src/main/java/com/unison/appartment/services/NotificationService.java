@@ -33,8 +33,8 @@ public class NotificationService extends Service {
 
     private Query postsRef;
     private ChildEventListener postsListener;
-    private final static String POST_CHANNEL_ID = "Post";
-    private final static String POST_CHANNEL_NAME = "Posts Channel";
+    private final static String POST_CHANNEL_ID = "Posts";
+    private final static String POST_CHANNEL_NAME = "Posts";
 
     public NotificationService() {
     }
@@ -42,14 +42,13 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        /*
-        NB
-        Per l'utente non ha senso tenere i dati aggiornati con firebase perché solo lui può modificare i
-        propri dati andando nella UserProfileActivity, ma se ci va e li modifica allora poi quando rientra
-        nella MainActivity avremo già l'oggetto aggiornato.
-        Per gli altri oggetti invece è necessario il continuo aggiornamento perché possono essere modificati
-        da più fonti.
-         */
+
+        // Creazione dei canali per le notifiche
+        // (necessario per / utilizzato esclusivamente da: Android 8+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            makeNotificationChannel(POST_CHANNEL_ID, POST_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+        }
+
         listenPosts();
     }
 
@@ -63,46 +62,49 @@ public class NotificationService extends Service {
         postsListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //TODO non mostrare quando sei nel fragment messages
-
                 Post post = dataSnapshot.getValue(Post.class);
 
-                // Create an Intent for the activity you want to start
-                Intent resultIntent = new Intent(NotificationService.this, MainActivity.class);
-                resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                // Non mostro la notifica se sono nel messages fragment
+                // (Include anche il controllo: non mostro la notifica se il nuovo messaggio è il mio
+                // in quanto per scrivere un nuovo messaggio devo necessariamente essere nel messages
+                // fragment)
+                if (Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_MESSAGES) {
 
-                //TODO mettere extra per andare nel fragment della bacheca
-/*
-                resultIntent.putExtra(TaskDetailActivity.EXTRA_TASK_OBJECT, task);
-*/
-                // Create the TaskStackBuilder and add the intent, which inflates the back stack
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(NotificationService.this);
-                stackBuilder.addNextIntentWithParentStack(resultIntent);
-                // Get the PendingIntent containing the entire back stack
-                PendingIntent resultPendingIntent =
-                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                    // Intent per l'activity che si vuole far partire al tap sulla notifica
+                    Intent resultIntent = new Intent(NotificationService.this, MainActivity.class);
+                    resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    // Extra utilizzati dall'activity che viene fatta partire al tap sulla notifica
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    makeNotificationChannel(POST_CHANNEL_ID, POST_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+                    //TODO mettere extra per andare nel fragment della bacheca
+//                resultIntent.putExtra(TaskDetailActivity.EXTRA_TASK_OBJECT, task);
+
+                    // Creazione dell'oggetto TaskStackBuilder, utilizzato per creare il backstack
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(NotificationService.this);
+                    stackBuilder.addNextIntentWithParentStack(resultIntent);
+                    // PendingIntent che contiene l'intero backstack
+                    PendingIntent resultPendingIntent =
+                            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    // TODO switchare sul tipo di post e creare notifiche diverse a seconda del tipo di messaggio
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, POST_CHANNEL_ID)
+                            .setSmallIcon(R.drawable.ic_message)
+                            .setContentTitle(getString(R.string.notification_new_post_title))
+                            .setContentText(getString(R.string.notification_new_post_content, post.getAuthor()))
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended, post.getAuthor(), post.getContent()))))
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setContentIntent(resultPendingIntent)
+                            .setAutoCancel(true)
+                            .setOnlyAlertOnce(true);
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(NotificationService.this);
+                    int notificationId = (int)(new Date().getTime() % Integer.MAX_VALUE);
+                    notificationManager.notify(notificationId, builder.build());
                 }
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, POST_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_message)
-                        .setContentTitle(getString(R.string.notification_new_post_title))
-                        .setContentText(getString(R.string.notification_new_post_content, post.getAuthor()))
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(post.getContent()))
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setContentIntent(resultPendingIntent)
-                        .setAutoCancel(true)
-                        .setOnlyAlertOnce(true);
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(NotificationService.this);
-                int notificationId = (int)(new Date().getTime() % Integer.MAX_VALUE);
-                notificationManager.notify(notificationId, builder.build());
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override

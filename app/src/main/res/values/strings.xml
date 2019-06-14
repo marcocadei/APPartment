@@ -126,6 +126,12 @@
     <string name="caption_ic_star">Icona di una stella</string>
     <string name="caption_profile_pic">Foto profilo dell\'utente</string>
 
+    <!-- Utilizzate per le notifiche -->
+
+    <string name="notification_new_post_content">Inviato da %1$s</string>
+    <string name="notification_new_post_title">Nuovo messaggio in bacheca</string>
+    <string name="notification_new_post_extended">&lt;b>%1$s:&lt;/b> %2$s</string>
+
     <!-- Legate ad una specifica activity -->
 
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
@@ -276,7 +282,5 @@
     <string name="activity_chart_title">Statistiche</string>
     <string name="fragment_family_btn_stats">Visualizza statistiche</string>
     <string name="activity_chart_empty_list_text">Non c\'è nessuna statistica da visualizzare.</string>
-    <string name="notification_new_post_title">Nuovo messaggio in bacheca</string>
-    <string name="notification_new_post_content">Inviato da %1$s</string>
 
 </resources>
