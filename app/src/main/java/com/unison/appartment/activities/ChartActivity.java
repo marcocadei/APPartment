@@ -181,6 +181,12 @@ public class ChartActivity extends AppCompatActivity {
         }
 
         chartListView.setAdapter(new ChartAdapter(this, 0, chartItems));
+
+        if (chartItems.size() == 0) {
+            // Se non ci sono grafici da visualizzare mostriamo una scritta all'utente
+            View emptyList = findViewById(R.id.activity_chart_layout_empty_list);
+            emptyList.setVisibility(View.VISIBLE);
+        }
     }
 
     private PieData createPieData(List<PieEntry> entries) {
