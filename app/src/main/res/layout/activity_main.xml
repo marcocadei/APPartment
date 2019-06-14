@@ -27,7 +27,7 @@
             app:menu="@menu/activity_main_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/fragment_reward_layout_points"
+                android:id="@+id/activity_main_layout_points"
                 style="@style/Component.Layout.Points"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
