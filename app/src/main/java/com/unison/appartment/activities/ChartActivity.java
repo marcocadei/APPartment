@@ -109,7 +109,7 @@ public class ChartActivity extends AppCompatActivity {
             chartItems.add(new PieChartItem(createPieData(entries), this, getString(R.string.pie_chart_tasks_title)));
         }
 
-        // Torta con i premi completati
+        // Torta con i premi ottenuti
         entries = new ArrayList<>();
 
         Collections.sort(homeUsers, new Comparator<HomeUser>() {
@@ -125,7 +125,7 @@ public class ChartActivity extends AppCompatActivity {
 
         cumulated = 0;
         for(HomeUser homeUser : homeUsers) {
-            if (homeUser.getCompletedTasks() / (total * 1.0) >= PIE_MIN_PERCENTAGE_SHOWN) {
+            if (homeUser.getClaimedRewards() / (total * 1.0) >= PIE_MIN_PERCENTAGE_SHOWN) {
                 cumulated += homeUser.getClaimedRewards();
                 entries.add(new PieEntry(homeUser.getClaimedRewards(), homeUser.getNickname()));
             }
@@ -181,6 +181,12 @@ public class ChartActivity extends AppCompatActivity {
         }
 
         chartListView.setAdapter(new ChartAdapter(this, 0, chartItems));
+
+        if (chartItems.size() == 0) {
+            // Se non ci sono grafici da visualizzare mostriamo una scritta all'utente
+            View emptyList = findViewById(R.id.activity_chart_layout_empty_list);
+            emptyList.setVisibility(View.VISIBLE);
+        }
     }
 
     private PieData createPieData(List<PieEntry> entries) {
