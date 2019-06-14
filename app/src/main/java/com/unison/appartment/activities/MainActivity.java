@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
         toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
         userPoints = toolbar.findViewById(R.id.activity_main_text_points_value);
+        final View layoutPoints = toolbar.findViewById(R.id.activity_main_layout_points);
         viewModel = ViewModelProviders.of(this).get(HomeUserViewModel.class);
         readHomeUser();
 
@@ -123,10 +125,18 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
                 /*
                 Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
                 fragment o provengo da quel fragment l'options menu deve essere cambiato.
+                Inoltre i punti non devono essere visualizzati.
                  */
                  if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
                     invalidateOptionsMenu();
                  }
+                 if (currentPosition == POSITION_FAMILY) {
+                     layoutPoints.setVisibility(View.GONE);
+                 }
+                 else {
+                     layoutPoints.setVisibility(View.VISIBLE);
+                 }
+
             }
 
             @Override
