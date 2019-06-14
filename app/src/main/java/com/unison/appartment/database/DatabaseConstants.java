@@ -20,6 +20,7 @@ public class DatabaseConstants {
     public final static String HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS = "claimed-rewards";
     public final static String HOMEUSERS_HOMENAME_UID_COMPLETEDTASKS = "completed-tasks";
     public final static String HOMEUSERS_HOMENAME_UID_IMAGEPOSTS = "image-posts";
+    public final static String HOMEUSERS_HOMENAME_UID_IMAGE = "image";
     public final static String HOMEUSERS_HOMENAME_UID_NICKNAME = "nickname";
     public final static String HOMEUSERS_HOMENAME_UID_POINTS = "points";
     public final static String HOMEUSERS_HOMENAME_UID_REJECTEDTASKS = "rejected-tasks";

@@ -26,6 +26,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseError;
+import com.unison.appartment.database.DatabaseReader;
+import com.unison.appartment.database.DatabaseReaderListener;
+import com.unison.appartment.database.FirebaseDatabaseReader;
+import com.unison.appartment.model.HomeUser;
+import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.AuthListener;
@@ -43,6 +49,7 @@ import com.unison.appartment.model.User;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 
 /**
@@ -56,6 +63,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private final static String BUNDLE_KEY_DATE_OBJECT = "dateObject";
     private final static String BUNDLE_KEY_SELECTED_IMAGE = "selectedImage";
     private final static String BUNDLE_KEY_NEW_USER = "newUser";
+    private final static String BUNDLE_KEY_OLD_USER = "oldUser";
 
     private final static int MIN_USER_PASSWORD_LENGTH = 6;
 
@@ -65,9 +73,12 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private String selectedImage;
     // Utente che verrà creato in questa activity
     private User newUser;
+    // Vecchio utente: serve nel caso l'activity venga aperta per la modifica
+    private User oldUser;
 
     private Auth auth;
     private DatabaseWriter databaseWriter;
+    private DatabaseReader databaseReader;
 
     private TextView txtTitle;
     private ImageView imgTitle;
@@ -93,6 +104,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
 
         auth = new FirebaseAuth();
         databaseWriter = new FirebaseDatabaseWriter();
+        databaseReader = new FirebaseDatabaseReader();
 
         txtTitle = findViewById(R.id.activity_signup_text_title);
         imgTitle = findViewById(R.id.activity_signup_img_title);
@@ -111,8 +123,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         FloatingActionButton floatFinish = findViewById(R.id.activity_signup_float_finish);
 
         Intent i = getIntent();
-        final User user = (User) i.getSerializableExtra(EXTRA_USER_DATA);
-        if (user != null) {
+        oldUser = (User) i.getSerializableExtra(EXTRA_USER_DATA);
+        if (oldUser != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un utente
             txtTitle.setText(R.string.activity_signup_title_edit);
             imgTitle.setImageDrawable(getDrawable(R.drawable.ic_person));
@@ -137,14 +149,14 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
             Nota: I campi non visualizzati vengono riempiti ugualmente con il valore corretto per
             assicurare che i controlli sulla form eseguiti in checkInput diano esito positivo.
              */
-            inputEmail.setText(user.getEmail());
+            inputEmail.setText(oldUser.getEmail());
             layoutEmail.setVisibility(View.GONE);
-            inputPassword.setText(user.getPassword());
+            inputPassword.setText(oldUser.getPassword());
             layoutPassword.setVisibility(View.GONE);
-            inputRepeatPassword.setText(user.getPassword());
+            inputRepeatPassword.setText(oldUser.getPassword());
             layoutRepeatPassword.setVisibility(View.GONE);
             try {
-                birthdate = DateUtils.parseDateWithStandardLocale(user.getBirthdate());
+                birthdate = DateUtils.parseDateWithStandardLocale(oldUser.getBirthdate());
                 inputBirthdate.setText(DateUtils.formatDateWithCurrentDefaultLocale(birthdate));
             } catch (ParseException e) {
                 /*
@@ -153,9 +165,9 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                  */
                 Log.e(getClass().getCanonicalName(), e.getMessage());
             }
-            inputNickname.setText(user.getName());
-            if (user.getImage() != null) {
-                selectedImage = user.getImage();
+            inputNickname.setText(oldUser.getName());
+            if (oldUser.getImage() != null) {
+                selectedImage = oldUser.getImage();
                 Glide.with(imgPhoto.getContext()).load(selectedImage).apply(RequestOptions.circleCropTransform()).into(imgPhoto);
                 imgPhoto.setVisibility(View.VISIBLE);
             }
@@ -163,7 +175,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 Il "+1" serve perchè gli indice dei bottoni del RadioGroup sono 1 e 2, non 0 e 1
                 in quanto c'è anche il titolo al suo interno (che ha indice 0)
             */
-            inputGender.check(inputGender.getChildAt(user.getGender() + 1).getId());
+            inputGender.check(inputGender.getChildAt(oldUser.getGender() + 1).getId());
 
             floatFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -182,13 +194,12 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                         corretto.
                          */
                         newUser = createUser();
-                        // Scrittura dei nuovi dati nel db
-                        databaseWriter.writeUser(newUser, user, auth.getCurrentUserUid(), dbUserEditWriterListener);
+
+                        databaseReader.retrieveUserHomes(auth.getCurrentUserUid(), dbUserHomesReaderListener);
                     }
                 }
             });
-        }
-        else {
+        } else {
             floatFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -275,6 +286,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         outState.putSerializable(BUNDLE_KEY_DATE_OBJECT, birthdate);
         outState.putString(BUNDLE_KEY_SELECTED_IMAGE, selectedImage);
         outState.putSerializable(BUNDLE_KEY_NEW_USER, newUser);
+        outState.putSerializable(BUNDLE_KEY_OLD_USER, oldUser);
 
         super.onSaveInstanceState(outState);
     }
@@ -286,6 +298,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         birthdate = (Date) savedInstanceState.getSerializable(BUNDLE_KEY_DATE_OBJECT);
         selectedImage = savedInstanceState.getString(BUNDLE_KEY_SELECTED_IMAGE);
         newUser = (User) savedInstanceState.getSerializable(BUNDLE_KEY_NEW_USER);
+        oldUser = (User) savedInstanceState.getSerializable(BUNDLE_KEY_OLD_USER);
     }
 
     @Override
@@ -422,6 +435,34 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         DatePickerFragment.newInstance(year, month, day, this).show(getSupportFragmentManager(), DatePickerFragment.TAG_DATE_PICKER);
     }
 
+    final DatabaseReaderListener dbUserHomesReaderListener = new DatabaseReaderListener() {
+        @Override
+        public void onReadSuccess(String key, Object object) {
+            Map<String, UserHome> userHomes = (Map<String, UserHome>) object;
+
+            // Scrittura dei nuovi dati nel db
+            databaseWriter.writeUser(newUser, oldUser, auth.getCurrentUserUid(), userHomes.values(), dbUserEditWriterListener);
+        }
+
+        @Override
+        public void onReadEmpty() {
+            // Scrittura dei nuovi dati nel db
+            databaseWriter.writeUser(newUser, oldUser, auth.getCurrentUserUid(), null, dbUserEditWriterListener);
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+            /*
+            onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+            le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+            In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+            la situazione non può essere risolta dall'utente.
+            */
+            showErrorDialog();
+            dismissProgress();
+        }
+    };
+
     // Listener processo di aggiornamento di un utente già esistente
     final DatabaseWriterListener dbUserEditWriterListener = new DatabaseWriterListener() {
         @Override
@@ -470,10 +511,10 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     };
 
     // Listener processo di registrazione
-    final AuthListener authListener =  new AuthListener() {
+    final AuthListener authListener = new AuthListener() {
         @Override
         public void onSuccess() {
-            databaseWriter.writeUser(newUser, null, auth.getCurrentUserUid(), dbNewUserWriterListener);
+            databaseWriter.writeUser(newUser, null, auth.getCurrentUserUid(), null, dbNewUserWriterListener);
         }
 
         @Override

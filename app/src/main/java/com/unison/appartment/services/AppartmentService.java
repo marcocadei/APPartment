@@ -21,6 +21,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AppartmentService extends Service {
+
+    private DatabaseReference homeRef;
+    private DatabaseReference homeUsersRef;
+    private DatabaseReference userHomeRef;
+    private ValueEventListener homeListener;
+    private ValueEventListener homeUsersListener;
+    private ValueEventListener userHomeListener;
+
     public AppartmentService() {
     }
 
@@ -45,8 +53,8 @@ public class AppartmentService extends Service {
         È necessario mantenere l'oggetto casa continuamente aggiornato perché il "name" e il "conversionFactor"
         sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
          */
-        DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-        dbRef.addValueEventListener(new ValueEventListener() {
+        homeRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        homeListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -58,7 +66,8 @@ public class AppartmentService extends Service {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+        homeRef.addValueEventListener(homeListener);
     }
 
     private void listenHomeUsers() {
@@ -66,8 +75,8 @@ public class AppartmentService extends Service {
         È necessario mantenere la lista di HomeUser continuamente aggiornata perché diversi attributi, tra
         cui i points, sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
          */
-        DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-        dbRef.addValueEventListener(new ValueEventListener() {
+        homeUsersRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        homeUsersListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -83,7 +92,8 @@ public class AppartmentService extends Service {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+        homeUsersRef.addValueEventListener(homeUsersListener);
     }
 
     private void listenUserHome() {
@@ -91,8 +101,8 @@ public class AppartmentService extends Service {
         È necessario mantenere l'oggetto casa continuamente aggiornato perché il "name" e il "conversionFactor"
         sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
          */
-        DatabaseReference dbRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + new FirebaseAuth().getCurrentUserUid() + DatabaseConstants.SEPARATOR  + Appartment.getInstance().getHome().getName());
-        dbRef.addValueEventListener(new ValueEventListener() {
+        userHomeRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + new FirebaseAuth().getCurrentUserUid() + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+        userHomeListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -104,7 +114,8 @@ public class AppartmentService extends Service {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+        userHomeRef.addValueEventListener(userHomeListener);
     }
 
     /*
@@ -115,6 +126,20 @@ public class AppartmentService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         return Service.START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (homeRef != null && homeListener != null) {
+            homeRef.removeEventListener(homeListener);
+        }
+        if (userHomeRef != null && userHomeListener != null) {
+            userHomeRef.removeEventListener(userHomeListener);
+        }
+        if (homeUsersRef != null && homeUsersListener != null) {
+            homeUsersRef.removeEventListener(homeUsersListener);
+        }
     }
 
     @Override

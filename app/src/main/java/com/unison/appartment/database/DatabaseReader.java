@@ -10,4 +10,5 @@ public interface DatabaseReader {
     void retrieveHomeUsers(final String homeName, final DatabaseReaderListener listener);
     void retrieveHomeUserRefs(final String homeName, final String uid, final DatabaseReaderListener listener);
     void retrieveUser(final String uid, final DatabaseReaderListener listener);
+    void retrieveUserHomes(final String uid, final DatabaseReaderListener listener);
 }

@@ -24,6 +24,7 @@ import com.unison.appartment.state.MyApplication;
 import com.unison.appartment.utils.ImageUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -46,7 +47,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
                 });
     }
 
-    public void writeUser(final User newUser, final User oldUser, final String uid, final DatabaseWriterListener listener) {
+    public void writeUser(final User newUser, final User oldUser, final String uid, final Collection<UserHome> userHomes, final DatabaseWriterListener listener) {
         // Quando scrivo un utente nel database devo primare caricare la foto nel firebase storage
         // poi ottenere un URL a quella foto e salvare quello all'interno del realtime database
         // Tutto questo è fatto se l'utente ha selezionato una foto
@@ -98,7 +99,7 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
                                 String userPhotoUrl = task.getResult().toString();
                                 newUser.setImage(userPhotoUrl);
                                 newUser.setImageStoragePath(imageStoragePath);
-                                writeUserAfterUpdate(newUser, uid, listener);
+                                writeUserAfterUpdate(newUser, uid, userHomes, listener);
                             } else {
                                 listener.onWriteFail(task.getException());
                             }
@@ -113,16 +114,24 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
             });
 
         } else {
-            writeUserAfterUpdate(newUser, uid, listener);
+            writeUserAfterUpdate(newUser, uid, userHomes, listener);
         }
     }
 
-    private void writeUserAfterUpdate(final User newUser, final String uid, final DatabaseWriterListener listener) {
+    private void writeUserAfterUpdate(final User newUser, final String uid, final Collection<UserHome> userHomes, final DatabaseWriterListener listener) {
         // Scrittura dei dati relativi al nuovo utente nel database
         String path = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
 
         HashMap<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(path, newUser);
+
+        if(userHomes != null){
+            for (UserHome userHome : userHomes){
+                childUpdates.put(DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + userHome.getHomename() +
+                        DatabaseConstants.SEPARATOR + uid + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_IMAGE,
+                        newUser.getImage());
+            }
+        }
 
         write(childUpdates, listener);
     }

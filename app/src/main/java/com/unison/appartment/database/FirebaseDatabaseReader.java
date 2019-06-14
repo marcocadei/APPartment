@@ -9,6 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
+import com.unison.appartment.model.UserHome;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,8 +51,8 @@ public class FirebaseDatabaseReader implements DatabaseReader {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     Map<String, Object> map = new HashMap<>();
-                    for (DataSnapshot homeUserSnapshot : dataSnapshot.getChildren()) {
-                        map.put(homeUserSnapshot.getKey(), homeUserSnapshot.getValue(type));
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        map.put(data.getKey(), data.getValue(type));
                     }
                     listener.onReadSuccess(dataSnapshot.getKey(), map);
                 }
@@ -77,6 +78,12 @@ public class FirebaseDatabaseReader implements DatabaseReader {
     public void retrieveUser(final String uid, final DatabaseReaderListener listener) {
         String path = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
         read(path, listener, User.class);
+    }
+
+    @Override
+    public void retrieveUserHomes(final String uid, final DatabaseReaderListener listener){
+        String path = DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + uid;
+        readList(path, listener, UserHome.class);
     }
 
     @Override
