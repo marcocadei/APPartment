@@ -56,6 +56,6 @@ public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActiv
 
     @Override
     public void onNetworkErrorDialogFragmentDismiss() {
-        finishAndRemoveTask();
+        moveTaskToBack(true);
     }
 }

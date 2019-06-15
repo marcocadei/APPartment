@@ -1,14 +1,9 @@
 package com.unison.appartment.activities;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
-import com.unison.appartment.fragments.NetworkErrorDialogFragment;
-import com.unison.appartment.utils.NetworkStateReceiver;
-import com.unison.appartment.utils.NetworkStateReceiver.NetworkStateReceiverListener;
 
 /**
  * Classe astratta che rappresenta una generica activity in cui vengono visualizzati dei
