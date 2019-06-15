@@ -7,6 +7,7 @@ import android.os.PersistableBundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
@@ -34,7 +35,6 @@ public abstract class ActivityWithDialogs extends AppCompatActivity implements
      */
     private NetworkStateReceiver networkStateReceiver;
     // Dialog che mostra l'errore di rete
-    private NetworkErrorDialogFragment dialog;
 
     /**
      * Activity a cui si ritorna dopo la chiusura dell'ErrorDialog.
@@ -82,21 +82,20 @@ public abstract class ActivityWithDialogs extends AppCompatActivity implements
 
     @Override
     public void networkAvailable() {
-        Log.d("RETE", "On");
         // Se il dialog di errore di rete è mostrato allora lo nascondo.
         // Questo controllo è necessario perché all'apertura dell'app se la rete è presente il dialog
         // non è mai stato mostrato e quindi non faccio dismiss() su un null
+        NetworkErrorDialogFragment dialog = (NetworkErrorDialogFragment)getSupportFragmentManager().findFragmentByTag(NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG);
         if (dialog != null) {
             dialog.dismiss();
-            dialog = null;
         }
     }
 
     @Override
     public void networkUnavailable() {
-        Log.d("RETE", "Off");
-        dialog = new NetworkErrorDialogFragment();
-        dialog.show(getSupportFragmentManager(), NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG);
+        if (getSupportFragmentManager().findFragmentByTag(NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG) == null) {
+            new NetworkErrorDialogFragment().show(getSupportFragmentManager(), NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG);
+        }
     }
 
     /**

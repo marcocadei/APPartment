@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.unison.appartment.R;
 
@@ -19,7 +20,7 @@ import com.unison.appartment.R;
  */
 public class NetworkErrorDialogFragment extends DialogFragment {
 
-    public final static String TAG_NETWORK_ERROR_DIALOG = "NetworkErrorDialog";
+    public final static String TAG_NETWORK_ERROR_DIALOG = "networkErrorDialog";
 
     public interface NetworkErrorDialogInterface {
         void onNetworkErrorDialogFragmentDismiss();
