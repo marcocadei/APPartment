@@ -14,7 +14,7 @@ import com.unison.appartment.state.Appartment;
 /**
  * Classe che rappresenta l'Activity per entrare nell'applicazione, registrandosi oppure accedendo
  */
-public class EnterActivity extends AppCompatActivity {
+public class EnterActivity extends ActivityWithNetworkConnectionDialog {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

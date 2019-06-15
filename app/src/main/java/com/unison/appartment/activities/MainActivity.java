@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * Classe che rappresenta l'Activity principale di una Home
  */
-public class MainActivity extends AppCompatActivity implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
+public class MainActivity extends ActivityWithNetworkConnectionDialog implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
 
     /*
     Costanti che indicano la posizione delle varie sezioni così come ordinate nella bottom
