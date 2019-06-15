@@ -26,7 +26,7 @@ import com.unison.appartment.state.Appartment;
 /**
  * Classe che rappresenta l'Activity con il dettaglio del Reward
  */
-public class RewardDetailActivity extends AppCompatActivity {
+public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
 
     public final static String EXTRA_REWARD_OBJECT = "rewardObject";
 

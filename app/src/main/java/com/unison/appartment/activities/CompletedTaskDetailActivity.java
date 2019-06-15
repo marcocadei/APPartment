@@ -26,7 +26,7 @@ import com.unison.appartment.utils.DateUtils;
 
 import java.util.Date;
 
-public class CompletedTaskDetailActivity extends AppCompatActivity implements CompletionListFragment.OnCompletionListFragmentInteractionListener {
+public class CompletedTaskDetailActivity extends ActivityWithNetworkConnectionDialog implements CompletionListFragment.OnCompletionListFragmentInteractionListener {
 
     public final static String EXTRA_COMPLETED_TASK_OBJECT = "completedTaskObject";
 

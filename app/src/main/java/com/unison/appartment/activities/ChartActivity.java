@@ -35,7 +35,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ChartActivity extends AppCompatActivity {
+public class ChartActivity extends ActivityWithNetworkConnectionDialog {
 
     private final static double PIE_MIN_PERCENTAGE_SHOWN = 0.05;
     private final static double PIE_CUMULATED_PERCENTAGE_LIMIT = 0.9;

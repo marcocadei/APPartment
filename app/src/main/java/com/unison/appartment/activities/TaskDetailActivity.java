@@ -32,7 +32,7 @@ import java.util.Date;
 /**
  * Classe che rappresenta l'Activity con il dettaglio del UncompletedTask
  */
-public class TaskDetailActivity extends AppCompatActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
+public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
 
     public final static String EXTRA_TASK_OBJECT = "taskObject";
 
