@@ -20,15 +20,8 @@ import com.unison.appartment.utils.NetworkStateReceiver.NetworkStateReceiverList
  * chiuso a seguito di un'azione dell'utente dal momento che non presenta bottoni o elementi con
  * cui l'utente può interagire).
  */
-public abstract class ActivityWithDialogs extends AppCompatActivity implements
-        FirebaseErrorDialogFragment.FirebaseErrorDialogInterface, NetworkStateReceiverListener,
-        NetworkErrorDialogFragment.NetworkErrorDialogInterface {
-
-    /**
-     * Broadcast receiver che si occupa di monitorare costantemente lo stato della rete
-     */
-    private NetworkStateReceiver networkStateReceiver;
-    // Dialog che mostra l'errore di rete
+public abstract class ActivityWithDialogs extends ActivityWithNetworkConnectionDialog implements
+        FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     /**
      * Activity a cui si ritorna dopo la chiusura dell'ErrorDialog.
@@ -55,43 +48,6 @@ public abstract class ActivityWithDialogs extends AppCompatActivity implements
                 .findFragmentByTag(FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Quando l'activity non è più visibile rimuovo il listener che riceve gli
-        // aggiornamenti sullo stato della rete
-        networkStateReceiver.removeListener(this);
-        this.unregisterReceiver(networkStateReceiver);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Quando l'activity torna ad essere visibile riaggiungo il listener che riceve gli
-        // aggiornamenti sullo stato della rete
-        networkStateReceiver = new NetworkStateReceiver();
-        networkStateReceiver.addListener(this);
-        this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    public void networkAvailable() {
-        // Se il dialog di errore di rete è mostrato allora lo nascondo.
-        // Questo controllo è necessario perché all'apertura dell'app se la rete è presente il dialog
-        // non è mai stato mostrato e quindi non faccio dismiss() su un null
-        NetworkErrorDialogFragment dialog = (NetworkErrorDialogFragment)getSupportFragmentManager().findFragmentByTag(NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG);
-        if (dialog != null) {
-            dialog.dismiss();
-        }
-    }
-
-    @Override
-    public void networkUnavailable() {
-        if (getSupportFragmentManager().findFragmentByTag(NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG) == null) {
-            new NetworkErrorDialogFragment().show(getSupportFragmentManager(), NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG);
-        }
-    }
-
     /**
      * Mostra l'AlertDialog con cui viene comunicata all'utente una situazione di errore.
      */
@@ -116,11 +72,6 @@ public abstract class ActivityWithDialogs extends AppCompatActivity implements
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
-    }
-
-    @Override
-    public void onNetworkErrorDialogFragmentDismiss() {
-        finishAndRemoveTask();
     }
 
     /**
