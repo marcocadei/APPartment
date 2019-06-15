@@ -1,10 +1,14 @@
 package com.unison.appartment.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +34,8 @@ public class RewardRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<Reward>> rewardLiveData;
 
+    private MutableLiveData<Boolean> error;
+
     public RewardRepository() {
         // Riferimento al nodo root del database
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -39,6 +45,8 @@ public class RewardRepository {
         Query orderedReward = rewardsRef.orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_NAME);
         liveData = new FirebaseQueryLiveData(orderedReward);
         rewardLiveData = Transformations.map(liveData, new RewardRepository.Deserializer());
+
+        error = new MutableLiveData<>();
     }
 
     @NonNull
@@ -79,7 +87,12 @@ public class RewardRepository {
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(userId).getPoints() - reward.getPoints());
         // Aggiungo l'id del premio prenotato ai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, true);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ERRORE", "ERRORE");
+            }
+        });
     }
 
     public void cancelRequest(Reward reward) {
