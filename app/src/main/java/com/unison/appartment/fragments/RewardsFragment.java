@@ -181,4 +181,12 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
         }
     }
 
+    @Override
+    public void onRewardListError(boolean error) {
+        if (error) {
+            View snackbarView = getActivity().findViewById(R.id.fragment_rewards);
+            Snackbar.make(snackbarView, getString(R.string.snackbar_rewards_error_message),
+                    Snackbar.LENGTH_LONG).show();
+        }
+    }
 }

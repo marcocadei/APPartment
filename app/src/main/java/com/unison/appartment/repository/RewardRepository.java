@@ -54,6 +54,10 @@ public class RewardRepository {
         return rewardLiveData;
     }
 
+    public LiveData<Boolean> getErrorLiveData() {
+        return error;
+    }
+
     public void addReward(Reward newReward) {
         String key = rewardsRef.push().getKey();
         newReward.setId(key);
@@ -90,7 +94,9 @@ public class RewardRepository {
         rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("ERRORE", "ERRORE");
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
             }
         });
     }
@@ -115,7 +121,14 @@ public class RewardRepository {
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints());
         // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, null);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void confirmRequest(Reward reward, String userId) {
@@ -140,7 +153,14 @@ public class RewardRepository {
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Appartment.getInstance().getHomeUser(userId).getClaimedRewards() + 1);
         // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, null);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Reward>> {

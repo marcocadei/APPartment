@@ -277,5 +277,6 @@
     <string name="fragment_family_btn_stats">Visualizza statistiche</string>
     <string name="activity_chart_empty_list_text">Non c\'è nessuna statistica da visualizzare.</string>
     <string name="dialog_network_error_message">Nessuna connessione disponibile.\nConnettersi ad Internet e riprovare.</string>
+    <string name="snackbar_rewards_error_message">Si è verificato un problema.\nIl premio è stato rimosso da un altro utente.</string>
 
 </resources>
