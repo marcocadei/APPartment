@@ -71,6 +71,13 @@ public class RewardListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reward_list, container, false);
 
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean error) {
+                listener.onRewardListError(error);
+            }
+        });
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -162,5 +169,6 @@ public class RewardListFragment extends Fragment {
     public interface OnRewardListFragmentInteractionListener {
         void onRewardListFragmentInteraction(Reward item);
         void onRewardListElementsLoaded(long elements);
+        void onRewardListError(boolean error);
     }
 }

@@ -43,6 +43,8 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
 
     private View emptyListLayout;
 
+    private boolean snackbarShown = false;
+
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
      */
@@ -181,4 +183,31 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
         }
     }
 
+    @Override
+    public void onRewardListError(boolean error) {
+        // È necessario controllare se la snackbar è già mostrata perché alcune operazioni
+        // in realtà fanno chiamate diverse al repository e ognuna dà errore. Pertanto senza
+        // questo controllo si vederebbe uno strano glitch dovuto al fatto che si mostrano
+        // molto velocemente due (o più) snackbar di fila
+        if (error && !snackbarShown) {
+            View snackbarView = getActivity().findViewById(R.id.fragment_rewards);
+            final Snackbar snackbar = Snackbar.make(snackbarView, getString(R.string.snackbar_rewards_error_message),
+                    Snackbar.LENGTH_LONG);
+            // snackbarShown mi serve che diventi subito true, ma con la callback non lo diventa subito
+            // perché c'è l'animazione
+            snackbarShown = true;
+            snackbar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar transientBottomBar, int event) {
+                    snackbarShown = false;
+                }
+
+                @Override
+                public void onShown(Snackbar transientBottomBar) {
+                    snackbarShown = true;
+                }
+            });
+            snackbar.show();
+        }
+    }
 }

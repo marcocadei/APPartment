@@ -1,10 +1,15 @@
 package com.unison.appartment.repository;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +39,8 @@ public class TodoTaskRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<UncompletedTask>> taskLiveData;
 
+    private MutableLiveData<Boolean> error;
+
     public TodoTaskRepository() {
         // Riferimento al nodo root del database
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -43,11 +50,17 @@ public class TodoTaskRepository {
         Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
         liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
+
+        error = new MutableLiveData<>();
     }
 
     @NonNull
     public LiveData<List<UncompletedTask>> getTaskLiveData() {
         return taskLiveData;
+    }
+
+    public LiveData<Boolean> getErrorLiveData() {
+        return error;
     }
 
     public void addTask(UncompletedTask newUncompletedTask) {
@@ -99,7 +112,14 @@ public class TodoTaskRepository {
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
         // Aggiungo l'id del task assegnato ai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, true);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void removeAssignment(String taskId, String assignedUserId) {
@@ -117,7 +137,14 @@ public class TodoTaskRepository {
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
         // Tolgo l'id del task assegnato dai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, null);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void markTask(String taskId, String userId, String userName) {
@@ -136,7 +163,14 @@ public class TodoTaskRepository {
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, true);
         // Aggiungo l'id del task assegnato ai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, true);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void cancelCompletion(String taskId, String userId) {
@@ -153,7 +187,14 @@ public class TodoTaskRepository {
         // Il task non è più marked, ma rimane assegnato
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + taskId + DatabaseConstants.SEPARATOR +
                 DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {
@@ -197,7 +238,14 @@ public class TodoTaskRepository {
         // Aggiornamento del riferimento al task confermato
         childUpdates.put(homeUserRefPath, null);
 
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     private class Deserializer implements Function<DataSnapshot, List<UncompletedTask>> {
