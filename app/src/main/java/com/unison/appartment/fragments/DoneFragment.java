@@ -70,11 +70,11 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
         emptyListLayout = myView.findViewById(R.id.fragment_done_layout_empty_list);
         TabLayout tabLayout = myView.findViewById(R.id.fragment_done_tabs);
-        updateFragmentContent(tabLayout.getSelectedTabPosition());
+        updateFragmentContent(tabLayout.getSelectedTabPosition(), false);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                updateFragmentContent(tab.getPosition());
+                updateFragmentContent(tab.getPosition(), true);
             }
 
             @Override
@@ -101,26 +101,29 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         super.onDetach();
     }
 
-    private void updateFragmentContent(int position) {
+    private void updateFragmentContent(int position, boolean animation) {
         switch (position) {
             default:
             case ALL_COMPLETEDTASKS_POSITION:
                 currentPosition = ALL_COMPLETEDTASKS_POSITION;
-                switchToFragment(AllCompletedTasksListFragment.class);
+                switchToFragment(AllCompletedTasksListFragment.class, animation);
                 break;
             case RECENT_COMPLETEDTASKS_POSITION:
                 currentPosition = RECENT_COMPLETEDTASKS_POSITION;
-                switchToFragment(RecentCompletedTasksListFragment.class);
+                switchToFragment(RecentCompletedTasksListFragment.class, animation);
                 break;
         }
     }
 
-    private void switchToFragment(Class fragment) {
+    private void switchToFragment(Class fragment, boolean animation) {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        if (currentPosition > lastPosition) {
-            ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        } else {
-            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+        // Se è richiesta effettuo un'animazione nel passaggio da un fragment all'altro
+        if (animation) {
+            if (currentPosition > lastPosition) {
+                ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+            } else {
+                ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+            }
         }
         lastPosition = currentPosition;
         try {
