@@ -22,6 +22,10 @@ public class TodoTaskViewModel extends ViewModel {
         return repository.getTaskLiveData();
     }
 
+    public LiveData<Boolean> getErrorLiveData() {
+        return repository.getErrorLiveData();
+    }
+
     public void addTask(UncompletedTask newUncompletedTask) {
         repository.addTask(newUncompletedTask);
     }

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateTaskActivity;
@@ -48,6 +49,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
     private static final int DETAIL_TASK_REQUEST_CODE = 2;
 
     private View emptyListLayout;
+
+    private boolean snackbarShown = false;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -189,6 +192,34 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
             emptyListLayout.setVisibility(View.VISIBLE);
         } else {
             emptyListLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onTodoListError(boolean error) {
+        // È necessario controllare se la snackbar è già mostrata perché alcune operazioni
+        // in realtà fanno chiamate diverse al repository e ognuna dà errore. Pertanto senza
+        // questo controllo si vederebbe uno strano glitch dovuto al fatto che si mostrano
+        // molto velocemente due (o più) snackbar di fila
+        if (error && !snackbarShown) {
+            View snackbarView = getActivity().findViewById(R.id.fragment_todo);
+            final Snackbar snackbar =  Snackbar.make(snackbarView, getString(R.string.snackbar_todo_error_message),
+                    Snackbar.LENGTH_LONG);
+            // snackbarShown mi serve che diventi subito true, ma con la callback non lo diventa subito
+            // perché c'è l'animazione
+            snackbarShown = true;
+            snackbar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar transientBottomBar, int event) {
+                    snackbarShown = false;
+                }
+
+                @Override
+                public void onShown(Snackbar transientBottomBar) {
+                    snackbarShown = true;
+                }
+            });
+            snackbar.show();
         }
     }
 }
