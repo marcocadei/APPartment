@@ -81,11 +81,17 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         final int role = Appartment.getInstance().getUserHome().getRole();
         final String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
 
+        // Mittente, data e menù sono degli elementi comuni a tutti i tipi di post
         final ViewHolderPost holderPost = (ViewHolderPost) holder;
         final Post postItem = getItem(position);
         holderPost.textPostSender.setText(postItem.getAuthor());
         timestamp = new Date(postItem.getTimestamp());
         holderPost.textPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
+        /*
+        Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
+        - per gli slave, solo ai propri post;
+        - per i master, a tutti quanti i post.
+         */
         if (role != Home.ROLE_SLAVE || postItem.getAuthor().equals(nickname)) {
             holderPost.textPostOptions.setVisibility(View.VISIBLE);
             holderPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
