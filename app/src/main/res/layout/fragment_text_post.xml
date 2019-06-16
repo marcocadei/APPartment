@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/fragment_text_post_sender"
+                android:id="@+id/post_sender"
                 style="@style/Component.TextView.SingleLine.ListItemTitle"
                 android:text="@string/placeholder_text"
                 android:textColor="@color/colorPrimary"
@@ -26,7 +26,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_text_post_date"
+                app:layout_constraintEnd_toStartOf="@+id/post_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,21 +40,21 @@
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/fragment_text_post_sender"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_text_post_sender" />
+                app:layout_constraintStart_toStartOf="@+id/post_sender"
+                app:layout_constraintTop_toBottomOf="@+id/post_sender" />
 
             <TextView
-                android:id="@+id/fragment_text_post_date"
+                android:id="@+id/post_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/placeholder_number"
-                app:layout_constraintEnd_toStartOf="@id/fragment_text_post_options"
+                app:layout_constraintEnd_toStartOf="@id/post_options"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/fragment_text_post_options"
+                android:id="@+id/post_options"
                 android:src="@drawable/ic_more_vert"
                 android:tint="@color/colorPrimary"
                 android:background="?attr/selectableItemBackgroundBorderless"
