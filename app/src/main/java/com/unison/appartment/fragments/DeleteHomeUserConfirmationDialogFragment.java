@@ -52,7 +52,7 @@ public class DeleteHomeUserConfirmationDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomErrorAlertDialogTheme);
         builder.setMessage(getArguments().getInt(BUNDLE_KEY_MESSAGE))
                 .setPositiveButton(getArguments().getInt(BUNDLE_KEY_POSITIVE_BUTTON_STRING), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
