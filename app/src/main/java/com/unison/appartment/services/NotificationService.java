@@ -1,5 +1,6 @@
 package com.unison.appartment.services;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +16,7 @@ import android.os.Messenger;
 import android.os.SystemClock;
 import android.text.Html;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -127,45 +129,29 @@ public class NotificationService extends Service {
                     // Extra utilizzati dall'activity che viene fatta partire al tap sulla notifica
                     resultIntent.putExtra(MainActivity.EXTRA_DESTINATION_FRAGMENT, MainActivity.POSITION_MESSAGES);
 
-                    // Creazione dell'oggetto TaskStackBuilder, utilizzato per creare il backstack
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(NotificationService.this);
-                    stackBuilder.addNextIntentWithParentStack(resultIntent);
-                    // PendingIntent che contiene l'intero backstack
-                    PendingIntent resultPendingIntent =
-                            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, POST_CHANNEL_ID)
-                            .setSmallIcon(R.drawable.ic_message)
-                            .setContentTitle(notificationTitle)
-                            .setContentText(notificationContent)
-                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                            .setContentIntent(resultPendingIntent)
-                            .setAutoCancel(true)
-                            .setOnlyAlertOnce(true);
-
-                    if (!messageNotificationAlreadyDispatched) {
-                        switch (post.getType()) {
-                            case Post.TEXT_POST:
-                                builder = builder.setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended_text, post.getAuthor(), post.getContent()))));
-                                break;
-
-                            case Post.IMAGE_POST:
-                                // FIXME vedere se e come è possibile mostrare l'immagine direttamente nella notifica. se non si può,
-                                // levare lo switch perché non serve più e fare gli if solo per costruire la stringa da passare
-                                // a bigText
-                                builder = builder.setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended_image, post.getAuthor()))));
-                                break;
-
-                            case Post.AUDIO_POST:
-                                builder = builder.setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended_audio, post.getAuthor()))));
-                                break;
-                        }
+                    CharSequence bigText = "";
+                    switch (post.getType()) {
+                        case Post.TEXT_POST:
+                            bigText = Html.fromHtml(getString(R.string.notification_new_post_extended_text, post.getAuthor(), post.getContent()));
+                            break;
+                        case Post.IMAGE_POST:
+                            bigText = Html.fromHtml(getString(R.string.notification_new_post_extended_image, post.getAuthor()));
+                            break;
+                        case Post.AUDIO_POST:
+                            bigText = Html.fromHtml(getString(R.string.notification_new_post_extended_audio, post.getAuthor()));
+                            break;
                     }
 
-                    notificationManager.notify(NOTIFICATIONS_TAG, notificationId, builder.build());
+                    notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
+                            resultIntent,
+                            POST_CHANNEL_ID,
+                            R.drawable.ic_message,
+                            notificationTitle,
+                            notificationContent,
+                            NotificationCompat.PRIORITY_DEFAULT,
+                            !messageNotificationAlreadyDispatched,
+                            bigText
+                    ));
 
                     if (!messageNotificationAlreadyDispatched) {
                         currentlyDisplayedNotifications.get(POST_CHANNEL_ID).add(notificationId);
@@ -201,31 +187,23 @@ public class NotificationService extends Service {
                             di nuovi messaggi visualizzato.
                              */
 
-                            // TODO refactorare in metodo a parte
                             // Intent per l'activity che si vuole far partire al tap sulla notifica
                             Intent resultIntent = new Intent(NotificationService.this, MainActivity.class);
                             resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             // Extra utilizzati dall'activity che viene fatta partire al tap sulla notifica
                             resultIntent.putExtra(MainActivity.EXTRA_DESTINATION_FRAGMENT, MainActivity.POSITION_MESSAGES);
 
-                            // Creazione dell'oggetto TaskStackBuilder, utilizzato per creare il backstack
-                            TaskStackBuilder stackBuilder = TaskStackBuilder.create(NotificationService.this);
-                            stackBuilder.addNextIntentWithParentStack(resultIntent);
-                            // PendingIntent che contiene l'intero backstack
-                            PendingIntent resultPendingIntent =
-                                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                            NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, POST_CHANNEL_ID)
-                                    .setSmallIcon(R.drawable.ic_message)
-                                    .setContentTitle(getResources().getQuantityString(R.plurals.notification_new_posts_title, newMessages))
-                                    .setContentText(getResources().getQuantityString(R.plurals.notification_new_posts_content, newMessages, newMessages))
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                    .setContentIntent(resultPendingIntent)
-                                    .setAutoCancel(true)
-                                    .setOnlyAlertOnce(true);
-
                             int notificationId = currentlyDisplayedNotifications.get(POST_CHANNEL_ID).get(0);
-                            notificationManager.notify(NOTIFICATIONS_TAG, notificationId, builder.build());
+                            notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
+                                    resultIntent,
+                                    POST_CHANNEL_ID,
+                                    R.drawable.ic_message,
+                                    getResources().getQuantityString(R.plurals.notification_new_posts_title, newMessages),
+                                    getResources().getQuantityString(R.plurals.notification_new_posts_content, newMessages, newMessages),
+                                    NotificationCompat.PRIORITY_DEFAULT,
+                                    false,
+                                    ""
+                            ));
                         }
                     }
                 }
@@ -286,6 +264,33 @@ public class NotificationService extends Service {
         // TODO codice scopiazzato da telegram - togliere se non serve
 //        Intent intent = new Intent("com.unison.appartment.start");
 //        sendBroadcast(intent);
+    }
+
+    private Notification buildTextNotification(Intent resultIntent, String channelId,
+                                               @DrawableRes int iconDrawable, String notificationTitle,
+                                               String notificationContent, int priority,
+                                               boolean showExtended, CharSequence bigText) {
+        // Creazione dell'oggetto TaskStackBuilder, utilizzato per creare il backstack
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        // PendingIntent che contiene l'intero backstack
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(iconDrawable)
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationContent)
+                .setPriority(priority)
+                .setContentIntent(resultPendingIntent)
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true);
+
+        if (showExtended) {
+            builder = builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
+        }
+
+        return builder.build();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
