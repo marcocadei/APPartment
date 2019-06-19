@@ -22,11 +22,6 @@
     <string name="general_ok_button">OK</string>
     <string name="general_points_name">Punti</string>
 
-    <plurals name="general_item_selected">
-        <item quantity="one">%d elemento selezionato</item>
-        <item quantity="other">%d elementi selezionati</item>
-    </plurals>
-
     <!-- Nome della transizione per aprire le immagini -->
     <string name="transition_open_image">transitionOpenImage</string>
 
