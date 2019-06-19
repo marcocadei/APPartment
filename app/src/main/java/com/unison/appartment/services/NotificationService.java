@@ -54,7 +54,7 @@ public class NotificationService extends Service {
     private Map<String, List<Integer>> currentlyDisplayedNotifications;
 
     // Altri dati utilizzati nel contenuto delle notifiche
-    private int newMessages = 1;
+    private int newMessages = 0;
 
     private NotificationManagerCompat notificationManager;
 
@@ -104,20 +104,21 @@ public class NotificationService extends Service {
                     /*
                     Se c'è già una notifica relativa alla bacheca visualizzata, ne modifico il testo
                     in modo che contenga anche il numero di nuovi messaggi.
-                    Nota importante: Siccome il riferimento dall'oggetto currentlyDisplayedNotifications
+                    Nota importante: Siccome il riferimento all'oggetto currentlyDisplayedNotifications
                     è rimosso solo quando l'utente accede alla bacheca, e rimane invece memorizzato
                     se per esempio l'utente cancella la notifica senza cliccarci sopra, il testo
                     conterrà sempre il numero di messaggi non letti dall'ultimo accesso in bacheca.
                      */
                     boolean messageNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(POST_CHANNEL_ID).size() != 0;
+                    newMessages = messageNotificationAlreadyDispatched
+                            ? newMessages + 1
+                            : 1;
                     int notificationId = messageNotificationAlreadyDispatched
                             ? currentlyDisplayedNotifications.get(POST_CHANNEL_ID).get(0)
                             : ((int) (SystemClock.uptimeMillis() * 10)) + POST_CHANNEL_NOTIFICATIONS_ID_UNIT;
-                    String notificationTitle = messageNotificationAlreadyDispatched
-                            ? getString(R.string.notification_new_posts_title)
-                            : getString(R.string.notification_new_post_title);
+                    String notificationTitle = getResources().getQuantityString(R.plurals.notification_new_posts_title, newMessages);
                     String notificationContent = messageNotificationAlreadyDispatched
-                            ? getString(R.string.notification_new_posts_content, ++newMessages)
+                            ? getResources().getQuantityString(R.plurals.notification_new_posts_content, newMessages, newMessages)
                             : getString(R.string.notification_new_post_content, post.getAuthor());
 
                     // Intent per l'activity che si vuole far partire al tap sulla notifica
@@ -144,7 +145,6 @@ public class NotificationService extends Service {
                             .setOnlyAlertOnce(true);
 
                     if (!messageNotificationAlreadyDispatched) {
-                        newMessages = 1;
                         switch (post.getType()) {
                             case Post.TEXT_POST:
                                 builder = builder.setStyle(new NotificationCompat.BigTextStyle()
@@ -167,7 +167,10 @@ public class NotificationService extends Service {
                     }
 
                     notificationManager.notify(NOTIFICATIONS_TAG, notificationId, builder.build());
-                    currentlyDisplayedNotifications.get(POST_CHANNEL_ID).add(notificationId);
+
+                    if (!messageNotificationAlreadyDispatched) {
+                        currentlyDisplayedNotifications.get(POST_CHANNEL_ID).add(notificationId);
+                    }
                 }
             }
 
@@ -181,7 +184,52 @@ public class NotificationService extends Service {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                // TODO qui va modificato il testo della notifica rimuovendo 1 dal msg count
+                // Faccio qualcosa solo se c'è una notifica attualmente mostrata
+                if (currentlyDisplayedNotifications.get(POST_CHANNEL_ID).size() != 0) {
+                    newMessages--;
+                    // Se il numero di nuovi messaggi scende a zero, cancello del tutto la notifica
+                    if (newMessages == 0) {
+                        for (Integer notificationId : currentlyDisplayedNotifications.get(POST_CHANNEL_ID)) {
+                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
+                        }
+                        currentlyDisplayedNotifications.get(POST_CHANNEL_ID).clear();
+                    }
+                    else {
+                        // Non mostro la notifica se sono nel messages fragment (vedi onChildAdded)
+                        if (Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_MESSAGES) {
+                            /*
+                            Modifico il testo della notifica già visualizzata decrementando 1 dal numero
+                            di nuovi messaggi visualizzato.
+                             */
+
+                            // TODO refactorare in metodo a parte
+                            // Intent per l'activity che si vuole far partire al tap sulla notifica
+                            Intent resultIntent = new Intent(NotificationService.this, MainActivity.class);
+                            resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            // Extra utilizzati dall'activity che viene fatta partire al tap sulla notifica
+                            resultIntent.putExtra(MainActivity.EXTRA_DESTINATION_FRAGMENT, MainActivity.POSITION_MESSAGES);
+
+                            // Creazione dell'oggetto TaskStackBuilder, utilizzato per creare il backstack
+                            TaskStackBuilder stackBuilder = TaskStackBuilder.create(NotificationService.this);
+                            stackBuilder.addNextIntentWithParentStack(resultIntent);
+                            // PendingIntent che contiene l'intero backstack
+                            PendingIntent resultPendingIntent =
+                                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, POST_CHANNEL_ID)
+                                    .setSmallIcon(R.drawable.ic_message)
+                                    .setContentTitle(getResources().getQuantityString(R.plurals.notification_new_posts_title, newMessages))
+                                    .setContentText(getResources().getQuantityString(R.plurals.notification_new_posts_content, newMessages, newMessages))
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                    .setContentIntent(resultPendingIntent)
+                                    .setAutoCancel(true)
+                                    .setOnlyAlertOnce(true);
+
+                            int notificationId = currentlyDisplayedNotifications.get(POST_CHANNEL_ID).get(0);
+                            notificationManager.notify(NOTIFICATIONS_TAG, notificationId, builder.build());
+                        }
+                    }
+                }
             }
 
             @Override
@@ -234,6 +282,7 @@ public class NotificationService extends Service {
             }
         }
         currentlyDisplayedNotifications.clear();
+        newMessages = 0;
 
         // TODO codice scopiazzato da telegram - togliere se non serve
 //        Intent intent = new Intent("com.unison.appartment.start");
@@ -269,6 +318,7 @@ public class NotificationService extends Service {
                             notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
                         }
                         currentlyDisplayedNotifications.get(POST_CHANNEL_ID).clear();
+                        newMessages = 0;
                     }
                     catch (NullPointerException e) {
                         currentlyDisplayedNotifications.put(POST_CHANNEL_ID, new LinkedList<Integer>());
