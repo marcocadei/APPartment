@@ -194,7 +194,24 @@ public class NotificationService extends Service {
             postsRef.removeEventListener(postsListener);
         }
 
-        // TODO qui per consistenza si dovrebbero rimuovere tutte le notifiche currently shown
+        // TODO rivedere se va bene come cosa - in caso toglierla
+        /*
+        Alla distruzione del NotificationService vengono rimosse tutte le notifiche mostrate in
+        quel momento (altrimenti non ci sarebbe più modo di manipolarle dato che comunque il
+        riferimento agli id verrebbe perduto). La distruzione del servizio avviene:
+        - se il servizio stesso viene fermato ESPLICITAMENTE dall'utente (nei casi in cui l'intero
+        processo viene rimosso dal sistema alla chiusura dell'app, il servizio dovrebbe stopparsi
+        SENZA che il metodo onDestroy sia invocato - don't ask why);
+        - quando l'utente esce da una casa e ritorna alla UserProfileActivity (in quanto in quel
+        caso è invocato stopService).
+        FIXME non è più vero se si sceglie di salvare gli id nelle shared preferences, cambiare di conseguenza!
+         */
+        for (List<Integer> notificationList : currentlyDisplayedNotifications.values()) {
+            for (Integer notificationId : notificationList) {
+                notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
+            }
+        }
+        currentlyDisplayedNotifications.clear();
 
         // TODO codice scopiazzato da telegram - togliere se non serve
 //        Intent intent = new Intent("com.unison.appartment.start");
