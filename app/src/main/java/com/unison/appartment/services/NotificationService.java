@@ -31,7 +31,6 @@ import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.state.Appartment;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -145,9 +144,26 @@ public class NotificationService extends Service {
                             .setOnlyAlertOnce(true);
 
                     if (!messageNotificationAlreadyDispatched) {
-                        builder.setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended, post.getAuthor(), post.getContent()))));
                         newMessages = 1;
+                        switch (post.getType()) {
+                            case Post.TEXT_POST:
+                                builder = builder.setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended_text, post.getAuthor(), post.getContent()))));
+                                break;
+
+                            case Post.IMAGE_POST:
+                                // FIXME vedere se e come è possibile mostrare l'immagine direttamente nella notifica. se non si può,
+                                // levare lo switch perché non serve più e fare gli if solo per costruire la stringa da passare
+                                // a bigText
+                                builder = builder.setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended_image, post.getAuthor()))));
+                                break;
+
+                            case Post.AUDIO_POST:
+                                builder = builder.setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(Html.fromHtml(getString(R.string.notification_new_post_extended_audio, post.getAuthor()))));
+                                break;
+                        }
                     }
 
                     notificationManager.notify(NOTIFICATIONS_TAG, notificationId, builder.build());
@@ -157,22 +173,28 @@ public class NotificationService extends Service {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                /*
+                Qui non viene fatto nulla perché nell'app non è possibile modificare i messaggi;
+                questo callback non verrà mai chiamato!
+                 */
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                // TODO qui va modificato il testo della notifica rimuovendo 1 dal msg count
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                /*
+                Qui non viene fatto nulla perché nell'app non è possibile modificare i messaggi;
+                questo callback non verrà mai chiamato!
+                 */
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                // TODO gestire errore
             }
         };
         postsRef.addChildEventListener(postsListener);

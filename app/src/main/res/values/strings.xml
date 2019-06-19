@@ -129,7 +129,9 @@
     <!-- Utilizzate per le notifiche -->
 
     <string name="notification_new_post_content">Inviato da %1$s</string>
-    <string name="notification_new_post_extended">&lt;b>%1$s:&lt;/b> %2$s</string>
+    <string name="notification_new_post_extended_text">&lt;b>%1$s:&lt;/b> %2$s</string>
+    <string name="notification_new_post_extended_audio">&lt;b>%1$s:&lt;/b> &lt;i>Nota vocale&lt;/i></string>
+    <string name="notification_new_post_extended_image">&lt;b>%1$s:&lt;/b> &lt;i>Immagine&lt;/i></string>
     <string name="notification_new_post_title">Nuovo messaggio in bacheca</string>
     <string name="notification_new_posts_content">%d nuovi messaggi</string>
     <string name="notification_new_posts_title">Nuovi messaggi in bacheca</string>
