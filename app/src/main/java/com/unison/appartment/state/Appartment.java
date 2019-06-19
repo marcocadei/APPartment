@@ -2,7 +2,6 @@ package com.unison.appartment.state;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -176,7 +175,6 @@ public class Appartment {
 
     public void setCurrentScreen(byte currentScreen) {
         this.currentScreen = currentScreen;
-        Log.e("zzzzz", String.valueOf(currentScreen));
     }
 
     public byte getCurrentScreen() {
