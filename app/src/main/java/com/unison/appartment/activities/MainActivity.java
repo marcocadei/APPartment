@@ -12,9 +12,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ValueAnimator;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -44,15 +50,17 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
 
+    public static final String EXTRA_DESTINATION_FRAGMENT = "destinationFragment";
+
     /*
     Costanti che indicano la posizione delle varie sezioni così come ordinate nella bottom
     navigation; sono usate per le animazioni di ingresso/uscita al cambio fragment.
      */
-    private static final byte POSITION_MESSAGES = 0;
-    private static final byte POSITION_FAMILY = 1;
-    private static final byte POSITION_TODO = 2;
-    private static final byte POSITION_DONE = 3;
-    private static final byte POSITION_REWARDS = 4;
+    public static final byte POSITION_MESSAGES = 0;
+    public static final byte POSITION_FAMILY = 1;
+    public static final byte POSITION_TODO = 2;
+    public static final byte POSITION_DONE = 3;
+    public static final byte POSITION_REWARDS = 4;
 
     // Ultima voce selezionata nella bottom navigation
     private int lastPosition = POSITION_MESSAGES;
@@ -63,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     private static final String BUNDLE_KEY_OLD_POINTS_VALUE = "oldPointsValue";
 
     private int selectedBottomNavigationMenuItemId;
+    private int oldPointsValue = 0;
 
     private Toolbar toolbar;
     private TextView userPoints;
@@ -71,12 +80,23 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     private ViewPager pager;
     private FragmentSlidePagerAdapter pagerAdapter;
 
-    private int oldPointsValue = 0;
+    private Messenger serviceMessenger = null;
+    private boolean serviceBound;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        // FIXME da spostare qui il pezzo aggiunto in fondo ad onCreate (rimpiazzare getIntent() con intent)
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // TODO se sono arrivato qui da una notifica però ero ad es. già uscito da una casa,
+        // devo fare un controllo e nel caso tornare indietro per evitare errori e crash
 
         // Avvio il servizio che mantiene aggiornato lo stato
         Intent appartmentServiceIntent = new Intent(this, AppartmentService.class);
@@ -167,6 +187,16 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
                 return true;
             }
         });
+
+        // FIXME da spostare in onNewIntent (cambiare getIntent() in intent)
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+         */
+        int destinationFragment = getIntent().getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+        if (destinationFragment != -1) {
+            pager.setCurrentItem(destinationFragment);
+        }
     }
 
     private void readHomeUser() {
@@ -296,27 +326,30 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setCurrentScreen(currentPosition);
+    }
+
+    @Override
     protected void onPause() {
         Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
         super.onPause();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        switch (currentPosition) {
-            case POSITION_MESSAGES:
-                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_MESSAGES);
-                break;
-            case POSITION_TODO:
-                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
-                break;
-            case POSITION_REWARDS:
-                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_REWARDS);
-                break;
-            default:
-                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
-                break;
+    protected void onStart() {
+        super.onStart();
+        bindService(new Intent(this, NotificationService.class), serviceConnection,
+                Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (serviceBound) {
+            unbindService(serviceConnection);
+            serviceBound = false;
         }
     }
 
@@ -342,21 +375,13 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
         @Override
         public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             if (currentFragment == null || !currentFragment.equals(object)) {
+                // Salvo il riferimento al fragment attualmente visualizzato
                 currentFragment = ((Fragment) object);
-                switch (position) {
-                    case POSITION_MESSAGES:
-                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_MESSAGES);
-                        break;
-                    case POSITION_TODO:
-                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
-                        break;
-                    case POSITION_REWARDS:
-                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_REWARDS);
-                        break;
-                    default:
-                        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
-                        break;
-                }
+
+                // Salvo nello stato la posizione corrente (che verrà utilizzata dal NotificationService
+                // per sapere quali notifiche mostrare) e se necessario invio al NotificationService un
+                // messaggio nel caso in cui quest'ultimo debba eseguire qualche azione particolare.
+                setCurrentScreen(position);
             }
             super.setPrimaryItem(container, position, object);
         }
@@ -390,6 +415,66 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
         @Override
         public int getCount() {
             return bottomNavigation.getMenu().size();
+        }
+    }
+
+    private void setCurrentScreen(int position) {
+        switch (position) {
+            case POSITION_MESSAGES:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_MESSAGES);
+                sendMessageToNotificationService(NotificationService.MSG_CLEAR_POSTS_NOTIFICATIONS);
+                break;
+            case POSITION_TODO:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
+                break;
+            case POSITION_REWARDS:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_REWARDS);
+                break;
+            default:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
+                break;
+        }
+    }
+
+    /**
+     * Classe utilizzata per interagire con il NotificationService
+     */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the object we can use to
+            // interact with the service.  We are communicating with the
+            // service using a Messenger, so here we get a client-side
+            // representation of that from the raw IBinder object.
+            serviceMessenger = new Messenger(service);
+            serviceBound = true;
+
+            /*
+            Appena il servizio viene collegato all'activity, controllo in quale fragment sono,
+            aggiorno lo stato e se necessario mando un messaggio al servizio.
+            NOTA IMPORTANTE: Questa chiamata viene fatta anche nel metodo onResume, ma quando questo
+            viene eseguito molto probabilmente il servizio non è ancora bindato e quindi il messaggio
+            non viene inviato!
+             */
+            setCurrentScreen(currentPosition);
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            serviceMessenger = null;
+            serviceBound = false;
+        }
+    };
+
+    private void sendMessageToNotificationService(int type) {
+        if (!serviceBound) return;
+
+        Message msg = Message.obtain(null, type);
+        try {
+            serviceMessenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 }

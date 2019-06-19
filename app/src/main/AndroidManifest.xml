@@ -3,6 +3,11 @@
     package="com.unison.appartment">
     <!-- Permesso per poter usare il registratore -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Altri permessi -->
+    <!-- TODO se non servono togliere -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".state.MyApplication"
@@ -12,7 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChartActivity"></activity>
+
+        <receiver
+            android:name=".AppStartReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <!--<intent-filter>-->
+                <!--<action android:name="com.unison.appartment.start" />-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+            <!--</intent-filter>-->
+        </receiver>
+
+        <activity android:name=".activities.ChartActivity" />
         <activity android:name=".activities.EditHomeUserActivity" />
         <activity android:name=".activities.WebActivity" />
         <activity android:name=".activities.CompletedTaskDetailActivity" />
@@ -21,7 +37,6 @@
             android:name=".services.AppartmentService"
             android:enabled="true"
             android:exported="true" />
-
         <service
             android:name=".services.NotificationService"
             android:enabled="true"
@@ -35,7 +50,10 @@
         <activity android:name=".activities.FamilyMemberDetailActivity" />
         <activity android:name=".activities.TaskDetailActivity" />
         <activity android:name=".activities.CreateTaskActivity" />
-        <activity android:name=".activities.MainActivity" android:parentActivityName=".activities.EnterActivity"/>
+        <activity
+            android:name=".activities.MainActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.EnterActivity" />
         <activity android:name=".activities.SignInActivity" />
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.CreateHomeActivity" />
