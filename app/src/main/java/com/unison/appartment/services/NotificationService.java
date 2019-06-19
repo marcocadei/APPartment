@@ -134,7 +134,6 @@ public class NotificationService extends Service {
                     PendingIntent resultPendingIntent =
                             stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                    // TODO switchare sul tipo di post e creare notifiche diverse a seconda del tipo di messaggio
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, POST_CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_message)
                             .setContentTitle(notificationTitle)
