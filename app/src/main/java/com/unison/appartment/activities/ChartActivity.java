@@ -2,7 +2,6 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
@@ -163,21 +162,28 @@ public class ChartActivity extends ActivityWithNetworkConnectionDialog {
             chartItems.add(new BarChartItem(barData, this, getString(R.string.bar_chart_rewards_title), nicknames));
         }
 
-        // Grafico a barre coi soldi
+        // Grafico a barre coi messaggi totali
         barEntries = new ArrayList<>();
         i = 0;
         nicknames = new ArrayList<>();
         for(HomeUser homeUser : Appartment.getInstance().getHomeUsers().values()) {
-            if (homeUser.getEarnedMoney() != 0f) {
+            int totalPosts = homeUser.getTextPosts() + homeUser.getAudioPosts() + homeUser.getImagePosts();
+            if (totalPosts != 0f) {
                 nicknames.add(homeUser.getNickname());
-                barEntries.add(new BarEntry(i++, homeUser.getEarnedMoney()));
+                barEntries.add(new BarEntry(i++, totalPosts));
             }
         }
         if (barEntries.size() > 0) {
             BarDataSet barDataSet = new BarDataSet(barEntries, "");
             barDataSet.setColors(colors);
             BarData barData = new BarData(barDataSet);
-            chartItems.add(new BarChartItem(barData, this, getString(R.string.bar_chart_money_title), nicknames));
+            barData.setValueFormatter(new IValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                    return String.valueOf((int) value);
+                }
+            });
+            chartItems.add(new BarChartItem(barData, this, getString(R.string.bar_chart_posts_title), nicknames));
         }
 
         chartListView.setAdapter(new ChartAdapter(this, 0, chartItems));
