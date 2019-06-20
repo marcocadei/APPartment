@@ -35,13 +35,21 @@
         style="@style/Component.Layout.NestedScrollViewFixedElement">
 
         <TextView
+            android:id="@+id/fragment_rewards_empty_list_title"
+            style="@style/Component.TextView.MultiLine.EmptyListTitle"
+            app:layout_constraintBottom_toTopOf="@id/fragment_rewards_empty_list_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/fragment_rewards_empty_list_text"
             style="@style/Component.TextView.MultiLine.EmptyListAdditionalText"
             android:text="@string/fragment_rewards_empty_list_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_rewards_empty_list_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
