@@ -228,8 +228,6 @@
     <string name="dialog_firebase_error_message" tools:ignore="Typos">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
     <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
-    <string name="fragment_done_empty_completedtask_list_text">Non c\'é nessuna attivita completata!</string>
-    <string name="fragment_done_empty_completedtask_list_title">Non c\'é nulla qui :(</string>
     <string name="fragment_done_empty_list_text">Nessuna attività completata registrata.</string>
     <string name="fragment_done_tab_all">TUTTE</string>
     <string name="fragment_done_tab_recent">RECENTI</string>
@@ -252,8 +250,8 @@
     <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
     <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
     <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
-    <string name="fragment_rewards_empty_list_text">Attualmente non ci sono premi disponibili.</string>
-    <string name="fragment_todo_empty_list_text">Non c\'è nessuna attività da svolgere.</string>
+    <string name="fragment_rewards_empty_list_text">Nessun premio disponibile.</string>
+    <string name="fragment_todo_empty_list_text">Nessuna attività da svolgere.</string>
     <string name="fragment_todo_text_assigned_user">Assegnato a: %1$s</string>
     <string name="fragment_todo_text_assigned_user_self">Assegnato a: me stesso</string>
     <string name="fragment_todo_text_status_pending_row_1">Conferma</string>
@@ -275,7 +273,7 @@
     <string name="bar_chart_money_title">Soldi guadagnati</string>
     <string name="activity_chart_title">Statistiche</string>
     <string name="fragment_family_btn_stats">Visualizza statistiche</string>
-    <string name="activity_chart_empty_list_text">Non c\'è nessuna statistica da visualizzare.</string>
+    <string name="activity_chart_empty_list_text">Nessuna statistica da visualizzare.</string>
     <string name="dialog_network_error_message">Nessuna connessione disponibile.\nConnettersi ad Internet e riprovare.</string>
     <string name="snackbar_rewards_error_message">Si è verificato un problema.\nIl premio è stato rimosso da un altro utente.</string>
     <string name="snackbar_todo_error_message">Si è verificato un problema.\nL\'attività è stata eliminata da un altro utente.</string>
