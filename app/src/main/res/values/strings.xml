@@ -276,5 +276,13 @@
     <string name="dialog_network_error_message">Nessuna connessione disponibile.\nConnettersi ad Internet e riprovare.</string>
     <string name="snackbar_rewards_error_message">Si è verificato un problema.\nIl premio è stato rimosso da un altro utente.</string>
     <string name="snackbar_todo_error_message">Si è verificato un problema.\nL\'attività è stata eliminata da un altro utente.</string>
+    <string name="activity_user_profile_toolbar_delete">Elimina utente</string>
+    <string name="activity_user_deletion_title">Elimina account</string>
+    <string name="caption_ic_delete">Icona di un cestino</string>
+    <string name="activity_user_deletion_text_info">Per procedere con l\'eliminazione, reinserisci la tua password.</string>
+    <string name="activity_user_deletion_text_confirm">Confermo di voler eliminare il mio account e tutti i dati ad esso associati.</string>
+    <string name="activity_user_deletion_btn_delete">Elimina account</string>
+    <string name="activity_user_deletion_progress_title">Raccolta informazioni</string>
+    <string name="activity_user_deletion_progress_description">Per favore attendi, è in corso la raccolta delle informazioni necessarie</string>
 
 </resources>

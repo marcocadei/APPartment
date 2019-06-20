@@ -166,6 +166,11 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 startActivityForResult(i, EDIT_USER_REQUEST_CODE);
                 return true;
 
+            case R.id.activity_user_profile_toolbar_delete:
+                i = new Intent(this, UserDeletionActivity.class);
+                startActivity(i);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChartActivity"></activity>
+        <activity android:name=".activities.UserDeletionActivity"></activity>
+        <activity android:name=".activities.ChartActivity" />
         <activity android:name=".activities.EditHomeUserActivity" />
         <activity android:name=".activities.WebActivity" />
         <activity android:name=".activities.CompletedTaskDetailActivity" />
