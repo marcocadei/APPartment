@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -112,7 +111,6 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         TextView role = findViewById(R.id.activity_family_member_detail_text_role_value);
 
         TextView earnedPoints = findViewById(R.id.activity_family_member_detail_text_total_points_value);
-        TextView earnedMoney = findViewById(R.id.activity_family_member_detail_text_earned_money_value);
         TextView publishedMessages = findViewById(R.id.activity_family_member_detail_text_text_posts_value);
         TextView publishedImages = findViewById(R.id.activity_family_member_detail_text_image_posts_value);
         TextView publishedAudio = findViewById(R.id.activity_family_member_detail_text_audio_posts_value);
@@ -120,7 +118,6 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         TextView completedTasks = findViewById(R.id.activity_family_member_detail_text_completed_tasks_value);
         TextView rejectedTasks = findViewById(R.id.activity_family_member_detail_text_rejected_tasks_value);
         earnedPoints.setText(String.valueOf(member.getTotalEarnedPoints()));
-        earnedMoney.setText(String.valueOf(member.getEarnedMoney()));
         publishedMessages.setText(String.valueOf(member.getTextPosts()));
         publishedImages.setText(String.valueOf(member.getImagePosts()));
         publishedAudio.setText(String.valueOf(member.getAudioPosts()));
@@ -247,7 +244,6 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         // Le stringhe originali sono troppo lunghe quindi il grafico viene bruttissimo
         final String[] labels = new String[]{
                 /*getString(R.string.desc_homeusers_homename_uid_totalearnedpoints_icon),*/
-                getString(R.string.desc_homeusers_homename_uid_earnedmoney_icon),
                 getString(R.string.desc_homeusers_homename_uid_textposts_icon),
                 getString(R.string.desc_homeusers_homename_uid_imageposts_icon),
                 getString(R.string.desc_homeusers_homename_uid_audioposts_icon),
@@ -261,7 +257,6 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         // I punti crescono troppo rapidamente rispetto a tutti gli altri valori, rovinando così
         // la visualizzazione. Pertanto non vengono aggiunti al radar
         /*entries.add(new RadarEntry(member.getTotalEarnedPoints()));*/
-        entries.add(new RadarEntry(member.getEarnedMoney()));
         entries.add(new RadarEntry(member.getTextPosts()));
         entries.add(new RadarEntry(member.getImagePosts()));
         entries.add(new RadarEntry(member.getAudioPosts()));
