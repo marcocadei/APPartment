@@ -1,10 +1,12 @@
 package com.unison.appartment.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
-import android.graphics.Color;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -12,34 +14,46 @@ import android.widget.EditText;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.R;
 import com.unison.appartment.database.Auth;
+import com.unison.appartment.database.AuthListener;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
+import com.unison.appartment.database.DatabaseWriter;
+import com.unison.appartment.database.DatabaseWriterListener;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.FirebaseDatabaseReader;
+import com.unison.appartment.database.FirebaseDatabaseWriter;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
-import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.KeyboardUtils;
 
+import java.util.HashSet;
 import java.util.Map;
 
 public class UserDeletionActivity extends FormActivity {
 
     private EditText inputPassword;
     private TextInputLayout layoutPassword;
-    private CheckBox checkBox;
 
     private Auth auth;
     private DatabaseReader databaseReader;
+    private DatabaseWriter databaseWriter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_deletion);
+
+        errorDialogDestinationActivity = UserProfileActivity.class;
+
+        auth = new FirebaseAuth();
+        databaseReader = new FirebaseDatabaseReader();
+        databaseWriter = new FirebaseDatabaseWriter();
+
         Toolbar toolbar = findViewById(R.id.activity_user_deletion_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -51,7 +65,7 @@ public class UserDeletionActivity extends FormActivity {
 
         inputPassword = findViewById(R.id.activity_user_deletion_input_password_value);
         layoutPassword = findViewById(R.id.activity_user_deletion_input_password);
-        checkBox = findViewById(R.id.activity_user_deletion_check);
+        CheckBox checkBox = findViewById(R.id.activity_user_deletion_check);
         final MaterialButton btnDelete = findViewById(R.id.activity_user_deletion_btn_delete);
 
         inputPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -60,10 +74,6 @@ public class UserDeletionActivity extends FormActivity {
                 if (hasFocus) resetErrorMessage(layoutPassword);
             }
         });
-
-        auth = new FirebaseAuth();
-        databaseReader = new FirebaseDatabaseReader();
-
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -105,22 +115,79 @@ public class UserDeletionActivity extends FormActivity {
         return result;
     }
 
+    // Listener processo di eliminazione da auth
+    final AuthListener authDeletionListener = new AuthListener() {
+        @Override
+        public void onSuccess() {
+            moveToNextActivity(EnterActivity.class);
+            dismissProgress();
+        }
+
+        @Override
+        public void onFail(Exception exception) {
+            try {
+                throw exception;
+            } catch (Exception e) {
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
+
+    // Listener processo di eliminazione di tutti i dati dell'utente
+    final DatabaseWriterListener dbWriterListener = new DatabaseWriterListener() {
+        @Override
+        public void onWriteSuccess() {
+            auth.deleteUser(authDeletionListener);
+        }
+
+        @Override
+        public void onWriteFail(Exception exception) {
+            try {
+                throw exception;
+            } catch (Exception e) {
+                // (DatabaseException se si verifica una violazione delle regole di sicurezza)
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
+
+    // Listener processo di autenticazione
+    final AuthListener reauthenticateListener = new AuthListener() {
+        @Override
+        public void onSuccess() {
+            databaseWriter.deleteUser(auth.getCurrentUserUid(), dbWriterListener);
+            dismissProgress();
+        }
+
+        @Override
+        public void onFail(Exception exception) {
+            try {
+                throw exception;
+            } catch (FirebaseAuthInvalidCredentialsException e) {
+                // Password non valida
+                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
+            } catch (Exception e) {
+                // Generico
+                showErrorDialog();
+            }
+            dismissProgress();
+        }
+    };
+
     // Listener processo di lettura dal database degli user homes
     final DatabaseReaderListener dbReaderListener = new DatabaseReaderListener() {
         @Override
         public void onReadSuccess(String key, Object object) {
-            Map<String, UserHome> userHomes = (Map<String, UserHome>) object;
-
-
-
-
-
-
+            // TODO mostrare errore
         }
 
         @Override
         public void onReadEmpty() {
-
+            auth.reauthenticate(Appartment.getInstance().getUser().getEmail(), inputPassword.getText().toString(), reauthenticateListener);
         }
 
         @Override

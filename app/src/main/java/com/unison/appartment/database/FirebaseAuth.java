@@ -63,6 +63,22 @@ public class FirebaseAuth implements Auth {
                 });
     }
 
+    @Override
+    public void deleteUser(final AuthListener listener) {
+        final com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
+        auth.getCurrentUser().delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess();
+                        } else {
+                            listener.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+
     @Nullable
     public String getCurrentUserUid() {
         try {
