@@ -51,7 +51,11 @@ public class MyFamilyMemberRecyclerViewAdapter extends ListAdapter<HomeUser, MyF
 
         holder.textMemberName.setText(member.getNickname());
         holder.textMemberRole.setText(roles[member.getRole()]);
-        holder.textStatusUpper.setText(String.valueOf(member.getPoints()));
+        if (member.getPoints() >= HomeUser.MAX_POINTS) {
+            holder.textStatusUpper.setText(R.string.general_max_points);
+        } else {
+            holder.textStatusUpper.setText(String.valueOf(member.getPoints()));
+        }
         holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
         holder.textStatusLower.setText(R.string.general_points_name);
         if (member.getImage() != null) {

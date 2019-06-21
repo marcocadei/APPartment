@@ -221,9 +221,9 @@ public class TodoTaskRepository {
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_COMPLETEDTASKS,
                 homeUser.getCompletedTasks() + 1);
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_TOTALEARNEDPOINTS,
-                homeUser.getTotalEarnedPoints() + task.getPoints());
+                Math.min(homeUser.getTotalEarnedPoints() + task.getPoints(), Long.MAX_VALUE));
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS,
-                homeUser.getPoints() + task.getPoints());
+                Math.min(homeUser.getPoints() + task.getPoints(), HomeUser.MAX_POINTS));
 
         // Aggiornamento dei completed-tasks
         long completionDate = System.currentTimeMillis();
