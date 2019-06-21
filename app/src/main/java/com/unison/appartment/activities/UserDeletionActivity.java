@@ -119,7 +119,10 @@ public class UserDeletionActivity extends FormActivity {
     final AuthListener authDeletionListener = new AuthListener() {
         @Override
         public void onSuccess() {
-            moveToNextActivity(EnterActivity.class);
+            Intent i = new Intent(UserDeletionActivity.this, EnterActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
             dismissProgress();
         }
 

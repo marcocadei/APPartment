@@ -1,5 +1,6 @@
 package com.unison.appartment.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -28,6 +29,7 @@ import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.FirebaseDatabaseReader;
+import com.unison.appartment.fragments.DismissableWarningDialogFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
@@ -53,6 +55,8 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private final static int EDIT_USER_REQUEST_CODE = 101;
     public final static String EXTRA_NEW_USER = "newUser";
 
+    private final static String BUNDLE_KEY_HAS_HOMES = "hasHomes";
+
     private Auth auth;
     private DatabaseReader databaseReader;
 
@@ -63,6 +67,8 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private TextView textGender;
     private TextView textBirthdate;
     private TextView textAge;
+
+    private boolean hasHomes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +146,20 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(BUNDLE_KEY_HAS_HOMES, hasHomes);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        hasHomes = savedInstanceState.getBoolean(BUNDLE_KEY_HAS_HOMES);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_user_profile_toolbar, menu);
         return true;
@@ -167,8 +187,14 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 return true;
 
             case R.id.activity_user_profile_toolbar_delete:
-                i = new Intent(this, UserDeletionActivity.class);
-                startActivity(i);
+                if (!hasHomes) {
+                    i = new Intent(this, UserDeletionActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    DismissableWarningDialogFragment dialog = new DismissableWarningDialogFragment();
+                    dialog.show(getSupportFragmentManager(), DismissableWarningDialogFragment.TAG_DISMISSABLE_WARNING_DIALOG);
+                }
                 return true;
 
             default:
@@ -255,6 +281,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         progressBar.setVisibility(View.GONE);
 
         // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
+        hasHomes = elements != 0;
         if (elements == 0) {
             emptyListLayout.setVisibility(View.VISIBLE);
         }
