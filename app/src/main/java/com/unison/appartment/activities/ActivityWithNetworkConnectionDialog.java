@@ -55,7 +55,6 @@ public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActiv
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals(Appartment.EVENT_HOME_DELETE)) {
-                        Log.w("zzzzzzzzzzzzzzzz", "receive broadcast HOME");
                         Intent i = new Intent(ActivityWithNetworkConnectionDialog.this, UserProfileActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_home_deleted_message));
@@ -65,7 +64,6 @@ public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActiv
                     "duplicate finish request" (don't know why tho)
                      */
                     } else if (intent.getAction().equals(Appartment.EVENT_HOME_KICK)) {
-                        Log.w("zzzzzzzzzzzzzzzz", "receive broadcast");
                         Intent i = new Intent(ActivityWithNetworkConnectionDialog.this, UserProfileActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_user_kicked_message));

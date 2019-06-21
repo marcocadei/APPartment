@@ -65,7 +65,6 @@ public class AppartmentService extends Service {
                     Appartment.getInstance().setHome(dataSnapshot.getValue(Home.class));
                 }
                 else {
-                    Log.w("zzzzzzzzzzzzzzzz", "send broadcast HOME");
                     Intent intent = new Intent();
                     intent.setAction(Appartment.EVENT_HOME_DELETE);
                     intent.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_home_deleted_message));
@@ -120,7 +119,6 @@ public class AppartmentService extends Service {
                     Appartment.getInstance().setUserHome(dataSnapshot.getValue(UserHome.class));
                 }
                 else {
-                    Log.w("zzzzzzzzzzzzzzzz", "send broadcast");
                     Intent intent = new Intent();
                     intent.setAction(Appartment.EVENT_HOME_KICK);
                     LocalBroadcastManager.getInstance(AppartmentService.this).sendBroadcast(intent);
