@@ -21,6 +21,7 @@ public class HomeUser implements Serializable {
     private final static String ATTRIBUTE_IMAGE_POSTS = "image-posts";
     private final static String ATTRIBUTE_REJECTED_TASKS = "rejected-tasks";
 
+    public final static int MAX_POINTS = 999999999;
     private final static int DEFAULT_POINTS = 0;
 
     @Exclude

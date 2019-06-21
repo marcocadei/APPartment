@@ -285,5 +285,6 @@
     <string name="activity_user_deletion_btn_delete">Elimina account</string>
     <string name="activity_user_deletion_progress_title">Raccolta informazioni</string>
     <string name="activity_user_deletion_progress_description">Per favore attendi, è in corso la raccolta delle informazioni necessarie</string>
+    <string name="general_max_points">MAX</string>
 
 </resources>

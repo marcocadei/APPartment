@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -14,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -181,19 +183,28 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
             public void onChanged(List<HomeUser> homeUsers) {
                 for(HomeUser homeUser : homeUsers) {
                     if (homeUser.getUserId().equals(userId)) {
-                        // Animazione dei punti dal valore precedente a quello corrente
-                        int oldPoints = oldPointsValue;
-                        int newPoints = homeUser.getPoints();
-                        ValueAnimator animator = ValueAnimator.ofInt(oldPoints, newPoints);
-                        animator.setDuration(1000);
-                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                userPoints.setText(animation.getAnimatedValue().toString());
+                        if (userPoints.getVisibility() != View.GONE) {
+                            if (homeUser.getPoints() >= HomeUser.MAX_POINTS) {
+                                userPoints.setText(R.string.general_max_points);
+                                oldPointsValue = HomeUser.MAX_POINTS;
                             }
-                        });
-                        animator.start();
-                        oldPointsValue = newPoints;
-                        break;
+                            else {
+                                // Animazione dei punti dal valore precedente a quello corrente
+                                /*int oldPoints = oldPointsValue;
+                                int newPoints = homeUser.getPoints();
+                                ValueAnimator animator = ValueAnimator.ofInt(oldPoints, newPoints);
+                                animator.setDuration(2000);
+                                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                    public void onAnimationUpdate(ValueAnimator animation) {
+                                        userPoints.setText(animation.getAnimatedValue().toString());
+                                    }
+                                });
+                                animator.start();*/
+                                userPoints.setText(String.valueOf(homeUser.getPoints()));
+                                oldPointsValue = homeUser.getPoints();
+                            }
+                            break;
+                        }
                     }
                 }
             }

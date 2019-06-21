@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
 
@@ -118,7 +119,9 @@ public class RewardRepository {
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
         // Vengono riaggiunti i punti all'utente che aveva eseguito la richiesta
-        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints());
+        Log.e("zzzzz", String.valueOf(Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints()));
+        Log.e("zzzzz", String.valueOf(Math.min(Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints(), HomeUser.MAX_POINTS)));
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Math.min(Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints(), HomeUser.MAX_POINTS));
         // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, null);
         rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
