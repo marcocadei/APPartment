@@ -145,7 +145,7 @@ public class NotificationService extends Service {
                     notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
                             resultIntent,
                             POST_CHANNEL_ID,
-                            R.drawable.ic_message,
+                            R.drawable.ic_message_notification,
                             notificationTitle,
                             notificationContent,
                             NotificationCompat.PRIORITY_DEFAULT,
@@ -197,7 +197,7 @@ public class NotificationService extends Service {
                             notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
                                     resultIntent,
                                     POST_CHANNEL_ID,
-                                    R.drawable.ic_message,
+                                    R.drawable.ic_message_notification,
                                     getResources().getQuantityString(R.plurals.notification_new_posts_title, newMessages),
                                     getResources().getQuantityString(R.plurals.notification_new_posts_content, newMessages, newMessages),
                                     NotificationCompat.PRIORITY_DEFAULT,
