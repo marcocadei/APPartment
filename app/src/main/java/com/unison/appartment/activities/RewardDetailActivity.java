@@ -93,8 +93,20 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
         }
 
         MaterialButton btnReserve = findViewById(R.id.activity_reward_detail_btn_reserve);
+        MaterialButton btnCancel = findViewById(R.id.activity_reward_detail_btn_cancel_reservation);
 
         final String userId = new FirebaseAuth().getCurrentUserUid();
+
+        /*
+        Quando il btnCancel è visualizzato, deve fare sempre la stessa azione a prescindere dal
+        ruolo dell'utente loggato.
+         */
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendCancelRequestData();
+            }
+        });
 
         if (Appartment.getInstance().getHomeUser(userId).getRole() == Home.ROLE_SLAVE) {
             /*
@@ -103,10 +115,11 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
              */
 
             if (reward.isRequested()) {
-                btnReserve.setEnabled(false);
                 if (reward.getReservationId().equals(userId)) {
-                    btnReserve.setText(R.string.activity_reward_detail_btn_reserve_reward_requested);
+                    btnReserve.setVisibility(View.GONE);
+                    btnCancel.setVisibility(View.VISIBLE);
                 } else {
+                    btnReserve.setEnabled(false);
                     btnReserve.setText(R.string.activity_reward_detail_btn_reserve_reward_unavailable);
                 }
             } else {
@@ -134,7 +147,6 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
             - se il premio è ancora disponibile, viene modificato il testo del bottone di richiesta.
              */
             MaterialButton btnConfirm = findViewById(R.id.activity_reward_detail_btn_confirm_reservation);
-            MaterialButton btnCancel = findViewById(R.id.activity_reward_detail_btn_cancel_reservation);
             MaterialButton btnDelete = findViewById(R.id.activity_reward_detail_btn_delete);
             TextView textInfo = findViewById(R.id.activity_reward_detail_text_info);
 
@@ -155,12 +167,6 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
                     @Override
                     public void onClick(View v) {
                         sendConfirmRequestData(reward.getReservationId());
-                    }
-                });
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sendCancelRequestData();
                     }
                 });
             } else {
