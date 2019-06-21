@@ -182,10 +182,19 @@ public class UserDeletionActivity extends FormActivity {
     };
 
     // Listener processo di lettura dal database degli user homes
+    /*
+    NOTA IMPORTANTE: In teoria questa lettura non è necessaria e potrebbe essere del tutto evitata
+    in quanto viene fatto un controllo a priori alla pressione dell'icona "elimina" e l'utente può
+    entrare in questa activity solo se non è membro di alcuna casa. La lettura è qui solo come
+    ulteriore misura di sicurezza.
+     */
     final DatabaseReaderListener dbReaderListener = new DatabaseReaderListener() {
         @Override
         public void onReadSuccess(String key, Object object) {
-            // TODO mostrare errore
+            /*
+            Qui dovrebbe sempre essere chiamato onReadEmpty, vedi nota sopra!
+             */
+            Log.e(getClass().getCanonicalName(), "Eliminazione di un utente ancora membro di una o più case.");
         }
 
         @Override
