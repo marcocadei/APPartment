@@ -2,6 +2,7 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
@@ -23,6 +24,7 @@ import com.appeaser.imagetransitionlibrary.TransitionImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.DatabaseReader;
@@ -53,7 +55,9 @@ import java.util.Map;
 public class UserProfileActivity extends ActivityWithDialogs implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
     private final static int EDIT_USER_REQUEST_CODE = 101;
+
     public final static String EXTRA_NEW_USER = "newUser";
+    public final static String EXTRA_SNACKBAR_MESSAGE = "snackbarMessage";
 
     private final static String BUNDLE_KEY_HAS_HOMES = "hasHomes";
 
@@ -74,6 +78,8 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        bypassHomeEventsReceiver = true;
 
         auth = new FirebaseAuth();
         databaseReader = new FirebaseDatabaseReader();
@@ -143,6 +149,13 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 startActivity(i);
             }
         });
+
+        String snackbarMessage = getIntent().getStringExtra(EXTRA_SNACKBAR_MESSAGE);
+        if (snackbarMessage != null) {
+            Snackbar.make(findViewById(R.id.activity_user_profile),
+                    snackbarMessage,
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override

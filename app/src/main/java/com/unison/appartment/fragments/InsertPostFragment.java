@@ -91,7 +91,7 @@ public class InsertPostFragment extends Fragment {
                     EditText inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
                     listener.onInsertPostFragmentSendPost(inputText.getText().toString(), Post.TEXT_POST);
                     // Ripulisco l'edit text dopo che il messaggio è stato inviato
-                    inputText.getText().clear();
+                    inputText.setText("");
                 }
             }
         });

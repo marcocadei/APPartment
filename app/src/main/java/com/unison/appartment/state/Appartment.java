@@ -2,17 +2,11 @@ package com.unison.appartment.state;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.User;
@@ -31,6 +25,9 @@ public class Appartment {
     private static final Appartment holder = new Appartment();
     private Appartment() {}
     public static Appartment getInstance() {return holder;}
+
+    public final static String EVENT_HOME_KICK = "com.unison.appartment.home.kick";
+    public final static String EVENT_HOME_DELETE = "com.unison.appartment.home.delete";
 
     private Home home;
     private User user;

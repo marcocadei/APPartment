@@ -22,6 +22,7 @@ import com.unison.appartment.activities.FamilyMemberDetailActivity;
 import com.unison.appartment.activities.UserProfileActivity;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.HomeUser;
+import com.unison.appartment.state.Appartment;
 
 import java.util.Set;
 
@@ -66,7 +67,7 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         final View myView = inflater.inflate(R.layout.fragment_family, container, false);
 
         TextView textMembers = myView.findViewById(R.id.fragment_family_text_members);
-        textMembers.setText(getString(R.string.fragment_family_text_members, 0));
+        textMembers.setText(getString(R.string.fragment_family_text_members, 0, Appartment.getInstance().getHome().getName()));
         /*
         Nota: Il numero di membri all'inizio viene impostato a 0 solo per non visualizzare la
         format string finché non si carica la lista.
@@ -166,6 +167,6 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         ProgressBar progressBar = getView().findViewById(R.id.fragment_family_progress);
         progressBar.setVisibility(View.GONE);
         TextView textMembers = getView().findViewById(R.id.fragment_family_text_members);
-        textMembers.setText(getString(R.string.fragment_family_text_members, elements));
+        textMembers.setText(getString(R.string.fragment_family_text_members, elements, Appartment.getInstance().getHome().getName()));
     }
 }

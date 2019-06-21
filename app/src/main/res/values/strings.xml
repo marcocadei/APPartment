@@ -48,6 +48,8 @@
     <string name="form_error_nonzero_required">Specificare un valore diverso da 0</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
     <string name="snackbar_downgrade_error_message">Non disponi più dei permessi necessari!</string>
+    <string name="snackbar_home_deleted_message">La casa in cui ti trovavi è stata eliminata!</string>
+    <string name="snackbar_user_kicked_message">Sei stato rimosso dalla casa in cui ti trovavi.</string>
 
     <!-- Descrizioni dei campi del database -->
 
@@ -231,7 +233,7 @@
     <string name="fragment_done_empty_list_text">Nessuna attività completata registrata.</string>
     <string name="fragment_done_tab_all">TUTTE</string>
     <string name="fragment_done_tab_recent">RECENTI</string>
-    <string name="fragment_family_text_members">%d utenti in questa casa</string>
+    <string name="fragment_family_text_members">%1$d utenti nella casa %2$s</string>
     <string name="fragment_image_post_img">Immagine del post</string>
     <string name="fragment_insert_post_btn_audio_suggestion">Tieni premuto il bottone e poi rilascialo per registrare un audio</string>
     <string name="fragment_insert_post_hint_post">Testo del messaggio</string>
