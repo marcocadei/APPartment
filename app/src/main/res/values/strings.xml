@@ -48,6 +48,8 @@
     <string name="form_error_nonzero_required">Specificare un valore diverso da 0</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
     <string name="snackbar_downgrade_error_message">Non disponi più dei permessi necessari!</string>
+    <string name="snackbar_home_deleted_message">La casa in cui ti trovavi è stata eliminata!</string>
+    <string name="snackbar_user_kicked_message">Sei stato rimosso dalla casa in cui ti trovavi.</string>
 
     <!-- Descrizioni dei campi del database -->
 
