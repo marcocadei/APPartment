@@ -176,4 +176,13 @@ public class FirebaseDatabaseWriter implements DatabaseWriter {
         write(childUpdates, listener);
     }
 
+    @Override
+    public void deleteUser(final String uid, final DatabaseWriterListener listener) {
+        final String userPath = DatabaseConstants.USERS + DatabaseConstants.SEPARATOR + uid;
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(userPath, null);
+
+        write(childUpdates, listener);
+    }
 }

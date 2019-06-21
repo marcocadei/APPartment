@@ -21,4 +21,5 @@ public interface DatabaseWriter {
     void writeCreateHome(final String homeName, final String uid,
                          final Home home, final HomeUser homeUser, final UserHome userHome,
                          final DatabaseWriterListener listener);
+    void deleteUser(final String uid, final DatabaseWriterListener listener);
 }

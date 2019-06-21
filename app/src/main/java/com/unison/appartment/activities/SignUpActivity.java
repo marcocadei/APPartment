@@ -66,6 +66,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     private final static String BUNDLE_KEY_OLD_USER = "oldUser";
 
     private final static int MIN_USER_PASSWORD_LENGTH = 6;
+    private final static String PLACEHOLDER_CORRECT_PASSWORD = "passuord123";
 
     public final static String EXTRA_USER_DATA = "userData";
 
@@ -151,9 +152,9 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
              */
             inputEmail.setText(oldUser.getEmail());
             layoutEmail.setVisibility(View.GONE);
-            inputPassword.setText(oldUser.getPassword());
+            inputPassword.setText(PLACEHOLDER_CORRECT_PASSWORD);
             layoutPassword.setVisibility(View.GONE);
-            inputRepeatPassword.setText(oldUser.getPassword());
+            inputRepeatPassword.setText(PLACEHOLDER_CORRECT_PASSWORD);
             layoutRepeatPassword.setVisibility(View.GONE);
             try {
                 birthdate = DateUtils.parseDateWithStandardLocale(oldUser.getBirthdate());
@@ -212,7 +213,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
 
                         newUser = createUser();
                         // Salvataggio delle informazioni in Auth
-                        auth.signUp(newUser, authListener);
+                        auth.signUp(newUser, inputPassword.getText().toString(), authListener);
                     }
                 }
             });
@@ -392,7 +393,6 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
 
         // Recupero i valori dei campi della form
         String email = inputEmail.getText().toString();
-        String password = inputPassword.getText().toString();
         String nickname = inputNickname.getText().toString();
         int gender;
         switch (inputGender.getCheckedRadioButtonId()) {
@@ -405,7 +405,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 break;
         }
 
-        return new User(email, password, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
+        return new User(email, nickname, DateUtils.formatDateWithStandardLocale(birthdate), gender, selectedImage);
     }
 
     @Override

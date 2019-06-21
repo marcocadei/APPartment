@@ -25,7 +25,6 @@ public class User implements Serializable {
 
     private String imageStoragePath;
     private String email;
-    private String password;
     private String name;
     private String birthdate;
     private int gender;
@@ -35,18 +34,16 @@ public class User implements Serializable {
     public User (){
     }
 
-    public User(String email, String password, String name, String birthdate, int gender, @Nullable String image) {
+    public User(String email, String name, String birthdate, int gender, @Nullable String image) {
         this.email = email;
-        this.password = password;
         this.name = name;
         this.birthdate = birthdate;
         this.gender = gender;
         this.image = image;
     }
 
-    public User(String email, String password, String name, String birthdate, int gender, @Nullable String image, String imageStoragePath) {
+    public User(String email, String name, String birthdate, int gender, @Nullable String image, String imageStoragePath) {
         this.email = email;
-        this.password = password;
         this.name = name;
         this.birthdate = birthdate;
         this.gender = gender;
@@ -68,14 +65,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
