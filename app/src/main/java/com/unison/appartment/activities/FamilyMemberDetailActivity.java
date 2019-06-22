@@ -95,7 +95,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         });
 
         Intent creationIntent = getIntent();
-        member = (HomeUser) creationIntent.getSerializableExtra(EXTRA_MEMBER_OBJECT);
+        member = (HomeUser) creationIntent.getParcelableExtra(EXTRA_MEMBER_OBJECT);
         
         String[] roles = getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
 
@@ -342,9 +342,9 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
             Intent returnIntent = new Intent();
             if (resultCode == Activity.RESULT_OK) {
                 returnIntent.putExtra(FamilyFragment.EXTRA_USER_ID, data.getStringExtra(FamilyFragment.EXTRA_USER_ID));
-                returnIntent.putExtra(FamilyFragment.EXTRA_OWN_POSTS, data.getSerializableExtra(FamilyFragment.EXTRA_OWN_POSTS));
-                returnIntent.putExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS, data.getSerializableExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS));
-                returnIntent.putExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS, data.getSerializableExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS));
+                returnIntent.putExtra(FamilyFragment.EXTRA_OWN_POSTS, data.getParcelableExtra(FamilyFragment.EXTRA_OWN_POSTS));
+                returnIntent.putExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS, data.getParcelableExtra(FamilyFragment.EXTRA_REQUESTED_REWARDS));
+                returnIntent.putExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS, data.getParcelableExtra(FamilyFragment.EXTRA_ASSIGNED_TASKS));
                 returnIntent.putExtra(FamilyFragment.EXTRA_NEW_NICKNAME, data.getStringExtra(FamilyFragment.EXTRA_NEW_NICKNAME));
                 setResult(RESULT_EDITED, returnIntent);
             } else {

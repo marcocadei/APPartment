@@ -69,7 +69,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        task = (UncompletedTask) creationIntent.getSerializableExtra(EXTRA_TASK_OBJECT);
+        task = (UncompletedTask) creationIntent.getParcelableExtra(EXTRA_TASK_OBJECT);
 
         TextView textName = findViewById(R.id.activity_task_detail_name);
         TextView textPoints = findViewById(R.id.activity_task_detail_points_value);
@@ -340,7 +340,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
         if (requestCode == EDIT_TASK_REQUEST_CODE) {
             Intent returnIntent = new Intent();
             if (resultCode == Activity.RESULT_OK) {
-                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getParcelableExtra(TodoFragment.EXTRA_NEW_TASK));
                 setResult(RESULT_EDITED, returnIntent);
             } else {
                 // Necessario impostare questo resultCode perché altrimenti il default è OK e non

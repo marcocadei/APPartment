@@ -72,7 +72,7 @@ public class EditHomeUserActivity extends FormActivity {
         sono stati specificati dei dati.
          */
         Intent creationIntent = getIntent();
-        HomeUser member = (HomeUser) creationIntent.getSerializableExtra(EXTRA_HOMEUSER_DATA);
+        HomeUser member = (HomeUser) creationIntent.getParcelableExtra(EXTRA_HOMEUSER_DATA);
         originalNickname = member.getNickname();
         userId = member.getUserId();
         inputNickname.setText(originalNickname);

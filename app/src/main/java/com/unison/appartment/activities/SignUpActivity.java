@@ -124,7 +124,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         FloatingActionButton floatFinish = findViewById(R.id.activity_signup_float_finish);
 
         Intent i = getIntent();
-        oldUser = (User) i.getSerializableExtra(EXTRA_USER_DATA);
+        oldUser = (User) i.getParcelableExtra(EXTRA_USER_DATA);
         if (oldUser != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un utente
             txtTitle.setText(R.string.activity_signup_title_edit);

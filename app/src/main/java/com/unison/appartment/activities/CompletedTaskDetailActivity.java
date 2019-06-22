@@ -63,7 +63,7 @@ public class CompletedTaskDetailActivity extends ActivityWithNetworkConnectionDi
         ft.commit();
 
         Intent creationIntent = getIntent();
-        final CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(EXTRA_COMPLETED_TASK_OBJECT);
+        final CompletedTask completedTask = (CompletedTask) creationIntent.getParcelableExtra(EXTRA_COMPLETED_TASK_OBJECT);
         // Imposto il nome del task visualizzato all'interno dello stato
         Appartment.getInstance().setCurrentCompletedTaskName(completedTask.getName());
         Log.d("STATO", Appartment.getInstance().getCurrentCompletedTaskName());
@@ -118,7 +118,7 @@ public class CompletedTaskDetailActivity extends ActivityWithNetworkConnectionDi
         if (requestCode == ADD_TASK_REQUEST_CODE) {
             Intent returnIntent = new Intent();
             if (resultCode == Activity.RESULT_OK) {
-                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getParcelableExtra(TodoFragment.EXTRA_NEW_TASK));
                 setResult(RESULT_CREATED, returnIntent);
             } else {
                 // Necessario impostare questo resultCode perché altrimenti il default è OK e non
