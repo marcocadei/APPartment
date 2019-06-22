@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
