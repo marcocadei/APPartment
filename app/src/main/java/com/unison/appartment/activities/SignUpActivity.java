@@ -298,8 +298,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
 
         birthdate = (Date) savedInstanceState.getSerializable(BUNDLE_KEY_DATE_OBJECT);
         selectedImage = savedInstanceState.getString(BUNDLE_KEY_SELECTED_IMAGE);
-        newUser = (User) savedInstanceState.getSerializable(BUNDLE_KEY_NEW_USER);
-        oldUser = (User) savedInstanceState.getSerializable(BUNDLE_KEY_OLD_USER);
+        newUser = savedInstanceState.getParcelable(BUNDLE_KEY_NEW_USER);
+        oldUser = savedInstanceState.getParcelable(BUNDLE_KEY_OLD_USER);
     }
 
     @Override

@@ -128,7 +128,7 @@ public class JoinHomeActivity extends FormActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        home = (Home) savedInstanceState.getSerializable(BUNDLE_KEY_HOME_TO_JOIN);
+        home = savedInstanceState.getParcelable(BUNDLE_KEY_HOME_TO_JOIN);
     }
 
     protected boolean checkInput() {

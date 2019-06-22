@@ -10,13 +10,10 @@ import com.unison.appartment.R;
 import com.unison.appartment.state.MyApplication;
 import com.unison.appartment.utils.DateUtils;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Classe che rappresenta un utente registrato all'applicazione, indipendente dalla/e casa/e in cui è presente

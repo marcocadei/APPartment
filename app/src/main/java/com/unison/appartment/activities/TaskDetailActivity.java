@@ -304,7 +304,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        task = (UncompletedTask) savedInstanceState.getSerializable(BUNDLE_KEY_TASK);
+        task = savedInstanceState.getParcelable(BUNDLE_KEY_TASK);
     }
 
     @Override

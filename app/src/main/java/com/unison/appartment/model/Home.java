@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.PropertyName;
 
-import java.io.Serializable;
-
 /**
  * Classe che rappresenta una casa
  */
