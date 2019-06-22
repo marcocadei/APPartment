@@ -295,7 +295,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(BUNDLE_KEY_TASK, task);
+        outState.putParcelable(BUNDLE_KEY_TASK, task);
 
         super.onSaveInstanceState(outState);
     }

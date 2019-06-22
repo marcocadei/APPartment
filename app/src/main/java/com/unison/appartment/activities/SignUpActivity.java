@@ -286,8 +286,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putSerializable(BUNDLE_KEY_DATE_OBJECT, birthdate);
         outState.putString(BUNDLE_KEY_SELECTED_IMAGE, selectedImage);
-        outState.putSerializable(BUNDLE_KEY_NEW_USER, newUser);
-        outState.putSerializable(BUNDLE_KEY_OLD_USER, oldUser);
+        outState.putParcelable(BUNDLE_KEY_NEW_USER, newUser);
+        outState.putParcelable(BUNDLE_KEY_OLD_USER, oldUser);
 
         super.onSaveInstanceState(outState);
     }

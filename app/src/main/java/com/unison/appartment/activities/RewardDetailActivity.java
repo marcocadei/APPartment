@@ -190,7 +190,7 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(BUNDLE_KEY_REWARD, reward);
+        outState.putParcelable(BUNDLE_KEY_REWARD, reward);
 
         super.onSaveInstanceState(outState);
     }
