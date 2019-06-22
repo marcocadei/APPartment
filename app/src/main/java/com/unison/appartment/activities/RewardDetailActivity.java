@@ -199,7 +199,7 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        reward = (Reward) savedInstanceState.getSerializable(BUNDLE_KEY_REWARD);
+        reward = savedInstanceState.getParcelable(BUNDLE_KEY_REWARD);
     }
 
     @Override
