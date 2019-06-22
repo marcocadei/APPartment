@@ -4,6 +4,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -29,6 +30,8 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.UserHome;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Map;
 
@@ -149,7 +152,14 @@ public class CreateHomeActivity extends FormActivity {
                                 getString(R.string.activity_create_home_edit_progress_description));
                         progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
                         // Scrivo i dati aggiornati nel db
-                        databaseWriter.writeHome(createHome(), dbHomeEditWriterListener);
+                        // Uso un thread perché l'hashing della password della casa potrebbe richiedere un po' di tempo
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                databaseWriter.writeHome(changeHomePassword(createHome()), dbHomeEditWriterListener);
+                            }
+                        }).start();
+
                     }
                 }
             });
@@ -283,6 +293,11 @@ public class CreateHomeActivity extends FormActivity {
         return new Home(homeName, password, conversionFactor);
     }
 
+    private Home changeHomePassword(Home home) {
+        home.setPassword(BCrypt.hashpw(home.getPassword(), BCrypt.gensalt()));
+        return home;
+    }
+
     private HomeUser createHomeUser() {
         // Precondizione: Tutti i campi della form sono corretti
 
@@ -303,9 +318,14 @@ public class CreateHomeActivity extends FormActivity {
     final DatabaseWriterListener dbHomeEditWriterListener = new DatabaseWriterListener() {
         @Override
         public void onWriteSuccess() {
-            Appartment.getInstance().setHome(createHome());
-            finish();
-            dismissProgress();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Appartment.getInstance().setHome(changeHomePassword(createHome()));
+                    finish();
+                    dismissProgress();
+                }
+            }).start();
         }
 
         @Override
@@ -328,7 +348,7 @@ public class CreateHomeActivity extends FormActivity {
             Appartment appState = Appartment.getInstance();
             appState.setHome(createHome());
             appState.setUserHome(createUserHome());
-            databaseReader.retrieveHomeUsers(createHome().getName(), dbReaderHomeUserListener);
+            databaseReader.retrieveHomeUsers(inputHomeName.getText().toString(), dbReaderHomeUserListener);
         }
 
         @Override
@@ -389,8 +409,14 @@ public class CreateHomeActivity extends FormActivity {
 
         @Override
         public void onReadEmpty() {
-            databaseWriter.writeCreateHome(inputHomeName.getText().toString(), auth.getCurrentUserUid(),
-                    createHome(), createHomeUser(), createUserHome(), databaseWriterListener);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    databaseWriter.writeCreateHome(inputHomeName.getText().toString(), auth.getCurrentUserUid(),
+                            changeHomePassword(createHome()), createHomeUser(), createUserHome(), databaseWriterListener);
+                }
+            }).start();
+
         }
 
         @Override

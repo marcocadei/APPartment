@@ -25,6 +25,8 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.R;
 import com.unison.appartment.model.UserHome;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.Map;
 
 /**
@@ -272,17 +274,27 @@ public class JoinHomeActivity extends FormActivity {
         @Override
         public void onReadSuccess(String key, Object object) {
             home = (Home)object;
-            String insertedPassword = inputPassword.getText().toString();
-            String homePassword = home.getPassword();
-            if (!insertedPassword.equals(homePassword)) {
-                // La password inserita è sbagliata
-                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
-                dismissProgress();
-            }
-            else {
-                // Credenziali corrette, passo alla verifica dei nickname dei membri della casa
-                databaseReader.retrieveHomeUsers(home.getName(), dbReaderHomeUserListener);
-            }
+            final String insertedPassword = inputPassword.getText().toString();
+            final String homePassword = home.getPassword();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!BCrypt.checkpw(insertedPassword, homePassword)) {
+                        // La password inserita è sbagliata
+                        layoutPassword.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                layoutPassword.setError(getString(R.string.form_error_incorrect_password));
+                            }
+                        });
+                        dismissProgress();
+                    }
+                    else {
+                        // Credenziali corrette, passo alla verifica dei nickname dei membri della casa
+                        databaseReader.retrieveHomeUsers(home.getName(), dbReaderHomeUserListener);
+                    }
+                }
+            }).start();
         }
 
         @Override
