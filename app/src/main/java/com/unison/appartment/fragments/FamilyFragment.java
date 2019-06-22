@@ -111,8 +111,8 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
                     case OPERATION_REMOVE_USER:
                         boolean isDeletingSelf = data.getStringExtra(EXTRA_USER_ID).equals(new FirebaseAuth().getCurrentUserUid());
                         listFragment.leaveHome(data.getStringExtra(EXTRA_USER_ID),
-                                (Set<String>) data.getParcelableExtra(EXTRA_REQUESTED_REWARDS),
-                                (Set<String>) data.getParcelableExtra(EXTRA_ASSIGNED_TASKS),
+                                (Set<String>) data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
+                                (Set<String>) data.getSerializableExtra(EXTRA_ASSIGNED_TASKS),
                                 data.getStringExtra(EXTRA_NEW_OWNER_ID));
                         if (isDeletingSelf) {
                             kickOutOfHome();
@@ -131,9 +131,9 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
             }
             else if (resultCode == FamilyMemberDetailActivity.RESULT_EDITED) {
                 listFragment.changeNickname(data.getStringExtra(EXTRA_USER_ID),
-                        (Set<String>) data.getParcelableExtra(EXTRA_REQUESTED_REWARDS),
-                        (Set<String>) data.getParcelableExtra(EXTRA_ASSIGNED_TASKS),
-                        (Set<String>) data.getParcelableExtra(EXTRA_OWN_POSTS),
+                        (Set<String>) data.getSerializableExtra(EXTRA_REQUESTED_REWARDS),
+                        (Set<String>) data.getSerializableExtra(EXTRA_ASSIGNED_TASKS),
+                        (Set<String>) data.getSerializableExtra(EXTRA_OWN_POSTS),
                         data.getStringExtra(EXTRA_NEW_NICKNAME));
             }
         }
