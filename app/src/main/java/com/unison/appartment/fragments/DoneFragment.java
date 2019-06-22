@@ -148,7 +148,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == DETAIL_COMPLETED_TASK_REQUEST_CODE) {
             if (resultCode == CompletedTaskDetailActivity.RESULT_CREATED) {
-                viewModel.addTask((UncompletedTask) data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+                viewModel.addTask((UncompletedTask) data.getParcelableExtra(TodoFragment.EXTRA_NEW_TASK));
             }
             else if (resultCode == CompletedTaskDetailActivity.RESULT_OK) {
                 if (data.getIntExtra(EXTRA_OPERATION_TYPE, -1) == OPERATION_DELETE) {

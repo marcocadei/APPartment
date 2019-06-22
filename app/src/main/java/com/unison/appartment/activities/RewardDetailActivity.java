@@ -63,7 +63,7 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        reward = (Reward) creationIntent.getSerializableExtra(EXTRA_REWARD_OBJECT);
+        reward = (Reward) creationIntent.getParcelableExtra(EXTRA_REWARD_OBJECT);
 
         TextView textName = findViewById(R.id.activity_reward_detail_text_name);
         TextView textDescription = findViewById(R.id.activity_reward_detail_text_description_value);
@@ -190,7 +190,7 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(BUNDLE_KEY_REWARD, reward);
+        outState.putParcelable(BUNDLE_KEY_REWARD, reward);
 
         super.onSaveInstanceState(outState);
     }
@@ -236,7 +236,7 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
         if (requestCode == EDIT_REWARD_REQUEST_CODE) {
             Intent returnIntent = new Intent();
             if (resultCode == Activity.RESULT_OK) {
-                returnIntent.putExtra(RewardsFragment.EXTRA_NEW_REWARD, data.getSerializableExtra(RewardsFragment.EXTRA_NEW_REWARD));
+                returnIntent.putExtra(RewardsFragment.EXTRA_NEW_REWARD, data.getParcelableExtra(RewardsFragment.EXTRA_NEW_REWARD));
                 setResult(RESULT_EDITED, returnIntent);
             } else {
                 // Necessario impostare questo resultCode perché altrimenti il default è OK e non

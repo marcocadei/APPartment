@@ -1,5 +1,8 @@
 package com.unison.appartment.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
@@ -9,7 +12,7 @@ import java.util.Objects;
 /**
  * Classe che rappresenta un task da completare
  */
-public class CompletedTask implements Serializable {
+public class CompletedTask implements Parcelable {
 
     private final static String ATTRIBUTE_LAST_DESCRIPTION = "last-description";
     private final static String ATTRIBUTE_LAST_POINTS = "last-points";
@@ -99,4 +102,38 @@ public class CompletedTask implements Serializable {
         return Objects.hash(name, lastDescription, lastPoints, lastCompletionDate);
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.lastDescription);
+        dest.writeInt(this.lastPoints);
+        dest.writeLong(this.lastCompletionDate);
+    }
+
+    protected CompletedTask(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.lastDescription = in.readString();
+        this.lastPoints = in.readInt();
+        this.lastCompletionDate = in.readLong();
+    }
+
+    public static final Parcelable.Creator<CompletedTask> CREATOR = new Parcelable.Creator<CompletedTask>() {
+        @Override
+        public CompletedTask createFromParcel(Parcel source) {
+            return new CompletedTask(source);
+        }
+
+        @Override
+        public CompletedTask[] newArray(int size) {
+            return new CompletedTask[size];
+        }
+    };
 }

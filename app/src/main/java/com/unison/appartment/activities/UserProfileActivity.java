@@ -225,7 +225,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 avvenuta quando torno a questa activity, quindi devo solo aggiornare i dati che
                 sono visualizzati.
                  */
-                User newUserData = (User) data.getSerializableExtra(EXTRA_NEW_USER);
+                User newUserData = (User) data.getParcelableExtra(EXTRA_NEW_USER);
                 textName.setText(newUserData.getName());
                 textGender.setText(newUserData.getGenderString());
                 try {

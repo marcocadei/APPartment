@@ -76,14 +76,14 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
 
         // Se provengo dall'activity di dettaglio di un'attività completata allora ho già delle informazioni
         Intent creationIntent = getIntent();
-        CompletedTask completedTask = (CompletedTask) creationIntent.getSerializableExtra(EXTRA_TASK_DATA);
+        CompletedTask completedTask = (CompletedTask) creationIntent.getParcelableExtra(EXTRA_TASK_DATA);
         if (completedTask != null) {
             inputName.setText(completedTask.getName());
             inputDescription.setText(completedTask.getLastDescription());
             inputPoints.setText(String.valueOf(completedTask.getLastPoints()));
         }
 
-        final UncompletedTask uncompletedTask = (UncompletedTask) creationIntent.getSerializableExtra(EXTRA_EDIT_TASK_DATA);
+        final UncompletedTask uncompletedTask = (UncompletedTask) creationIntent.getParcelableExtra(EXTRA_EDIT_TASK_DATA);
         if (uncompletedTask != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un premio
             toolbar.setTitle(R.string.activity_create_task_title_edit);

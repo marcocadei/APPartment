@@ -124,7 +124,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
         FloatingActionButton floatFinish = findViewById(R.id.activity_signup_float_finish);
 
         Intent i = getIntent();
-        oldUser = (User) i.getSerializableExtra(EXTRA_USER_DATA);
+        oldUser = (User) i.getParcelableExtra(EXTRA_USER_DATA);
         if (oldUser != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un utente
             txtTitle.setText(R.string.activity_signup_title_edit);
@@ -286,8 +286,8 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putSerializable(BUNDLE_KEY_DATE_OBJECT, birthdate);
         outState.putString(BUNDLE_KEY_SELECTED_IMAGE, selectedImage);
-        outState.putSerializable(BUNDLE_KEY_NEW_USER, newUser);
-        outState.putSerializable(BUNDLE_KEY_OLD_USER, oldUser);
+        outState.putParcelable(BUNDLE_KEY_NEW_USER, newUser);
+        outState.putParcelable(BUNDLE_KEY_OLD_USER, oldUser);
 
         super.onSaveInstanceState(outState);
     }

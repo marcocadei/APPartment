@@ -113,7 +113,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
             if (resultCode == Activity.RESULT_OK) {
                 TodoListFragment tlf = (TodoListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_todo_todolist);
-                tlf.addTask((UncompletedTask) data.getSerializableExtra(EXTRA_NEW_TASK));
+                tlf.addTask((UncompletedTask) data.getParcelableExtra(EXTRA_NEW_TASK));
             }
         }
         else if (requestCode == DETAIL_TASK_REQUEST_CODE) {
@@ -130,7 +130,7 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                         listFragment.deleteTask(taskId);
                         break;
                     case OPERATION_ASSIGN:
-                        UncompletedTask task = (UncompletedTask) data.getSerializableExtra(EXTRA_TASK_DATA);
+                        UncompletedTask task = (UncompletedTask) data.getParcelableExtra(EXTRA_TASK_DATA);
                         if (task.isAssigned()) {
                             listFragment.removeAssignment(task.getId(), task.getAssignedUserId());
                         }
@@ -151,14 +151,14 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                         listFragment.cancelCompletion(data.getStringExtra(EXTRA_TASK_ID), data.getStringExtra(EXTRA_USER_ID));
                         break;
                     case OPERATION_CONFIRM_COMPLETION:
-                        listFragment.confirmCompletion((UncompletedTask)data.getSerializableExtra(EXTRA_TASK),
+                        listFragment.confirmCompletion((UncompletedTask)data.getParcelableExtra(EXTRA_TASK),
                                 data.getStringExtra(EXTRA_USER_ID));
                         break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }
             } else if (resultCode == TaskDetailActivity.RESULT_EDITED) {
-                listFragment.editTask((UncompletedTask)data.getSerializableExtra(EXTRA_NEW_TASK));
+                listFragment.editTask((UncompletedTask)data.getParcelableExtra(EXTRA_NEW_TASK));
             }
         }
     }

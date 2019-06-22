@@ -94,7 +94,7 @@ public class CreateHomeActivity extends FormActivity {
         inputConversionFactor.setText(String.valueOf(Home.DEFAULT_CONVERSION_FACTOR));
 
         Intent i = getIntent();
-        final Home home = (Home) i.getSerializableExtra(EXTRA_HOME_DATA);
+        final Home home = (Home) i.getParcelableExtra(EXTRA_HOME_DATA);
         if (home != null) {
             toolbar.setTitle(R.string.activity_create_home_text_title_edit);
             TextView textTitle = findViewById(R.id.activity_create_home_text_title);

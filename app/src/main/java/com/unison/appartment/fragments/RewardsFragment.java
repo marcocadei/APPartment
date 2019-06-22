@@ -112,7 +112,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             if (resultCode == Activity.RESULT_OK) {
                 RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_rewards_fragment_reward_list);
-                listFragment.addReward((Reward) data.getSerializableExtra(EXTRA_NEW_REWARD));
+                listFragment.addReward((Reward) data.getParcelableExtra(EXTRA_NEW_REWARD));
             }
         } else if (requestCode == DETAIL_REWARD_REQUEST_CODE) {
             RewardListFragment listFragment = (RewardListFragment) getChildFragmentManager()
@@ -120,22 +120,22 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             if (resultCode == RewardDetailActivity.RESULT_OK) {
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_DELETE:
-                        Reward rewardToDelete = (Reward)data.getSerializableExtra(EXTRA_REWARD_DATA);
+                        Reward rewardToDelete = (Reward)data.getParcelableExtra(EXTRA_REWARD_DATA);
                         if (rewardToDelete.isRequested()) {
                             listFragment.cancelRequest(rewardToDelete);
                         }
                         listFragment.deleteReward(rewardToDelete.getId());
                         break;
                     case OPERATION_RESERVE:
-                        listFragment.requestReward((Reward)data.getSerializableExtra(EXTRA_REWARD_DATA),
+                        listFragment.requestReward((Reward)data.getParcelableExtra(EXTRA_REWARD_DATA),
                                 data.getStringExtra(EXTRA_USER_ID),
                                 data.getStringExtra(EXTRA_USER_NAME));
                         break;
                     case OPERATION_CANCEL:
-                        listFragment.cancelRequest((Reward)data.getSerializableExtra(EXTRA_REWARD_DATA));
+                        listFragment.cancelRequest((Reward)data.getParcelableExtra(EXTRA_REWARD_DATA));
                         break;
                     case OPERATION_CONFIRM:
-                        Reward rewardToConfirm = (Reward)data.getSerializableExtra(EXTRA_REWARD_DATA);
+                        Reward rewardToConfirm = (Reward)data.getParcelableExtra(EXTRA_REWARD_DATA);
                         if (!rewardToConfirm.isRequested()) {
                             listFragment.requestReward(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID),
                                     data.getStringExtra(EXTRA_USER_NAME));
@@ -146,7 +146,7 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");
                 }
             } else if (resultCode == RewardDetailActivity.RESULT_EDITED) {
-                listFragment.editReward((Reward)data.getSerializableExtra(EXTRA_NEW_REWARD));
+                listFragment.editReward((Reward)data.getParcelableExtra(EXTRA_NEW_REWARD));
             }
         }
     }

@@ -117,7 +117,7 @@ public class JoinHomeActivity extends FormActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(BUNDLE_KEY_HOME_TO_JOIN, home);
+        outState.putParcelable(BUNDLE_KEY_HOME_TO_JOIN, home);
 
         super.onSaveInstanceState(outState);
     }
