@@ -88,8 +88,13 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
 
     @Override
     public void onHomeListElementsLoaded(int elements) {
-        if (!loading)
+        if (!loading) {
             progressBar.setVisibility(View.GONE);
+            // Disabilito i bottoni di inserimento di un post durante un caricamento
+            InsertPostFragment pf = (InsertPostFragment)getChildFragmentManager()
+                    .findFragmentById(R.id.fragment_messages_fragment_insert_post);
+            pf.loaded();
+        }
 
         View emptyListLayout = getView().findViewById(R.id.fragment_messages_layout_empty_list);
         // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case

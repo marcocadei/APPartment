@@ -70,7 +70,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/fragment_insert_post_img_send_audio_description"
         android:focusableInTouchMode="false"
-        android:tint="@color/colorAccent"
+        android:tint="@color/insert_post_button_color"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_insert_post_input_post"
         app:layout_constraintEnd_toEndOf="parent"
