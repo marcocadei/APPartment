@@ -1,5 +1,8 @@
 package com.unison.appartment.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
@@ -11,7 +14,7 @@ import java.util.Objects;
 /**
  * Classe che rappresenta un membro di una casa
  */
-public class HomeUser implements Serializable {
+public class HomeUser implements Parcelable {
 
     private final static String ATTRIBUTE_TOTAL_EARNED_POINTS = "total-earned-points";
     private final static String ATTRIBUTE_COMPLETED_TASKS = "completed-tasks";
@@ -210,4 +213,53 @@ public class HomeUser implements Serializable {
     public int hashCode() {
         return Objects.hash(nickname, points, totalEarnedPoints, role, image, completedTasks, claimedRewards, textPosts, audioPosts, imagePosts, rejectedTasks);
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.userId);
+        dest.writeString(this.nickname);
+        dest.writeInt(this.points);
+        dest.writeLong(this.totalEarnedPoints);
+        dest.writeInt(this.role);
+        dest.writeString(this.image);
+        dest.writeInt(this.completedTasks);
+        dest.writeInt(this.claimedRewards);
+        dest.writeInt(this.textPosts);
+        dest.writeInt(this.audioPosts);
+        dest.writeInt(this.imagePosts);
+        dest.writeInt(this.rejectedTasks);
+    }
+
+    protected HomeUser(Parcel in) {
+        this.userId = in.readString();
+        this.nickname = in.readString();
+        this.points = in.readInt();
+        this.totalEarnedPoints = in.readLong();
+        this.role = in.readInt();
+        this.image = in.readString();
+        this.completedTasks = in.readInt();
+        this.claimedRewards = in.readInt();
+        this.textPosts = in.readInt();
+        this.audioPosts = in.readInt();
+        this.imagePosts = in.readInt();
+        this.rejectedTasks = in.readInt();
+    }
+
+    public static final Parcelable.Creator<HomeUser> CREATOR = new Parcelable.Creator<HomeUser>() {
+        @Override
+        public HomeUser createFromParcel(Parcel source) {
+            return new HomeUser(source);
+        }
+
+        @Override
+        public HomeUser[] newArray(int size) {
+            return new HomeUser[size];
+        }
+    };
 }

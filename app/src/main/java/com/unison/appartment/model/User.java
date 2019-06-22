@@ -1,5 +1,8 @@
 package com.unison.appartment.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
@@ -18,7 +21,7 @@ import java.util.List;
 /**
  * Classe che rappresenta un utente registrato all'applicazione, indipendente dalla/e casa/e in cui è presente
  */
-public class User implements Serializable {
+public class User implements Parcelable {
 
     public final static int GENDER_MALE = 0;
     public final static int GENDER_FEMALE = 1;
@@ -114,4 +117,41 @@ public class User implements Serializable {
         String[] genderValues = MyApplication.getAppContext().getResources().getStringArray(R.array.desc_users_uid_gender_values);
         return genderValues[this.getGender()];
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.imageStoragePath);
+        dest.writeString(this.email);
+        dest.writeString(this.name);
+        dest.writeString(this.birthdate);
+        dest.writeInt(this.gender);
+        dest.writeString(this.image);
+    }
+
+    protected User(Parcel in) {
+        this.imageStoragePath = in.readString();
+        this.email = in.readString();
+        this.name = in.readString();
+        this.birthdate = in.readString();
+        this.gender = in.readInt();
+        this.image = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

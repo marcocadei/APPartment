@@ -1,5 +1,8 @@
 package com.unison.appartment.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
@@ -11,7 +14,7 @@ import java.util.Objects;
 /**
  * Classe che rappresenta un premio da reclamare
  */
-public class Reward implements Serializable {
+public class Reward implements Parcelable {
 
     private final static String ATTRIBUTE_RESERVATION_NAME = "reservation-name";
     private final static String ATTRIBUTE_RESERVATION_ID = "reservation-id";
@@ -125,4 +128,41 @@ public class Reward implements Serializable {
     public int hashCode() {
         return Objects.hash(name, description, points, reservationId, reservationName);
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeInt(this.points);
+        dest.writeString(this.reservationId);
+        dest.writeString(this.reservationName);
+    }
+
+    protected Reward(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.points = in.readInt();
+        this.reservationId = in.readString();
+        this.reservationName = in.readString();
+    }
+
+    public static final Parcelable.Creator<Reward> CREATOR = new Parcelable.Creator<Reward>() {
+        @Override
+        public Reward createFromParcel(Parcel source) {
+            return new Reward(source);
+        }
+
+        @Override
+        public Reward[] newArray(int size) {
+            return new Reward[size];
+        }
+    };
 }
