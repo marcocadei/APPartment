@@ -1,4 +1,4 @@
-package com.unison.appartment;
+package com.unison.appartment.state;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,8 +7,17 @@ import android.os.Handler;
 
 import com.unison.appartment.services.NotificationService;
 
-// TODO - Classe scopiazzata da Telegram, eliminare se non serve
-// (Nel caso c'è da aggiornare il manifest)
+/*
+NOTA: Classe attualmente non utilizzata!
+
+Questa è la classe che estende Application utilizzata per la gestione del NotificationService.
+
+Vedi anche classe AppStartReceiver e metodo onDestroy di NotificationService.
+
+Se si sceglie di utilizzare questa classe, il manifest deve essere modificato e l'altra classe
+che estende Application (MyApplication) dev'essere rimossa dal momento che non possono essere
+registrate due o più classi Application contemporaneamente.
+ */
 public class ApplicationLoader extends Application {
 
     public static volatile Context applicationContext;

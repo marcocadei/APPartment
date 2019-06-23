@@ -261,7 +261,14 @@ public class NotificationService extends Service {
         currentlyDisplayedNotifications.clear();
         newMessages = 0;
 
-        // TODO codice scopiazzato da telegram - togliere se non serve
+        /*
+        NOTA: Codice attualmente non utilizzato!
+
+        Questo è il codice utilizzato per rilanciare il NotificationService nel caso questo venisse
+        stoppato e fosse invocato onDestroy.
+
+        Vedi anche classi AppStartReceiver e ApplicationLoader.
+         */
 //        Intent intent = new Intent("com.unison.appartment.start");
 //        sendBroadcast(intent);
     }
