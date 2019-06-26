@@ -87,14 +87,8 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        /*
-        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
-        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
-         */
-        int destinationFragment = intent.getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
-        if (destinationFragment != -1) {
-            pager.setCurrentItem(destinationFragment);
-        }
+        // Utilizzato per far sì che in onResume ci sia sempre a disposizione l'intent più recente.
+        setIntent(intent);
     }
 
     @Override
@@ -325,6 +319,16 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     @Override
     protected void onResume() {
         super.onResume();
+
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+         */
+        int destinationFragment = getIntent().getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+        if (destinationFragment != -1) {
+            pager.setCurrentItem(destinationFragment);
+        }
+
         setCurrentScreen(currentPosition);
     }
 
@@ -420,6 +424,9 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
             case POSITION_MESSAGES:
                 Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_MESSAGES);
                 sendMessageToNotificationService(NotificationService.MSG_CLEAR_POSTS_NOTIFICATIONS);
+                break;
+            case POSITION_FAMILY:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_FAMILY);
                 break;
             case POSITION_TODO:
                 Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);

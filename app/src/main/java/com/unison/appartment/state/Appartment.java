@@ -37,6 +37,7 @@ public class Appartment {
     // Costanti varie utilizzate per indicare quale schermata è attualmente visualizzata dall'utente
     public final static byte SCREEN_ANYTHING_ELSE = -1;
     public final static byte SCREEN_MESSAGES = 0;
+    public final static byte SCREEN_FAMILY = 1;
     public final static byte SCREEN_TODO = 2;
     public final static byte SCREEN_REWARDS = 4;
 
