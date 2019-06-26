@@ -87,7 +87,14 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        // FIXME da spostare qui il pezzo aggiunto in fondo ad onCreate (rimpiazzare getIntent() con intent)
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+         */
+        int destinationFragment = intent.getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+        if (destinationFragment != -1) {
+            pager.setCurrentItem(destinationFragment);
+        }
     }
 
     @Override
@@ -187,16 +194,6 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
                 return true;
             }
         });
-
-        // FIXME da spostare in onNewIntent (cambiare getIntent() in intent)
-        /*
-        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
-        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
-         */
-        int destinationFragment = getIntent().getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
-        if (destinationFragment != -1) {
-            pager.setCurrentItem(destinationFragment);
-        }
     }
 
     private void readHomeUser() {

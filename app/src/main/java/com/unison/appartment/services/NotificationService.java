@@ -277,12 +277,28 @@ public class NotificationService extends Service {
                                                @DrawableRes int iconDrawable, String notificationTitle,
                                                String notificationContent, int priority,
                                                boolean showExtended, CharSequence bigText) {
-        // Creazione dell'oggetto TaskStackBuilder, utilizzato per creare il backstack
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        // PendingIntent che contiene l'intero backstack
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        /*
+        Qui è commentato il vecchio codice che era utilizzato per la creazione del backstack.
+        Non è più utilizzato perché con TaskStackBuilder ci sono problemi nel riciclo della stessa
+        istanza dell'activity nel caso in cui la notifica sia aperta quando l'utente si trova già
+        nell'activity di destinazione (con TaskStackBuilder viene creata comunque una nuova istanza
+        nonostante i flag nell'intent e il launchMode nel manifest).
+        Notare che di per sé il TaskStackBuilder non è necessario in questo punto in quanto se l'utente
+        è loggato la EnterActivity non esegue alcuna azione particolare prima di portare l'utente
+        alla MainActivity.
+         */
+//        // Creazione dell'oggetto TaskStackBuilder, utilizzato per creare il backstack
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//        stackBuilder.addNextIntentWithParentStack(resultIntent);
+//        // PendingIntent che contiene l'intero backstack
+//        PendingIntent resultPendingIntent =
+//                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        /*
+        Nota: Mettere il requestCode (secondo parametro) al valore 0 così come indicato dalla
+        documentazione non funziona, è necessario utilizzare un valore diverso.
+         */
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, POST_CHANNEL_NOTIFICATIONS_ID_UNIT, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(iconDrawable)
