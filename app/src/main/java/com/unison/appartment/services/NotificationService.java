@@ -167,7 +167,7 @@ public class NotificationService extends Service {
                     notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
                             resultIntent,
                             POST_CHANNEL_ID,
-                            R.drawable.ic_message_notification,
+                            R.drawable.ic_appartment_notifications,
                             notificationTitle,
                             notificationContent,
                             NotificationCompat.PRIORITY_DEFAULT,
@@ -219,7 +219,7 @@ public class NotificationService extends Service {
                             notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
                                     resultIntent,
                                     POST_CHANNEL_ID,
-                                    R.drawable.ic_message_notification,
+                                    R.drawable.ic_appartment_notifications,
                                     getResources().getQuantityString(R.plurals.notification_new_posts_title, newMessages),
                                     getResources().getQuantityString(R.plurals.notification_new_posts_content, newMessages, newMessages),
                                     NotificationCompat.PRIORITY_DEFAULT,
@@ -347,7 +347,7 @@ public class NotificationService extends Service {
                     notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
                             resultIntent,
                             USER_INFO_CHANNEL_ID,
-                            R.drawable.ic_account_circle, // FIXME DA CAMBIARE
+                            R.drawable.ic_appartment_notifications,
                             getString(R.string.notification_role_changed_title),
                             notificationContent,
                             NotificationCompat.PRIORITY_HIGH,
@@ -383,7 +383,7 @@ public class NotificationService extends Service {
                     notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
                             resultIntent,
                             HOME_STATUS_CHANNEL_ID,
-                            R.drawable.ic_home, // FIXME cambiare
+                            R.drawable.ic_appartment_notifications,
                             getString(R.string.notification_user_kicked_title),
                             getString(R.string.notification_user_kicked_content, userHome.getHomename()),
                             NotificationCompat.PRIORITY_HIGH,
