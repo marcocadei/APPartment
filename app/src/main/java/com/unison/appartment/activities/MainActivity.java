@@ -87,8 +87,14 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        // Utilizzato per far sì che in onResume ci sia sempre a disposizione l'intent più recente.
-        setIntent(intent);
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+         */
+        int destinationFragment = intent.getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+        if (destinationFragment != -1) {
+            pager.setCurrentItem(destinationFragment);
+        }
     }
 
     @Override
@@ -188,6 +194,17 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
                 return true;
             }
         });
+
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+        (Questo è lo stesso codice utilizzato in onNewIntent, in teoria onNewIntent e onCreate
+        dovrebbero essere mutuamente esclusivi).
+         */
+        int destinationFragment = getIntent().getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+        if (destinationFragment != -1) {
+            pager.setCurrentItem(destinationFragment);
+        }
     }
 
     private void readHomeUser() {
@@ -319,16 +336,6 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     @Override
     protected void onResume() {
         super.onResume();
-
-        /*
-        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
-        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
-         */
-        int destinationFragment = getIntent().getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
-        if (destinationFragment != -1) {
-            pager.setCurrentItem(destinationFragment);
-        }
-
         setCurrentScreen(currentPosition);
     }
 
@@ -427,6 +434,7 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
                 break;
             case POSITION_FAMILY:
                 Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_FAMILY);
+                sendMessageToNotificationService(NotificationService.MSG_CLEAR_HOME_STATUS_NOTIFICATIONS);
                 break;
             case POSITION_TODO:
                 Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
@@ -472,9 +480,17 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
     };
 
     private void sendMessageToNotificationService(int type) {
+        sendMessageToNotificationService(type, null);
+    }
+
+    private void sendMessageToNotificationService(int type, Bundle data) {
         if (!serviceBound) return;
 
         Message msg = Message.obtain(null, type);
+        if (data != null) {
+            msg.setData(data);
+        }
+
         try {
             serviceMessenger.send(msg);
         } catch (RemoteException e) {

@@ -66,6 +66,25 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private TextView textAge;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        // Fermo il servizio che mantiene aggiornato lo stato
+        Intent appartmentServiceIntent = new Intent(this, AppartmentService.class);
+        stopService(appartmentServiceIntent);
+
+        // Fermo il servizio che gestisce le notifiche
+        Intent notificationServiceIntent = new Intent(this, NotificationService.class);
+        stopService(notificationServiceIntent);
+
+        // Quando entro in questa activity devo dimenticarmi l'ultima casa in cui è entrato l'utente
+        Appartment appState = Appartment.getInstance();
+        appState.resetHome();
+        appState.resetHomeUsers();
+        appState.resetUserHome();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
