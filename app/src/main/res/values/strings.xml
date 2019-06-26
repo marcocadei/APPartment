@@ -127,6 +127,10 @@
     <string name="notification_new_post_extended_text">&lt;b>%1$s:&lt;/b> %2$s</string>
     <string name="notification_new_post_extended_audio">&lt;b>%1$s:&lt;/b> &lt;i>Nota vocale&lt;/i></string>
     <string name="notification_new_post_extended_image">&lt;b>%1$s:&lt;/b> &lt;i>Immagine&lt;/i></string>
+    <string name="notification_role_changed_content">Il tuo ruolo all\'interno della casa %1$s è stato modificato in: %2$s.</string>
+    <string name="notification_role_changed_title">Ruolo modificato</string>
+    <string name="notification_user_kicked_content">Non fai più parte della casa %1$s.</string>
+    <string name="notification_user_kicked_title">Rimozione da una casa</string>
     <plurals name="notification_new_posts_content">
         <item quantity="one">%d nuovo messaggio</item>
         <item quantity="other">%d nuovi messaggi</item>
