@@ -3,6 +3,9 @@
     package="com.unison.appartment">
     <!-- Permesso per poter usare il registratore -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Permesso per poter ricevere il broadcast dell'evento BOOT_COMPLETED -->
+    <!-- (Attualmente inutilizzato, vedi classi AppStartReceiver e ApplicationLoader) -->
+    <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
 
     <application
         android:name=".state.MyApplication"
@@ -12,17 +15,31 @@
         android:roundIcon="@mipmap/ic_launcher_appartment_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.UserDeletionActivity"></activity>
-        <activity android:name=".activities.ChartActivity" />
-        <activity android:name=".activities.EditHomeUserActivity" />
-        <activity android:name=".activities.WebActivity" />
-        <activity android:name=".activities.CompletedTaskDetailActivity" />
+
+        <!--<receiver-->
+            <!--android:name=".receivers.AppStartReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.unison.appartment.start" />-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service
             android:name=".services.AppartmentService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".services.NotificationService"
+            android:enabled="true"
+            android:exported="true" />
 
+        <activity android:name=".activities.UserDeletionActivity" />
+        <activity android:name=".activities.ChartActivity" />
+        <activity android:name=".activities.EditHomeUserActivity" />
+        <activity android:name=".activities.WebActivity" />
+        <activity android:name=".activities.CompletedTaskDetailActivity" />
         <activity android:name=".activities.UserProfileActivity" />
         <activity android:name=".activities.JoinHomeActivity" />
         <activity android:name=".activities.ImageDetailActivity" />

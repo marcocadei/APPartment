@@ -34,6 +34,16 @@ public class Appartment {
     private UserHome userHome;
     private Map<String, HomeUser> homeUsers;
 
+    // Variabile in cui è memorizzata la schermata attualmente visualizzata dall'utente
+    private byte currentScreen = SCREEN_ANYTHING_ELSE;
+
+    // Costanti varie utilizzate per indicare quale schermata è attualmente visualizzata dall'utente
+    public final static byte SCREEN_ANYTHING_ELSE = -1;
+    public final static byte SCREEN_MESSAGES = 0;
+    public final static byte SCREEN_FAMILY = 1;
+    public final static byte SCREEN_TODO = 2;
+    public final static byte SCREEN_REWARDS = 4;
+
     // Questo mi serve perché quando apro un completed task voglio visualizzare la cronologia, ma
     // per far ciò nel database devo leggere il percorso completions/home-name/task-name quindi mi
     // serve sapere il nome del task corrente
@@ -165,5 +175,13 @@ public class Appartment {
         resetHome();
         resetUserHome();
         resetHomeUsers();
+    }
+
+    public void setCurrentScreen(byte currentScreen) {
+        this.currentScreen = currentScreen;
+    }
+
+    public byte getCurrentScreen() {
+        return currentScreen;
     }
 }

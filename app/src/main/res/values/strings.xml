@@ -22,11 +22,6 @@
     <string name="general_ok_button">OK</string>
     <string name="general_points_name">Punti</string>
 
-    <plurals name="general_item_selected">
-        <item quantity="one">%d elemento selezionato</item>
-        <item quantity="other">%d elementi selezionati</item>
-    </plurals>
-
     <!-- Nome della transizione per aprire le immagini -->
     <string name="transition_open_image">transitionOpenImage</string>
 
@@ -126,6 +121,29 @@
     <string name="caption_ic_play_arrow">Simbolo di play</string>
     <string name="caption_ic_star">Icona di una stella</string>
     <string name="caption_profile_pic">Foto profilo dell\'utente</string>
+
+    <!-- Utilizzate per le notifiche -->
+
+    <string name="notification_new_post_content">Inviato da %1$s</string>
+    <string name="notification_new_post_extended_text">&lt;b>%1$s:&lt;/b> %2$s</string>
+    <string name="notification_new_post_extended_audio">&lt;b>%1$s:&lt;/b> &lt;i>Nota vocale&lt;/i></string>
+    <string name="notification_new_post_extended_image">&lt;b>%1$s:&lt;/b> &lt;i>Immagine&lt;/i></string>
+    <string name="notification_new_reward_request_content">Ci sono nuove richieste di premi in attesa di conferma.</string>
+    <string name="notification_new_reward_request_title">Nuova richiesta premio</string>
+    <string name="notification_new_task_request_content">Ci sono nuove richieste di completamento in attesa di conferma.</string>
+    <string name="notification_new_task_request_title">Nuova richiesta conferma attività</string>
+    <string name="notification_role_changed_content">Il tuo ruolo all\'interno della casa %1$s è stato modificato in: %2$s.</string>
+    <string name="notification_role_changed_title">Ruolo modificato</string>
+    <string name="notification_user_kicked_content">Non fai più parte della casa %1$s.</string>
+    <string name="notification_user_kicked_title">Rimozione da una casa</string>
+    <plurals name="notification_new_posts_content">
+        <item quantity="one">%d nuovo messaggio</item>
+        <item quantity="other">%d nuovi messaggi</item>
+    </plurals>
+    <plurals name="notification_new_posts_title">
+        <item quantity="one">Nuovo messaggio in bacheca</item>
+        <item quantity="other">Nuovi messaggi in bacheca</item>
+    </plurals>
 
     <!-- Legate ad una specifica activity -->
 

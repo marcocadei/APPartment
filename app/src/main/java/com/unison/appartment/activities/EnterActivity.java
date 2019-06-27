@@ -59,8 +59,8 @@ public class EnterActivity extends AppCompatActivity {
 
             Intent i;
             if (Appartment.getInstance().getHome() != null) {
-                // Se l'utente è uscito dall'app mentre era in una casa: in caso vado direttamente
-                // alla MainActivity
+                // Se l'utente è uscito dall'app mentre era in una casa: vado direttamente alla
+                // MainActivity di quella casa
                 i = new Intent(EnterActivity.this, MainActivity.class);
             } else {
                 // Se l'utente è uscito dall'app quando era fuori da una casa: vado alla UserProfileActivity

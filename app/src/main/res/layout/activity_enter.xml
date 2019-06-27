@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/logo_text_1000" />
+        app:srcCompat="@drawable/logo_1000_text" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/activity_enter_btn_signup"

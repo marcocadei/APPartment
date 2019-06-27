@@ -13,8 +13,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ValueAnimator;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +41,7 @@ import com.unison.appartment.fragments.MessagesFragment;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.RewardsFragment;
 import com.unison.appartment.fragments.TodoFragment;
+import com.unison.appartment.services.NotificationService;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.viewmodel.HomeUserViewModel;
@@ -45,15 +53,17 @@ import java.util.List;
  */
 public class MainActivity extends ActivityWithNetworkConnectionDialog implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
 
+    public static final String EXTRA_DESTINATION_FRAGMENT = "destinationFragment";
+
     /*
     Costanti che indicano la posizione delle varie sezioni così come ordinate nella bottom
     navigation; sono usate per le animazioni di ingresso/uscita al cambio fragment.
      */
-    private static final byte POSITION_MESSAGES = 0;
-    private static final byte POSITION_FAMILY = 1;
-    private static final byte POSITION_TODO = 2;
-    private static final byte POSITION_DONE = 3;
-    private static final byte POSITION_REWARDS = 4;
+    public static final byte POSITION_MESSAGES = 0;
+    public static final byte POSITION_FAMILY = 1;
+    public static final byte POSITION_TODO = 2;
+    public static final byte POSITION_DONE = 3;
+    public static final byte POSITION_REWARDS = 4;
 
     // Ultima voce selezionata nella bottom navigation
     private int lastPosition = POSITION_MESSAGES;
@@ -64,6 +74,7 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     private static final String BUNDLE_KEY_OLD_POINTS_VALUE = "oldPointsValue";
 
     private int selectedBottomNavigationMenuItemId;
+    private int oldPointsValue = 0;
 
     private Toolbar toolbar;
     private TextView userPoints;
@@ -72,16 +83,38 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     private ViewPager pager;
     private FragmentSlidePagerAdapter pagerAdapter;
 
-    private int oldPointsValue = 0;
+    private Messenger serviceMessenger = null;
+    private boolean serviceBound;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+         */
+        int destinationFragment = intent.getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+        if (destinationFragment != -1) {
+            pager.setCurrentItem(destinationFragment);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TODO se sono arrivato qui da una notifica però ero ad es. già uscito da una casa,
+        // devo fare un controllo e nel caso tornare indietro per evitare errori e crash
+
         // Avvio il servizio che mantiene aggiornato lo stato
-        Intent intent = new Intent(this, AppartmentService.class);
-        startService(intent);
+        Intent appartmentServiceIntent = new Intent(this, AppartmentService.class);
+        startService(appartmentServiceIntent);
+
+        // Avvio il servizio che gestisce le notifiche
+        Intent notificationServiceIntent = new Intent(this, NotificationService.class);
+        startService(notificationServiceIntent);
 
         // Precondizione: Quando si arriva in questa activity, TUTTI gli oggetti della classe
         // Appartment sono stati settati
@@ -173,6 +206,17 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
                 return true;
             }
         });
+
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+        (Questo è lo stesso codice utilizzato in onNewIntent, in teoria onNewIntent e onCreate
+        dovrebbero essere mutuamente esclusivi).
+         */
+        int destinationFragment = getIntent().getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+        if (destinationFragment != -1) {
+            pager.setCurrentItem(destinationFragment);
+        }
     }
 
     private void readHomeUser() {
@@ -310,6 +354,34 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
         ((FamilyFragment) pagerAdapter.getCurrentFragment()).deleteHome();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setCurrentScreen(currentPosition);
+    }
+
+    @Override
+    protected void onPause() {
+        Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
+        super.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bindService(new Intent(this, NotificationService.class), serviceConnection,
+                Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (serviceBound) {
+            unbindService(serviceConnection);
+            serviceBound = false;
+        }
+    }
+
     private class FragmentSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         private Fragment currentFragment;
@@ -331,7 +403,15 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
          */
         @Override
         public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            currentFragment = ((Fragment) object);
+            if (currentFragment == null || !currentFragment.equals(object)) {
+                // Salvo il riferimento al fragment attualmente visualizzato
+                currentFragment = ((Fragment) object);
+
+                // Salvo nello stato la posizione corrente (che verrà utilizzata dal NotificationService
+                // per sapere quali notifiche mostrare) e se necessario invio al NotificationService un
+                // messaggio nel caso in cui quest'ultimo debba eseguire qualche azione particolare.
+                setCurrentScreen(position);
+            }
             super.setPrimaryItem(container, position, object);
         }
 
@@ -364,6 +444,80 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
         @Override
         public int getCount() {
             return bottomNavigation.getMenu().size();
+        }
+    }
+
+    private void setCurrentScreen(int position) {
+        switch (position) {
+            case POSITION_MESSAGES:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_MESSAGES);
+                sendMessageToNotificationService(NotificationService.MSG_CLEAR_POSTS_NOTIFICATIONS);
+                break;
+            case POSITION_FAMILY:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_FAMILY);
+                sendMessageToNotificationService(NotificationService.MSG_CLEAR_USER_INFO_NOTIFICATIONS);
+                break;
+            case POSITION_TODO:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
+                sendMessageToNotificationService(NotificationService.MSG_CLEAR_TASKS_NOTIFICATIONS);
+                break;
+            case POSITION_REWARDS:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_REWARDS);
+                sendMessageToNotificationService(NotificationService.MSG_CLEAR_REWARDS_NOTIFICATIONS);
+                break;
+            default:
+                Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_ANYTHING_ELSE);
+                break;
+        }
+    }
+
+    /**
+     * Classe utilizzata per interagire con il NotificationService
+     */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the object we can use to
+            // interact with the service.  We are communicating with the
+            // service using a Messenger, so here we get a client-side
+            // representation of that from the raw IBinder object.
+            serviceMessenger = new Messenger(service);
+            serviceBound = true;
+
+            /*
+            Appena il servizio viene collegato all'activity, controllo in quale fragment sono,
+            aggiorno lo stato e se necessario mando un messaggio al servizio.
+            NOTA IMPORTANTE: Questa chiamata viene fatta anche nel metodo onResume, ma quando questo
+            viene eseguito molto probabilmente il servizio non è ancora bindato e quindi il messaggio
+            non viene inviato!
+             */
+            setCurrentScreen(currentPosition);
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            serviceMessenger = null;
+            serviceBound = false;
+        }
+    };
+
+    private void sendMessageToNotificationService(int type) {
+        sendMessageToNotificationService(type, null);
+    }
+
+    private void sendMessageToNotificationService(int type, Bundle data) {
+        if (!serviceBound) return;
+
+        Message msg = Message.obtain(null, type);
+        if (data != null) {
+            msg.setData(data);
+        }
+
+        try {
+            serviceMessenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 }
