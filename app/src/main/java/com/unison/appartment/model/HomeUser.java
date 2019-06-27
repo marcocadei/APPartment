@@ -213,7 +213,6 @@ public class HomeUser implements Parcelable {
         return Objects.hash(nickname, points, totalEarnedPoints, role, image, completedTasks, claimedRewards, textPosts, audioPosts, imagePosts, rejectedTasks);
     }
 
-
     @Override
     public int describeContents() {
         return 0;

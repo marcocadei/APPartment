@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -13,8 +12,8 @@ import com.unison.appartment.R;
 import com.unison.appartment.fragments.NetworkErrorDialogFragment;
 import com.unison.appartment.fragments.NetworkErrorDialogFragment.NetworkErrorDialogInterface;
 import com.unison.appartment.state.Appartment;
-import com.unison.appartment.utils.NetworkStateReceiver;
-import com.unison.appartment.utils.NetworkStateReceiver.NetworkStateReceiverListener;
+import com.unison.appartment.receivers.NetworkStateReceiver;
+import com.unison.appartment.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
 
 public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActivity
         implements NetworkStateReceiverListener, NetworkErrorDialogInterface {
