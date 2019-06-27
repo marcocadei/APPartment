@@ -82,7 +82,7 @@ public class NotificationService extends Service {
     private final static int HOME_STATUS_CHANNEL_NOTIFICATIONS_ID_UNIT = 9;
 
     // Struttura dati utilizzata per memorizzare gli id delle notifiche attualmente visualizzate per ogni canale
-    private Map<String, List<Integer>> currentlyDisplayedNotifications;
+    private Map<String, Integer> currentlyDisplayedNotifications;
 
     // Altri dati utilizzati nel contenuto delle notifiche
     private int newMessages = 0;
@@ -111,11 +111,11 @@ public class NotificationService extends Service {
             makeNotificationChannel(USER_INFO_CHANNEL_ID, USER_INFO_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
             makeNotificationChannel(HOME_STATUS_CHANNEL_ID, HOME_STATUS_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
         }
-        currentlyDisplayedNotifications.put(POST_CHANNEL_ID, new LinkedList<Integer>());
-        currentlyDisplayedNotifications.put(REWARD_CHANNEL_ID, new LinkedList<Integer>());
-        currentlyDisplayedNotifications.put(TASK_CHANNEL_ID, new LinkedList<Integer>());
-        currentlyDisplayedNotifications.put(USER_INFO_CHANNEL_ID, new LinkedList<Integer>());
-        currentlyDisplayedNotifications.put(HOME_STATUS_CHANNEL_ID, new LinkedList<Integer>());
+//        currentlyDisplayedNotifications.put(POST_CHANNEL_ID, new LinkedList<Integer>());
+//        currentlyDisplayedNotifications.put(REWARD_CHANNEL_ID, new LinkedList<Integer>());
+//        currentlyDisplayedNotifications.put(TASK_CHANNEL_ID, new LinkedList<Integer>());
+//        currentlyDisplayedNotifications.put(USER_INFO_CHANNEL_ID, new LinkedList<Integer>());
+//        currentlyDisplayedNotifications.put(HOME_STATUS_CHANNEL_ID, new LinkedList<Integer>());
 
         listenPosts();
         listenRewards();
@@ -144,12 +144,12 @@ public class NotificationService extends Service {
                     se per esempio l'utente cancella la notifica senza cliccarci sopra, il testo
                     conterrà sempre il numero di messaggi non letti dall'ultimo accesso in bacheca.
                      */
-                    boolean messageNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(POST_CHANNEL_ID).size() != 0;
+                    boolean messageNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(POST_CHANNEL_ID) != null;
                     newMessages = messageNotificationAlreadyDispatched
                             ? newMessages + 1
                             : 1;
                     int notificationId = messageNotificationAlreadyDispatched
-                            ? currentlyDisplayedNotifications.get(POST_CHANNEL_ID).get(0)
+                            ? currentlyDisplayedNotifications.get(POST_CHANNEL_ID)
                             : ((int) (SystemClock.uptimeMillis() * 10)) + POST_CHANNEL_NOTIFICATIONS_ID_UNIT;
                     String notificationTitle = getResources().getQuantityString(R.plurals.notification_new_posts_title, newMessages);
                     String notificationContent = messageNotificationAlreadyDispatched
@@ -187,7 +187,7 @@ public class NotificationService extends Service {
                     ));
 
                     if (!messageNotificationAlreadyDispatched) {
-                        currentlyDisplayedNotifications.get(POST_CHANNEL_ID).add(notificationId);
+                        currentlyDisplayedNotifications.put(POST_CHANNEL_ID, notificationId);
                     }
                 }
             }
@@ -203,14 +203,12 @@ public class NotificationService extends Service {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 // Faccio qualcosa solo se c'è una notifica attualmente mostrata
-                if (currentlyDisplayedNotifications.get(POST_CHANNEL_ID).size() != 0) {
+                if (currentlyDisplayedNotifications.get(POST_CHANNEL_ID) != null) {
                     newMessages--;
                     // Se il numero di nuovi messaggi scende a zero, cancello del tutto la notifica
                     if (newMessages == 0) {
-                        for (Integer notificationId : currentlyDisplayedNotifications.get(POST_CHANNEL_ID)) {
-                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
-                        }
-                        currentlyDisplayedNotifications.get(POST_CHANNEL_ID).clear();
+                        notificationManager.cancel(NOTIFICATIONS_TAG, currentlyDisplayedNotifications.get(POST_CHANNEL_ID));
+                        currentlyDisplayedNotifications.remove(POST_CHANNEL_ID);
                     }
                     else {
                         // Non mostro la notifica se sono nel messages fragment (vedi onChildAdded)
@@ -226,7 +224,7 @@ public class NotificationService extends Service {
                             // Extra utilizzati dall'activity che viene fatta partire al tap sulla notifica
                             resultIntent.putExtra(MainActivity.EXTRA_DESTINATION_FRAGMENT, MainActivity.POSITION_MESSAGES);
 
-                            int notificationId = currentlyDisplayedNotifications.get(POST_CHANNEL_ID).get(0);
+                            int notificationId = currentlyDisplayedNotifications.get(POST_CHANNEL_ID);
                             notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
                                     resultIntent,
                                     POST_CHANNEL_ID,
@@ -285,9 +283,9 @@ public class NotificationService extends Service {
                         // Non mostro la notifica se sono nel rewards fragment
                         if (Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_REWARDS) {
                             // Se c'è già una notifica relativa ai rewards visualizzata, la sovrascrivo.
-                            boolean rewardNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).size() != 0;
+                            boolean rewardNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID) != null;
                             int notificationId = rewardNotificationAlreadyDispatched
-                                    ? currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).get(0)
+                                    ? currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID)
                                     : ((int) (SystemClock.uptimeMillis() * 10)) + REWARD_CHANNEL_NOTIFICATIONS_ID_UNIT;
 
                             // Intent per l'activity che si vuole far partire al tap sulla notifica
@@ -308,7 +306,7 @@ public class NotificationService extends Service {
                             ));
 
                             if (!rewardNotificationAlreadyDispatched) {
-                                currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).add(notificationId);
+                                currentlyDisplayedNotifications.put(REWARD_CHANNEL_ID, notificationId);
                             }
                         }
                     }
@@ -366,9 +364,9 @@ public class NotificationService extends Service {
                         // Non mostro la notifica se sono nel todo fragment
                         if (Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_TODO) {
                             // Se c'è già una notifica relativa ai task visualizzata, la sovrascrivo.
-                            boolean taskNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).size() != 0;
+                            boolean taskNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(TASK_CHANNEL_ID) != null;
                             int notificationId = taskNotificationAlreadyDispatched
-                                    ? currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).get(0)
+                                    ? currentlyDisplayedNotifications.get(TASK_CHANNEL_ID)
                                     : ((int) (SystemClock.uptimeMillis() * 10)) + TASK_CHANNEL_NOTIFICATIONS_ID_UNIT;
 
                             // Intent per l'activity che si vuole far partire al tap sulla notifica
@@ -389,7 +387,7 @@ public class NotificationService extends Service {
                             ));
 
                             if (!taskNotificationAlreadyDispatched) {
-                                currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).add(notificationId);
+                                currentlyDisplayedNotifications.put(TASK_CHANNEL_ID, notificationId);
                             }
                         }
                     }
@@ -458,9 +456,9 @@ public class NotificationService extends Service {
                  */
                 if (userHome.getHomename().equals(currentHomeName) && Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_FAMILY) {
                     // Se c'è una notifica attualmente mostrata che riguarda la stessa casa, questa viene sovrascritta.
-                    boolean messageNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(USER_INFO_CHANNEL_ID).size() != 0;
+                    boolean messageNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(USER_INFO_CHANNEL_ID) != null;
                     int notificationId = messageNotificationAlreadyDispatched
-                            ? currentlyDisplayedNotifications.get(USER_INFO_CHANNEL_ID).get(0)
+                            ? currentlyDisplayedNotifications.get(USER_INFO_CHANNEL_ID)
                             : ((int) (SystemClock.uptimeMillis() * 10)) + USER_INFO_CHANNEL_NOTIFICATIONS_ID_UNIT;
 
                     String notificationContent = getString(R.string.notification_role_changed_content,
@@ -486,7 +484,7 @@ public class NotificationService extends Service {
                     ));
 
                     if (!messageNotificationAlreadyDispatched) {
-                        currentlyDisplayedNotifications.get(USER_INFO_CHANNEL_ID).add(notificationId);
+                        currentlyDisplayedNotifications.put(USER_INFO_CHANNEL_ID, notificationId);
                     }
                 }
             }
@@ -521,7 +519,7 @@ public class NotificationService extends Service {
                             ""
                     ));
 
-                    currentlyDisplayedNotifications.get(HOME_STATUS_CHANNEL_ID).add(notificationId);
+                    currentlyDisplayedNotifications.put(HOME_STATUS_CHANNEL_ID, notificationId);
                 }
             }
 
@@ -578,10 +576,8 @@ public class NotificationService extends Service {
         caso è invocato stopService).
         FIXME non è più vero se si sceglie di salvare gli id nelle shared preferences, cambiare di conseguenza!
          */
-        for (List<Integer> notificationList : currentlyDisplayedNotifications.values()) {
-            for (Integer notificationId : notificationList) {
-                notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
-            }
+        for (Integer notificationId : currentlyDisplayedNotifications.values()) {
+            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
         }
         currentlyDisplayedNotifications.clear();
         newMessages = 0;
@@ -663,58 +659,32 @@ public class NotificationService extends Service {
 
         @Override
         public void handleMessage(Message msg) {
+            String channelToClear = null;
             switch (msg.what) {
                 case MSG_CLEAR_POSTS_NOTIFICATIONS:
-                    try {
-                        for (Integer notificationId : currentlyDisplayedNotifications.get(POST_CHANNEL_ID)) {
-                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
-                        }
-                        currentlyDisplayedNotifications.get(POST_CHANNEL_ID).clear();
-                        newMessages = 0;
-                    }
-                    catch (NullPointerException e) {
-                        currentlyDisplayedNotifications.put(POST_CHANNEL_ID, new LinkedList<Integer>());
-                    }
+                    channelToClear = POST_CHANNEL_ID;
+                    newMessages = 0;
                     break;
 
                 case MSG_CLEAR_REWARDS_NOTIFICATIONS:
-                    try {
-                        for (Integer notificationId : currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID)) {
-                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
-                        }
-                        currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).clear();
-                    }
-                    catch (NullPointerException e) {
-                        currentlyDisplayedNotifications.put(REWARD_CHANNEL_ID, new LinkedList<Integer>());
-                    }
+                    channelToClear = REWARD_CHANNEL_ID;
                     break;
 
                 case MSG_CLEAR_TASKS_NOTIFICATIONS:
-                    try {
-                        for (Integer notificationId : currentlyDisplayedNotifications.get(TASK_CHANNEL_ID)) {
-                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
-                        }
-                        currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).clear();
-                    }
-                    catch (NullPointerException e) {
-                        currentlyDisplayedNotifications.put(TASK_CHANNEL_ID, new LinkedList<Integer>());
-                    }
+                    channelToClear = TASK_CHANNEL_ID;
                     break;
 
                 case MSG_CLEAR_USER_INFO_NOTIFICATIONS:
-                    try {
-                        for (Integer notificationId : currentlyDisplayedNotifications.get(USER_INFO_CHANNEL_ID)) {
-                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
-                        }
-                        currentlyDisplayedNotifications.get(USER_INFO_CHANNEL_ID).clear();
-                    }
-                    catch (NullPointerException e) {
-                        currentlyDisplayedNotifications.put(USER_INFO_CHANNEL_ID, new LinkedList<Integer>());
-                    }
+                    channelToClear = USER_INFO_CHANNEL_ID;
                     break;
+            }
 
-                default:
-                    super.handleMessage(msg);
+            if (channelToClear != null) {
+                try {
+                    notificationManager.cancel(NOTIFICATIONS_TAG, currentlyDisplayedNotifications.get(channelToClear));
+                    currentlyDisplayedNotifications.remove(channelToClear);
+                }
+                catch (NullPointerException ignored) {}
             }
         }
     }
