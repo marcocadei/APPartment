@@ -14,7 +14,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.SystemClock;
 import android.text.Html;
-import android.util.Log;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -32,6 +31,7 @@ import com.unison.appartment.activities.MainActivity;
 import com.unison.appartment.activities.UserProfileActivity;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.model.UserHome;
@@ -46,6 +46,7 @@ public class NotificationService extends Service {
 
     // Costanti utilizzate per la gestione dei messaggi ricevuti da activity/fragments
     public final static int MSG_CLEAR_POSTS_NOTIFICATIONS = 1;
+    public final static int MSG_CLEAR_REWARDS_NOTIFICATIONS = 2;
     public final static int MSG_CLEAR_USER_INFO_NOTIFICATIONS = 8;
 
     private Query postsRef;
@@ -249,7 +250,7 @@ public class NotificationService extends Service {
 
     private void listenRewards() {
         rewardsRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName()).orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID).equalTo(null);
+                Appartment.getInstance().getHome().getName());
         rewardsListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -257,21 +258,59 @@ public class NotificationService extends Service {
                 Qui non viene fatto nulla perché non viene mostrata alcuna notifica particolare se
                 viene aggiunto un nuovo premio.
                  */
-                Reward reward = dataSnapshot.getValue(Reward.class);
-                Log.e("zzzzzzzz", reward.getName());
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Reward reward = dataSnapshot.getValue(Reward.class);
+
                 /*
-                Qui non viene fatto nulla perché nell'app non è possibile compiere nessuna azione
-                tale da triggerare questo callback.
+                La notifica è relativa solo alle nuove richieste di premio che arrivano, quindi viene
+                verificato che il reservationId sia diverso da null (in quanto non è possibile
+                fare altre modifiche al premio fintantoché questo è prenotato da qualcuno).
                  */
+                if (reward.isRequested()) {
+                    // Mostro la notifica solo ai master
+                    if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
+                        // Non mostro la notifica se sono nel rewards fragment
+                        if (Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_REWARDS) {
+                            // Se c'è già una notifica relativa ai rewards visualizzata, la sovrascrivo.
+                            boolean rewardNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).size() != 0;
+                            int notificationId = rewardNotificationAlreadyDispatched
+                                    ? currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).get(0)
+                                    : ((int) (SystemClock.uptimeMillis() * 10)) + REWARD_CHANNEL_NOTIFICATIONS_ID_UNIT;
+
+                            // Intent per l'activity che si vuole far partire al tap sulla notifica
+                            Intent resultIntent = new Intent(NotificationService.this, MainActivity.class);
+                            resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            // Extra utilizzati dall'activity che viene fatta partire al tap sulla notifica
+                            resultIntent.putExtra(MainActivity.EXTRA_DESTINATION_FRAGMENT, MainActivity.POSITION_REWARDS);
+
+                            notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
+                                    resultIntent,
+                                    REWARD_CHANNEL_ID,
+                                    R.drawable.ic_appartment_notifications,
+                                    getString(R.string.notification_new_reward_request_title),
+                                    getString(R.string.notification_new_reward_request_content),
+                                    NotificationCompat.PRIORITY_DEFAULT,
+                                    false,
+                                    ""
+                            ));
+
+                            if (!rewardNotificationAlreadyDispatched) {
+                                currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).add(notificationId);
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Log.e("zzzzzzzz", "REWARD REMOVED");
+                /*
+                Qui non viene fatto nulla perché non viene mostrata alcuna notifica particolare se
+                viene rimosso un premio.
+                 */
             }
 
             @Override
@@ -426,6 +465,9 @@ public class NotificationService extends Service {
         if (postsRef != null && postsListener != null) {
             postsRef.removeEventListener(postsListener);
         }
+        if (rewardsRef != null && rewardsListener != null) {
+            rewardsRef.removeEventListener(rewardsListener);
+        }
         if (userHomesRef != null && userHomesListener != null) {
             userHomesRef.removeEventListener(userHomesListener);
         }
@@ -538,6 +580,18 @@ public class NotificationService extends Service {
                     }
                     catch (NullPointerException e) {
                         currentlyDisplayedNotifications.put(POST_CHANNEL_ID, new LinkedList<Integer>());
+                    }
+                    break;
+
+                case MSG_CLEAR_REWARDS_NOTIFICATIONS:
+                    try {
+                        for (Integer notificationId : currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID)) {
+                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
+                        }
+                        currentlyDisplayedNotifications.get(REWARD_CHANNEL_ID).clear();
+                    }
+                    catch (NullPointerException e) {
+                        currentlyDisplayedNotifications.put(REWARD_CHANNEL_ID, new LinkedList<Integer>());
                     }
                     break;
 
