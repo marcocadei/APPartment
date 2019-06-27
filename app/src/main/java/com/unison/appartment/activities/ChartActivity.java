@@ -103,7 +103,7 @@ public class ChartActivity extends ActivityWithNetworkConnectionDialog {
         }
         if (entries.size() > 0) {
             if (total != cumulated) {
-                entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+                entries.add(new PieEntry(total - cumulated, getString(R.string.pie_chart_others)));
             }
             chartItems.add(new PieChartItem(createPieData(entries), this, getString(R.string.pie_chart_tasks_title)));
         }
@@ -134,7 +134,7 @@ public class ChartActivity extends ActivityWithNetworkConnectionDialog {
         }
         if (entries.size() > 0) {
             if (total != cumulated) {
-                entries.add(new PieEntry(total - cumulated, getString(R.string.general_pie_chart_others)));
+                entries.add(new PieEntry(total - cumulated, getString(R.string.pie_chart_others)));
             }
             chartItems.add(new PieChartItem(createPieData(entries), this, getString(R.string.pie_chart_rewards_title)));
         }
