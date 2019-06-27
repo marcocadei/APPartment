@@ -46,12 +46,10 @@ public class CreateHomeActivity extends FormActivity {
     private DatabaseWriter databaseWriter;
 
     private EditText inputHomeName;
-    private EditText inputConversionFactor;
     private EditText inputPassword;
     private EditText inputRepeatPassword;
     private EditText inputNickname;
     private TextInputLayout layoutHomeName;
-    private TextInputLayout layoutConversionFactor;
     private TextInputLayout layoutPassword;
     private TextInputLayout layoutRepeatPassword;
     private TextInputLayout layoutNickname;
@@ -79,22 +77,19 @@ public class CreateHomeActivity extends FormActivity {
         this.errorDialogDestinationActivity = UserProfileActivity.class;
 
         inputHomeName = findViewById(R.id.activity_create_home_input_homename_value);
-        inputConversionFactor = findViewById(R.id.activity_create_home_input_conversion_factor_value);
         inputPassword = findViewById(R.id.activity_create_home_input_password_value);
         inputRepeatPassword = findViewById(R.id.activity_create_home_input_repeat_password_value);
         inputNickname = findViewById(R.id.activity_create_home_input_repeat_nickname_value);
         layoutHomeName = findViewById(R.id.activity_create_home_input_homename);
-        layoutConversionFactor = findViewById(R.id.activity_create_home_input_conversion_factor);
         layoutPassword = findViewById(R.id.activity_create_home_input_password);
         layoutRepeatPassword = findViewById(R.id.activity_create_home_input_repeat_password);
         layoutNickname = findViewById(R.id.activity_create_home_input_nickname);
         FloatingActionButton floatNext = findViewById(R.id.activity_create_home_float_next);
 
         inputNickname.setText(Appartment.getInstance().getUser().getName());
-        inputConversionFactor.setText(String.valueOf(Home.DEFAULT_CONVERSION_FACTOR));
 
         Intent i = getIntent();
-        final Home home = (Home) i.getParcelableExtra(EXTRA_HOME_DATA);
+        final Home home = i.getParcelableExtra(EXTRA_HOME_DATA);
         if (home != null) {
             toolbar.setTitle(R.string.activity_create_home_text_title_edit);
             TextView textTitle = findViewById(R.id.activity_create_home_text_title);
@@ -103,39 +98,7 @@ public class CreateHomeActivity extends FormActivity {
             textRoleInfo.setVisibility(View.GONE);
             layoutHomeName.setVisibility(View.GONE);
             inputHomeName.setText(home.getName());
-            layoutConversionFactor.setVisibility(View.VISIBLE);
-            inputConversionFactor.setText(String.valueOf(home.getConversionFactor()));
             layoutNickname.setVisibility(View.GONE);
-
-            final String originalPassword = home.getPassword();
-            layoutPassword.setVisibility(View.GONE);
-            inputPassword.setText(originalPassword);
-            layoutRepeatPassword.setVisibility(View.GONE);
-            inputRepeatPassword.setText(originalPassword);
-            final TextView textPasswordInfo = findViewById(R.id.activity_create_home_text_password_info);
-            textPasswordInfo.setVisibility(View.GONE);
-            View layoutSwitch = findViewById(R.id.activity_create_home_layout_switch);
-            layoutSwitch.setVisibility(View.VISIBLE);
-            SwitchCompat switchPassword = findViewById(R.id.activity_create_home_switch_password);
-            switchPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        textPasswordInfo.setVisibility(View.VISIBLE);
-                        layoutPassword.setVisibility(View.VISIBLE);
-                        inputPassword.setText(null);
-                        layoutRepeatPassword.setVisibility(View.VISIBLE);
-                        inputRepeatPassword.setText(null);
-                    }
-                    else {
-                        textPasswordInfo.setVisibility(View.GONE);
-                        layoutPassword.setVisibility(View.GONE);
-                        inputPassword.setText(originalPassword);
-                        layoutRepeatPassword.setVisibility(View.GONE);
-                        inputRepeatPassword.setText(originalPassword);
-                    }
-                }
-            });
 
             floatNext.setImageDrawable(getDrawable(R.drawable.ic_check));
             // Gestione click sul bottone per completare la modifica
@@ -150,7 +113,6 @@ public class CreateHomeActivity extends FormActivity {
                         progressDialog.show(getSupportFragmentManager(), FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
                         // Scrivo i dati aggiornati nel db
                         databaseWriter.writeHome(createHome(), dbHomeEditWriterListener);
-
                     }
                 }
             });
@@ -179,12 +141,6 @@ public class CreateHomeActivity extends FormActivity {
                 if (hasFocus) resetErrorMessage(layoutHomeName);
             }
         });
-        inputConversionFactor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) resetErrorMessage(layoutConversionFactor);
-            }
-        });
         inputPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -207,7 +163,6 @@ public class CreateHomeActivity extends FormActivity {
 
     protected boolean checkInput() {
         resetErrorMessage(layoutHomeName);
-        resetErrorMessage(layoutConversionFactor);
         resetErrorMessage(layoutPassword);
         resetErrorMessage(layoutRepeatPassword);
         resetErrorMessage(layoutNickname);
@@ -216,31 +171,19 @@ public class CreateHomeActivity extends FormActivity {
         inputNickname.setText(inputNickname.getText().toString().trim());
 
         String homeNameValue = inputHomeName.getText().toString();
-        String conversionFactorValue = inputConversionFactor.getText().toString();
         String passwordValue = inputPassword.getText().toString();
         String repeatPasswordValue = inputRepeatPassword.getText().toString();
         String nicknameValue = inputNickname.getText().toString();
 
         boolean result = true;
 
-        // Controllo che i campi "nome casa", "nickname" e "conversion factor" non siano stati lasciati vuoti
+        // Controllo che i campi "nome casa" e "nickname"
         if (homeNameValue.trim().length() == 0) {
             layoutHomeName.setError(getString(R.string.form_error_missing_value));
             result = false;
         }
         if (nicknameValue.trim().length() == 0) {
             layoutNickname.setError(getString(R.string.form_error_missing_value));
-            result = false;
-        }
-        if (conversionFactorValue.trim().length() == 0) {
-            layoutConversionFactor.setError(getString(R.string.form_error_missing_value));
-            result = false;
-        }
-
-        // Controllo che il fattore di conversione impostato sia maggiore di 0
-        if (Integer.parseInt(conversionFactorValue) <= 0) {
-            layoutConversionFactor.setError(null);
-            layoutConversionFactor.setError(getString(R.string.form_error_nonzero_required));
             result = false;
         }
 
@@ -279,9 +222,8 @@ public class CreateHomeActivity extends FormActivity {
 
         String homeName = inputHomeName.getText().toString();
         String password = inputPassword.getText().toString();
-        int conversionFactor = Integer.parseInt(inputConversionFactor.getText().toString());
 
-        return new Home(homeName, password, conversionFactor);
+        return new Home(homeName, password);
     }
 
     private HomeUser createHomeUser() {

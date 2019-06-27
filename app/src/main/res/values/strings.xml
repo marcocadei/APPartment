@@ -50,7 +50,6 @@
 
     <string name="desc_completedtasks_homename_taskname_lastcompletiondate">Data di ultimo completamento</string>
     <string name="desc_completedtasks_homename_taskname_lastdescription">Ultima descrizione</string>
-    <string name="desc_homes_homename_conversionfactor">Fattore di conversione punti/€</string>
     <string name="desc_homes_homename_name">Nome della casa</string>
     <string name="desc_homes_homename_password">Password della casa</string>
     <string name="desc_homes_homename_password_repeat">Ripeti password della casa</string>
@@ -161,7 +160,7 @@
     <string name="activity_create_home_text_role_info">Alla creazione della casa, assumerai il ruolo di proprietario.</string>
     <string name="activity_create_home_text_switch">Cambia password</string>
     <string name="activity_create_home_text_title">Crea una nuova casa</string>
-    <string name="activity_create_home_text_title_edit">Modifica dati casa</string>
+    <string name="activity_create_home_text_title_edit">Modifica password casa</string>
     <string name="activity_create_reward_title_edit">Modifica premio</string>
     <string name="activity_create_reward_title_new">Aggiungi premio</string>
     <string name="activity_create_task_title">Aggiungi attività</string>
@@ -192,7 +191,7 @@
     <string name="activity_main_bottom_navigation_rewards">Premi</string>
     <string name="activity_main_bottom_navigation_todo">Da fare</string>
     <string name="activity_main_toolbar_delete_home">Elimina casa</string>
-    <string name="activity_main_toolbar_edit_home_data">Modifica dati casa</string>
+    <string name="activity_main_toolbar_edit_home_data">Modifica password casa</string>
     <string name="activity_main_toolbar_settings">Impostazioni</string>
     <string name="activity_main_toolbar_switch">Profilo utente</string>
     <string name="activity_reward_detail_btn_cancel_reservation">Annulla richiesta premio</string>
@@ -261,8 +260,6 @@
     <string name="fragment_insert_post_text_recording">Registrazione in corso</string>
     <string name="fragment_messages_empty_list_text">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
     <string name="fragment_messages_post_options_delete">Elimina</string>
-    <string name="fragment_money_reward_text_description">Guadagna 1€ ogni %d punti</string>
-    <string name="fragment_money_reward_text_title">Converti punti in denaro</string>
     <string name="fragment_post_datetime_format">%1$s %2$s</string>
     <string name="fragment_reward_text_status_pending_row_1">Conferma</string>
     <string name="fragment_reward_text_status_pending_row_2">necessaria</string>
@@ -283,8 +280,6 @@
     <string name="fragment_userpicker_text_title">Membri della casa</string>
 
     <!-- FIXME ancora da riallineare -->
-
-    <!-- TODO rimuovere -->
     <string name="fragment_charts_placeholder_title">Fragment dei grafici</string>
     <string name="general_pie_chart_others">Altri</string>
     <string name="pie_chart_tasks_title">Attività completate</string>

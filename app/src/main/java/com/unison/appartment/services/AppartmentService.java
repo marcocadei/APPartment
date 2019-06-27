@@ -54,8 +54,11 @@ public class AppartmentService extends Service {
 
     private void listenHome() {
         /*
-        È necessario mantenere l'oggetto casa continuamente aggiornato perché il "name" e il "conversionFactor"
-        sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
+        Il nome della casa non può essere mai modificato, ma l'oggetto viene comunque tenuto aggiornato
+        per intercettare il caso in cui una casa venga eliminata.
+        (Quando era stato realizzato il servizio, Home conteneva dei dati che potevano essere modificati
+        da altri utenti quindi questo aggiornamento era necessario, poi la logica è cambiata e si è
+        scelto di conservare ugualmente l'aggiornamento dell'oggetto.)
          */
         homeRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMES + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         homeListener = new ValueEventListener() {
@@ -107,10 +110,6 @@ public class AppartmentService extends Service {
     }
 
     private void listenUserHome() {
-        /*
-        È necessario mantenere l'oggetto casa continuamente aggiornato perché il "name" e il "conversionFactor"
-        sono utilizzati all'interno della MainActivity, ma possono essere cambiati da un altro utente
-         */
         userHomeRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR + new FirebaseAuth().getCurrentUserUid() + DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
         userHomeListener = new ValueEventListener() {
             @Override

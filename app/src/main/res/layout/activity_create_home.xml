@@ -64,7 +64,7 @@
                 android:id="@+id/activity_create_home_input_homename"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/desc_homes_homename_name"
-                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_conversion_factor"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_home_input_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_layout_title">
@@ -77,31 +77,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_create_home_input_conversion_factor"
-                style="@style/CustomFormTextFieldLayout"
-                android:hint="@string/desc_homes_homename_conversionfactor"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_password"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_homename">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/activity_create_home_input_conversion_factor_value"
-                    style="@style/CustomFormTextFieldInput"
-                    android:maxLength="9"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/activity_create_home_input_password"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/desc_homes_homename_password"
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_input_repeat_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_conversion_factor">
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_homename">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_create_home_input_password_value"
@@ -132,7 +114,7 @@
                 android:id="@+id/activity_create_home_input_nickname"
                 style="@style/CustomFormTextFieldLayout"
                 android:hint="@string/desc_homeusers_homename_uid_nickname"
-                app:layout_constraintBottom_toTopOf="@id/activity_create_home_layout_switch"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_password_info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_repeat_password">
@@ -144,43 +126,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/activity_create_home_layout_switch"
-                style="@style/Component.Layout"
-                app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_password_info"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_create_home_input_nickname"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/margin_extra_small"
-                android:layout_marginBottom="@dimen/margin_extra_small">
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/activity_create_home_switch_password"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/activity_create_home_text_switch"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:gravity="start|center_vertical"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    android:layout_marginEnd="@dimen/margin_extra_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/activity_create_home_text_switch"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/activity_create_home_text_switch"
-                    android:gravity="start|center_vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/activity_create_home_switch_password"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <!-- Nota: Il drawableStart è creato appositamente già colorato poiché su alcuni
              dispositivi anche definendo l'attributo android:Tint l'immagine non viene ricolorata. -->
             <TextView
@@ -191,7 +136,7 @@
                 app:layout_constraintBottom_toTopOf="@id/activity_create_home_text_role_info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_create_home_layout_switch" />
+                app:layout_constraintTop_toBottomOf="@id/activity_create_home_input_nickname" />
 
             <!-- Nota: Il drawableStart è creato appositamente già colorato poiché su alcuni
              dispositivi anche definendo l'attributo android:Tint l'immagine non viene ricolorata. -->
