@@ -1,4 +1,4 @@
-package com.unison.appartment.utils;
+package com.unison.appartment.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
