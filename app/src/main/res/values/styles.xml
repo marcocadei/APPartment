@@ -272,10 +272,5 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
-    <style name="Component.Button2" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_marginBottom">@dimen/margin_small</item>
-        <item name="android:button"></item>
-    </style>
 
 </resources>
