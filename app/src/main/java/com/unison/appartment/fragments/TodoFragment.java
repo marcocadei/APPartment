@@ -145,7 +145,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                                 data.getStringExtra(EXTRA_USER_NAME));
                         break;
                     case OPERATION_UNMARK:
-                        listFragment.cancelCompletion(data.getStringExtra(EXTRA_TASK_ID), data.getStringExtra(EXTRA_USER_ID));
+                        listFragment.cancelCompletion(data.getStringExtra(EXTRA_TASK_ID),
+                                data.getStringExtra(EXTRA_USER_ID));
                         break;
                     case OPERATION_CONFIRM_COMPLETION:
                         listFragment.confirmCompletion((UncompletedTask)data.getSerializableExtra(EXTRA_TASK),
