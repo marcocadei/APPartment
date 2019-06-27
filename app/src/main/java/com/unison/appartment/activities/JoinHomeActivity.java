@@ -117,7 +117,7 @@ public class JoinHomeActivity extends FormActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(BUNDLE_KEY_HOME_TO_JOIN, home);
+        outState.putParcelable(BUNDLE_KEY_HOME_TO_JOIN, home);
 
         super.onSaveInstanceState(outState);
     }
@@ -126,7 +126,7 @@ public class JoinHomeActivity extends FormActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        home = (Home) savedInstanceState.getSerializable(BUNDLE_KEY_HOME_TO_JOIN);
+        home = savedInstanceState.getParcelable(BUNDLE_KEY_HOME_TO_JOIN);
     }
 
     protected boolean checkInput() {
@@ -272,8 +272,8 @@ public class JoinHomeActivity extends FormActivity {
         @Override
         public void onReadSuccess(String key, Object object) {
             home = (Home)object;
-            String insertedPassword = inputPassword.getText().toString();
-            String homePassword = home.getPassword();
+            final String insertedPassword = inputPassword.getText().toString();
+            final String homePassword = home.getPassword();
             if (!insertedPassword.equals(homePassword)) {
                 // La password inserita è sbagliata
                 layoutPassword.setError(getString(R.string.form_error_incorrect_password));

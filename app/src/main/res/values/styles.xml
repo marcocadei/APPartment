@@ -35,6 +35,10 @@
         <item name="android:layout_marginLeft">@dimen/margin_extra_small</item>
     </style>
 
+    <style name="CustomDeletePositiveButtonStyle" parent="CustomDatePickerPositiveButtonStyle">
+        <item name="android:backgroundTint">@android:color/holo_red_light</item>
+    </style>
+
     <style name="CustomDatePickerNegativeButtonStyle" parent="android:Widget.Material.Light.Button.Borderless.Colored">
         <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="android:layout_marginRight">@dimen/margin_extra_small</item>
@@ -46,6 +50,9 @@
         <item name="android:colorAccent">@color/colorPrimary</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/CustomDatePickerPositiveButtonStyle</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/CustomDatePickerNegativeButtonStyle</item>
+    </style>
+    <style name="CustomErrorAlertDialogTheme" parent="CustomAlertDialogTheme">
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomDeletePositiveButtonStyle</item>
     </style>
 
     <!-- Layout definiti da noi per i vari componenti -->
@@ -264,6 +271,11 @@
     <style name="Component.Button">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
+    <style name="Component.Button2" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="android:button"></item>
     </style>
 
 </resources>

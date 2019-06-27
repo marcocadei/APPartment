@@ -35,6 +35,7 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".activities.UserDeletionActivity" />
         <activity android:name=".activities.ChartActivity" />
         <activity android:name=".activities.EditHomeUserActivity" />
         <activity android:name=".activities.WebActivity" />

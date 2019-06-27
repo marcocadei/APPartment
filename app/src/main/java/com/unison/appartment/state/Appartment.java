@@ -26,6 +26,9 @@ public class Appartment {
     private Appartment() {}
     public static Appartment getInstance() {return holder;}
 
+    public final static String EVENT_HOME_KICK = "com.unison.appartment.home.kick";
+    public final static String EVENT_HOME_DELETE = "com.unison.appartment.home.delete";
+
     private Home home;
     private User user;
     private UserHome userHome;

@@ -2,10 +2,6 @@ package com.unison.appartment.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.textfield.TextInputLayout;
 import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 
@@ -19,7 +15,8 @@ import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
  * chiuso a seguito di un'azione dell'utente dal momento che non presenta bottoni o elementi con
  * cui l'utente può interagire).
  */
-public abstract class ActivityWithDialogs extends AppCompatActivity implements FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
+public abstract class ActivityWithDialogs extends ActivityWithNetworkConnectionDialog implements
+        FirebaseErrorDialogFragment.FirebaseErrorDialogInterface {
 
     /**
      * Activity a cui si ritorna dopo la chiusura dell'ErrorDialog.

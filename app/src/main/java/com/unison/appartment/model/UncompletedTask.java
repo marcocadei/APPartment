@@ -1,17 +1,19 @@
 package com.unison.appartment.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Classe che rappresenta un task da completare
  */
-public class UncompletedTask implements Serializable {
+public class UncompletedTask implements Parcelable {
 
     private final static String ATTRIBUTE_CREATION_DATE = "creation-date";
     private final static String ATTRIBUTE_ASSIGNED_USER_ID = "assigned-user-id";
@@ -164,4 +166,45 @@ public class UncompletedTask implements Serializable {
     public int hashCode() {
         return Objects.hash(name, description, points, creationDate, assignedUserId, assignedUserName, marked);
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeInt(this.points);
+        dest.writeLong(this.creationDate);
+        dest.writeString(this.assignedUserId);
+        dest.writeString(this.assignedUserName);
+        dest.writeByte(this.marked ? (byte) 1 : (byte) 0);
+    }
+
+    protected UncompletedTask(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.points = in.readInt();
+        this.creationDate = in.readLong();
+        this.assignedUserId = in.readString();
+        this.assignedUserName = in.readString();
+        this.marked = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<UncompletedTask> CREATOR = new Parcelable.Creator<UncompletedTask>() {
+        @Override
+        public UncompletedTask createFromParcel(Parcel source) {
+            return new UncompletedTask(source);
+        }
+
+        @Override
+        public UncompletedTask[] newArray(int size) {
+            return new UncompletedTask[size];
+        }
+    };
 }

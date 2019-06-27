@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,8 +22,10 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -48,7 +51,7 @@ import java.util.List;
 /**
  * Classe che rappresenta l'Activity principale di una Home
  */
-public class MainActivity extends AppCompatActivity implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
+public class MainActivity extends ActivityWithNetworkConnectionDialog implements DeleteHomeUserConfirmationDialogFragment.ConfirmationDialogInterface {
 
     public static final String EXTRA_DESTINATION_FRAGMENT = "destinationFragment";
 
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
         toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
         userPoints = toolbar.findViewById(R.id.activity_main_text_points_value);
+        final View layoutPoints = toolbar.findViewById(R.id.activity_main_layout_points);
         viewModel = ViewModelProviders.of(this).get(HomeUserViewModel.class);
         readHomeUser();
 
@@ -156,10 +160,18 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
                 /*
                 Il family fragment ha un options menu differente, quindi se mi sto spostando in quel
                 fragment o provengo da quel fragment l'options menu deve essere cambiato.
+                Inoltre i punti non devono essere visualizzati.
                  */
                  if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
                     invalidateOptionsMenu();
                  }
+                 if (currentPosition == POSITION_FAMILY) {
+                     layoutPoints.setVisibility(View.GONE);
+                 }
+                 else {
+                     layoutPoints.setVisibility(View.VISIBLE);
+                 }
+
             }
 
             @Override
@@ -215,19 +227,28 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
             public void onChanged(List<HomeUser> homeUsers) {
                 for(HomeUser homeUser : homeUsers) {
                     if (homeUser.getUserId().equals(userId)) {
-                        // Animazione dei punti dal valore precedente a quello corrente
-                        int oldPoints = oldPointsValue;
-                        int newPoints = homeUser.getPoints();
-                        ValueAnimator animator = ValueAnimator.ofInt(oldPoints, newPoints);
-                        animator.setDuration(1000);
-                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                userPoints.setText(animation.getAnimatedValue().toString());
+                        if (userPoints.getVisibility() != View.GONE) {
+                            if (homeUser.getPoints() >= HomeUser.MAX_POINTS) {
+                                userPoints.setText(R.string.general_max_points);
+                                oldPointsValue = HomeUser.MAX_POINTS;
                             }
-                        });
-                        animator.start();
-                        oldPointsValue = newPoints;
-                        break;
+                            else {
+                                // Animazione dei punti dal valore precedente a quello corrente
+                                /*int oldPoints = oldPointsValue;
+                                int newPoints = homeUser.getPoints();
+                                ValueAnimator animator = ValueAnimator.ofInt(oldPoints, newPoints);
+                                animator.setDuration(2000);
+                                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                    public void onAnimationUpdate(ValueAnimator animation) {
+                                        userPoints.setText(animation.getAnimatedValue().toString());
+                                    }
+                                });
+                                animator.start();*/
+                                userPoints.setText(String.valueOf(homeUser.getPoints()));
+                                oldPointsValue = homeUser.getPoints();
+                            }
+                            break;
+                        }
                     }
                 }
             }

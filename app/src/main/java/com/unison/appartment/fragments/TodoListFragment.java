@@ -71,6 +71,13 @@ public class TodoListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
 
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean error) {
+                listener.onTodoListError(error);
+            }
+        });
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -85,7 +92,6 @@ public class TodoListFragment extends Fragment {
             myAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
-                    super.onItemRangeInserted(positionStart, itemCount);
                     super.onItemRangeInserted(positionStart, itemCount);
                     // Finché i task sono ordinati per data di inserimento positionStart è sempre uguale a 0
                     myRecyclerView.smoothScrollToPosition(positionStart);
@@ -171,5 +177,6 @@ public class TodoListFragment extends Fragment {
     public interface OnTodoListFragmentInteractionListener {
         void onTodoListFragmentOpenTask(UncompletedTask uncompletedTask);
         void onTodoListElementsLoaded(long elements);
+        void onTodoListError(boolean error);
     }
 }

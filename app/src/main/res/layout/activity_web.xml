@@ -9,6 +9,11 @@
         android:id="@+id/activity_web_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="false"
+        android:longClickable="false"
+        android:contextClickable="false"
+        android:focusable="false"
+        android:hapticFeedbackEnabled="false"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

@@ -81,52 +81,56 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         final int role = Appartment.getInstance().getUserHome().getRole();
         final String nickname = Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getNickname();
 
+        // Mittente, data e menù sono degli elementi comuni a tutti i tipi di post
+        final ViewHolderPost holderPost = (ViewHolderPost) holder;
+        final Post postItem = getItem(position);
+        holderPost.textPostSender.setText(postItem.getAuthor());
+        timestamp = new Date(postItem.getTimestamp());
+        holderPost.textPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
+        /*
+        Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
+        - per gli slave, solo ai propri post;
+        - per i master, a tutti quanti i post.
+         */
+        if (role != Home.ROLE_SLAVE || postItem.getAuthor().equals(nickname)) {
+            holderPost.textPostOptions.setVisibility(View.VISIBLE);
+            holderPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final PopupMenu popup = new PopupMenu(v.getContext(), holderPost.textPostOptions);
+                    //inflating menu from xml resource
+                    popup.inflate(R.menu.fragment_messages_post_options);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch(item.getItemId()) {
+                                case R.id.fragment_messages_post_options_delete:
+                                    if (role == Home.ROLE_SLAVE && !postItem.getAuthor().equals(nickname)) {
+                                        holderPost.textPostOptions.setVisibility(View.GONE);
+                                        notifyDataSetChanged();
+                                        listener.onDowngrade();
+                                    } else {
+                                        listener.deletePost(postItem);
+                                    }
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    popup.show();
+                }
+            });
+        }
+        else {
+            holderPost.textPostOptions.setVisibility(View.INVISIBLE);
+        }
+
         switch (holder.getItemViewType()){
             case Post.TEXT_POST:
                 final ViewHolderTextPost holderTextPost = (ViewHolderTextPost) holder;
                 final Post textPostItem = getItem(position);
                 holderTextPost.textPostTxt.setText(textPostItem.getContent());
-                holderTextPost.textPostSender.setText(textPostItem.getAuthor());
-                timestamp = new Date(textPostItem.getTimestamp());
-                holderTextPost.textPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
-                /*
-                Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
-                - per gli slave, solo ai propri post;
-                - per i master, a tutti quanti i post.
-                 */
-                if (role != Home.ROLE_SLAVE || textPostItem.getAuthor().equals(nickname)) {
-                    holderTextPost.textPostOptions.setVisibility(View.VISIBLE);
-                    holderTextPost.textPostOptions.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            final PopupMenu popup = new PopupMenu(v.getContext(), holderTextPost.textPostOptions);
-                            //inflating menu from xml resource
-                            popup.inflate(R.menu.fragment_messages_post_options);
-                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    switch(item.getItemId()) {
-                                        case R.id.fragment_messages_post_options_delete:
-                                            if (role == Home.ROLE_SLAVE && !textPostItem.getAuthor().equals(nickname)) {
-                                                holderTextPost.textPostOptions.setVisibility(View.GONE);
-                                                notifyDataSetChanged();
-                                                listener.onDowngrade();
-                                            } else {
-                                                listener.deletePost(textPostItem);
-                                            }
-                                            return true;
-                                        default:
-                                            return false;
-                                    }
-                                }
-                            });
-                            popup.show();
-                        }
-                    });
-                }
-                else {
-                    holderTextPost.textPostOptions.setVisibility(View.INVISIBLE);
-                }
                 break;
 
             case Post.IMAGE_POST:
@@ -139,9 +143,6 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         .load(imagePostItem.getContent())
                         .fitCenter()
                         .into(holderImagePost.imagePostImg);
-                holderImagePost.imagePostSender.setText(imagePostItem.getAuthor());
-                timestamp = new Date(imagePostItem.getTimestamp());
-                holderImagePost.imagePostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
                 holderImagePost.imagePostImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -150,43 +151,6 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         }
                     }
                 });
-                /*
-                Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
-                - per gli slave, solo ai propri post;
-                - per i master, a tutti quanti i post.
-                 */
-                if (role != Home.ROLE_SLAVE || imagePostItem.getAuthor().equals(nickname)) {
-                    holderImagePost.imagePostOptions.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            PopupMenu popup = new PopupMenu(v.getContext(), holderImagePost.imagePostOptions);
-                            //inflating menu from xml resource
-                            popup.inflate(R.menu.fragment_messages_post_options);
-                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    switch(item.getItemId()) {
-                                        case R.id.fragment_messages_post_options_delete:
-                                            if (role == Home.ROLE_SLAVE && !imagePostItem.getAuthor().equals(nickname)) {
-                                                holderImagePost.imagePostOptions.setVisibility(View.GONE);
-                                                notifyDataSetChanged();
-                                                listener.onDowngrade();
-                                            } else {
-                                                listener.deletePost(imagePostItem);
-                                            }
-                                            return true;
-                                        default:
-                                            return false;
-                                    }
-                                }
-                            });
-                            popup.show();
-                        }
-                    });
-                }
-                else {
-                    holderImagePost.imagePostOptions.setVisibility(View.INVISIBLE);
-                }
                 break;
 
             case Post.AUDIO_POST:
@@ -198,9 +162,6 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                 else {
                     holderAudioPost.audioPostState.setText(R.string.fragment_audio_post_state_play);
                 }
-                holderAudioPost.audioPostSender.setText(audioPostItem.getAuthor());
-                timestamp = new Date(audioPostItem.getTimestamp());
-                holderAudioPost.audioPostDate.setText(res.getString(R.string.fragment_post_datetime_format, dateFormat.format(timestamp), timeFormat.format(timestamp)));
                 holderAudioPost.audioPostBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -210,43 +171,6 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         handleAudioPlay(audioPostItem, holderAudioPost);
                     }
                 });
-                /*
-                Il popup menù attraverso cui è possibile eliminare un post viene mostrato:
-                - per gli slave, solo ai propri post;
-                - per i master, a tutti quanti i post.
-                 */
-                if (role != Home.ROLE_SLAVE || audioPostItem.getAuthor().equals(nickname)) {
-                    holderAudioPost.audioPostOptions.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            PopupMenu popup = new PopupMenu(v.getContext(), holderAudioPost.audioPostOptions);
-                            //inflating menu from xml resource
-                            popup.inflate(R.menu.fragment_messages_post_options);
-                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    switch(item.getItemId()) {
-                                        case R.id.fragment_messages_post_options_delete:
-                                            if (role == Home.ROLE_SLAVE && !audioPostItem.getAuthor().equals(nickname)) {
-                                                holderAudioPost.audioPostOptions.setVisibility(View.GONE);
-                                                notifyDataSetChanged();
-                                                listener.onDowngrade();
-                                            } else {
-                                                listener.deletePost(audioPostItem);
-                                            }
-                                            return true;
-                                        default:
-                                            return false;
-                                    }
-                                }
-                            });
-                            popup.show();
-                        }
-                    });
-                }
-                else {
-                    holderAudioPost.audioPostOptions.setVisibility(View.INVISIBLE);
-                }
                 break;
 
             default:
@@ -300,56 +224,51 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
         }
     };
 
-    public class ViewHolderTextPost extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView textPostTxt;
+    public class ViewHolderPost extends RecyclerView.ViewHolder {
         public final TextView textPostSender;
         public final TextView textPostDate;
         public final ImageView textPostOptions;
+
+        public ViewHolderPost(View view) {
+            super(view);
+            textPostSender = view.findViewById(R.id.post_sender);
+            textPostDate = view.findViewById(R.id.post_date);
+            textPostOptions = view.findViewById(R.id.post_options);
+        }
+    }
+
+    public class ViewHolderTextPost extends ViewHolderPost {
+        public final View mView;
+        public final TextView textPostTxt;
 
         public ViewHolderTextPost(View view) {
             super(view);
             mView = view;
             textPostTxt = view.findViewById(R.id.fragment_text_post_txt);
-            textPostSender = view.findViewById(R.id.fragment_text_post_sender);
-            textPostDate = view.findViewById(R.id.fragment_text_post_date);
-            textPostOptions = view.findViewById(R.id.fragment_text_post_options);
         }
     }
 
-    public class ViewHolderImagePost extends RecyclerView.ViewHolder {
+    public class ViewHolderImagePost extends ViewHolderPost {
         public final View mView;
         public final ImageView imagePostImg;
-        public final TextView imagePostSender;
-        public final TextView imagePostDate;
-        public final ImageView imagePostOptions;
 
         public ViewHolderImagePost(View view) {
             super(view);
             mView = view;
             imagePostImg = view.findViewById(R.id.fragment_image_post_img);
-            imagePostSender = view.findViewById(R.id.fragment_image_post_sender);
-            imagePostDate = view.findViewById(R.id.fragment_image_post_date);
-            imagePostOptions = view.findViewById(R.id.fragment_image_post_options);
         }
     }
 
-    public class ViewHolderAudioPost extends RecyclerView.ViewHolder {
+    public class ViewHolderAudioPost extends ViewHolderPost {
         public final View mView;
         public final ImageButton audioPostBtn;
-        public final TextView audioPostSender;
         public final TextView audioPostState;
-        public final TextView audioPostDate;
-        public final ImageView audioPostOptions;
 
         public ViewHolderAudioPost(View view) {
             super(view);
             mView = view;
             audioPostBtn = view.findViewById(R.id.fragment_audio_post_btn);
-            audioPostSender = view.findViewById(R.id.fragment_audio_post_sender);
             audioPostState = view.findViewById(R.id.fragment_audio_post_state);
-            audioPostDate = view.findViewById(R.id.fragment_audio_post_date);
-            audioPostOptions = view.findViewById(R.id.fragment_audio_post_options);
         }
     }
 

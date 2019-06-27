@@ -25,7 +25,7 @@ import com.unison.appartment.utils.ImageUtils;
 /**
  * Classe che rappresenta l'Activity con il dettaglio dell'immagine
  */
-public class ImageDetailActivity extends AppCompatActivity {
+public class ImageDetailActivity extends ActivityWithNetworkConnectionDialog {
 
     public final static String EXTRA_IMAGE_URI = "imageUri";
     public final static String EXTRA_IMAGE_TYPE = "imageType";

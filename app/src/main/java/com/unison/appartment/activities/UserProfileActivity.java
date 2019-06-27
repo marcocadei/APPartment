@@ -1,6 +1,8 @@
 package com.unison.appartment.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
@@ -22,12 +24,14 @@ import com.appeaser.imagetransitionlibrary.TransitionImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.database.Auth;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.FirebaseDatabaseReader;
+import com.unison.appartment.fragments.DismissableWarningDialogFragment;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
@@ -52,7 +56,11 @@ import java.util.Map;
 public class UserProfileActivity extends ActivityWithDialogs implements UserHomeListFragment.OnHomeListFragmentInteractionListener {
 
     private final static int EDIT_USER_REQUEST_CODE = 101;
+
     public final static String EXTRA_NEW_USER = "newUser";
+    public final static String EXTRA_SNACKBAR_MESSAGE = "snackbarMessage";
+
+    private final static String BUNDLE_KEY_HAS_HOMES = "hasHomes";
 
     private Auth auth;
     private DatabaseReader databaseReader;
@@ -64,6 +72,8 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private TextView textGender;
     private TextView textBirthdate;
     private TextView textAge;
+
+    private boolean hasHomes;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -88,6 +98,8 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        bypassHomeEventsReceiver = true;
 
         auth = new FirebaseAuth();
         databaseReader = new FirebaseDatabaseReader();
@@ -161,6 +173,27 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 startActivity(i);
             }
         });
+
+        String snackbarMessage = getIntent().getStringExtra(EXTRA_SNACKBAR_MESSAGE);
+        if (snackbarMessage != null) {
+            Snackbar.make(findViewById(R.id.activity_user_profile),
+                    snackbarMessage,
+                    Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(BUNDLE_KEY_HAS_HOMES, hasHomes);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        hasHomes = savedInstanceState.getBoolean(BUNDLE_KEY_HAS_HOMES);
     }
 
     @Override
@@ -190,6 +223,17 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 startActivityForResult(i, EDIT_USER_REQUEST_CODE);
                 return true;
 
+            case R.id.activity_user_profile_toolbar_delete:
+                if (!hasHomes) {
+                    i = new Intent(this, UserDeletionActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    DismissableWarningDialogFragment dialog = new DismissableWarningDialogFragment();
+                    dialog.show(getSupportFragmentManager(), DismissableWarningDialogFragment.TAG_DISMISSABLE_WARNING_DIALOG);
+                }
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -205,7 +249,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                 avvenuta quando torno a questa activity, quindi devo solo aggiornare i dati che
                 sono visualizzati.
                  */
-                User newUserData = (User) data.getSerializableExtra(EXTRA_NEW_USER);
+                User newUserData = (User) data.getParcelableExtra(EXTRA_NEW_USER);
                 textName.setText(newUserData.getName());
                 textGender.setText(newUserData.getGenderString());
                 try {
@@ -274,6 +318,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         progressBar.setVisibility(View.GONE);
 
         // Se gli elementi sono 0 allora mostro un testo che indichi all'utente l'assenza di case
+        hasHomes = elements != 0;
         if (elements == 0) {
             emptyListLayout.setVisibility(View.VISIBLE);
         }
@@ -282,7 +327,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     private void updateImage(String imageUri) {
         imgDefault.setVisibility(View.INVISIBLE);
         imgProfile.setVisibility(View.VISIBLE);
-        Glide.with(imgProfile.getContext()).load(imageUri).placeholder(R.drawable.ic_hourglass_empty).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        Glide.with(imgProfile.getContext()).load(imageUri).placeholder(R.drawable.ic_hourglass_empty_color_38006b).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

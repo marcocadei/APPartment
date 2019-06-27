@@ -1,5 +1,8 @@
 package com.unison.appartment.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.google.firebase.database.Exclude;
@@ -7,25 +10,21 @@ import com.unison.appartment.R;
 import com.unison.appartment.state.MyApplication;
 import com.unison.appartment.utils.DateUtils;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Classe che rappresenta un utente registrato all'applicazione, indipendente dalla/e casa/e in cui è presente
  */
-public class User implements Serializable {
+public class User implements Parcelable {
 
     public final static int GENDER_MALE = 0;
     public final static int GENDER_FEMALE = 1;
 
     private String imageStoragePath;
     private String email;
-    private String password;
     private String name;
     private String birthdate;
     private int gender;
@@ -35,18 +34,16 @@ public class User implements Serializable {
     public User (){
     }
 
-    public User(String email, String password, String name, String birthdate, int gender, @Nullable String image) {
+    public User(String email, String name, String birthdate, int gender, @Nullable String image) {
         this.email = email;
-        this.password = password;
         this.name = name;
         this.birthdate = birthdate;
         this.gender = gender;
         this.image = image;
     }
 
-    public User(String email, String password, String name, String birthdate, int gender, @Nullable String image, String imageStoragePath) {
+    public User(String email, String name, String birthdate, int gender, @Nullable String image, String imageStoragePath) {
         this.email = email;
-        this.password = password;
         this.name = name;
         this.birthdate = birthdate;
         this.gender = gender;
@@ -68,14 +65,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -125,4 +114,41 @@ public class User implements Serializable {
         String[] genderValues = MyApplication.getAppContext().getResources().getStringArray(R.array.desc_users_uid_gender_values);
         return genderValues[this.getGender()];
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.imageStoragePath);
+        dest.writeString(this.email);
+        dest.writeString(this.name);
+        dest.writeString(this.birthdate);
+        dest.writeInt(this.gender);
+        dest.writeString(this.image);
+    }
+
+    protected User(Parcel in) {
+        this.imageStoragePath = in.readString();
+        this.email = in.readString();
+        this.name = in.readString();
+        this.birthdate = in.readString();
+        this.gender = in.readInt();
+        this.image = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

@@ -22,6 +22,10 @@ public class RewardViewModel extends ViewModel {
         return repository.getRewardLiveData();
     }
 
+    public LiveData<Boolean> getErrorLiveData() {
+        return repository.getErrorLiveData();
+    }
+
     public void addReward(Reward newReward) {
         repository.addReward(newReward);
     }

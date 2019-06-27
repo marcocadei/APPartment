@@ -32,7 +32,7 @@ import java.util.Date;
 /**
  * Classe che rappresenta l'Activity con il dettaglio del UncompletedTask
  */
-public class TaskDetailActivity extends AppCompatActivity implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
+public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog implements UserPickerFragment.OnUserPickerFragmentInteractionListener {
 
     public final static String EXTRA_TASK_OBJECT = "taskObject";
 
@@ -69,7 +69,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         è costruita l'activity.
          */
         Intent creationIntent = getIntent();
-        task = (UncompletedTask) creationIntent.getSerializableExtra(EXTRA_TASK_OBJECT);
+        task = (UncompletedTask) creationIntent.getParcelableExtra(EXTRA_TASK_OBJECT);
 
         TextView textName = findViewById(R.id.activity_task_detail_name);
         TextView textPoints = findViewById(R.id.activity_task_detail_points_value);
@@ -295,7 +295,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putSerializable(BUNDLE_KEY_TASK, task);
+        outState.putParcelable(BUNDLE_KEY_TASK, task);
 
         super.onSaveInstanceState(outState);
     }
@@ -304,7 +304,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        task = (UncompletedTask) savedInstanceState.getSerializable(BUNDLE_KEY_TASK);
+        task = savedInstanceState.getParcelable(BUNDLE_KEY_TASK);
     }
 
     @Override
@@ -340,7 +340,7 @@ public class TaskDetailActivity extends AppCompatActivity implements UserPickerF
         if (requestCode == EDIT_TASK_REQUEST_CODE) {
             Intent returnIntent = new Intent();
             if (resultCode == Activity.RESULT_OK) {
-                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getSerializableExtra(TodoFragment.EXTRA_NEW_TASK));
+                returnIntent.putExtra(TodoFragment.EXTRA_NEW_TASK, data.getParcelableExtra(TodoFragment.EXTRA_NEW_TASK));
                 setResult(RESULT_EDITED, returnIntent);
             } else {
                 // Necessario impostare questo resultCode perché altrimenti il default è OK e non

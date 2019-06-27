@@ -1,13 +1,14 @@
 package com.unison.appartment.model;
 
-import com.google.firebase.database.PropertyName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
+import com.google.firebase.database.PropertyName;
 
 /**
  * Classe che rappresenta una casa
  */
-public class Home implements Serializable {
+public class Home implements Parcelable {
 
     public final static int DEFAULT_CONVERSION_FACTOR = 50;
 
@@ -60,4 +61,34 @@ public class Home implements Serializable {
     public void setConversionFactor(int conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.password);
+        dest.writeInt(this.conversionFactor);
+    }
+
+    protected Home(Parcel in) {
+        this.name = in.readString();
+        this.password = in.readString();
+        this.conversionFactor = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Home> CREATOR = new Parcelable.Creator<Home>() {
+        @Override
+        public Home createFromParcel(Parcel source) {
+            return new Home(source);
+        }
+
+        @Override
+        public Home[] newArray(int size) {
+            return new Home[size];
+        }
+    };
 }

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,8 @@ public class InsertPostFragment extends Fragment {
 
     private static final int PERMISSION_REQUEST_RECORDER = 1;
 
+    private final static String BUNDLE_KEY_LOADED = "loaded";
+
     // Edittext contenente l'input del messaggio
     private EditText inputText;
 
@@ -52,6 +55,10 @@ public class InsertPostFragment extends Fragment {
     private boolean isRecording = false;
     // Nome del file in cui viene salvato l'audio
     private String fileName;
+
+    private ImageButton btnSendText;
+    private ImageButton btnSendImg;
+    private ImageButton btnSendAudio;
 
     /**
      * Costruttore vuoto obbligatorio che viene usato nella creazione del fragment
@@ -82,7 +89,13 @@ public class InsertPostFragment extends Fragment {
         // Inflate the layout for this fragment
         final View myView =  inflater.inflate(R.layout.fragment_insert_post, container, false);
 
-        final ImageButton btnSendText = myView.findViewById(R.id.fragment_insert_post_btn_send_text);
+        if (savedInstanceState == null) {
+            loaded = false;
+        } else {
+            loaded = savedInstanceState.getBoolean(BUNDLE_KEY_LOADED);
+        }
+
+        btnSendText = myView.findViewById(R.id.fragment_insert_post_btn_send_text);
         btnSendText.setEnabled(false);
         btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,12 +104,13 @@ public class InsertPostFragment extends Fragment {
                     EditText inputText = myView.findViewById(R.id.fragment_insert_post_input_text);
                     listener.onInsertPostFragmentSendPost(inputText.getText().toString(), Post.TEXT_POST);
                     // Ripulisco l'edit text dopo che il messaggio è stato inviato
-                    inputText.getText().clear();
+                    inputText.setText("");
                 }
             }
         });
 
-        final ImageButton btnSendImg = myView.findViewById(R.id.fragment_insert_post_btn_send_img);
+        btnSendImg = myView.findViewById(R.id.fragment_insert_post_btn_send_img);
+        btnSendImg.setEnabled(false);
         btnSendImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +124,8 @@ public class InsertPostFragment extends Fragment {
             }
         });
 
-        final ImageButton btnSendAudio = myView.findViewById(R.id.fragment_insert_post_btn_send_audio);
+        btnSendAudio = myView.findViewById(R.id.fragment_insert_post_btn_send_audio);
+        btnSendAudio.setEnabled(false);
         btnSendAudio.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -185,7 +200,10 @@ public class InsertPostFragment extends Fragment {
                     btnSendText.setEnabled(false);
                 } else {
                     // btnSendText.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-                    btnSendText.setEnabled(true);
+                    // Se non si è ancora caricata la lista dei messaggi non consento la pubblicazione di un post
+                    if (loaded) {
+                        btnSendText.setEnabled(true);
+                    }
                 }
             }
 
@@ -197,6 +215,22 @@ public class InsertPostFragment extends Fragment {
         });
 
         return myView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(BUNDLE_KEY_LOADED, loaded);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    private boolean loaded = false;
+    public void loaded() {
+        this.loaded = true;
+        btnSendText.setEnabled(inputText.getText().toString().replaceAll("\n", "")
+                .replaceAll("\\s+", "").length() != 0 );
+        btnSendImg.setEnabled(true);
+        btnSendAudio.setEnabled(true);
     }
 
     /**

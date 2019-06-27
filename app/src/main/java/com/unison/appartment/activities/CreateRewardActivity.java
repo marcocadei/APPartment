@@ -61,7 +61,7 @@ public class CreateRewardActivity extends FormActivity {
         layoutPoints = findViewById(R.id.activity_create_reward_input_points);
 
         Intent i = getIntent();
-        final Reward reward = (Reward) i.getSerializableExtra(EXTRA_REWARD_DATA);
+        final Reward reward = (Reward) i.getParcelableExtra(EXTRA_REWARD_DATA);
         if (reward != null) {
             // Imposto il titolo opportunamente se devo modificare e non creare un premio
             toolbar.setTitle(R.string.activity_create_reward_title_edit);

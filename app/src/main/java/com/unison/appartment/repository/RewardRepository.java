@@ -1,16 +1,21 @@
 package com.unison.appartment.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
+import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
 
@@ -30,6 +35,8 @@ public class RewardRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<Reward>> rewardLiveData;
 
+    private MutableLiveData<Boolean> error;
+
     public RewardRepository() {
         // Riferimento al nodo root del database
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -39,11 +46,17 @@ public class RewardRepository {
         Query orderedReward = rewardsRef.orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_NAME);
         liveData = new FirebaseQueryLiveData(orderedReward);
         rewardLiveData = Transformations.map(liveData, new RewardRepository.Deserializer());
+
+        error = new MutableLiveData<>();
     }
 
     @NonNull
     public LiveData<List<Reward>> getRewardLiveData() {
         return rewardLiveData;
+    }
+
+    public LiveData<Boolean> getErrorLiveData() {
+        return error;
     }
 
     public void addReward(Reward newReward) {
@@ -79,7 +92,14 @@ public class RewardRepository {
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(userId).getPoints() - reward.getPoints());
         // Aggiungo l'id del premio prenotato ai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, true);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void cancelRequest(Reward reward) {
@@ -99,10 +119,17 @@ public class RewardRepository {
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
         // Vengono riaggiunti i punti all'utente che aveva eseguito la richiesta
-        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints());
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Math.min(Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints(), HomeUser.MAX_POINTS));
         // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, null);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void confirmRequest(Reward reward, String userId) {
@@ -127,7 +154,14 @@ public class RewardRepository {
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Appartment.getInstance().getHomeUser(userId).getClaimedRewards() + 1);
         // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, null);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     private class Deserializer implements Function<DataSnapshot, List<Reward>> {

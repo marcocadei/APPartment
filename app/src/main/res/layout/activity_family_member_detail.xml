@@ -182,7 +182,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_family_member_detail_layout_stat_total_points"
-                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_earned_money"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_text_posts"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_chart"
@@ -222,52 +222,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/activity_family_member_detail_layout_stat_earned_money"
-                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_text_posts"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_total_points"
-                style="@style/Component.Layout.StatItem">
-
-                <ImageView
-                    android:id="@+id/activity_family_member_detail_img_money"
-                    style="@style/Component.ImageView.ListItemIcon"
-                    android:layout_width="@dimen/img_small"
-                    android:layout_height="@dimen/img_small"
-                    android:contentDescription="@string/caption_ic_attach_money"
-                    android:src="@drawable/ic_attach_money"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_earned_money_name"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/activity_family_member_detail_text_earned_money_name"
-                    android:text="@string/desc_homeusers_homename_uid_earnedmoney"
-                    style="@style/Component.TextView.SingleLine.ListItemTitle"
-                    android:textStyle="normal"
-                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_money"
-                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_earned_money_value"
-                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_earned_money_value"
-                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_earned_money_value" />
-
-                <TextView
-                    android:id="@+id/activity_family_member_detail_text_earned_money_value"
-                    style="@style/Component.TextView.SingleLine.PointsValue"
-                    android:text="@string/placeholder_number"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_earned_money_name"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_family_member_detail_layout_stat_text_posts"
                 app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_image_posts"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_earned_money"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_total_points"
                 style="@style/Component.Layout.StatItem">
 
                 <ImageView
