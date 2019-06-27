@@ -129,6 +129,8 @@
     <string name="notification_new_post_extended_image">&lt;b>%1$s:&lt;/b> &lt;i>Immagine&lt;/i></string>
     <string name="notification_new_reward_request_content">Ci sono nuove richieste di premi in attesa di conferma.</string>
     <string name="notification_new_reward_request_title">Nuova richiesta premio</string>
+    <string name="notification_new_task_request_content">Ci sono nuove richieste di completamento in attesa di conferma.</string>
+    <string name="notification_new_task_request_title">Nuova richiesta conferma attività</string>
     <string name="notification_role_changed_content">Il tuo ruolo all\'interno della casa %1$s è stato modificato in: %2$s.</string>
     <string name="notification_role_changed_title">Ruolo modificato</string>
     <string name="notification_user_kicked_content">Non fai più parte della casa %1$s.</string>

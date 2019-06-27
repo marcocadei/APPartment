@@ -34,6 +34,7 @@ import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.Post;
 import com.unison.appartment.model.Reward;
+import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 
@@ -47,12 +48,15 @@ public class NotificationService extends Service {
     // Costanti utilizzate per la gestione dei messaggi ricevuti da activity/fragments
     public final static int MSG_CLEAR_POSTS_NOTIFICATIONS = 1;
     public final static int MSG_CLEAR_REWARDS_NOTIFICATIONS = 2;
+    public final static int MSG_CLEAR_TASKS_NOTIFICATIONS = 3;
     public final static int MSG_CLEAR_USER_INFO_NOTIFICATIONS = 8;
 
     private Query postsRef;
     private ChildEventListener postsListener;
     private Query rewardsRef;
     private ChildEventListener rewardsListener;
+    private Query tasksRef;
+    private ChildEventListener tasksListener;
     private Query userHomesRef;
     private ChildEventListener userHomesListener;
 
@@ -63,6 +67,8 @@ public class NotificationService extends Service {
     private final static String POST_CHANNEL_NAME = "Posts";
     private final static String REWARD_CHANNEL_ID = "Rewards";
     private final static String REWARD_CHANNEL_NAME = "Rewards";
+    private final static String TASK_CHANNEL_ID = "Tasks";
+    private final static String TASK_CHANNEL_NAME = "Tasks";
     private final static String USER_INFO_CHANNEL_ID = "User Info";
     private final static String USER_INFO_CHANNEL_NAME = "User Info";
     private final static String HOME_STATUS_CHANNEL_ID = "Home Status";
@@ -71,6 +77,7 @@ public class NotificationService extends Service {
     // Costanti utilizzate per gestire gli id delle notifiche
     private final static int POST_CHANNEL_NOTIFICATIONS_ID_UNIT = 1;
     private final static int REWARD_CHANNEL_NOTIFICATIONS_ID_UNIT = 2;
+    private final static int TASK_CHANNEL_NOTIFICATIONS_ID_UNIT = 3;
     private final static int USER_INFO_CHANNEL_NOTIFICATIONS_ID_UNIT = 8;
     private final static int HOME_STATUS_CHANNEL_NOTIFICATIONS_ID_UNIT = 9;
 
@@ -100,16 +107,19 @@ public class NotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             makeNotificationChannel(POST_CHANNEL_ID, POST_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             makeNotificationChannel(REWARD_CHANNEL_ID, REWARD_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            makeNotificationChannel(TASK_CHANNEL_ID, TASK_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             makeNotificationChannel(USER_INFO_CHANNEL_ID, USER_INFO_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
             makeNotificationChannel(HOME_STATUS_CHANNEL_ID, HOME_STATUS_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
         }
         currentlyDisplayedNotifications.put(POST_CHANNEL_ID, new LinkedList<Integer>());
         currentlyDisplayedNotifications.put(REWARD_CHANNEL_ID, new LinkedList<Integer>());
+        currentlyDisplayedNotifications.put(TASK_CHANNEL_ID, new LinkedList<Integer>());
         currentlyDisplayedNotifications.put(USER_INFO_CHANNEL_ID, new LinkedList<Integer>());
         currentlyDisplayedNotifications.put(HOME_STATUS_CHANNEL_ID, new LinkedList<Integer>());
 
         listenPosts();
         listenRewards();
+        listenTasks();
         listenUserHomes();
     }
 
@@ -329,6 +339,87 @@ public class NotificationService extends Service {
         rewardsRef.addChildEventListener(rewardsListener);
     }
 
+    private void listenTasks() {
+        tasksRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName());
+        tasksListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                /*
+                Qui non viene fatto nulla perché non viene mostrata alcuna notifica particolare se
+                viene aggiunto un nuovo task.
+                 */
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                UncompletedTask task = dataSnapshot.getValue(UncompletedTask.class);
+
+                /*
+                La notifica è relativa solo alle nuove richieste di conferma che arrivano, quindi viene
+                verificato che l'attributo marked sia uguale a true (in quanto non è possibile
+                fare altre modifiche al task fintantoché questo è marcato come completato da qualcuno).
+                 */
+                if (task.isMarked()) {
+                    // Mostro la notifica solo ai master
+                    if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
+                        // Non mostro la notifica se sono nel todo fragment
+                        if (Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_TODO) {
+                            // Se c'è già una notifica relativa ai task visualizzata, la sovrascrivo.
+                            boolean taskNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).size() != 0;
+                            int notificationId = taskNotificationAlreadyDispatched
+                                    ? currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).get(0)
+                                    : ((int) (SystemClock.uptimeMillis() * 10)) + TASK_CHANNEL_NOTIFICATIONS_ID_UNIT;
+
+                            // Intent per l'activity che si vuole far partire al tap sulla notifica
+                            Intent resultIntent = new Intent(NotificationService.this, MainActivity.class);
+                            resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            // Extra utilizzati dall'activity che viene fatta partire al tap sulla notifica
+                            resultIntent.putExtra(MainActivity.EXTRA_DESTINATION_FRAGMENT, MainActivity.POSITION_TODO);
+
+                            notificationManager.notify(NOTIFICATIONS_TAG, notificationId, buildTextNotification(
+                                    resultIntent,
+                                    TASK_CHANNEL_ID,
+                                    R.drawable.ic_appartment_notifications,
+                                    getString(R.string.notification_new_task_request_title),
+                                    getString(R.string.notification_new_task_request_content),
+                                    NotificationCompat.PRIORITY_DEFAULT,
+                                    false,
+                                    ""
+                            ));
+
+                            if (!taskNotificationAlreadyDispatched) {
+                                currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).add(notificationId);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                /*
+                Qui non viene fatto nulla perché non viene mostrata alcuna notifica particolare se
+                viene rimosso un task.
+                 */
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                /*
+                Qui non viene fatto nulla perché nell'app non è possibile compiere nessuna azione
+                tale da triggerare questo callback.
+                 */
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // TODO gestire errore
+            }
+        };
+        tasksRef.addChildEventListener(tasksListener);
+    }
+
     private void listenUserHomes() {
         userHomesRef = com.google.firebase.database.FirebaseDatabase.getInstance().getReference(DatabaseConstants.USERHOMES + DatabaseConstants.SEPARATOR +
                 new FirebaseAuth().getCurrentUserUid());
@@ -468,6 +559,9 @@ public class NotificationService extends Service {
         if (rewardsRef != null && rewardsListener != null) {
             rewardsRef.removeEventListener(rewardsListener);
         }
+        if (tasksRef != null && tasksListener != null) {
+            tasksRef.removeEventListener(tasksListener);
+        }
         if (userHomesRef != null && userHomesListener != null) {
             userHomesRef.removeEventListener(userHomesListener);
         }
@@ -592,6 +686,18 @@ public class NotificationService extends Service {
                     }
                     catch (NullPointerException e) {
                         currentlyDisplayedNotifications.put(REWARD_CHANNEL_ID, new LinkedList<Integer>());
+                    }
+                    break;
+
+                case MSG_CLEAR_TASKS_NOTIFICATIONS:
+                    try {
+                        for (Integer notificationId : currentlyDisplayedNotifications.get(TASK_CHANNEL_ID)) {
+                            notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);
+                        }
+                        currentlyDisplayedNotifications.get(TASK_CHANNEL_ID).clear();
+                    }
+                    catch (NullPointerException e) {
+                        currentlyDisplayedNotifications.put(TASK_CHANNEL_ID, new LinkedList<Integer>());
                     }
                     break;
 

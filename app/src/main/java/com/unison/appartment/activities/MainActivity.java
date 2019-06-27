@@ -438,6 +438,7 @@ public class MainActivity extends AppCompatActivity implements DeleteHomeUserCon
                 break;
             case POSITION_TODO:
                 Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_TODO);
+                sendMessageToNotificationService(NotificationService.MSG_CLEAR_TASKS_NOTIFICATIONS);
                 break;
             case POSITION_REWARDS:
                 Appartment.getInstance().setCurrentScreen(Appartment.SCREEN_REWARDS);
