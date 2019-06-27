@@ -33,7 +33,6 @@
         android:layout_marginEnd="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_extra_small"
         android:layout_marginBottom="@dimen/margin_extra_small"
-        android:text="@string/fragment_family_text_members"
         android:textSize="@dimen/text_large"
         android:gravity="start"
         app:layout_constraintEnd_toEndOf="parent"
