@@ -70,7 +70,6 @@ public class AppartmentService extends Service {
                 else {
                     Intent intent = new Intent();
                     intent.setAction(Appartment.EVENT_HOME_DELETE);
-                    intent.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_home_deleted_message));
                     LocalBroadcastManager.getInstance(AppartmentService.this).sendBroadcast(intent);
                 }
             }
