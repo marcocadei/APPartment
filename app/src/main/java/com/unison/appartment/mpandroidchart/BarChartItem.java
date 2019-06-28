@@ -31,6 +31,8 @@ public class BarChartItem extends ChartItem {
     private String title;
     private List<String> labels;
 
+    private final static int DP_PER_BAR = 60;
+
     public BarChartItem(ChartData<?> cd, Context c, String title, List<String> labels) {
         super(cd);
         this.title = title;
@@ -100,6 +102,10 @@ public class BarChartItem extends ChartItem {
         yr.setDrawAxisLine(true);
         yr.setDrawGridLines(false);
         yr.setAxisMinimum(0f);
+
+        // Modifica dell'altezza in base al numero di righe visualizzate
+        final float scale = c.getResources().getDisplayMetrics().density;
+        holder.chart.getLayoutParams().height = (int) ((DP_PER_BAR * mChartData.getEntryCount()) * scale + 0.5f);
 
         // set data
         holder.chart.setData((BarData) mChartData);
