@@ -301,8 +301,8 @@ public class NotificationService extends Service {
                                     getString(R.string.notification_new_reward_request_title),
                                     getString(R.string.notification_new_reward_request_content),
                                     NotificationCompat.PRIORITY_DEFAULT,
-                                    false,
-                                    ""
+                                    true,
+                                    getString(R.string.notification_new_reward_request_content)
                             ));
 
                             if (!rewardNotificationAlreadyDispatched) {
@@ -382,8 +382,8 @@ public class NotificationService extends Service {
                                     getString(R.string.notification_new_task_request_title),
                                     getString(R.string.notification_new_task_request_content),
                                     NotificationCompat.PRIORITY_DEFAULT,
-                                    false,
-                                    ""
+                                    true,
+                                    getString(R.string.notification_new_task_request_content)
                             ));
 
                             if (!taskNotificationAlreadyDispatched) {
@@ -479,8 +479,8 @@ public class NotificationService extends Service {
                             getString(R.string.notification_role_changed_title),
                             notificationContent,
                             NotificationCompat.PRIORITY_HIGH,
-                            false,
-                            ""
+                            true,
+                            notificationContent
                     ));
 
                     if (!messageNotificationAlreadyDispatched) {
@@ -515,8 +515,8 @@ public class NotificationService extends Service {
                             getString(R.string.notification_user_kicked_title),
                             getString(R.string.notification_user_kicked_content, userHome.getHomename()),
                             NotificationCompat.PRIORITY_HIGH,
-                            false,
-                            ""
+                            true,
+                            getString(R.string.notification_user_kicked_content, userHome.getHomename())
                     ));
 
                     currentlyDisplayedNotifications.put(HOME_STATUS_CHANNEL_ID, notificationId);
