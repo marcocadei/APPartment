@@ -30,9 +30,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseError;
+import com.unison.appartment.database.DatabaseReader;
+import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseAuth;
+import com.unison.appartment.database.FirebaseDatabaseReader;
 import com.unison.appartment.fragments.DeleteHomeUserConfirmationDialogFragment;
 import com.unison.appartment.fragments.DoneFragment;
+import com.unison.appartment.fragments.FirebaseErrorDialogFragment;
 import com.unison.appartment.model.Home;
 import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.services.AppartmentService;
@@ -47,6 +52,7 @@ import com.unison.appartment.utils.KeyboardUtils;
 import com.unison.appartment.viewmodel.HomeUserViewModel;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Classe che rappresenta l'Activity principale di una Home
@@ -86,6 +92,8 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     private Messenger serviceMessenger = null;
     private boolean serviceBound;
 
+    private Bundle savedInstanceState;
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -104,7 +112,16 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.savedInstanceState = savedInstanceState;
 
+        if (Appartment.getInstance().getHome() != null) {
+            // Se l'utente è uscito dall'app mentre era in una casa: vado direttamente alla
+            // MainActivity di quella casa
+            new FirebaseDatabaseReader().retrieveHomeUsers(Appartment.getInstance().getHome().getName(), databaseReaderListener);
+        }
+    }
+
+    protected void initialize(Bundle savedInstanceState) {
         // TODO se sono arrivato qui da una notifica però ero ad es. già uscito da una casa,
         // devo fare un controllo e nel caso tornare indietro per evitare errori e crash
 
@@ -162,15 +179,15 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
                 fragment o provengo da quel fragment l'options menu deve essere cambiato.
                 Inoltre i punti non devono essere visualizzati.
                  */
-                 if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
+                if (currentPosition == POSITION_FAMILY || lastPosition == POSITION_FAMILY) {
                     invalidateOptionsMenu();
-                 }
-                 if (currentPosition == POSITION_FAMILY) {
-                     layoutPoints.setVisibility(View.GONE);
-                 }
-                 else {
-                     layoutPoints.setVisibility(View.VISIBLE);
-                 }
+                }
+                if (currentPosition == POSITION_FAMILY) {
+                    layoutPoints.setVisibility(View.GONE);
+                }
+                else {
+                    layoutPoints.setVisibility(View.VISIBLE);
+                }
 
             }
 
@@ -185,24 +202,24 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 // Quando viene selezionata dal menù nella bottom navigation la stessa sezione in cui si è già
                 // il fragment non deve essere ricaricato (non viene fatto nulla).
-                    updateActivityContent(menuItem);
-                    switch (menuItem.getItemId()) {
-                        case R.id.activity_main_bottom_navigation_messages:
-                            pager.setCurrentItem(POSITION_MESSAGES, true);
-                            break;
-                        case R.id.activity_main_bottom_navigation_family:
-                            pager.setCurrentItem(POSITION_FAMILY, true);
-                            break;
-                        case R.id.activity_main_bottom_navigation_todo:
-                            pager.setCurrentItem(POSITION_TODO, true);
-                            break;
-                        case R.id.activity_main_bottom_navigation_done:
-                            pager.setCurrentItem(POSITION_DONE, true);
-                            break;
-                        case R.id.activity_main_bottom_navigation_rewards:
-                            pager.setCurrentItem(POSITION_REWARDS, true);
-                            break;
-                    }
+                updateActivityContent(menuItem);
+                switch (menuItem.getItemId()) {
+                    case R.id.activity_main_bottom_navigation_messages:
+                        pager.setCurrentItem(POSITION_MESSAGES, true);
+                        break;
+                    case R.id.activity_main_bottom_navigation_family:
+                        pager.setCurrentItem(POSITION_FAMILY, true);
+                        break;
+                    case R.id.activity_main_bottom_navigation_todo:
+                        pager.setCurrentItem(POSITION_TODO, true);
+                        break;
+                    case R.id.activity_main_bottom_navigation_done:
+                        pager.setCurrentItem(POSITION_DONE, true);
+                        break;
+                    case R.id.activity_main_bottom_navigation_rewards:
+                        pager.setCurrentItem(POSITION_REWARDS, true);
+                        break;
+                }
                 return true;
             }
         });
@@ -520,4 +537,42 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
             e.printStackTrace();
         }
     }
+
+    final DatabaseReaderListener databaseReaderListener = new DatabaseReaderListener() {
+        // Se l'utente è stato eliminato dalla casa allora vado alla UserProfileActivity
+        @Override
+        public void onReadSuccess(String key, Object object) {
+            Map<String, HomeUser> homeUsers = (Map<String, HomeUser>) object;
+            if (homeUsers.get(new FirebaseAuth().getCurrentUserUid()) == null) {
+                Intent i = new Intent(MainActivity.this, UserProfileActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_user_kicked_message));
+                startActivity(i);
+                finish();
+            } else {
+                initialize(savedInstanceState);
+            }
+        }
+        // Se la casa è stata eliminata vado alla UserProfileActivity
+        @Override
+        public void onReadEmpty() {
+            Intent i = new Intent(MainActivity.this, UserProfileActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_home_deleted_message));
+            startActivity(i);
+            finish();
+        }
+
+        @Override
+        public void onReadCancelled(DatabaseError databaseError) {
+            /*
+            onCancelled viene invocato solo se si verifica un errore a lato server oppure se
+            le regole di sicurezza impostate in Firebase non permettono l'operazione richiesta.
+            In questo caso perciò viene visualizzato un messaggio di errore generico, dato che
+            la situazione non può essere risolta dall'utente.
+            */
+            FirebaseErrorDialogFragment dialog = new FirebaseErrorDialogFragment();
+            dialog.show(getSupportFragmentManager(), FirebaseErrorDialogFragment.TAG_FIREBASE_ERROR_DIALOG);
+        }
+    };
 }
