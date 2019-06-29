@@ -232,5 +232,18 @@ public class ChartActivity extends ActivityWithNetworkConnectionDialog {
         public int getViewTypeCount() {
             return 2;
         }
+
+        /**
+         * Definiti per disabilitare il ripple sui grafici
+         **/
+        @Override
+        public boolean isEnabled(int position) {
+            return false;
+        }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
     }
 }
