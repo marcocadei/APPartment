@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    tools:context=".activities.FamilyMemberDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/activity_family_member_detail_appbar"
+        style="@style/Component.AppBarWithBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activity_family_member_detail_toolbar"
+            style="@style/Component.ToolbarWithBackButton"
+            app:menu="@menu/activity_family_member_detail_toolbar"
+            app:title="@string/activity_family_member_detail_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/activity_family_member_detail_scroll_achievement"
+        style="@style/Component.ScrollView"
+        app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_appbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Component.Layout.NestedScrollViewChild">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_achievement_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/margin_small"
+                style="@style/Component.Layout.NestedScrollViewFixedElement">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/activity_family_member_detail_layout_header"
+                    style="@style/Component.Layout.Header"
+                    android:layout_marginBottom="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.appeaser.imagetransitionlibrary.TransitionImageView
+                        android:id="@+id/activity_family_member_detail_img_profile"
+                        style="@style/Component.ImageView.ProfileImage"
+                        android:visibility="invisible"
+                        android:scaleType="centerCrop"
+                        app:tiv_rounding="1"
+                        android:transitionName="@string/transition_open_image"
+                        android:contentDescription="@string/caption_profile_pic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_layout_attributes"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/activity_family_member_detail_img_profile_default"
+                        style="@style/Component.ImageView.ProfileImage"
+                        android:visibility="visible"
+                        android:scaleType="centerCrop"
+                        android:transitionName="@string/transition_open_image"
+                        android:contentDescription="@string/caption_profile_pic"
+                        app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_img_profile"
+                        app:layout_constraintEnd_toEndOf="@id/activity_family_member_detail_img_profile"
+                        app:layout_constraintStart_toStartOf="@id/activity_family_member_detail_img_profile"
+                        app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_img_profile"
+                        android:tint="@color/colorPrimaryDark"
+                        app:srcCompat="@drawable/ic_person" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/activity_family_member_detail_layout_attributes"
+                        style="@style/Component.Layout"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/margin_small"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/activity_family_member_detail_img_profile"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_name"
+                            style="@style/Component.TextView.SingleLine.PointsName"
+                            android:gravity="start"
+                            android:text="@string/placeholder_text"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_extra_large"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_points_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_points_title"
+                            style="@style/Component.TextView.SingleLine.PointsName"
+                            android:gravity="start"
+                            android:text="@string/general_points_name"
+                            android:textStyle="bold"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_name"
+                            app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_points_value"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_text_role_title" />
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_points_value"
+                            style="@style/Component.TextView.SingleLine.PointsValue"
+                            android:gravity="start"
+                            android:text="@string/placeholder_number"
+                            android:textSize="@dimen/text_medium"
+                            android:layout_marginStart="@dimen/margin_small"
+                            app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_points_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_points_title"
+                            app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_points_title" />
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_role_title"
+                            style="@style/Component.TextView.SingleLine.PointsName"
+                            android:gravity="start"
+                            android:text="@string/desc_userhomes_uid_homename_role"
+                            android:textStyle="bold"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_role_value"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_points_title" />
+
+                        <TextView
+                            android:id="@+id/activity_family_member_detail_text_role_value"
+                            style="@style/Component.TextView.SingleLine.PointsValue"
+                            android:gravity="start"
+                            android:text="@string/placeholder_text"
+                            android:textSize="@dimen/text_medium"
+                            android:layout_marginStart="@dimen/margin_small"
+                            app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_role_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_role_title"
+                            app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_role_title" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/activity_family_member_detail_text_achievement_title"
+                android:text="@string/activity_family_member_detail_text_achievement_title"
+                style="@style/Component.TextView.MultiLine.ObjectTitle"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="@dimen/text_extra_large"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_chart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_profile" />
+
+            <com.github.mikephil.charting.charts.RadarChart
+                android:id="@+id/activity_family_member_detail_chart"
+                android:layout_width="300dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_total_points"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_text_achievement_title" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_stat_total_points"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_text_posts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_chart"
+                style="@style/Component.Layout.StatItem">
+
+                <ImageView
+                    android:id="@+id/activity_family_member_detail_img_star"
+                    style="@style/Component.ImageView.ListItemIcon"
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:contentDescription="@string/caption_ic_star"
+                    android:src="@drawable/ic_star_border"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_total_points_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_total_points_name"
+                    android:text="@string/desc_homeusers_homename_uid_totalearnedpoints"
+                    style="@style/Component.TextView.SingleLine.ListItemTitle"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_star"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_total_points_value"
+                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_total_points_value"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_total_points_value" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_total_points_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_total_points_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_stat_text_posts"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_image_posts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_total_points"
+                style="@style/Component.Layout.StatItem">
+
+                <ImageView
+                    android:id="@+id/activity_family_member_detail_img_message"
+                    style="@style/Component.ImageView.ListItemIcon"
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:contentDescription="@string/caption_ic_message"
+                    android:src="@drawable/ic_message"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_text_posts_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_text_posts_name"
+                    android:text="@string/desc_homeusers_homename_uid_textposts"
+                    style="@style/Component.TextView.SingleLine.ListItemTitle"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_message"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_text_posts_value"
+                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_text_posts_value"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_text_posts_value" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_text_posts_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_text_posts_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_stat_image_posts"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_audio_posts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_text_posts"
+                style="@style/Component.Layout.StatItem">
+
+                <ImageView
+                    android:id="@+id/activity_family_member_detail_img_photo"
+                    style="@style/Component.ImageView.ListItemIcon"
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:contentDescription="@string/caption_ic_photo"
+                    android:src="@drawable/ic_photo_size_select_actual"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_image_posts_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_image_posts_name"
+                    android:text="@string/desc_homeusers_homename_uid_imageposts"
+                    style="@style/Component.TextView.SingleLine.ListItemTitle"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_photo"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_image_posts_value"
+                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_image_posts_value"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_image_posts_value" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_image_posts_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_image_posts_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_stat_audio_posts"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_claimed_rewards"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_image_posts"
+                style="@style/Component.Layout.StatItem">
+
+                <ImageView
+                    android:id="@+id/activity_family_member_detail_img_audio"
+                    style="@style/Component.ImageView.ListItemIcon"
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:contentDescription="@string/caption_ic_audiotrack"
+                    android:src="@drawable/ic_audiotrack"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_audio_posts_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_audio_posts_name"
+                    android:text="@string/desc_homeusers_homename_uid_audioposts"
+                    style="@style/Component.TextView.SingleLine.ListItemTitle"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_audio"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_audio_posts_value"
+                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_audio_posts_value"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_audio_posts_value" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_audio_posts_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_audio_posts_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_stat_claimed_rewards"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_completed_tasks"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_audio_posts"
+                style="@style/Component.Layout.StatItem">
+
+                <ImageView
+                    android:id="@+id/activity_family_member_detail_img_giftcard"
+                    style="@style/Component.ImageView.ListItemIcon"
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:contentDescription="@string/caption_ic_card_giftcard"
+                    android:src="@drawable/ic_card_giftcard"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_claimed_rewards_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_claimed_rewards_name"
+                    android:text="@string/desc_homeusers_homename_uid_claimedrewards"
+                    style="@style/Component.TextView.SingleLine.ListItemTitle"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_giftcard"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_claimed_rewards_value"
+                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_claimed_rewards_value"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_claimed_rewards_value" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_claimed_rewards_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_claimed_rewards_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_stat_completed_tasks"
+                app:layout_constraintBottom_toTopOf="@id/activity_family_member_detail_layout_stat_rejected_tasks"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_claimed_rewards"
+                style="@style/Component.Layout.StatItem">
+
+                <ImageView
+                    android:id="@+id/activity_family_member_detail_img_check"
+                    style="@style/Component.ImageView.ListItemIcon"
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:contentDescription="@string/caption_ic_check"
+                    android:src="@drawable/ic_check"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_completed_tasks_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_completed_tasks_name"
+                    android:text="@string/desc_homeusers_homename_uid_completedtasks"
+                    style="@style/Component.TextView.SingleLine.ListItemTitle"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_check"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_completed_tasks_value"
+                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_completed_tasks_value"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_completed_tasks_value" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_completed_tasks_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_completed_tasks_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_family_member_detail_layout_stat_rejected_tasks"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_layout_stat_completed_tasks"
+                style="@style/Component.Layout.StatItem">
+
+                <ImageView
+                    android:id="@+id/activity_family_member_detail_img_clear"
+                    style="@style/Component.ImageView.ListItemIcon"
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:contentDescription="@string/caption_ic_clear"
+                    android:src="@drawable/ic_clear"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_rejected_tasks_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_rejected_tasks_name"
+                    android:text="@string/desc_homeusers_homename_uid_rejectedtasks"
+                    style="@style/Component.TextView.SingleLine.ListItemTitle"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_img_clear"
+                    app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_text_rejected_tasks_value"
+                    app:layout_constraintTop_toTopOf="@id/activity_family_member_detail_text_rejected_tasks_value"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_family_member_detail_text_rejected_tasks_value" />
+
+                <TextView
+                    android:id="@+id/activity_family_member_detail_text_rejected_tasks_value"
+                    style="@style/Component.TextView.SingleLine.PointsValue"
+                    android:text="@string/placeholder_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_text_rejected_tasks_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--<fragment
+                android:id="@+id/fragment_achievement_list"
+                android:name="com.unison.appartment.fragments.AchievementListFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/margin_extra_large"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_family_member_detail_text_achievement_title"
+                tools:layout="@layout/fragment_achievement_list" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_family_member_detail_layout_buttons"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_large"
+        app:layout_constraintTop_toBottomOf="@id/activity_family_member_detail_scroll_achievement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Component.Layout.ButtonSet"
+        android:visibility="gone">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_family_member_detail_btn_upgrade"
+            style="@style/Component.Button"
+            android:text="@string/activity_family_member_detail_btn_upgrade_action_upgrade"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_btn_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_family_member_detail_btn_delete"
+            style="@style/Component.Button"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/activity_family_member_detail_btn_delete"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/activity_family_member_detail_btn_upgrade"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
