@@ -148,53 +148,67 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_task_detail_btn_complete"
-                    style="@style/Component.Button"
-                    android:text="@string/activity_task_detail_btn_complete_task_available"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_switch"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/activity_task_detail_layout_not_delete_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_delete">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_task_detail_btn_switch"
-                    style="@style/Component.Button"
-                    android:text="@string/activity_task_detail_btn_switch"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_assign"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_task_detail_btn_complete"
+                        style="@style/Component.Button"
+                        android:text="@string/activity_task_detail_btn_complete_task_available"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/activity_task_detail_btn_assign"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_task_detail_btn_assign"
-                    style="@style/Component.Button"
-                    android:text="@string/activity_task_detail_btn_assign"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_confirm_completion"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_switch" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_task_detail_btn_assign"
+                        style="@style/Component.Button"
+                        android:text="@string/activity_task_detail_btn_assign"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/activity_task_detail_btn_confirm_completion"
+                        app:layout_constraintStart_toEndOf="@id/activity_task_detail_btn_complete"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_task_detail_btn_confirm_completion"
-                    style="@style/Component.Button"
-                    android:text="@string/activity_task_detail_btn_confirm_completion"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_cancel_completion"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_complete" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_task_detail_btn_confirm_completion"
+                        style="@style/Component.Button"
+                        android:text="@string/activity_task_detail_btn_confirm_completion"
+                        android:visibility="gone"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/activity_task_detail_btn_cancel_completion"
+                        app:layout_constraintStart_toEndOf="@id/activity_task_detail_btn_assign"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_task_detail_btn_cancel_completion"
-                    style="@style/Component.Button"
-                    android:text="@string/activity_task_detail_btn_cancel_completion"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@id/activity_task_detail_btn_delete"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_confirm_completion" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_task_detail_btn_cancel_completion"
+                        style="@style/Component.Button"
+                        android:text="@string/activity_task_detail_btn_cancel_completion"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/activity_task_detail_btn_switch"
+                        app:layout_constraintStart_toEndOf="@id/activity_task_detail_btn_confirm_completion"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/activity_task_detail_btn_switch"
+                        style="@style/Component.Button"
+                        android:text="@string/activity_task_detail_btn_switch"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/activity_task_detail_btn_cancel_completion"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activity_task_detail_btn_delete"
@@ -205,7 +219,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_btn_cancel_completion" />
+                    app:layout_constraintTop_toBottomOf="@id/activity_task_detail_layout_not_delete_buttons" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
