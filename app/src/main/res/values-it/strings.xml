@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">APPartment</string>
     <string name="activity_chart_empty_list_text">Nessuna statistica da visualizzare.</string>
     <string name="activity_chart_title">Statistiche</string>
     <string name="activity_completed_task_detail_btn_create_task">Ricrea attività</string>
@@ -152,7 +151,7 @@
     <string name="dialog_delete_home_confirmation_message">Tutti i dati relativi a questa casa e agli utenti che ne fanno parte verranno eliminati. Sei sicuro di voler procedere? Una volta rimossi, i dati non potranno più essere recuperati.</string>
     <string name="dialog_delete_home_user_confirmation_message_last">Sei sicuro di voler lasciare la casa? Poiché non ci sono altri utenti, alla tua uscita tutti i dati relativi a questa casa verranno eliminati in modo irreversibile.</string>
     <string name="dialog_delete_home_user_confirmation_message_other">Sei sicuro di voler rimuovere l\'utente dalla casa? Tutti i suoi dati saranno eliminati.</string>
-    <string name="dialog_delete_home_user_confirmation_message_self">Sei sicuro di voler lasciare la casa? Tutti i tuoi dati saranno eliminati.Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
+    <string name="dialog_delete_home_user_confirmation_message_self">Sei sicuro di voler lasciare la casa? Tutti i tuoi dati saranno eliminati.</string>
     <string name="dialog_firebase_error_message">Si è verificato un errore e non è stato possibile portare a termine l\'operazione.</string>
     <string name="general_remove_button">RIMUOVI</string>
     <string name="general_points_name">Punti</string>
@@ -172,7 +171,7 @@
     <string name="fragment_todo_empty_list_text">Nessuna attività da svolgere.</string>
     <string name="fragment_rewards_empty_list_text">Nessun premio disponibile.</string>
     <string name="fragment_reward_text_status_unavailable_row_2">disponibile</string>
-    <string name="fragment_reward_text_status_unavailable_row_1">Ottieni premio</string>
+    <string name="fragment_reward_text_status_unavailable_row_1">Premio non</string>
     <string name="fragment_reward_text_status_requested_row_2">richiesto</string>
     <string name="fragment_reward_text_status_requested_row_1">Premio</string>
     <string name="fragment_reward_text_status_pending_row_2">necessaria</string>
@@ -190,7 +189,7 @@
     <string name="fragment_done_tab_all">TUTTE</string>
     <string name="fragment_done_empty_list_text">Nessuna attività completata registrata.</string>
     <string name="fragment_audio_post_state_playing">Riproduzione audio in corso</string>
-    <string name="fragment_audio_post_state_play">Clicca il bottone per avviare la riproduzione</string>
+    <string name="fragment_audio_post_state_play">Premi il bottone per avviare la riproduzione</string>
     <string name="dialog_user_deletion_not_allowed">Per eliminare il tuo account devi prima uscire da tutte le case di cui sei membro.</string>
     <string name="error_not_enough_points">Non hai abbastanza punti per richiedere questo premio!</string>
     <string name="form_error_duplicate_email">Questo indirizzo email è già in uso</string>
@@ -209,9 +208,9 @@
     <string name="fragment_messages_empty_list_text">Non ci sono ancora messaggi.\\nUtilizza i bottoni in alto per creare un nuovo post.</string>
     <string name="dialog_network_error_message">Nessuna connessione disponibile.\\nConnettersi ad Internet e riprovare.</string>
     <string name="notification_new_post_content">Inviato da %1$s</string>
-    <string name="notification_new_post_extended_audio"><b>%1$s:</b> <i>Nota vocale</i></string>
-    <string name="notification_new_post_extended_image"><b>%1$s:</b> <i>Immagine</i></string>
-    <string name="notification_new_post_extended_text"><b>%1$s:</b> %2$s</string>
+    <string name="notification_new_post_extended_audio">&lt;b>%1$s:&lt;/b> &lt;i>Nota vocale&lt;/i></string>
+    <string name="notification_new_post_extended_image">&lt;b>%1$s:&lt;/b> &lt;i>Immagine&lt;/i></string>
+    <string name="notification_new_post_extended_text">&lt;b>%1$s:&lt;/b> %2$s</string>
     <string name="notification_new_reward_request_content">Ci sono nuove richieste di premi in attesa di conferma.</string>
     <string name="notification_new_reward_request_title">Nuova richiesta premio</string>
     <string name="notification_new_task_request_content">Ci sono nuove richieste di completamento in attesa di conferma.</string>
