@@ -157,6 +157,10 @@ public class TodoListFragment extends Fragment {
         viewModel.removeAssignment(taskId, assignedUserId);
     }
 
+    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName) {
+        viewModel.switchAssignment(taskId, assignedUserId, newAssignedUserId, newAssignedUserName);
+    }
+
     public void markTask(String taskId, String userId, String userName) {
         viewModel.markTask(taskId, userId, userName);
     }

@@ -50,15 +50,22 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
         Resetto le view ai valori di default (solo per i campi che non sono comunque resettati ad un
         altro valore) in modo che se il ViewHolder è stato riciclato non mi trovo risultati strani.
          */
-        holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check, null));
         holder.itemIcon.setColorFilter(res.getColor(R.color.colorPrimaryDark, null));
-        holder.taskAssignedUser.setVisibility(View.GONE);
-
         holder.taskName.setText(uncompletedTask.getName());
         holder.taskDescription.setText(uncompletedTask.getDescription());
         holder.textStatusUpper.setText(String.valueOf(uncompletedTask.getPoints()));
         holder.textStatusUpper.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_extra_large));
         holder.textStatusLower.setText(R.string.general_points_name);
+
+        /*
+        Il reset di icona e campi di testo sono inseriti in questo if per evitare glitch grafici
+        nel caso in cui il task sia assegnato (quando viene aggiornato un elemento, il rispettivo
+        list item è modificato due volte in pochi istanti originando un brutto effetto grafico).
+         */
+        if (!uncompletedTask.isAssigned()) {
+            holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check, null));
+            holder.taskAssignedUser.setVisibility(View.GONE);
+        }
 
         if (uncompletedTask.isAssigned()) {
             holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check_circle, null));

@@ -46,6 +46,10 @@ public class TodoTaskViewModel extends ViewModel {
         repository.removeAssignment(taskId, assignedUserId);
     }
 
+    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName) {
+        repository.switchAssignment(taskId, assignedUserId, newAssignedUserId, newAssignedUserName);
+    }
+
     public void markTask(String taskId, String userId, String userName) {
         repository.markTask(taskId, userId, userName);
     }

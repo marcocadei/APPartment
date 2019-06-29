@@ -147,6 +147,37 @@ public class TodoTaskRepository {
         });
     }
 
+    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName) {
+        String homeName = Appartment.getInstance().getHome().getName();
+        String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
+                taskId;
+        String oldHomeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR + assignedUserId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR +
+                taskId;
+        String newHomeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR + newAssignedUserId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR +
+                taskId;
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, newAssignedUserId);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, newAssignedUserName);
+        // Tolgo l'id del task assegnato dai riferimenti associati al vecchio utente
+        childUpdates.put(oldHomeUserRefPath, null);
+        // Aggiungo l'id del task assegnato ai riferimenti associati al nuovo utente
+        childUpdates.put(newHomeUserRefPath, true);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
+    }
+
     public void markTask(String taskId, String userId, String userName) {
         String homeName = Appartment.getInstance().getHome().getName();
         String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +

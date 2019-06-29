@@ -130,13 +130,18 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                         listFragment.deleteTask(taskId);
                         break;
                     case OPERATION_ASSIGN:
-                        UncompletedTask task = (UncompletedTask) data.getParcelableExtra(EXTRA_TASK_DATA);
+                        UncompletedTask task = data.getParcelableExtra(EXTRA_TASK_DATA);
                         if (task.isAssigned()) {
-                            listFragment.removeAssignment(task.getId(), task.getAssignedUserId());
+                            listFragment.switchAssignment(task.getId(),
+                                    task.getAssignedUserId(),
+                                    data.getStringExtra(EXTRA_USER_ID),
+                                    data.getStringExtra(EXTRA_USER_NAME));
                         }
-                        listFragment.assignTask(task.getId(),
-                                data.getStringExtra(EXTRA_USER_ID),
-                                data.getStringExtra(EXTRA_USER_NAME));
+                        else {
+                            listFragment.assignTask(task.getId(),
+                                    data.getStringExtra(EXTRA_USER_ID),
+                                    data.getStringExtra(EXTRA_USER_NAME));
+                        }
                         break;
                     case OPERATION_REMOVE_ASSIGNMENT:
                         listFragment.removeAssignment(data.getStringExtra(EXTRA_TASK_ID),
