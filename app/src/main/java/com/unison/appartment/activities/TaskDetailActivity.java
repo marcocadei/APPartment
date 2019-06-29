@@ -141,9 +141,9 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
                     che sia marcato come completato o meno): in questo caso l'utente vede soltanto
                     un bottone disabilitato e non può fare niente.
                      */
-                    btnComplete.setVisibility(View.GONE);
-                    btnAssign.setEnabled(false);
-                    btnAssign.setText(R.string.activity_task_detail_btn_complete_task_already_assigned);
+                    btnAssign.setVisibility(View.GONE);
+                    btnComplete.setEnabled(false);
+                    btnComplete.setText(R.string.activity_task_detail_btn_complete_task_already_assigned);
                 }
             }
             else {
@@ -244,9 +244,9 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
                         come completato: in questo caso il master vede soltanto il bottone per eseguire
                         il disassegnamento.
                          */
-                        btnComplete.setVisibility(View.GONE);
-                        btnAssign.setText(R.string.activity_task_detail_btn_unassign);
-                        btnAssign.setOnClickListener(new View.OnClickListener() {
+                        btnAssign.setVisibility(View.GONE);
+                        btnComplete.setText(R.string.activity_task_detail_btn_unassign);
+                        btnComplete.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 sendRemoveAssignmentData();
