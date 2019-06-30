@@ -99,6 +99,10 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        // Devo mettere qui il reset perché nell'onNewIntent non va (non so perché)
+        Appartment.getInstance().setKicked(false);
+        Appartment.getInstance().setHomeDeleted(false);
+
         bypassHomeEventsReceiver = true;
 
         auth = new FirebaseAuth();

@@ -44,6 +44,32 @@ public class Appartment {
     public final static byte SCREEN_TODO = 2;
     public final static byte SCREEN_REWARDS = 4;
 
+    // Mi serve sapere quando un utente è stato eliminato dalla csa o la casa in cui era è stata eliminata
+    // anche se il receiver non aveva listeners in quel momento
+    private Boolean kicked;
+    public Boolean getKicked() {
+        if (kicked == null) {
+            kicked = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.USER_KICKED), Boolean.class);
+        }
+        return kicked;
+    }
+    public void setKicked(boolean kicked) {
+        setSharedPreferencesValue(SharedPreferencesConstants.USER_KICKED, new Gson().toJson(kicked));
+        this.kicked = kicked;
+    }
+
+    private Boolean homeDeleted;
+    public Boolean getHomeDeleted() {
+        if (homeDeleted == null) {
+            homeDeleted = new Gson().fromJson(getSharedPreferencesJsonValue(SharedPreferencesConstants.HOME_DELETED), Boolean.class);
+        }
+        return homeDeleted;
+    }
+    public void setHomeDeleted(boolean homeDeleted) {
+        setSharedPreferencesValue(SharedPreferencesConstants.HOME_DELETED, new Gson().toJson(homeDeleted));
+        this.homeDeleted = homeDeleted;
+    }
+
     // Questo mi serve perché quando apro un completed task voglio visualizzare la cronologia, ma
     // per far ciò nel database devo leggere il percorso completions/home-name/task-name quindi mi
     // serve sapere il nome del task corrente

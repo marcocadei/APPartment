@@ -99,13 +99,12 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
         super.onNewIntent(intent);
 
         /*
-        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
-        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+        Per gestire il fatto che l'utente potrebbe essere stato kickato qui conviene solamente
+        settare l'intent e poi gestirlo in onResume() (che è il metodo invocato immediatamente dopo)
+        con getIntent().
+        Se metto qui pager.setCurrentItem(..) viene invocato subito l'adapter e l'app crasha
          */
-        int destinationFragment = intent.getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
-        if (destinationFragment != -1) {
-            pager.setCurrentItem(destinationFragment);
-        }
+        setIntent(intent);
     }
 
     @Override
@@ -374,7 +373,19 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     @Override
     protected void onResume() {
         super.onResume();
-        setCurrentScreen(currentPosition);
+
+        /*
+        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+         */
+        if (getIntent() != null) {
+            int destinationFragment = getIntent().getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+            if (destinationFragment != -1) {
+                pager.setCurrentItem(destinationFragment);
+            }
+        } else {
+            setCurrentScreen(currentPosition);
+        }
     }
 
     @Override

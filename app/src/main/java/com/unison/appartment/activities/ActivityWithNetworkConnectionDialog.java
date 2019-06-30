@@ -11,12 +11,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.NetworkErrorDialogFragment;
 import com.unison.appartment.fragments.NetworkErrorDialogFragment.NetworkErrorDialogInterface;
+import com.unison.appartment.receivers.HomeStateReceiver;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.receivers.NetworkStateReceiver;
 import com.unison.appartment.receivers.NetworkStateReceiver.NetworkStateReceiverListener;
 
 public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActivity
-        implements NetworkStateReceiverListener, NetworkErrorDialogInterface {
+        implements NetworkStateReceiverListener, NetworkErrorDialogInterface, HomeStateReceiver.HomeStateReceiverListener {
 
     protected boolean bypassHomeEventsReceiver = false;
 
@@ -25,7 +26,7 @@ public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActiv
      */
     private NetworkStateReceiver networkStateReceiver;
 
-    private BroadcastReceiver homeEventsReceiver;
+    private HomeStateReceiver homeEventsReceiver;
 
     @Override
     protected void onPause() {
@@ -36,6 +37,7 @@ public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActiv
         this.unregisterReceiver(networkStateReceiver);
 
         if (!bypassHomeEventsReceiver) {
+            homeEventsReceiver.removeListener(this);
             LocalBroadcastManager.getInstance(this).unregisterReceiver(homeEventsReceiver);
         }
     }
@@ -50,26 +52,8 @@ public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActiv
         this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
 
         if (!bypassHomeEventsReceiver) {
-            homeEventsReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    if (intent.getAction().equals(Appartment.EVENT_HOME_DELETE)) {
-                        Intent i = new Intent(ActivityWithNetworkConnectionDialog.this, UserProfileActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_home_deleted_message));
-                        startActivity(i);
-                    /*
-                    Non mettiamo finish() perché altrimenti viene fuori un warning
-                    "duplicate finish request" (don't know why tho)
-                     */
-                    } else if (intent.getAction().equals(Appartment.EVENT_HOME_KICK)) {
-                        Intent i = new Intent(ActivityWithNetworkConnectionDialog.this, UserProfileActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_user_kicked_message));
-                        startActivity(i);
-                    }
-                }
-            };
+            homeEventsReceiver = new HomeStateReceiver();
+            homeEventsReceiver.addListener(this);
             IntentFilter filter = new IntentFilter();
             filter.addAction(Appartment.EVENT_HOME_KICK);
             filter.addAction(Appartment.EVENT_HOME_DELETE);
@@ -93,6 +77,22 @@ public abstract class ActivityWithNetworkConnectionDialog extends AppCompatActiv
         if (getSupportFragmentManager().findFragmentByTag(NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG) == null) {
             new NetworkErrorDialogFragment().show(getSupportFragmentManager(), NetworkErrorDialogFragment.TAG_NETWORK_ERROR_DIALOG);
         }
+    }
+
+    @Override
+    public void kickedFromHome() {
+        Intent i = new Intent(ActivityWithNetworkConnectionDialog.this, UserProfileActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_user_kicked_message));
+        startActivity(i);
+    }
+
+    @Override
+    public void homeDeleted(){
+        Intent i = new Intent(ActivityWithNetworkConnectionDialog.this, UserProfileActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_home_deleted_message));
+        startActivity(i);
     }
 
     @Override

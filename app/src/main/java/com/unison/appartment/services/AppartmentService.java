@@ -71,7 +71,9 @@ public class AppartmentService extends Service {
                     Intent intent = new Intent();
                     intent.setAction(Appartment.EVENT_HOME_DELETE);
                     intent.putExtra(UserProfileActivity.EXTRA_SNACKBAR_MESSAGE, getString(R.string.snackbar_home_deleted_message));
+                    Appartment.getInstance().setHomeDeleted(true);
                     LocalBroadcastManager.getInstance(AppartmentService.this).sendBroadcast(intent);
+                    Log.d("ZZZZ", "CASA ELIMINATA");
                 }
             }
 
@@ -120,6 +122,8 @@ public class AppartmentService extends Service {
                 else {
                     Intent intent = new Intent();
                     intent.setAction(Appartment.EVENT_HOME_KICK);
+                    Log.d("ZZZZ", "ELIMINATO DALLA CASA");
+                    Appartment.getInstance().setKicked(true);
                     LocalBroadcastManager.getInstance(AppartmentService.this).sendBroadcast(intent);
                 }
             }
