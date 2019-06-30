@@ -277,7 +277,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_user_profile_btn_join"
             android:text="@string/activity_user_profile_btn_join"
-            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_extra_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/activity_user_profile_btn_create"
@@ -287,6 +287,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_user_profile_btn_create"
             android:text="@string/activity_user_profile_btn_create"
+            android:layout_marginStart="@dimen/margin_extra_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/activity_user_profile_btn_join"
             app:layout_constraintEnd_toEndOf="parent"
