@@ -9,6 +9,7 @@ import androidx.lifecycle.Transformations;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.Home;
@@ -26,7 +27,7 @@ public class HomeUserRepository {
     // Riferimento al nodo root del database
     private DatabaseReference rootRef;
     // Riferimento al nodo del database a cui sono interessato
-    private DatabaseReference homeUsersRef;
+    private Query homeUsersRef;
     // Livedata che rappresenta i dati nel nodo del database considerato che vengono convertiti
     // tramite un Deserializer in ogetti di tipo Reward
     private FirebaseQueryLiveData liveData;
@@ -37,7 +38,7 @@ public class HomeUserRepository {
         rootRef = FirebaseDatabase.getInstance().getReference();
         // Riferimento al nodo del database a cui sono interessato
         homeUsersRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.HOMEUSERS +
-                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
+                DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName()).orderByChild(DatabaseConstants.HOMEUSERS_HOMENAME_UID_NICKNAME);
         liveData = new FirebaseQueryLiveData(homeUsersRef);
         homeUserLiveData = Transformations.map(liveData, new HomeUserRepository.Deserializer());
     }
