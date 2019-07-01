@@ -157,9 +157,10 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
             // (non può però modificarsi il proprio ruolo)
             if (!member.getUserId().equals(loggedUserUid)) {
                 layoutButtons.setVisibility(View.VISIBLE);
-                btnDelete.setVisibility(View.VISIBLE);
+
+                // Bottone per rimuovere un utente dalla casa
+                /*btnDelete.setVisibility(View.VISIBLE);
                 btnDelete.setText(R.string.activity_family_member_detail_btn_delete_masters);
-                btnUpgrade.setVisibility(View.VISIBLE);
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -167,7 +168,8 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                         deletedUserId = member.getUserId();
                         showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other, R.string.general_remove_button);
                     }
-                });
+                });*/
+                btnUpgrade.setVisibility(View.VISIBLE);
                 if (member.getRole() == Home.ROLE_SLAVE) {
                     btnUpgrade.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -194,9 +196,10 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
             // I master possono eliminare e upgradare i collaboratori
             if (member.getRole() == Home.ROLE_SLAVE) {
                 layoutButtons.setVisibility(View.VISIBLE);
-                btnDelete.setVisibility(View.VISIBLE);
+
+                // Bottone per rimuovere un utente dalla casa
+                /*btnDelete.setVisibility(View.VISIBLE);
                 btnDelete.setText(R.string.activity_family_member_detail_btn_delete_masters);
-                btnUpgrade.setVisibility(View.VISIBLE);
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -204,7 +207,8 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                         deletedUserId = member.getUserId();
                         showDeleteConfirmationDialog(R.string.dialog_delete_home_user_confirmation_message_other, R.string.general_remove_button);
                     }
-                });
+                });*/
+                btnUpgrade.setVisibility(View.VISIBLE);
                 btnUpgrade.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

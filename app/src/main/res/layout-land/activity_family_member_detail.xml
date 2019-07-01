@@ -500,7 +500,6 @@
             style="@style/Component.Button"
             android:text="@string/activity_family_member_detail_btn_upgrade_action_upgrade"
             android:visibility="gone"
-            android:layout_marginEnd="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/activity_family_member_detail_btn_delete"
             app:layout_constraintStart_toStartOf="parent"
