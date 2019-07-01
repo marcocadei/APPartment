@@ -70,10 +70,8 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     // Voce attualmente selezionata nella bottom navigation
     private int currentPosition = POSITION_MESSAGES;
 
-    private static final String BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM = "selectedBottomMenuItem";
     private static final String BUNDLE_KEY_OLD_POINTS_VALUE = "oldPointsValue";
 
-    private int selectedBottomNavigationMenuItemId;
     private int oldPointsValue = 0;
 
     private Toolbar toolbar;
@@ -131,14 +129,9 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
         // Alla creazione dell'activity vengono impostati titolo e logo della toolbar in base alla voce
         // selezionata del menù alla prima apertura
         bottomNavigation = findViewById(R.id.activity_main_bottom_navigation);
-        if (savedInstanceState != null) {
-            selectedBottomNavigationMenuItemId = savedInstanceState.getInt(BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM);
-        } else {
-            selectedBottomNavigationMenuItemId = bottomNavigation.getSelectedItemId();
+        if (savedInstanceState == null) {
+            updateActivityContent(bottomNavigation.getMenu().findItem(bottomNavigation.getSelectedItemId()));
         }
-        final MenuItem selectedBottomNavigationMenuItem = bottomNavigation.getMenu().findItem(selectedBottomNavigationMenuItemId);
-        updateActivityContent(selectedBottomNavigationMenuItem);
-        bottomNavigation.setSelectedItemId(selectedBottomNavigationMenuItem.getItemId());
 
         // Imposto il ViewPager
         pager = findViewById(R.id.activity_main_viewpager);
@@ -185,7 +178,6 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 // Quando viene selezionata dal menù nella bottom navigation la stessa sezione in cui si è già
                 // il fragment non deve essere ricaricato (non viene fatto nulla).
-                    updateActivityContent(menuItem);
                     switch (menuItem.getItemId()) {
                         case R.id.activity_main_bottom_navigation_messages:
                             pager.setCurrentItem(POSITION_MESSAGES, true);
@@ -322,7 +314,6 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(BUNDLE_KEY_SELECTED_BOTTOM_MENU_ITEM, selectedBottomNavigationMenuItemId);
         outState.putInt(BUNDLE_KEY_OLD_POINTS_VALUE, oldPointsValue);
         super.onSaveInstanceState(outState);
     }
