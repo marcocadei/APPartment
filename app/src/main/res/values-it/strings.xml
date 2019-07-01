@@ -90,8 +90,8 @@
     <string name="activity_user_deletion_title">Elimina account</string>
     <string name="activity_user_profile_btn_create">Crea una nuova casa</string>
     <string name="activity_user_profile_btn_join">Unisciti ad una casa</string>
-    <string name="activity_reward_detail_text_info">I punti ti verranno sottratti al momento della richiesta.\\nIn caso di annullamento, ti verranno riaccreditati.</string>
-    <string name="activity_user_profile_empty_list_text">Non sei ancora membro di alcuna casa.\\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
+    <string name="activity_reward_detail_text_info">I punti ti verranno sottratti al momento della richiesta.\nIn caso di annullamento, ti verranno riaccreditati.</string>
+    <string name="activity_user_profile_empty_list_text">Non sei ancora membro di alcuna casa.\nUtilizza i bottoni in basso per creare una nuova casa o per unirti ad una casa esistente.</string>
     <string name="activity_user_profile_progress_description">Recupero dati casa in corso</string>
     <string name="activity_user_profile_progress_title">Accesso</string>
     <string name="activity_user_profile_text_homelist_title">Le mie case</string>
@@ -205,8 +205,8 @@
     <string name="form_error_nonexistent_email">Questa email non è associata ad alcun utente</string>
     <string name="form_error_nonexistent_home">Non esiste alcuna casa con questo nome</string>
     <string name="form_error_short_password">Specificare una password con almeno %1$d caratteri</string>
-    <string name="fragment_messages_empty_list_text">Non ci sono ancora messaggi.\\nUtilizza i bottoni in alto per creare un nuovo post.</string>
-    <string name="dialog_network_error_message">Nessuna connessione disponibile.\\nConnettersi ad Internet e riprovare.</string>
+    <string name="fragment_messages_empty_list_text">Non ci sono ancora messaggi.\nUtilizza i bottoni in alto per creare un nuovo post.</string>
+    <string name="dialog_network_error_message">Nessuna connessione disponibile.\nConnettersi ad Internet e riprovare.</string>
     <string name="notification_new_post_content">Inviato da %1$s</string>
     <string name="notification_new_post_extended_audio">&lt;b>%1$s:&lt;/b> &lt;i>Nota vocale&lt;/i></string>
     <string name="notification_new_post_extended_image">&lt;b>%1$s:&lt;/b> &lt;i>Immagine&lt;/i></string>
@@ -225,7 +225,7 @@
     <string name="placeholder_date">1 giu 2019</string>
     <string name="snackbar_downgrade_error_message">Non disponi più dei permessi necessari!</string>
     <string name="snackbar_home_deleted_message">La casa in cui ti trovavi è stata eliminata!</string>
-    <string name="snackbar_rewards_error_message">Si è verificato un problema.\\nIl premio è stato rimosso da un altro utente.</string>
-    <string name="snackbar_todo_error_message">Si è verificato un problema.\\nL\\\'attività è stata eliminata da un altro utente.</string>
+    <string name="snackbar_rewards_error_message">Si è verificato un problema.\nIl premio è stato rimosso da un altro utente.</string>
+    <string name="snackbar_todo_error_message">Si è verificato un problema.\nL\'attività è stata eliminata da un altro utente.</string>
     <string name="snackbar_user_kicked_message">Sei stato rimosso dalla casa in cui ti trovavi.</string>
 </resources>

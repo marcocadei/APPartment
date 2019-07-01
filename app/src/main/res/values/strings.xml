@@ -9,7 +9,7 @@
 
     <!-- Generali -->
     <string name="app_name" translatable="false">APPartment</string>
-    <string name="general_cancel_button">CANCEL</string>
+    <string name="general_cancel_button" tools:ignore="ButtonCase">CANCEL</string>
     <string name="general_delete_home_button">DELETE HOME</string>
     <string name="general_empty_list">There is nothing here!</string>
     <string name="general_leave_home_button">LEAVE HOME</string>
@@ -93,13 +93,13 @@
     <!-- Messaggi di errore -->
     <string name="error_not_enough_points">You don\'t have enough points to request this prize!</string>
     <string name="form_error_duplicate_email">This email address is already in use</string>
-    <string name="form_error_duplicate_homename">"A home with this name already exists "</string>
+    <string name="form_error_duplicate_homename">A home with this name already exists</string>
     <string name="form_error_duplicate_nickname">This nickname is already in use in the home</string>
     <string name="form_error_home_already_joined">You are already a member of this home</string>
     <string name="form_error_incorrect_email">Specify a correct email address</string>
     <string name="form_error_incorrect_password">Wrong password</string>
     <string name="form_error_invalid_characters">The home name contains invalid characters (.$[]#/)</string>
-    <string name="form_error_invalid_date">"Specify a date before today's date "</string>
+    <string name="form_error_invalid_date">Specify a date before today\'s date</string>
     <string name="form_error_mismatch_password">Passwords must match</string>
     <string name="form_error_missing_value">Specify a value</string>
     <string name="form_error_nonexistent_email">This email is not associated with any user</string>
@@ -111,11 +111,11 @@
     <string name="notification_new_post_extended_audio">&lt;b>%1$s:&lt;/b> &lt;i>Voice note&lt;/i></string>
     <string name="notification_new_post_extended_image">&lt;b>%1$s:&lt;/b> &lt;i>Image&lt;/i></string>
     <string name="notification_new_post_extended_text">&lt;b>%1$s:&lt;/b> %2$s</string>
-    <string name="notification_new_reward_request_content">"There are new reward requests awaiting confirmation. "</string>
+    <string name="notification_new_reward_request_content">There are new reward requests awaiting confirmation.</string>
     <string name="notification_new_reward_request_title">New reward request</string>
     <string name="notification_new_task_request_content">There are new completion requests awaiting confirmation.</string>
     <string name="notification_new_task_request_title">New task confirmation request</string>
-    <string name="notification_role_changed_content">"Your role within the %1$s home has been changed to: %2$s. "</string>
+    <string name="notification_role_changed_content">Your role within the %1$s home has been changed to: %2$s.</string>
     <string name="notification_role_changed_title">Role changed</string>
     <string name="notification_user_kicked_content">You are no longer part of the home %1$s.</string>
     <string name="notification_user_kicked_title">Removed from a home</string>
@@ -143,10 +143,10 @@
     <string name="pie_chart_tasks_title">Completed tasks</string>
 
     <!-- Utilizzate nei dialogs -->
-    <string name="dialog_delete_home_confirmation_message">All data relating to this home and to its users will be deleted. Are you sure you want to proceed? Once removed, the data can no longer be recovered.</string>
-    <string name="dialog_delete_home_user_confirmation_message_last">"Are you sure you want to leave the home? Since there are no other users, once you leave all the data related to this home will be irreversibly deleted. "</string>
+    <string name="dialog_delete_home_confirmation_message">All data related to this home and to its users will be deleted. Are you sure you want to proceed? Once removed, the data can no longer be recovered.</string>
+    <string name="dialog_delete_home_user_confirmation_message_last">Are you sure you want to leave the home? Since there are no other users, once you leave all the data related to this home will be irreversibly deleted.</string>
     <string name="dialog_delete_home_user_confirmation_message_other">Are you sure you want to remove the user from the home? All its data will be deleted.</string>
-    <string name="dialog_delete_home_user_confirmation_message_self">"Are you sure you want to leave the home? All your data will be deleted. "</string>
+    <string name="dialog_delete_home_user_confirmation_message_self">Are you sure you want to leave the home? All your data will be deleted.</string>
     <string name="dialog_firebase_error_message">An error occurred and the operation could not be completed.</string>
     <string name="dialog_network_error_message">No connection available.\nConnect to the Internet and try again.</string>
     <string name="dialog_user_deletion_not_allowed">In order to delete your account you must first leave all the homes you are a member of.</string>
@@ -164,8 +164,8 @@
     <string name="activity_create_home_edit_progress_title">Editing home data</string>
     <string name="activity_create_home_progress_description">Please wait, the home is being created</string>
     <string name="activity_create_home_progress_title">Creating home</string>
-    <string name="activity_create_home_text_password_info">"Home password must be used by new members to join your home. "</string>
-    <string name="activity_create_home_text_role_info">Once the home is created, you will assume the role of owner.</string>
+    <string name="activity_create_home_text_password_info">Home password must be used by new members to join your home.</string>
+    <string name="activity_create_home_text_role_info">Once the home is created, you will be part of it as its owner.</string>
     <string name="activity_create_home_text_title">Create a new home</string>
     <string name="activity_create_home_text_title_edit">Change home password</string>
     <string name="activity_create_reward_title_edit">Edit reward</string>
@@ -192,7 +192,7 @@
     <string name="activity_join_home_progress_check_title">Checking credentials</string>
     <string name="activity_join_home_text_info">You will join the home as a collaborator. You can be upgraded by the leaders or the owner.</string>
     <string name="activity_join_home_text_title">Join a home</string>
-    <string name="activity_main_bottom_navigation_done">Finished</string>
+    <string name="activity_main_bottom_navigation_done">Done</string>
     <string name="activity_main_bottom_navigation_family">Home</string>
     <string name="activity_main_bottom_navigation_messages">Board</string>
     <string name="activity_main_bottom_navigation_rewards">Rewards</string>
@@ -206,13 +206,13 @@
     <string name="activity_reward_detail_btn_reserve_reward_available">Request reward</string>
     <string name="activity_reward_detail_btn_reserve_reward_available_masters">Get reward</string>
     <string name="activity_reward_detail_btn_reserve_reward_unavailable">Reward not available</string>
-    <string name="activity_reward_detail_text_info">Points will be deducted at the time of the request.\\nIn the event of cancellation, you will be re-credited.</string>
+    <string name="activity_reward_detail_text_info">Points will be deducted at the time of the request.\nIn the event of cancellation, you will be re-credited.</string>
     <string name="activity_reward_detail_text_reservation_title">This reward has been requested by</string>
     <string name="activity_reward_detail_title">Reward detail</string>
     <string name="activity_reward_detail_toolbar_edit">Edit reward</string>
     <string name="activity_signin_progress_description">Please wait, login in progress</string>
     <string name="activity_signin_progress_title">Signing in</string>
-    <string name="activity_signin_text_title">Sign in APPartment</string>
+    <string name="activity_signin_text_title">Sign in to APPartment</string>
     <string name="activity_signup_btn_photo">Select an image</string>
     <string name="activity_signup_edit_description">Please wait, profile is being updated</string>
     <string name="activity_signup_edit_title">Updating data</string>
@@ -238,12 +238,12 @@
     <string name="activity_user_deletion_btn_delete">Delete account</string>
     <string name="activity_user_deletion_progress_description">Please wait, necessary information is being retrieved</string>
     <string name="activity_user_deletion_progress_title">Gathering data</string>
-    <string name="activity_user_deletion_text_confirm">"I confirm that I want to delete my account and all data associated with it.  "</string>
-    <string name="activity_user_deletion_text_info">"To proceed with the deletion, re-enter your password. "</string>
+    <string name="activity_user_deletion_text_confirm">I confirm that I want to delete my account and all data associated with it.</string>
+    <string name="activity_user_deletion_text_info">To proceed with the deletion, re-enter your password.</string>
     <string name="activity_user_deletion_title">Delete account</string>
     <string name="activity_user_profile_btn_create">Create a new home</string>
     <string name="activity_user_profile_btn_join">Join a home</string>
-    <string name="activity_user_profile_empty_list_text">"You are not yet a member of any home.\\nUse the buttons below to create a new home or join an existing one. "</string>
+    <string name="activity_user_profile_empty_list_text">You are not a member of any home yet.\nUse the buttons below to create a new home or join an existing one.</string>
     <string name="activity_user_profile_progress_description">Home data are being retrieved</string>
     <string name="activity_user_profile_progress_title">Signing in</string>
     <string name="activity_user_profile_text_homelist_title">My homes</string>
@@ -253,7 +253,7 @@
     <string name="activity_user_profile_toolbar_title">User profile</string>
     <string name="fragment_audio_post_state_play">Tap the button to start playback</string>
     <string name="fragment_audio_post_state_playing">Audio playback in progress</string>
-    <string name="fragment_done_empty_list_text">No completed task recorded.</string>
+    <string name="fragment_done_empty_list_text">No completion recorded.</string>
     <string name="fragment_done_tab_all">ALL</string>
     <string name="fragment_done_tab_recent">RECENT</string>
     <string name="fragment_family_btn_stats">View stats</string>
