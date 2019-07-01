@@ -301,11 +301,11 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
                 return true;
             }
 
-            case R.id.activity_main_toolbar_delete_home: {
+            /*case R.id.activity_main_toolbar_delete_home: {
                 DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(R.string.dialog_delete_home_confirmation_message, R.string.general_delete_home_button);
                 dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
                 return true;
-            }
+            }*/
 
             default:
                 return super.onOptionsItemSelected(item);
