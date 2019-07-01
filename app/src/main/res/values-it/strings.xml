@@ -228,4 +228,28 @@
     <string name="snackbar_rewards_error_message">Si è verificato un problema.\nIl premio è stato rimosso da un altro utente.</string>
     <string name="snackbar_todo_error_message">Si è verificato un problema.\nL\'attività è stata eliminata da un altro utente.</string>
     <string name="snackbar_user_kicked_message">Sei stato rimosso dalla casa in cui ti trovavi.</string>
+
+    <string-array name="desc_users_uid_gender_values">
+        <item>Maschio</item>
+        <item>Femmina</item>
+    </string-array>
+    <string-array name="desc_userhomes_uid_homename_role_values">
+        <item>Proprietario</item>
+        <item>Leader</item>
+        <item>Collaboratore</item>
+    </string-array>
+
+    <plurals name="notification_new_posts_content">
+        <item quantity="one">%d nuovo messaggio</item>
+        <item quantity="other">%d nuovi messaggi</item>
+    </plurals>
+    <plurals name="notification_new_posts_title">
+        <item quantity="one">Nuovo messaggio in bacheca</item>
+        <item quantity="other">Nuovi messaggi in bacheca</item>
+    </plurals>
+
+    <plurals name="fragment_family_text_members">
+        <item quantity="one">Un utente nella casa %2$s</item>
+        <item quantity="other">%1$d utenti nella casa %2$s</item>
+    </plurals>
 </resources>

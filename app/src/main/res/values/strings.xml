@@ -72,19 +72,19 @@
     <string name="desc_users_uid_password">Password</string>
     <string name="desc_users_uid_password_repeat">Repeat password</string>
     <string-array name="desc_users_uid_gender_values">
-        <item>Maschio</item>
-        <item>Femmina</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
     <string-array name="desc_userhomes_uid_homename_role_values">
-        <item>Proprietario</item>
+        <item>Owner</item>
         <item>Leader</item>
-        <item>Collaboratore</item>
+        <item>Collaborator</item>
     </string-array>
 
     <!-- Icone associate alle statistiche -->
     <string name="desc_homeusers_homename_uid_audioposts_icon" translatable="false">&#xe3a1;</string>
-    <string name="desc_homeusers_homename_uid_claimedrewards_icon" translatable="false">	&#xe8f6;</string>
-    <string name="desc_homeusers_homename_uid_completedtasks_icon" translatable="false">	&#xe5ca;</string>
+    <string name="desc_homeusers_homename_uid_claimedrewards_icon" translatable="false">&#xe8f6;</string>
+    <string name="desc_homeusers_homename_uid_completedtasks_icon" translatable="false">&#xe5ca;</string>
     <string name="desc_homeusers_homename_uid_imageposts_icon" translatable="false">&#xe3f4;</string>
     <string name="desc_homeusers_homename_uid_rejectedtasks_icon" translatable="false">&#xe14c;</string>
     <string name="desc_homeusers_homename_uid_textposts_icon" translatable="false">&#xe0c9;</string>
@@ -120,12 +120,12 @@
     <string name="notification_user_kicked_content">You are no longer part of the home %1$s.</string>
     <string name="notification_user_kicked_title">Removed from a home</string>
     <plurals name="notification_new_posts_content">
-        <item quantity="one">%d nuovo messaggio</item>
-        <item quantity="other">%d nuovi messaggi</item>
+        <item quantity="one">%d new message</item>
+        <item quantity="other">%d new messages</item>
     </plurals>
     <plurals name="notification_new_posts_title">
-        <item quantity="one">Nuovo messaggio in bacheca</item>
-        <item quantity="other">Nuovi messaggi in bacheca</item>
+        <item quantity="one">New message</item>
+        <item quantity="other">New messages</item>
     </plurals>
 
     <!-- Utilizzate per le snackbars -->
@@ -285,8 +285,8 @@
     <string name="fragment_todo_text_status_requested_row_2">confirmation</string>
     <string name="fragment_userpicker_text_title">Home members</string>
     <plurals name="fragment_family_text_members">
-        <item quantity="one">Un utente nella casa %2$s</item>
-        <item quantity="other">%1$d utenti nella casa %2$s</item>
+        <item quantity="one">One user in %2$s home</item>
+        <item quantity="other">%1$d users in %2$s home</item>
     </plurals>
 
     <!-- FIXME ancora da riallineare -->
