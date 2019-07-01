@@ -22,11 +22,12 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
+        android:id="@+id/activity_reward_detail_scroll"
         style="@style/Component.ScrollView"
         app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_appbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_layout_buttons">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/Component.Layout.ScrollViewChild">
@@ -81,7 +82,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_reward_detail_layout_attributes"
                 app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_layout_header"
-                app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_layout_buttons"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/Component.Layout.AttributeSet">
@@ -138,70 +139,72 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/activity_reward_detail_layout_buttons"
-                style="@style/Component.Layout.ButtonSet"
-                app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_layout_attributes"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/activity_reward_detail_layout_not_delete_buttons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_btn_delete">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/activity_reward_detail_btn_reserve"
-                        style="@style/Component.Button"
-                        android:text="@string/activity_reward_detail_btn_reserve_reward_available"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_btn_confirm_reservation"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/activity_reward_detail_btn_confirm_reservation"
-                        style="@style/Component.Button"
-                        android:text="@string/activity_reward_detail_btn_confirm_reservation"
-                        android:visibility="gone"
-                        android:layout_marginEnd="@dimen/margin_small"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_btn_cancel_reservation"
-                        app:layout_constraintStart_toEndOf="@id/activity_reward_detail_btn_reserve"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/activity_reward_detail_btn_cancel_reservation"
-                        style="@style/Component.Button"
-                        android:text="@string/activity_reward_detail_btn_cancel_reservation"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/activity_reward_detail_btn_confirm_reservation"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/activity_reward_detail_btn_delete"
-                    style="@style/Component.Button"
-                    android:backgroundTint="@android:color/holo_red_dark"
-                    android:text="@string/activity_reward_detail_btn_delete"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_layout_not_delete_buttons" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_reward_detail_layout_buttons"
+        style="@style/Component.Layout.ButtonSet"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_scroll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_reward_detail_layout_not_delete_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_btn_delete">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activity_reward_detail_btn_reserve"
+                style="@style/Component.Button"
+                android:text="@string/activity_reward_detail_btn_reserve_reward_available"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_btn_confirm_reservation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activity_reward_detail_btn_confirm_reservation"
+                style="@style/Component.Button"
+                android:text="@string/activity_reward_detail_btn_confirm_reservation"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/margin_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_btn_cancel_reservation"
+                app:layout_constraintStart_toEndOf="@id/activity_reward_detail_btn_reserve"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activity_reward_detail_btn_cancel_reservation"
+                style="@style/Component.Button"
+                android:text="@string/activity_reward_detail_btn_cancel_reservation"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/activity_reward_detail_btn_confirm_reservation"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_reward_detail_btn_delete"
+            style="@style/Component.Button"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/activity_reward_detail_btn_delete"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_layout_not_delete_buttons" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
