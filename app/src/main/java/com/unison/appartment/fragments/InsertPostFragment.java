@@ -265,7 +265,6 @@ public class InsertPostFragment extends Fragment {
                     // Non faccio nulla perché per iniziare la registrazione deve tenere premuto
                 } else {
                     // Il permesso è stato negato, non effettuo la registrazione
-                    // TODO mettere un qualche effetto grafico, es microfono barrato
                 }
                 return;
             }

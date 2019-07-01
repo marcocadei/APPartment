@@ -58,6 +58,7 @@ public class PostRepository {
     private String homeUserRefPath;
 
     private MutableLiveData<Boolean> loading;
+    private MutableLiveData<Boolean> error;
 
     public PostRepository() {
         String homeName = Appartment.getInstance().getHome().getName();
@@ -79,6 +80,7 @@ public class PostRepository {
         postLiveData = Transformations.map(liveData, new PostRepository.Deserializer());
 
         loading = new MutableLiveData<>();
+        error = new MutableLiveData<>();
     }
 
     @NonNull
@@ -88,6 +90,10 @@ public class PostRepository {
 
     public LiveData<Boolean> getLoadingLiveData() {
         return loading;
+    }
+
+    public LiveData<Boolean> getErrorLiveData() {
+        return error;
     }
 
     public void addPost(Post newPost) {
@@ -130,20 +136,23 @@ public class PostRepository {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (!task.isSuccessful()) {
-                            // TODO gestire errore upload
+                            return null;
                         }
                         return postImageRef.getDownloadUrl();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && task.getResult() != null) {
                             String imageUrl = task.getResult().toString();
                             newPost.setContent(imageUrl);
                             newPost.setStoragePath(storagePath);
                             addUpdatedPost(newPost);
                         } else {
-                            // TODO gestire errore upload
+                            // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                            error.setValue(true);
+                            error.setValue(false);
+                            loading.setValue(false);
                         }
                     }
                 });
@@ -168,20 +177,22 @@ public class PostRepository {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if (!task.isSuccessful()) {
-                    // TODO gestire errore upload
+                    return null;
                 }
                 return postAudioRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
+                if (task.isSuccessful() && task.getResult() != null) {
                     String audioUrl = task.getResult().toString();
                     newPost.setContent(audioUrl);
                     newPost.setStoragePath(storagePath);
                     addUpdatedPost(newPost);
                 } else {
-                    // TODO gestire errore upload
+                    error.setValue(true);
+                    error.setValue(false);
+                    loading.setValue(false);
                 }
             }
         });

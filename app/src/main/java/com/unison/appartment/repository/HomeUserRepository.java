@@ -135,7 +135,6 @@ public class HomeUserRepository {
 
     public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, Set<String> ownPosts, String newNickname) {
         String homeName = Appartment.getInstance().getHome().getName();
-        // FIXME completions da aggiungere?
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
                 DatabaseConstants.HOMEUSERS_HOMENAME_UID_NICKNAME;

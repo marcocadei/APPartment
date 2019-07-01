@@ -1,6 +1,7 @@
 package com.unison.appartment.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -129,7 +130,7 @@ public class SignInActivity extends FormActivity {
 
         @Override
         public void onReadEmpty() {
-            // TODO gestire l'errore
+            Log.e(getClass().getCanonicalName(), "Errore nella lettura dei dati utente");
         }
 
         @Override

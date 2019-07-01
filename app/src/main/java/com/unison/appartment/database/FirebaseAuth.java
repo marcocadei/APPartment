@@ -48,6 +48,11 @@ public class FirebaseAuth implements Auth {
     }
 
     @Override
+    public void logOut() {
+        com.google.firebase.auth.FirebaseAuth.getInstance().signOut();
+    }
+
+    @Override
     public void reauthenticate(String email, String password, final AuthListener listener) {
         final com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
         auth.getCurrentUser().reauthenticate(EmailAuthProvider.getCredential(email, password))

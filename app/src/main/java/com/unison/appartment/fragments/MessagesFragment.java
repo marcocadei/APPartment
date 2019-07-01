@@ -131,4 +131,13 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         Snackbar.make(snackbarView, getString(R.string.snackbar_downgrade_error_message),
                 Snackbar.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onPostListError(boolean error) {
+        if (error) {
+            View snackbarView = getActivity().findViewById(R.id.fragment_messages);
+            Snackbar.make(snackbarView, getString(R.string.snackbar_messages_error_message),
+                    Snackbar.LENGTH_LONG).show();
+        }
+    }
 }

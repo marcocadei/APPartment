@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,13 @@ public class PostListFragment extends Fragment {
             @Override
             public void onChanged(Boolean loading) {
                 listener.loading(loading);
+            }
+        });
+
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean error) {
+                listener.onPostListError(error);
             }
         });
 
@@ -154,7 +162,7 @@ public class PostListFragment extends Fragment {
                 post = new Post(Post.AUDIO_POST, content, nickname, System.currentTimeMillis());
                 break;
             default:
-                // TODO errore, non si deve entrare qui
+                Log.e(getClass().getCanonicalName(), "Post type non valido");
                 post = null;
         }
         viewModel.addPost(post);
@@ -188,5 +196,7 @@ public class PostListFragment extends Fragment {
         void deletePost(Post post);
 
         void onDowngrade();
+
+        void onPostListError(boolean error);
     }
 }

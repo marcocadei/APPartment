@@ -225,6 +225,7 @@
     <string name="placeholder_date">1 giu 2019</string>
     <string name="snackbar_downgrade_error_message">Non disponi più dei permessi necessari!</string>
     <string name="snackbar_home_deleted_message">La casa in cui ti trovavi è stata eliminata!</string>
+    <string name="snackbar_messages_error_message">Si è verificato un problema e il messaggio non è stato inviato.</string>
     <string name="snackbar_rewards_error_message">Si è verificato un problema.\nIl premio è stato rimosso da un altro utente.</string>
     <string name="snackbar_todo_error_message">Si è verificato un problema.\nL\'attività è stata eliminata da un altro utente.</string>
     <string name="snackbar_user_kicked_message">Sei stato rimosso dalla casa in cui ti trovavi.</string>

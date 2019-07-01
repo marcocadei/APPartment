@@ -131,6 +131,7 @@
     <!-- Utilizzate per le snackbars -->
     <string name="snackbar_downgrade_error_message">You no longer have the required permissions!</string>
     <string name="snackbar_home_deleted_message">The home you were in was deleted!</string>
+    <string name="snackbar_messages_error_message">A problem occurred and the post hasn\'t been sent.</string>
     <string name="snackbar_rewards_error_message">A problem has occurred.\nThe reward has been removed by another user.</string>
     <string name="snackbar_todo_error_message">A problem has occurred.\nThe activity was deleted by another user.</string>
     <string name="snackbar_user_kicked_message">You have been removed from the house you were in.</string>
@@ -288,7 +289,5 @@
         <item quantity="one">One user in %2$s home</item>
         <item quantity="other">%1$d users in %2$s home</item>
     </plurals>
-
-    <!-- FIXME ancora da riallineare -->
 
 </resources>
