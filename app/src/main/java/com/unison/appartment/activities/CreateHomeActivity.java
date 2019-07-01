@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -312,12 +313,12 @@ public class CreateHomeActivity extends FormActivity {
 
         @Override
         public void onReadEmpty() {
-            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+            Log.e(getClass().getCanonicalName(), "Errore nella lettura dei dati utente");
         }
 
         @Override
         public void onReadCancelled(DatabaseError databaseError) {
-            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+            Log.e(getClass().getCanonicalName(), "Errore nella lettura dei dati utente");
         }
     };
 

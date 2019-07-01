@@ -33,4 +33,8 @@ public class PostViewModel extends ViewModel {
     public LiveData<Boolean> getLoadingLiveData() {
         return repository.getLoadingLiveData();
     }
+
+    public LiveData<Boolean> getErrorLiveData() {
+        return repository.getErrorLiveData();
+    }
 }

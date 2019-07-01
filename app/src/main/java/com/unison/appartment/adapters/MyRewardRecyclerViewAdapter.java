@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//FIXME Rimuovere se non serve
 import com.unison.appartment.R;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.fragments.RewardListFragment.OnRewardListFragmentInteractionListener;
@@ -21,7 +20,6 @@ import com.unison.appartment.model.Reward;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.state.MyApplication;
 
-import java.util.Locale;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link Reward} e che effettua una

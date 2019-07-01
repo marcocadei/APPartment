@@ -9,7 +9,6 @@ public class MyApplication extends Application {
 
     public void onCreate() {
         super.onCreate();
-        // TODO vedere se va tolto o qualche miglioramento lo dà lo stesso
         /*
         NB
         Mantenere questa riga di codice abilita questa funzionalità: se si apre l'app, e si accede
@@ -18,7 +17,7 @@ public class MyApplication extends Application {
         Senza questa riga alla chiusura dell'app si perdono i dati e se la si riapre senza rete
         si continua a vedere la progress bar.
          */
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         MyApplication.context = getApplicationContext();
     }
 

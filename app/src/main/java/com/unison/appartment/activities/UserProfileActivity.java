@@ -206,11 +206,9 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
 
-        // TODO ora è implementato soltanto il logout
         switch (item.getItemId()) {
             case R.id.activity_user_profile_toolbar_logout:
-                // FIXME da cambiare usando la nostra FirebaseAuth
-                com.google.firebase.auth.FirebaseAuth.getInstance().signOut();
+                auth.logOut();
                 i = new Intent(this, EnterActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
@@ -355,12 +353,12 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
 
         @Override
         public void onReadEmpty() {
-            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+            Log.e(getClass().getCanonicalName(), "Errore nella lettura dei dati utente");
         }
 
         @Override
         public void onReadCancelled(DatabaseError databaseError) {
-            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+            Log.e(getClass().getCanonicalName(), "Errore nella lettura dei dati utente");
         }
     };
 
@@ -379,12 +377,12 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
 
         @Override
         public void onReadEmpty() {
-            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+            Log.e(getClass().getCanonicalName(), "Errore nella lettura dei dati utente");
         }
 
         @Override
         public void onReadCancelled(DatabaseError databaseError) {
-            // TODO Se si entra qui c'è un errore perché la casa è selezionata dalla lista e quindi deve esistere
+            Log.e(getClass().getCanonicalName(), "Errore nella lettura dei dati utente");
         }
     };
 }

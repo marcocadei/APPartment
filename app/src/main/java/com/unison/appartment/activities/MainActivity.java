@@ -88,13 +88,22 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        /*
-        Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
-        l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
-         */
-        int destinationFragment = intent.getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
-        if (destinationFragment != -1) {
-            pager.setCurrentItem(destinationFragment);
+        if (Appartment.getInstance().getHome() == null) {
+            Class destination = new FirebaseAuth().getCurrentUserUid() == null ? EnterActivity.class : UserProfileActivity.class;
+            Intent i = new Intent(this, destination);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
+        }
+        else {
+            /*
+            Se sono arrivato alla MainActivity schiacciando su una notifica, nell'intent è contenuta
+            l'indicazione del fragment che deve essere visualizzato all'apertura dell'activity.
+             */
+            int destinationFragment = intent.getByteExtra(EXTRA_DESTINATION_FRAGMENT, (byte) -1);
+            if (destinationFragment != -1) {
+                pager.setCurrentItem(destinationFragment);
+            }
         }
     }
 
@@ -103,8 +112,14 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO se sono arrivato qui da una notifica però ero ad es. già uscito da una casa,
-        // devo fare un controllo e nel caso tornare indietro per evitare errori e crash
+        if (Appartment.getInstance().getHome() == null) {
+            Class destination = new FirebaseAuth().getCurrentUserUid() == null ? EnterActivity.class : UserProfileActivity.class;
+            Intent i = new Intent(this, destination);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
+            return;
+        }
 
         // Avvio il servizio che mantiene aggiornato lo stato
         Intent appartmentServiceIntent = new Intent(this, AppartmentService.class);
@@ -278,7 +293,6 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // FIXME Aggiungere gli altri pulsanti
 
             case R.id.activity_main_toolbar_profile: {
                 Intent i = new Intent(this, UserProfileActivity.class);
@@ -301,11 +315,11 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
                 return true;
             }
 
-            case R.id.activity_main_toolbar_delete_home: {
+            /*case R.id.activity_main_toolbar_delete_home: {
                 DeleteHomeUserConfirmationDialogFragment dialog = DeleteHomeUserConfirmationDialogFragment.newInstance(R.string.dialog_delete_home_confirmation_message, R.string.general_delete_home_button);
                 dialog.show(getSupportFragmentManager(), DeleteHomeUserConfirmationDialogFragment.TAG_CONFIRMATION_DIALOG);
                 return true;
-            }
+            }*/
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -426,7 +440,7 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
                     nextFragment = RewardsFragment.newInstance();
                     break;
                 default:
-                    // FIXME ERRORE qui non deve entrare mai
+                    Log.e(getClass().getCanonicalName(), "Posizione pager non valida");
                     nextFragment = null;
             }
             return nextFragment;

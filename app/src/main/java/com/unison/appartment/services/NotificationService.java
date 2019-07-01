@@ -250,7 +250,6 @@ public class NotificationService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // TODO gestire errore
             }
         };
         postsRef.addChildEventListener(postsListener);
@@ -331,7 +330,6 @@ public class NotificationService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // TODO gestire errore
             }
         };
         rewardsRef.addChildEventListener(rewardsListener);
@@ -361,7 +359,7 @@ public class NotificationService extends Service {
                 if (task.isMarked()) {
                     // Mostro la notifica solo ai master
                     if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
-                        // Non mostro la notifica se sono nel todo fragment
+                        // Non mostro la notifica se sono nel to-do fragment
                         if (Appartment.getInstance().getCurrentScreen() != Appartment.SCREEN_TODO) {
                             // Se c'è già una notifica relativa ai task visualizzata, la sovrascrivo.
                             boolean taskNotificationAlreadyDispatched = currentlyDisplayedNotifications.get(TASK_CHANNEL_ID) != null;
@@ -412,7 +410,6 @@ public class NotificationService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // TODO gestire errore
             }
         };
         tasksRef.addChildEventListener(tasksListener);
@@ -533,7 +530,6 @@ public class NotificationService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // TODO gestire errore
             }
         };
         userHomesRef.addChildEventListener(userHomesListener);
@@ -564,7 +560,6 @@ public class NotificationService extends Service {
             userHomesRef.removeEventListener(userHomesListener);
         }
 
-        // TODO rivedere se va bene come cosa - in caso toglierla
         /*
         Alla distruzione del NotificationService vengono rimosse tutte le notifiche mostrate in
         quel momento (altrimenti non ci sarebbe più modo di manipolarle dato che comunque il
@@ -574,7 +569,6 @@ public class NotificationService extends Service {
         SENZA che il metodo onDestroy sia invocato - don't ask why);
         - quando l'utente esce da una casa e ritorna alla UserProfileActivity (in quanto in quel
         caso è invocato stopService).
-        FIXME non è più vero se si sceglie di salvare gli id nelle shared preferences, cambiare di conseguenza!
          */
         for (Integer notificationId : currentlyDisplayedNotifications.values()) {
             notificationManager.cancel(NOTIFICATIONS_TAG, notificationId);

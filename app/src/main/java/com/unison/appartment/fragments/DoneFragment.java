@@ -79,7 +79,7 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                // TODO
+
             }
 
             @Override
@@ -152,10 +152,6 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
             }
             else if (resultCode == CompletedTaskDetailActivity.RESULT_OK) {
                 if (data.getIntExtra(EXTRA_OPERATION_TYPE, -1) == OPERATION_DELETE) {
-                    // FIXME codice completamente da ristrutturare se si eliminano i tab
-                    // (Se invece si lasciano i tab cambiare i due CompletedTasksListFragment mettendo
-                    // un'interfaccia o una superclasse comune perché così il codice fa schifo)
-
                     Fragment listFragment = getChildFragmentManager().findFragmentById(R.id.fragment_done_fragment_done_list);
                     String taskName = data.getStringExtra(EXTRA_TASK_NAME);
                     if (currentPosition == ALL_COMPLETEDTASKS_POSITION) {

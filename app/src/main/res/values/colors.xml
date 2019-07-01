@@ -8,9 +8,9 @@
     <color name="colorAccentDark">#c56000</color>
     <color name="colorPrimaryText">#ffffff</color>
     <color name="colorSecondaryText">#ffffff</color>
-    <!--TODO colore corretto da reimpostare alla fine-->
-    <!--<color name="colorBackground">#ffefff</color>-->
-    <color name="colorBackground">#ffccff</color>
+    <color name="colorBackground">#ffefff</color>
+    <!-- Colore background di prova -->
+    <!--<color name="colorBackground">#ffccff</color>-->
 
     <color name="gray">#D3D3D3</color>
     <color name="darkGray">#AAAAAA</color>

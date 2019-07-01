@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,7 +68,7 @@ public class MyPostRecyclerViewAdapter extends ListAdapter<Post, RecyclerView.Vi
                         .inflate(R.layout.fragment_audio_post, parent, false);
                 return new ViewHolderAudioPost(view);
             default:
-                // TODO gestione errore
+                Log.e(getClass().getCanonicalName(), "Post type non valido");
                 return null;
         }
     }
