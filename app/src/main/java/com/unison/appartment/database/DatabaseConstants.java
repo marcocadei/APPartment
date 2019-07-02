@@ -38,6 +38,7 @@ public class DatabaseConstants {
 
     // Premi
     public final static String REWARDS = "rewards";
+    public static final String REWARDS_HOMENAME_REWARDID_DELETED = "deleted";
     public static final String REWARDS_HOMENAME_REWARDID_NAME = "name";
     public static final String REWARDS_HOMENAME_REWARDID_RESERVATIONID = "reservation-id";
     public static final String REWARDS_HOMENAME_REWARDID_RESERVATIONNAME = "reservation-name";

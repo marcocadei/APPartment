@@ -22,6 +22,7 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.Reward;
 import com.unison.appartment.viewmodel.RewardViewModel;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -126,6 +127,7 @@ public class RewardListFragment extends Fragment {
         rewardLiveData.observe(getViewLifecycleOwner(), new Observer<List<Reward>>() {
             @Override
             public void onChanged(List<Reward> rewards) {
+                Collections.sort(rewards);
                 myAdapter.submitList(rewards);
                 listener.onRewardListElementsLoaded(rewards.size());
             }
@@ -140,8 +142,8 @@ public class RewardListFragment extends Fragment {
         viewModel.addReward(newReward);
     }
 
-    public void deleteReward(String id) {
-        viewModel.deleteReward(id);
+    public void deleteReward(String id, int rewardVersion) {
+        viewModel.deleteReward(id, rewardVersion);
     }
 
     public void editReward(Reward reward) {
@@ -152,8 +154,16 @@ public class RewardListFragment extends Fragment {
         viewModel.requestReward(reward, userId, userName);
     }
 
+    public void requestAndConfirm(Reward reward, String userId, String userName){
+        viewModel.requestAndConfirm(reward, userId, userName);
+    }
+
     public void cancelRequest(Reward reward){
         viewModel.cancelRequest(reward);
+    }
+
+    public void cancelAndDelete(Reward reward) {
+        viewModel.cancelAndDelete(reward);
     }
 
     public void confirmRequest(Reward reward, String userId) {

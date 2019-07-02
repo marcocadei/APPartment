@@ -43,7 +43,8 @@ public class RewardRepository {
         // Riferimento al nodo del database a cui sono interessato
         rewardsRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.REWARDS +
                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-        Query orderedReward = rewardsRef.orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_NAME);
+        Query orderedReward = rewardsRef.orderByChild(DatabaseConstants.REWARDS_HOMENAME_REWARDID_DELETED)
+                .equalTo(false);
         liveData = new FirebaseQueryLiveData(orderedReward);
         rewardLiveData = Transformations.map(liveData, new RewardRepository.Deserializer());
 
@@ -65,14 +66,26 @@ public class RewardRepository {
         rewardsRef.child(key).setValue(newReward);
     }
 
-    public void deleteReward(String id){
-        rewardsRef.child(id).removeValue();
+    public void deleteReward(String id, int rewardVersion) {
+        Map<String, Object> childUpdates = new HashMap<>();
+
+//        rewardsRef.child(id).removeValue();
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, rewardVersion + 1);
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_DELETED, true);
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
+        childUpdates.put(DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
+        rewardsRef.child(id).updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void editReward(Reward reward) {
-        Log.d("zzz", reward.getVersion() + "");
         reward.setVersion(reward.getVersion() + 1);
-        Log.d("zzz", reward.getVersion() + "");
         rewardsRef.child(reward.getId()).setValue(reward).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -108,6 +121,68 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 Log.d("zzz", "request");
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
+    }
+
+    public void requestAndConfirm(Reward reward, String userId, String userName) {
+        String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                reward.getId();
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                userId;
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, userId);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, userName);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, reward.getVersion() + 1);
+        // I punti diminuiscono di una quantità pari ai punti associati al premio ottenuto
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Appartment.getInstance().getHomeUser(userId).getPoints() - reward.getPoints());
+
+//        childUpdates.put(rewardsPath, null);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_DELETED, true);
+        // I claimed rewards aumentano di uno
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Appartment.getInstance().getHomeUser(userId).getClaimedRewards() + 1);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
+    }
+
+    public void cancelAndDelete(Reward reward) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                reward.getId();
+        String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                reward.getReservationId();
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                reward.getReservationId() + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
+                DatabaseConstants.SEPARATOR + reward.getId();
+
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, reward.getVersion() + 1);
+//        rewardsRef.child(id).removeValue();
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_DELETED, true);
+        // Vengono riaggiunti i punti all'utente che aveva eseguito la richiesta
+        childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_POINTS, Math.min(Appartment.getInstance().getHomeUser(reward.getReservationId()).getPoints() + reward.getPoints(), HomeUser.MAX_POINTS));
+        // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, null);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
                 error.setValue(false);
             }
@@ -162,7 +237,9 @@ public class RewardRepository {
                 userId + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
                 DatabaseConstants.SEPARATOR + reward.getId();
 
-        childUpdates.put(rewardsPath, null);
+//        childUpdates.put(rewardsPath, null);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, reward.getVersion() + 1);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_DELETED, true);
         // I claimed rewards aumentano di uno
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Appartment.getInstance().getHomeUser(userId).getClaimedRewards() + 1);
         // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
