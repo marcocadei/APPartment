@@ -56,6 +56,8 @@ public abstract class ActivityWithDialogs extends ActivityWithNetworkConnectionD
      * Rimuove il ProgressDialog mostrato all'utente (se questo è visualizzato su schermo).
      */
     protected void dismissProgress() {
+        progressDialog = (FirebaseProgressDialogFragment)getSupportFragmentManager()
+                .findFragmentByTag(FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
