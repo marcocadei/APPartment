@@ -56,6 +56,8 @@ public abstract class ActivityWithDialogs extends ActivityWithNetworkConnectionD
      * Rimuove il ProgressDialog mostrato all'utente (se questo è visualizzato su schermo).
      */
     protected void dismissProgress() {
+        // Prendo il riferimento all'ultimo fragment mostrato
+        // Questo evita il crash, ma non risolve il memory leak
         progressDialog = (FirebaseProgressDialogFragment)getSupportFragmentManager()
                 .findFragmentByTag(FirebaseProgressDialogFragment.TAG_FIREBASE_PROGRESS_DIALOG);
         if (progressDialog != null) {
