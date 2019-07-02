@@ -227,8 +227,8 @@
     <string name="snackbar_family_members_error_message">L\'utente non fa più parte di questa casa.</string>
     <string name="snackbar_home_deleted_message">La casa in cui ti trovavi è stata eliminata!</string>
     <string name="snackbar_messages_error_message">Si è verificato un problema e il messaggio non è stato inviato.</string>
-    <string name="snackbar_rewards_error_message">Si è verificato un problema.\nIl premio è stato rimosso da un altro utente.</string>
-    <string name="snackbar_todo_error_message">Si è verificato un problema.\nL\'attività è stata eliminata da un altro utente.</string>
+    <string name="snackbar_rewards_error_message">Si è verificato un problema. Il premio è stato modificato o rimosso da un altro utente.</string>
+    <string name="snackbar_todo_error_message">Si è verificato un problema.L\'attività è stata eliminata da un altro utente.</string>
     <string name="snackbar_user_kicked_message">Sei stato rimosso dalla casa in cui ti trovavi.</string>
 
     <string-array name="desc_users_uid_gender_values">

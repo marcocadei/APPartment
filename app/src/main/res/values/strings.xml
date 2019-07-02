@@ -91,7 +91,7 @@
     <string name="desc_homeusers_homename_uid_totalearnedpoints_icon" translatable="false">&#xe83a;</string>
 
     <!-- Messaggi di errore -->
-    <string name="error_not_enough_points">You don\'t have enough points to request this prize!</string>
+    <string name="error_not_enough_points">You don\'t have enough points to request this reward!</string>
     <string name="form_error_duplicate_email">This email address is already in use</string>
     <string name="form_error_duplicate_homename">A home with this name already exists</string>
     <string name="form_error_duplicate_nickname">This nickname is already in use in the home</string>
@@ -133,8 +133,8 @@
     <string name="snackbar_family_members_error_message">The user is no longer part of this home.</string>
     <string name="snackbar_home_deleted_message">The home you were in was deleted!</string>
     <string name="snackbar_messages_error_message">A problem occurred and the post hasn\'t been sent.</string>
-    <string name="snackbar_rewards_error_message">A problem has occurred.\nThe reward has been removed by another user.</string>
-    <string name="snackbar_todo_error_message">A problem has occurred.\nThe activity was deleted by another user.</string>
+    <string name="snackbar_rewards_error_message">A problem has occurred. The reward has been modified or removed by another user.</string>
+    <string name="snackbar_todo_error_message">A problem has occurred. The activity was deleted by another user.</string>
     <string name="snackbar_user_kicked_message">You have been removed from the house you were in.</string>
 
     <!-- Utilizzate per i grafici -->
