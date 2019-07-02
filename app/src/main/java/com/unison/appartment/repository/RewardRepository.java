@@ -73,7 +73,14 @@ public class RewardRepository {
         Log.d("zzz", reward.getVersion() + "");
         reward.setVersion(reward.getVersion() + 1);
         Log.d("zzz", reward.getVersion() + "");
-        rewardsRef.child(reward.getId()).setValue(reward);
+        rewardsRef.child(reward.getId()).setValue(reward).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void requestReward(Reward reward, String userId, String userName) {
