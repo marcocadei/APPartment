@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.R;
 import com.unison.appartment.database.DatabaseConstants;
@@ -100,9 +101,9 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         String[] roles = getResources().getStringArray(R.array.desc_userhomes_uid_homename_role_values);
 
         // Recupero il riferimento agli elementi dell'interfaccia
-        View layoutButtons = findViewById(R.id.activity_family_member_detail_layout_buttons);
+        final View layoutButtons = findViewById(R.id.activity_family_member_detail_layout_buttons);
         MaterialButton btnDelete = findViewById(R.id.activity_family_member_detail_btn_delete);
-        MaterialButton btnUpgrade = findViewById(R.id.activity_family_member_detail_btn_upgrade);
+        final MaterialButton btnUpgrade = findViewById(R.id.activity_family_member_detail_btn_upgrade);
 
         final ImageView image = findViewById(R.id.activity_family_member_detail_img_profile);
         final ImageView imgDefault = findViewById(R.id.activity_family_member_detail_img_profile_default);
@@ -212,8 +213,18 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
                 btnUpgrade.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Upgrade slave -> master
-                        sendChangeRoleData(member.getUserId(), Home.ROLE_MASTER);
+                        // Controllo di avere ancora i permessi necessari
+                        if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
+                            // Upgrade slave -> master
+                            sendChangeRoleData(member.getUserId(), Home.ROLE_MASTER);
+                        } else {
+                            layoutButtons.setVisibility(View.GONE);
+                            btnUpgrade.setVisibility(View.GONE);
+                            View snackbarView = findViewById(R.id.activity_family_member_detail);
+                            Snackbar.make(snackbarView, getString(R.string.snackbar_downgrade_error_message),
+                                    Snackbar.LENGTH_LONG).show();
+                        }
+
                     }
                 });
             }
