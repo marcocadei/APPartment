@@ -130,6 +130,7 @@
 
     <!-- Utilizzate per le snackbars -->
     <string name="snackbar_downgrade_error_message">You no longer have the required permissions!</string>
+    <string name="snackbar_family_members_error_message">The user is no longer part of this home.</string>
     <string name="snackbar_home_deleted_message">The home you were in was deleted!</string>
     <string name="snackbar_messages_error_message">A problem occurred and the post hasn\'t been sent.</string>
     <string name="snackbar_rewards_error_message">A problem has occurred.\nThe reward has been removed by another user.</string>

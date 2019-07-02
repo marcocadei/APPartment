@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.ChartActivity;
 import com.unison.appartment.activities.FamilyMemberDetailActivity;
@@ -168,5 +169,14 @@ public class FamilyFragment extends Fragment implements FamilyMemberListFragment
         progressBar.setVisibility(View.GONE);
         TextView textMembers = getView().findViewById(R.id.fragment_family_text_members);
         textMembers.setText(getResources().getQuantityString(R.plurals.fragment_family_text_members, elements, elements, Appartment.getInstance().getHome().getName()));
+    }
+
+    @Override
+    public void onFamilyMemberListError(boolean error) {
+        if (error) {
+            View snackbarView = getActivity().findViewById(R.id.fragment_family);
+            Snackbar.make(snackbarView, getString(R.string.snackbar_family_members_error_message),
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 }
