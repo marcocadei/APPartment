@@ -145,7 +145,8 @@ public class CreateRewardActivity extends FormActivity {
                     oldReward.getId(),
                     inputName.getText().toString(),
                     inputDescription.getText().toString(),
-                    Integer.valueOf(inputPoints.getText().toString())
+                    Integer.valueOf(inputPoints.getText().toString()),
+                    oldReward.getVersion()
             );
         } else {
             newReward = new Reward(
