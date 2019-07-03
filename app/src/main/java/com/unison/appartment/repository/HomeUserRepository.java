@@ -175,9 +175,11 @@ public class HomeUserRepository {
         }
         for (String rewardId : requestedRewards) {
             childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, newNickname);
+            childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, 0);
         }
         for (String taskId : assignedTasks) {
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, newNickname);
+            childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, 0);
         }
         rootRef.updateChildren(childUpdates);
     }
