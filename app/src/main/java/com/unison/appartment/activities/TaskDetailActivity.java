@@ -364,8 +364,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
     private void sendRemoveAssignmentData() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_REMOVE_ASSIGNMENT);
-        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
-        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, task.getAssignedUserId());
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
         setResult(RESULT_OK, returnIntent);
         finish();
     }
@@ -373,7 +372,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
     private void sendMarkData(String userId) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_MARK_AS_COMPLETED);
-        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
         returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
         returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
         setResult(RESULT_OK, returnIntent);
@@ -383,8 +382,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
     private void sendUnmarkData() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_UNMARK);
-        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
-        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, task.getAssignedUserId());
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
         setResult(RESULT_OK, returnIntent);
         finish();
     }
@@ -392,8 +390,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
     private void sendDeleteData() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_DELETE);
-        returnIntent.putExtra(TodoFragment.EXTRA_TASK_ID, task.getId());
-        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, task.getAssignedUserId());
+        returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
         setResult(RESULT_OK, returnIntent);
         finish();
     }

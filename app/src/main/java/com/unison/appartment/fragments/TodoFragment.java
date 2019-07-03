@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.unison.appartment.R;
 import com.unison.appartment.activities.CreateTaskActivity;
@@ -33,7 +32,6 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
 
     public final static String EXTRA_NEW_TASK = "newTask";
     public final static String EXTRA_TASK_DATA = "taskData";
-    public final static String EXTRA_TASK_ID = "taskId";
     public final static String EXTRA_USER_NAME = "userName";
     public final static String EXTRA_USER_ID = "userId";
     public final static String EXTRA_TASK = "task";
@@ -122,39 +120,50 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
             if (resultCode == TaskDetailActivity.RESULT_OK) {
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_DELETE:
-                        String taskId = data.getStringExtra(EXTRA_TASK_ID);
-                        String assignedUserId = data.getStringExtra(EXTRA_USER_ID);
-                        if (assignedUserId != null) {
-                            listFragment.removeAssignment(taskId, assignedUserId);
-                        }
-                        listFragment.deleteTask(taskId);
-                        break;
-                    case OPERATION_ASSIGN:
-                        UncompletedTask task = data.getParcelableExtra(EXTRA_TASK_DATA);
-                        if (task.isAssigned()) {
-                            listFragment.switchAssignment(task.getId(),
-                                    task.getAssignedUserId(),
-                                    data.getStringExtra(EXTRA_USER_ID),
-                                    data.getStringExtra(EXTRA_USER_NAME));
+                        UncompletedTask taskToDelete = data.getParcelableExtra(EXTRA_TASK_DATA);
+                        if (taskToDelete.getAssignedUserId() != null) {
+                            listFragment.removeAssignmentAndDelete(taskToDelete.getId(),
+                                    taskToDelete.getAssignedUserId(),
+                                    taskToDelete.getVersion());
                         }
                         else {
-                            listFragment.assignTask(task.getId(),
+                            listFragment.deleteTask(taskToDelete.getId(), taskToDelete.getVersion());
+                        }
+                        break;
+                    case OPERATION_ASSIGN:
+                        UncompletedTask taskToAssign = data.getParcelableExtra(EXTRA_TASK_DATA);
+                        if (taskToAssign.isAssigned()) {
+                            listFragment.switchAssignment(taskToAssign.getId(),
+                                    taskToAssign.getAssignedUserId(),
                                     data.getStringExtra(EXTRA_USER_ID),
-                                    data.getStringExtra(EXTRA_USER_NAME));
+                                    data.getStringExtra(EXTRA_USER_NAME),
+                                    taskToAssign.getVersion());
+                        }
+                        else {
+                            listFragment.assignTask(taskToAssign.getId(),
+                                    data.getStringExtra(EXTRA_USER_ID),
+                                    data.getStringExtra(EXTRA_USER_NAME),
+                                    taskToAssign.getVersion());
                         }
                         break;
                     case OPERATION_REMOVE_ASSIGNMENT:
-                        listFragment.removeAssignment(data.getStringExtra(EXTRA_TASK_ID),
-                                data.getStringExtra(EXTRA_USER_ID));
+                        UncompletedTask task = data.getParcelableExtra(EXTRA_TASK_DATA);
+                        listFragment.removeAssignment(task.getId(),
+                                task.getAssignedUserId(),
+                                task.getVersion());
                         break;
                     case OPERATION_MARK_AS_COMPLETED:
-                        listFragment.markTask(data.getStringExtra(EXTRA_TASK_ID),
+                        UncompletedTask taskToMark = data.getParcelableExtra(EXTRA_TASK_DATA);
+                        listFragment.markTask(taskToMark.getId(),
                                 data.getStringExtra(EXTRA_USER_ID),
-                                data.getStringExtra(EXTRA_USER_NAME));
+                                data.getStringExtra(EXTRA_USER_NAME),
+                                taskToMark.getVersion());
                         break;
                     case OPERATION_UNMARK:
-                        listFragment.cancelCompletion(data.getStringExtra(EXTRA_TASK_ID),
-                                data.getStringExtra(EXTRA_USER_ID));
+                        UncompletedTask taskToUnmark = data.getParcelableExtra(EXTRA_TASK_DATA);
+                        listFragment.cancelCompletion(taskToUnmark.getId(),
+                                taskToUnmark.getAssignedUserId(),
+                                taskToUnmark.getVersion());
                         break;
                     case OPERATION_CONFIRM_COMPLETION:
                         listFragment.confirmCompletion((UncompletedTask)data.getParcelableExtra(EXTRA_TASK),
