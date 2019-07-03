@@ -76,7 +76,10 @@ public class FamilyMemberListFragment extends Fragment {
         viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean error) {
-                listener.onFamilyMemberListError(error);
+                if (error) {
+                    listener.onFamilyMemberListError(true);
+                    viewModel.getErrorLiveData().setValue(false);
+                }
             }
         });
 

@@ -54,7 +54,7 @@ public class HomeUserRepository {
         return homeUserLiveData;
     }
 
-    public LiveData<Boolean> getErrorLiveData() {
+    public MutableLiveData<Boolean> getErrorLiveData() {
         return error;
     }
 
@@ -75,7 +75,6 @@ public class HomeUserRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -153,6 +152,11 @@ public class HomeUserRepository {
     }
 
     public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, Set<String> ownPosts, String newNickname) {
+        if (Appartment.getInstance().getHomeUser(userId) == null) {
+            error.setValue(true);
+            return;
+        }
+
         String homeName = Appartment.getInstance().getHome().getName();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
