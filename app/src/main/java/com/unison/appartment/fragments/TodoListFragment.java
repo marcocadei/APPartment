@@ -69,12 +69,15 @@ public class TodoListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
 
         viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean error) {
-                listener.onTodoListError(error);
+                if (error) {
+                    listener.onTodoListError(true);
+                    viewModel.getErrorLiveData().setValue(false);
+                }
             }
         });
 

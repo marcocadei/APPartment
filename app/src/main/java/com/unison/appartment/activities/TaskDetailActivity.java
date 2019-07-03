@@ -41,6 +41,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
     public final static int RESULT_OK = 200;
     public final static int RESULT_EDITED = 201;
     public final static int RESULT_NOT_EDITED = 202;
+    public final static int RESULT_ERROR = 203;
 
     private UncompletedTask task;
 
@@ -351,11 +352,16 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
 
     private void sendAssignData(String userId) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_ASSIGN);
-        returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
-        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
-        returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
-        setResult(RESULT_OK, returnIntent);
+        try {
+            returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_ASSIGN);
+            returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
+            returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
+            returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
+            setResult(RESULT_OK, returnIntent);
+        }
+        catch (NullPointerException e) {
+            setResult(RESULT_ERROR, returnIntent);
+        }
         finish();
     }
 
@@ -369,11 +375,16 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
 
     private void sendMarkData(String userId) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_MARK_AS_COMPLETED);
-        returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
-        returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
-        returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
-        setResult(RESULT_OK, returnIntent);
+        try {
+            returnIntent.putExtra(TodoFragment.EXTRA_OPERATION_TYPE, TodoFragment.OPERATION_MARK_AS_COMPLETED);
+            returnIntent.putExtra(TodoFragment.EXTRA_TASK_DATA, task);
+            returnIntent.putExtra(TodoFragment.EXTRA_USER_ID, userId);
+            returnIntent.putExtra(TodoFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
+            setResult(RESULT_OK, returnIntent);
+        }
+        catch (NullPointerException e) {
+            setResult(RESULT_ERROR, returnIntent);
+        }
         finish();
     }
 
