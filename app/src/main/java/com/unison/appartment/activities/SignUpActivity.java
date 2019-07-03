@@ -164,7 +164,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 Questa eccezione non si può mai verificare se si assume che nel database la data è
                 sempre salvata nel formato corretto.
                  */
-                Log.e(getClass().getCanonicalName(), e.getMessage());
+                Log.e(getClass().getCanonicalName(), "Formato data non corretto");
             }
             inputNickname.setText(oldUser.getName());
             if (oldUser.getImage() != null) {
@@ -531,7 +531,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 eseguiti controlli lato client sulla lunghezza della password.
                 Se si entra in questo blocco c'è qualche problema!
                  */
-                Log.w(getClass().getCanonicalName(), e.getMessage());
+                Log.w(getClass().getCanonicalName(), "Password non sufficientemente robusta");
             } catch (FirebaseAuthInvalidCredentialsException e) {
                 // Email malformata
                 /*
@@ -539,7 +539,7 @@ public class SignUpActivity extends FormActivity implements DatePickerDialog.OnD
                 eseguiti controlli lato client sulla struttura dell'indirizzo mail.
                 Se si entra in questo blocco c'è qualche problema!
                  */
-                Log.w(getClass().getCanonicalName(), e.getMessage());
+                Log.w(getClass().getCanonicalName(), "Email malformata");
             } catch (Exception e) {
                 // Generico
                 showErrorDialog();

@@ -120,7 +120,6 @@ public class RewardRepository {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
-                Log.d("zzz", "request");
                 error.setValue(true);
                 error.setValue(false);
             }
@@ -250,7 +249,6 @@ public class RewardRepository {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
-                Log.d("zzz", "confirm");
                 error.setValue(true);
                 error.setValue(false);
             }

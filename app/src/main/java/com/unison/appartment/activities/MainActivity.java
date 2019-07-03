@@ -522,7 +522,7 @@ public class MainActivity extends ActivityWithNetworkConnectionDialog implements
         try {
             serviceMessenger.send(msg);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            Log.e(getClass().getCanonicalName(), "Errore nell'invio del messaggio al servizio");
         }
     }
 }

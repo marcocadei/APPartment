@@ -11,14 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,6 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.Post;
 
 import java.io.IOException;
-
 
 /**
  * Le Activity che contengono questo fragment devono implementare l'interface
@@ -288,7 +285,6 @@ public class InsertPostFragment extends Fragment {
         } catch (IOException e) {
             // Qualcosa è andato storto con la registrazione
         }
-        Log.d("audio_prova", "iniziata registrazione");
         recorder.start();
     }
 

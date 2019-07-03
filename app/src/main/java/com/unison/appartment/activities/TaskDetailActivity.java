@@ -412,7 +412,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
             sendAssignData(item.getUserId());
         }
         catch (NullPointerException e) {
-            Log.e(getClass().getCanonicalName(), e.getMessage());
+            Log.e(getClass().getCanonicalName(), "Fragment non trovato");
         }
     }
 }

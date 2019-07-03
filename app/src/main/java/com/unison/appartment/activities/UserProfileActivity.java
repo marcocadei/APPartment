@@ -149,7 +149,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
             Questa eccezione non si può mai verificare se si assume che nel database la data è
             sempre salvata nel formato corretto.
              */
-            Log.e(getClass().getCanonicalName(), e.getMessage());
+            Log.e(getClass().getCanonicalName(), "Formato data non corretto");
         }
 
         if (currentUser.getImage() != null) {
@@ -260,7 +260,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                     Questa eccezione non si può mai verificare se si assume che nel database la data è
                     sempre salvata nel formato corretto.
                      */
-                    Log.e(getClass().getCanonicalName(), e.getMessage());
+                    Log.e(getClass().getCanonicalName(), "Formato data non corretto");
                 }
                 if (newUserData.getImage() != null) {
                     updateImage(newUserData.getImage());
