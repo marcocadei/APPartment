@@ -306,6 +306,9 @@ public class TodoTaskRepository {
 //        childUpdates.put(uncompletedTaskPath, null);
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, task.getVersion() + 1);
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_DELETED, true);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
 
         // Aggiornamento di home-users
         HomeUser homeUser = Appartment.getInstance().getHomeUser(assignedUserId);

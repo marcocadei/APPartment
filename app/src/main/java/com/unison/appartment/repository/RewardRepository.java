@@ -240,6 +240,8 @@ public class RewardRepository {
 //        childUpdates.put(rewardsPath, null);
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, reward.getVersion() + 1);
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_DELETED, true);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
+        childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
         // I claimed rewards aumentano di uno
         childUpdates.put(homeUserPath + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERS_HOMENAME_UID_CLAIMEDREWARDS, Appartment.getInstance().getHomeUser(userId).getClaimedRewards() + 1);
         // Tolgo l'id del premio prenotato dai riferimenti associati all'utente
