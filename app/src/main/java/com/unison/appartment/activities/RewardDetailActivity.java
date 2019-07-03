@@ -35,6 +35,7 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
     public final static int RESULT_OK = 200;
     public final static int RESULT_EDITED = 201;
     public final static int RESULT_NOT_EDITED = 202;
+    public final static int RESULT_ERROR = 203;
 
     private Reward reward;
 
@@ -246,21 +247,31 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
 
     private void sendConfirmRequestData(String userId) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CONFIRM);
-        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
-        returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
-        returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
-        setResult(RESULT_OK, returnIntent);
+        try {
+            returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_CONFIRM);
+            returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
+            returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
+            returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
+            setResult(RESULT_OK, returnIntent);
+        }
+        catch (NullPointerException e) {
+            setResult(RESULT_ERROR, returnIntent);
+        }
         finish();
     }
 
     private void sendMakeRequestData(String userId) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_RESERVE);
-        returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
-        returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
-        returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
-        setResult(RESULT_OK, returnIntent);
+        try {
+            returnIntent.putExtra(RewardsFragment.EXTRA_OPERATION_TYPE, RewardsFragment.OPERATION_RESERVE);
+            returnIntent.putExtra(RewardsFragment.EXTRA_REWARD_DATA, reward);
+            returnIntent.putExtra(RewardsFragment.EXTRA_USER_ID, userId);
+            returnIntent.putExtra(RewardsFragment.EXTRA_USER_NAME, Appartment.getInstance().getHomeUser(userId).getNickname());
+            setResult(RESULT_OK, returnIntent);
+        }
+        catch (NullPointerException e) {
+            setResult(RESULT_ERROR, returnIntent);
+        }
         finish();
     }
 

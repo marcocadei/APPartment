@@ -54,7 +54,7 @@ public class RewardRepository {
         return rewardLiveData;
     }
 
-    public LiveData<Boolean> getErrorLiveData() {
+    public MutableLiveData<Boolean> getErrorLiveData() {
         return error;
     }
 
@@ -77,7 +77,6 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -89,21 +88,19 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
 
     public void requestReward(Reward reward, String userId, String userName) {
+        String homeName = Appartment.getInstance().getHome().getName();
         String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                reward.getId();
+                homeName + DatabaseConstants.SEPARATOR + reward.getId();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                userId;
+                homeName + DatabaseConstants.SEPARATOR + userId;
         String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                userId + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
+                homeName + DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
                 DatabaseConstants.SEPARATOR + reward.getId();
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -119,7 +116,6 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -148,21 +144,25 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
 
     public void cancelAndDelete(Reward reward) {
+        if (Appartment.getInstance().getHomeUser(reward.getReservationId()) == null) {
+            // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+            error.setValue(true);
+            return;
+        }
+
         Map<String, Object> childUpdates = new HashMap<>();
+        String homeName = Appartment.getInstance().getHome().getName();
         String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                reward.getId();
+                homeName + DatabaseConstants.SEPARATOR + reward.getId();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                reward.getReservationId();
+                homeName + DatabaseConstants.SEPARATOR + reward.getReservationId();
         String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR +
                 reward.getReservationId() + DatabaseConstants.SEPARATOR +
                 DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
                 DatabaseConstants.SEPARATOR + reward.getId();
@@ -181,21 +181,25 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
 
     public void cancelRequest(Reward reward) {
+        if (Appartment.getInstance().getHomeUser(reward.getReservationId()) == null) {
+            // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+            error.setValue(true);
+            return;
+        }
+
         Map<String, Object> childUpdates = new HashMap<>();
+        String homeName = Appartment.getInstance().getHome().getName();
         String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                reward.getId();
+                homeName + DatabaseConstants.SEPARATOR + reward.getId();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                reward.getReservationId();
+                homeName + DatabaseConstants.SEPARATOR + reward.getReservationId();
         String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR +
                 reward.getReservationId() + DatabaseConstants.SEPARATOR +
                 DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
                 DatabaseConstants.SEPARATOR + reward.getId();
@@ -212,7 +216,6 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -223,16 +226,15 @@ public class RewardRepository {
         termine dell'operazione non è negativo.
          */
         Map<String, Object> childUpdates = new HashMap<>();
+        String homeName = Appartment.getInstance().getHome().getName();
         String rewardsPath = DatabaseConstants.REWARDS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                reward.getId();
+                homeName + DatabaseConstants.SEPARATOR + reward.getId();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                userId;
+                homeName + DatabaseConstants.SEPARATOR + userId;
         String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
-                Appartment.getInstance().getHome().getName() + DatabaseConstants.SEPARATOR +
-                userId + DatabaseConstants.SEPARATOR + DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS +
-                DatabaseConstants.SEPARATOR + reward.getId();
+                homeName + DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_REWARDS + DatabaseConstants.SEPARATOR +
+                reward.getId();
 
 //        childUpdates.put(rewardsPath, null);
         childUpdates.put(rewardsPath + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, reward.getVersion() + 1);
@@ -248,7 +250,6 @@ public class RewardRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }

@@ -151,6 +151,8 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                 }
             } else if (resultCode == RewardDetailActivity.RESULT_EDITED) {
                 listFragment.editReward((Reward)data.getParcelableExtra(EXTRA_NEW_REWARD));
+            } else if (resultCode == RewardDetailActivity.RESULT_ERROR) {
+                onRewardListError(true);
             }
         }
     }
