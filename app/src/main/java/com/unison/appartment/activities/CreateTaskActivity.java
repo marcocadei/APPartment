@@ -203,7 +203,8 @@ public class CreateTaskActivity extends FormActivity implements UserPickerFragme
                     uncompletedTask.getCreationDate(),
                     uncompletedTask.getAssignedUserId(),
                     uncompletedTask.getAssignedUserName(),
-                    uncompletedTask.isMarked()
+                    uncompletedTask.isMarked(),
+                    uncompletedTask.getVersion()
             );
         } else {
             newUncompletedTask = new UncompletedTask(

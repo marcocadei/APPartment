@@ -74,6 +74,13 @@ public class FamilyMemberListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_family_member_list, container, false);
 
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean error) {
+                listener.onFamilyMemberListError(error);
+            }
+        });
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -150,5 +157,6 @@ public class FamilyMemberListFragment extends Fragment {
     public interface OnFamilyMemberListFragmentInteractionListener {
         void onFamilyMemberListFragmentOpenMember(HomeUser member);
         void onFamilyMemberListElementsLoaded(int elements);
+        void onFamilyMemberListError(boolean error);
     }
 }

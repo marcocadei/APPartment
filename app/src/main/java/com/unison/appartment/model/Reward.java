@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * Classe che rappresenta un premio da reclamare
  */
-public class Reward implements Parcelable {
+public class Reward implements Parcelable, Comparable {
 
     private final static String ATTRIBUTE_RESERVATION_NAME = "reservation-name";
     private final static String ATTRIBUTE_RESERVATION_ID = "reservation-id";
@@ -29,25 +29,30 @@ public class Reward implements Parcelable {
     @Nullable
     @PropertyName(ATTRIBUTE_RESERVATION_NAME)
     private String reservationName;
+    private int version;
+    private boolean deleted;
 
     public Reward() {}
 
     public Reward(String id, String name, String description, int points) {
+        this(name, description, points);
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.points = points;
+        this.deleted = false;
+    }
+
+    public Reward(String id, String name, String description, int points, int version) {
+        this(name, description, points);
+        this.id = id;
+        this.version = version;
+        this.deleted = false;
     }
 
     public Reward(String name, String description, int points) {
         this.name = name;
         this.description = description;
         this.points = points;
-    }
-
-    public Reward(String name, String description, int points, @Nullable String reservationId) {
-        this(name, description, points);
-        this.reservationId = reservationId;
+        this.version = 0;
+        this.deleted = false;
     }
 
     @Nullable
@@ -111,12 +116,30 @@ public class Reward implements Parcelable {
         return this.reservationId != null;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reward reward = (Reward) o;
         return points == reward.points &&
+                version == reward.version &&
+                deleted == reward.deleted &&
                 name.equals(reward.name) &&
                 description.equals(reward.description) &&
                 Objects.equals(reservationId, reward.reservationId) &&
@@ -125,9 +148,8 @@ public class Reward implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, points, reservationId, reservationName);
+        return Objects.hash(name, description, points, reservationId, reservationName, version, deleted);
     }
-
 
     @Override
     public int describeContents() {
@@ -142,6 +164,8 @@ public class Reward implements Parcelable {
         dest.writeInt(this.points);
         dest.writeString(this.reservationId);
         dest.writeString(this.reservationName);
+        dest.writeInt(this.version);
+        dest.writeByte(this.deleted ? (byte) 1 : (byte) 0);
     }
 
     protected Reward(Parcel in) {
@@ -151,9 +175,11 @@ public class Reward implements Parcelable {
         this.points = in.readInt();
         this.reservationId = in.readString();
         this.reservationName = in.readString();
+        this.version = in.readInt();
+        this.deleted = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<Reward> CREATOR = new Parcelable.Creator<Reward>() {
+    public static final Creator<Reward> CREATOR = new Creator<Reward>() {
         @Override
         public Reward createFromParcel(Parcel source) {
             return new Reward(source);
@@ -164,4 +190,9 @@ public class Reward implements Parcelable {
             return new Reward[size];
         }
     };
+
+    @Override
+    public int compareTo(Object o) {
+        return this.getName().compareTo(((Reward) o).getName());
+    }
 }

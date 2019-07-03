@@ -34,28 +34,32 @@ public class TodoTaskViewModel extends ViewModel {
         repository.editTask(newUncompletedTask);
     }
 
-    public void deleteTask(String id) {
-        repository.deleteTask(id);
+    public void deleteTask(String id, int taskVersion) {
+        repository.deleteTask(id, taskVersion);
     }
 
-    public void assignTask(String taskId, String userId, String userName) {
-        repository.assignTask(taskId, userId, userName);
+    public void assignTask(String taskId, String userId, String userName, int taskVersion) {
+        repository.assignTask(taskId, userId, userName, taskVersion);
     }
 
-    public void removeAssignment(String taskId, String assignedUserId) {
-        repository.removeAssignment(taskId, assignedUserId);
+    public void removeAssignment(String taskId, String assignedUserId, int taskVersion) {
+        repository.removeAssignment(taskId, assignedUserId, taskVersion);
     }
 
-    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName) {
-        repository.switchAssignment(taskId, assignedUserId, newAssignedUserId, newAssignedUserName);
+    public void removeAssignmentAndDelete(String taskId, String assignedUserId, int taskVersion) {
+        repository.removeAssignmentAndDelete(taskId, assignedUserId, taskVersion);
     }
 
-    public void markTask(String taskId, String userId, String userName) {
-        repository.markTask(taskId, userId, userName);
+    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName, int taskVersion) {
+        repository.switchAssignment(taskId, assignedUserId, newAssignedUserId, newAssignedUserName, taskVersion);
     }
 
-    public void cancelCompletion(String taskId, String userId) {
-        repository.cancelCompletion(taskId, userId);
+    public void markTask(String taskId, String userId, String userName, int taskVersion) {
+        repository.markTask(taskId, userId, userName, taskVersion);
+    }
+
+    public void cancelCompletion(String taskId, String userId, int taskVersion) {
+        repository.cancelCompletion(taskId, userId, taskVersion);
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {

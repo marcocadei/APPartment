@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * Classe che rappresenta un task da completare
  */
-public class UncompletedTask implements Parcelable {
+public class UncompletedTask implements Parcelable, Comparable {
 
     private final static String ATTRIBUTE_CREATION_DATE = "creation-date";
     private final static String ATTRIBUTE_ASSIGNED_USER_ID = "assigned-user-id";
@@ -33,22 +33,13 @@ public class UncompletedTask implements Parcelable {
     @PropertyName(ATTRIBUTE_ASSIGNED_USER_NAME)
     private String assignedUserName;
     private boolean marked;
+    private int version;
+    private boolean deleted;
 
     // Costruttore vuoto richiesto da firebase
     public UncompletedTask() {}
 
-    public UncompletedTask(String name, String description, int points) {
-        this(name, description, points, System.currentTimeMillis());
-    }
-
-    public UncompletedTask(String name, String description, int points, long creationDate) {
-        this.name = name;
-        this.description = description;
-        this.points = points;
-        this.creationDate = creationDate;
-    }
-
-    public UncompletedTask(String id, String name, String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked) {
+    public UncompletedTask(String id, String name, String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked, int version) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -57,6 +48,8 @@ public class UncompletedTask implements Parcelable {
         this.assignedUserId = assignedUserId;
         this.assignedUserName = assignedUserName;
         this.marked = marked;
+        this.version = version;
+        this.deleted = false;
     }
 
     public UncompletedTask(String name, String description, int points, long creationDate, @Nullable String assignedUserId, @Nullable String assignedUserName, boolean marked) {
@@ -67,6 +60,8 @@ public class UncompletedTask implements Parcelable {
         this.assignedUserId = assignedUserId;
         this.assignedUserName = assignedUserName;
         this.marked = marked;
+        this.version = 0;
+        this.deleted = false;
     }
 
     public String getName() {
@@ -148,6 +143,22 @@ public class UncompletedTask implements Parcelable {
         return this.assignedUserId != null;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -156,6 +167,8 @@ public class UncompletedTask implements Parcelable {
         return points == that.points &&
                 creationDate == that.creationDate &&
                 marked == that.marked &&
+                version == that.version &&
+                deleted == that.deleted &&
                 name.equals(that.name) &&
                 description.equals(that.description) &&
                 Objects.equals(assignedUserId, that.assignedUserId) &&
@@ -164,9 +177,8 @@ public class UncompletedTask implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, points, creationDate, assignedUserId, assignedUserName, marked);
+        return Objects.hash(name, description, points, creationDate, assignedUserId, assignedUserName, marked, version, deleted);
     }
-
 
     @Override
     public int describeContents() {
@@ -183,6 +195,8 @@ public class UncompletedTask implements Parcelable {
         dest.writeString(this.assignedUserId);
         dest.writeString(this.assignedUserName);
         dest.writeByte(this.marked ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.version);
+        dest.writeByte(this.deleted ? (byte) 1 : (byte) 0);
     }
 
     protected UncompletedTask(Parcel in) {
@@ -194,9 +208,11 @@ public class UncompletedTask implements Parcelable {
         this.assignedUserId = in.readString();
         this.assignedUserName = in.readString();
         this.marked = in.readByte() != 0;
+        this.version = in.readInt();
+        this.deleted = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<UncompletedTask> CREATOR = new Parcelable.Creator<UncompletedTask>() {
+    public static final Creator<UncompletedTask> CREATOR = new Creator<UncompletedTask>() {
         @Override
         public UncompletedTask createFromParcel(Parcel source) {
             return new UncompletedTask(source);
@@ -207,4 +223,9 @@ public class UncompletedTask implements Parcelable {
             return new UncompletedTask[size];
         }
     };
+
+    @Override
+    public int compareTo(Object o) {
+        return Long.compare(((UncompletedTask) o).getCreationDate(), this.creationDate);
+    }
 }

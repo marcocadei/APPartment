@@ -30,8 +30,8 @@ public class RewardViewModel extends ViewModel {
         repository.addReward(newReward);
     }
 
-    public void deleteReward(String id) {
-        repository.deleteReward(id);
+    public void deleteReward(String id, int rewardVersion) {
+        repository.deleteReward(id, rewardVersion);
     }
 
     public void editReward(Reward reward) {
@@ -42,8 +42,16 @@ public class RewardViewModel extends ViewModel {
         repository.requestReward(reward, userId, userName);
     }
 
+    public void requestAndConfirm(Reward reward, String userId, String userName) {
+        repository.requestAndConfirm(reward, userId, userName);
+    }
+
     public void cancelRequest(Reward reward) {
         repository.cancelRequest(reward);
+    }
+
+    public void cancelAndDelete(Reward reward) {
+        repository.cancelAndDelete(reward);
     }
 
     public void confirmRequest(Reward reward, String userId) {

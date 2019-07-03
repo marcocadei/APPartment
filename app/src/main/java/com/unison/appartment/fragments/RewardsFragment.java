@@ -120,11 +120,13 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
             if (resultCode == RewardDetailActivity.RESULT_OK) {
                 switch (data.getIntExtra(EXTRA_OPERATION_TYPE, -1)) {
                     case OPERATION_DELETE:
-                        Reward rewardToDelete = (Reward)data.getParcelableExtra(EXTRA_REWARD_DATA);
+                        Reward rewardToDelete = data.getParcelableExtra(EXTRA_REWARD_DATA);
                         if (rewardToDelete.isRequested()) {
-                            listFragment.cancelRequest(rewardToDelete);
+                            listFragment.cancelAndDelete(rewardToDelete);
                         }
-                        listFragment.deleteReward(rewardToDelete.getId());
+                        else {
+                            listFragment.deleteReward(rewardToDelete.getId(), rewardToDelete.getVersion());
+                        }
                         break;
                     case OPERATION_RESERVE:
                         listFragment.requestReward((Reward)data.getParcelableExtra(EXTRA_REWARD_DATA),
@@ -135,12 +137,14 @@ public class RewardsFragment extends Fragment implements RewardListFragment.OnRe
                         listFragment.cancelRequest((Reward)data.getParcelableExtra(EXTRA_REWARD_DATA));
                         break;
                     case OPERATION_CONFIRM:
-                        Reward rewardToConfirm = (Reward)data.getParcelableExtra(EXTRA_REWARD_DATA);
+                        Reward rewardToConfirm = data.getParcelableExtra(EXTRA_REWARD_DATA);
                         if (!rewardToConfirm.isRequested()) {
-                            listFragment.requestReward(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID),
+                            listFragment.requestAndConfirm(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID),
                                     data.getStringExtra(EXTRA_USER_NAME));
                         }
-                        listFragment.confirmRequest(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID));
+                        else {
+                            listFragment.confirmRequest(rewardToConfirm, data.getStringExtra(EXTRA_USER_ID));
+                        }
                         break;
                     default:
                         Log.e(getClass().getCanonicalName(), "Operation type non riconosciuto");

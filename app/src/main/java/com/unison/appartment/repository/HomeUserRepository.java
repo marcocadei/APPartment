@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,6 +35,8 @@ public class HomeUserRepository {
     private FirebaseQueryLiveData liveData;
     private LiveData<List<HomeUser>> homeUserLiveData;
 
+    private MutableLiveData<Boolean> error;
+
     public HomeUserRepository() {
         // Riferimento al nodo root del database
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -41,11 +45,17 @@ public class HomeUserRepository {
                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName()).orderByChild(DatabaseConstants.HOMEUSERS_HOMENAME_UID_NICKNAME);
         liveData = new FirebaseQueryLiveData(homeUsersRef);
         homeUserLiveData = Transformations.map(liveData, new HomeUserRepository.Deserializer());
+
+        error = new MutableLiveData<>();
     }
 
     @NonNull
     public LiveData<List<HomeUser>> getHomeUserLiveData() {
         return homeUserLiveData;
+    }
+
+    public LiveData<Boolean> getErrorLiveData() {
+        return error;
     }
 
     public void changeRole(String userId, int newRole) {
@@ -60,7 +70,14 @@ public class HomeUserRepository {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(homeUserPath, newRole);
         childUpdates.put(userHomePath, newRole);
-        rootRef.updateChildren(childUpdates);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
     public void leaveHome(String userId, Set<String> requestedRewards, Set<String> assignedTasks, @Nullable String newOwnerId) {

@@ -23,6 +23,7 @@ import com.unison.appartment.viewmodel.TodoTaskViewModel;
 import com.unison.appartment.adapters.MyTodoListRecyclerViewAdapter;
 import com.unison.appartment.R;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -126,9 +127,9 @@ public class TodoListFragment extends Fragment {
         taskLiveData.observe(getViewLifecycleOwner(), new Observer<List<UncompletedTask>>() {
             @Override
             public void onChanged(List<UncompletedTask> uncompletedTasks) {
+                Collections.sort(uncompletedTasks);
                 myAdapter.submitList(uncompletedTasks);
                 listener.onTodoListElementsLoaded(uncompletedTasks.size());
-                Log.d("provaListAdapter", "aggiunto");
             }
         });
     }
@@ -145,28 +146,32 @@ public class TodoListFragment extends Fragment {
         viewModel.editTask(newUncompletedTask);
     }
 
-    public void deleteTask(String id) {
-        viewModel.deleteTask(id);
+    public void deleteTask(String id, int taskVersion) {
+        viewModel.deleteTask(id, taskVersion);
     }
 
-    public void assignTask(String taskId, String userId, String userName) {
-        viewModel.assignTask(taskId, userId, userName);
+    public void assignTask(String taskId, String userId, String userName, int taskVersion) {
+        viewModel.assignTask(taskId, userId, userName, taskVersion);
     }
 
-    public void removeAssignment(String taskId, String assignedUserId) {
-        viewModel.removeAssignment(taskId, assignedUserId);
+    public void removeAssignment(String taskId, String assignedUserId, int taskVersion) {
+        viewModel.removeAssignment(taskId, assignedUserId, taskVersion);
     }
 
-    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName) {
-        viewModel.switchAssignment(taskId, assignedUserId, newAssignedUserId, newAssignedUserName);
+    public void removeAssignmentAndDelete(String taskId, String assignedUserId, int taskVersion) {
+        viewModel.removeAssignmentAndDelete(taskId, assignedUserId, taskVersion);
     }
 
-    public void markTask(String taskId, String userId, String userName) {
-        viewModel.markTask(taskId, userId, userName);
+    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName, int taskVersion) {
+        viewModel.switchAssignment(taskId, assignedUserId, newAssignedUserId, newAssignedUserName, taskVersion);
     }
 
-    public void cancelCompletion(String taskId, String userId) {
-        viewModel.cancelCompletion(taskId, userId);
+    public void markTask(String taskId, String userId, String userName, int taskVersion) {
+        viewModel.markTask(taskId, userId, userName, taskVersion);
+    }
+
+    public void cancelCompletion(String taskId, String userId, int taskVersion) {
+        viewModel.cancelCompletion(taskId, userId, taskVersion);
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {

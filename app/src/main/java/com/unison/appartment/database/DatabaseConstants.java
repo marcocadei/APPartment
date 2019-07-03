@@ -38,16 +38,20 @@ public class DatabaseConstants {
 
     // Premi
     public final static String REWARDS = "rewards";
-    public static final String REWARDS_HOMENAME_REWARDID_NAME = "name";
-    public static final String REWARDS_HOMENAME_REWARDID_RESERVATIONID = "reservation-id";
-    public static final String REWARDS_HOMENAME_REWARDID_RESERVATIONNAME = "reservation-name";
+    public final static String REWARDS_HOMENAME_REWARDID_DELETED = "deleted";
+    public final static String REWARDS_HOMENAME_REWARDID_NAME = "name";
+    public final static String REWARDS_HOMENAME_REWARDID_RESERVATIONID = "reservation-id";
+    public final static String REWARDS_HOMENAME_REWARDID_RESERVATIONNAME = "reservation-name";
+    public final static String REWARDS_HOMENAME_REWARDID_VERSION = "version";
 
     // UncompletedTask
     public final static String UNCOMPLETEDTASKS = "uncompleted-tasks";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID = "assigned-user-id";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME = "assigned-user-name";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE = "creation-date";
+    public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_DELETED = "deleted";
     public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED = "marked";
+    public final static String UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION = "version";
 
     // CompletedTask
     public final static String COMPLETEDTASKS = "completed-tasks";

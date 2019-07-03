@@ -47,7 +47,8 @@ public class TodoTaskRepository {
         // Riferimento al nodo del database a cui sono interessato
         uncompletedTasksRef = FirebaseDatabase.getInstance().getReference(DatabaseConstants.UNCOMPLETEDTASKS +
                 DatabaseConstants.SEPARATOR + Appartment.getInstance().getHome().getName());
-        Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_CREATIONDATE);
+        Query orderedTasks = uncompletedTasksRef.orderByChild(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_DELETED)
+                .equalTo(false);
         liveData = new FirebaseQueryLiveData(orderedTasks);
         taskLiveData = Transformations.map(liveData, new TodoTaskRepository.Deserializer());
 
@@ -90,14 +91,37 @@ public class TodoTaskRepository {
 
     public void editTask(UncompletedTask newUncompletedTask) {
         newUncompletedTask.setCreationDate((-1) * newUncompletedTask.getCreationDate());
-        uncompletedTasksRef.child(newUncompletedTask.getId()).setValue(newUncompletedTask);
+        newUncompletedTask.setVersion(newUncompletedTask.getVersion() + 1);
+        uncompletedTasksRef.child(newUncompletedTask.getId()).setValue(newUncompletedTask).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
-    public void deleteTask(String id){
-        uncompletedTasksRef.child(id).removeValue();
+    public void deleteTask(String id, int taskVersion) {
+//        uncompletedTasksRef.child(id).removeValue();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, taskVersion + 1);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_DELETED, true);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        childUpdates.put(DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
+        uncompletedTasksRef.child(id).updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
     }
 
-    public void assignTask(String taskId, String userId, String userName) {
+    public void assignTask(String taskId, String userId, String userName, int taskVersion) {
         String homeName = Appartment.getInstance().getHome().getName();
         String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
                 DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
@@ -110,6 +134,7 @@ public class TodoTaskRepository {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, taskVersion + 1);
         // Aggiungo l'id del task assegnato ai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, true);
         rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
@@ -122,7 +147,7 @@ public class TodoTaskRepository {
         });
     }
 
-    public void removeAssignment(String taskId, String assignedUserId) {
+    public void removeAssignment(String taskId, String assignedUserId, int taskVersion) {
         String homeName = Appartment.getInstance().getHome().getName();
         String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
                 DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
@@ -135,6 +160,7 @@ public class TodoTaskRepository {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, taskVersion + 1);
         // Tolgo l'id del task assegnato dai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, null);
         rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
@@ -147,7 +173,35 @@ public class TodoTaskRepository {
         });
     }
 
-    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName) {
+    public void removeAssignmentAndDelete(String taskId, String assignedUserId, int taskVersion) {
+        String homeName = Appartment.getInstance().getHome().getName();
+        String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
+                DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
+                taskId;
+        String homeUserRefPath = DatabaseConstants.HOMEUSERSREFS + DatabaseConstants.SEPARATOR +
+                homeName + DatabaseConstants.SEPARATOR + assignedUserId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.HOMEUSERSREFS_HOMENAME_UID_TASKS + DatabaseConstants.SEPARATOR +
+                taskId;
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, taskVersion + 1);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_DELETED, true);
+        // Tolgo l'id del task assegnato dai riferimenti associati all'utente
+        childUpdates.put(homeUserRefPath, null);
+        rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
+                error.setValue(true);
+                error.setValue(false);
+            }
+        });
+    }
+
+    public void switchAssignment(String taskId, String assignedUserId, String newAssignedUserId, String newAssignedUserName, int taskVersion) {
         String homeName = Appartment.getInstance().getHome().getName();
         String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
                 DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
@@ -164,6 +218,7 @@ public class TodoTaskRepository {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, newAssignedUserId);
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, newAssignedUserName);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, taskVersion + 1);
         // Tolgo l'id del task assegnato dai riferimenti associati al vecchio utente
         childUpdates.put(oldHomeUserRefPath, null);
         // Aggiungo l'id del task assegnato ai riferimenti associati al nuovo utente
@@ -178,7 +233,7 @@ public class TodoTaskRepository {
         });
     }
 
-    public void markTask(String taskId, String userId, String userName) {
+    public void markTask(String taskId, String userId, String userName, int taskVersion) {
         String homeName = Appartment.getInstance().getHome().getName();
         String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS +
                 DatabaseConstants.SEPARATOR + homeName + DatabaseConstants.SEPARATOR +
@@ -192,6 +247,7 @@ public class TodoTaskRepository {
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, userId);
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, userName);
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, true);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, taskVersion + 1);
         // Aggiungo l'id del task assegnato ai riferimenti associati all'utente
         childUpdates.put(homeUserRefPath, true);
         rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
@@ -204,7 +260,7 @@ public class TodoTaskRepository {
         });
     }
 
-    public void cancelCompletion(String taskId, String userId) {
+    public void cancelCompletion(String taskId, String userId, int taskVersion) {
         Map<String, Object> childUpdates = new HashMap<>();
 
         String homeName = Appartment.getInstance().getHome().getName();
@@ -218,6 +274,8 @@ public class TodoTaskRepository {
         // Il task non è più marked, ma rimane assegnato
         childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + taskId + DatabaseConstants.SEPARATOR +
                 DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + taskId + DatabaseConstants.SEPARATOR +
+                DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, taskVersion + 1);
         rootRef.updateChildren(childUpdates).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -245,7 +303,12 @@ public class TodoTaskRepository {
                 task.getId();
 
         // Aggiornamento di uncompleted-tasks
-        childUpdates.put(uncompletedTaskPath, null);
+//        childUpdates.put(uncompletedTaskPath, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, task.getVersion() + 1);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_DELETED, true);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
+        childUpdates.put(uncompletedTaskPath + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
 
         // Aggiornamento di home-users
         HomeUser homeUser = Appartment.getInstance().getHomeUser(assignedUserId);

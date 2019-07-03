@@ -219,14 +219,13 @@ public class RewardDetailActivity extends ActivityWithNetworkConnectionDialog {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (Appartment.getInstance().getHomeUser(new FirebaseAuth().getCurrentUserUid()).getRole() != Home.ROLE_SLAVE) {
-            if (item.getItemId() == R.id.activity_reward_detail_toolbar_edit) {
-                Intent i = new Intent(this, CreateRewardActivity.class);
-                i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
-                startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
-                return true;
-            }
+        if (item.getItemId() == R.id.activity_reward_detail_toolbar_edit) {
+            Intent i = new Intent(this, CreateRewardActivity.class);
+            i.putExtra(CreateRewardActivity.EXTRA_REWARD_DATA, reward);
+            startActivityForResult(i, EDIT_REWARD_REQUEST_CODE);
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
