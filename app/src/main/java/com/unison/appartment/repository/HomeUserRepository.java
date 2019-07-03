@@ -170,9 +170,9 @@ public class HomeUserRepository {
 
         final Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(homeUserPath, newNickname);
-        for (String postId : ownPosts) {
-            childUpdates.put(basePostPath + postId + DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS_HOMENAME_POSTID_AUTHOR, newNickname);
-        }
+//        for (String postId : ownPosts) {
+//            childUpdates.put(basePostPath + postId + DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS_HOMENAME_POSTID_AUTHOR, newNickname);
+//        }
         for (String rewardId : requestedRewards) {
             childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, newNickname);
             childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, 0);
