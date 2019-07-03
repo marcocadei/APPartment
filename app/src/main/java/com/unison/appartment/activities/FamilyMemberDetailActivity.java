@@ -291,6 +291,7 @@ public class FamilyMemberDetailActivity extends ActivityWithDialogs implements D
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
         chart.getYAxis().setEnabled(false);
+        chart.getYAxis().setAxisMinimum(0f);
         chart.animateXY(1000, 1000);
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         chart.getXAxis().setTextSize(20f);
