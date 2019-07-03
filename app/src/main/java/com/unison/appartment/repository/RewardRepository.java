@@ -1,7 +1,5 @@
 package com.unison.appartment.repository;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -120,7 +118,6 @@ public class RewardRepository {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
-                Log.d("zzz", "request");
                 error.setValue(true);
                 error.setValue(false);
             }
@@ -250,7 +247,6 @@ public class RewardRepository {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
-                Log.d("zzz", "confirm");
                 error.setValue(true);
                 error.setValue(false);
             }

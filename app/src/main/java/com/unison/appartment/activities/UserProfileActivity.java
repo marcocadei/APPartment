@@ -2,8 +2,6 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
@@ -11,7 +9,6 @@ import androidx.core.view.ViewCompat;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +43,6 @@ import com.unison.appartment.utils.DateUtils;
 import com.unison.appartment.utils.ImageUtils;
 
 import java.text.ParseException;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -149,7 +145,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
             Questa eccezione non si può mai verificare se si assume che nel database la data è
             sempre salvata nel formato corretto.
              */
-            Log.e(getClass().getCanonicalName(), e.getMessage());
+            Log.e(getClass().getCanonicalName(), "Formato data non corretto");
         }
 
         if (currentUser.getImage() != null) {
@@ -260,7 +256,7 @@ public class UserProfileActivity extends ActivityWithDialogs implements UserHome
                     Questa eccezione non si può mai verificare se si assume che nel database la data è
                     sempre salvata nel formato corretto.
                      */
-                    Log.e(getClass().getCanonicalName(), e.getMessage());
+                    Log.e(getClass().getCanonicalName(), "Formato data non corretto");
                 }
                 if (newUserData.getImage() != null) {
                     updateImage(newUserData.getImage());

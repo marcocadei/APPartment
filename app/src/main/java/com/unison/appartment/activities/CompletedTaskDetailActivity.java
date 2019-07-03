@@ -1,14 +1,12 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -66,7 +64,6 @@ public class CompletedTaskDetailActivity extends ActivityWithNetworkConnectionDi
         final CompletedTask completedTask = (CompletedTask) creationIntent.getParcelableExtra(EXTRA_COMPLETED_TASK_OBJECT);
         // Imposto il nome del task visualizzato all'interno dello stato
         Appartment.getInstance().setCurrentCompletedTaskName(completedTask.getName());
-        Log.d("STATO", Appartment.getInstance().getCurrentCompletedTaskName());
 
         emptyListLayout = findViewById(R.id.activity_completed_task_detail_layout_empty_list);
         TextView textName = findViewById(R.id.activity_completed_task_detail_name);

@@ -2,13 +2,11 @@ package com.unison.appartment.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -412,7 +410,7 @@ public class TaskDetailActivity extends ActivityWithNetworkConnectionDialog impl
             sendAssignData(item.getUserId());
         }
         catch (NullPointerException e) {
-            Log.e(getClass().getCanonicalName(), e.getMessage());
+            Log.e(getClass().getCanonicalName(), "Fragment non trovato");
         }
     }
 }

@@ -7,10 +7,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.unison.appartment.R;
-import com.unison.appartment.activities.UserProfileActivity;
 import com.unison.appartment.model.User;
 
 public class FirebaseAuth implements Auth {

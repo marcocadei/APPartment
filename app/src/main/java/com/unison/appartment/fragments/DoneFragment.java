@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.unison.appartment.activities.CompletedTaskDetailActivity;
@@ -22,7 +22,6 @@ import com.unison.appartment.R;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.model.UncompletedTask;
 import com.unison.appartment.viewmodel.TodoTaskViewModel;
-
 
 public class DoneFragment extends Fragment implements AllCompletedTasksListFragment.OnAllCompletedTasksListFragmentInteractionListener {
 
@@ -129,9 +128,9 @@ public class DoneFragment extends Fragment implements AllCompletedTasksListFragm
         try {
             ft.replace(R.id.fragment_done_fragment_done_list, (Fragment) fragment.newInstance());
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            Log.e(getClass().getCanonicalName(), "La classe " + fragment.getCanonicalName() + " non è disponibile");
         } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
+            Log.e(getClass().getCanonicalName(), "La classe " + fragment.getCanonicalName() + " non può essere istanziata");
         }
         ft.commit();
     }

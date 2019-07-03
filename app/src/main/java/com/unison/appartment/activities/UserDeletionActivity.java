@@ -1,9 +1,7 @@
 package com.unison.appartment.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,12 +25,8 @@ import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.database.FirebaseDatabaseReader;
 import com.unison.appartment.database.FirebaseDatabaseWriter;
 import com.unison.appartment.fragments.FirebaseProgressDialogFragment;
-import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.KeyboardUtils;
-
-import java.util.HashSet;
-import java.util.Map;
 
 public class UserDeletionActivity extends FormActivity {
 
@@ -194,7 +188,7 @@ public class UserDeletionActivity extends FormActivity {
             /*
             Qui dovrebbe sempre essere chiamato onReadEmpty, vedi nota sopra!
              */
-            Log.e(getClass().getCanonicalName(), "Eliminazione di un utente ancora membro di una o più case.");
+            Log.e(getClass().getCanonicalName(), "Eliminazione di un utente ancora membro di una o più case");
         }
 
         @Override

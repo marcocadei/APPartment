@@ -12,7 +12,6 @@ import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.livedata.FirebaseQueryLiveData;
 import com.unison.appartment.model.UserHome;
-import com.unison.appartment.state.Appartment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,6 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,7 @@ import com.unison.appartment.fragments.InsertPostFragment.OnInsertPostFragmentLi
 import com.unison.appartment.fragments.PostListFragment.OnPostListFragmentInteractionListener;
 import com.unison.appartment.activities.ImageDetailActivity;
 import com.unison.appartment.model.Post;
-import com.unison.appartment.state.Appartment;
 import com.unison.appartment.utils.ImageUtils;
-
 
 /**
  * Fragment che rappresenta l'intera bacheca
@@ -112,10 +109,8 @@ public class MessagesFragment extends Fragment implements OnInsertPostFragmentLi
         this.loading = loading;
         if (loading) {
             progressBar.setVisibility(View.VISIBLE);
-            Log.d("MESSAGGI", "LOADING");
         } else {
             progressBar.setVisibility(View.GONE);
-            Log.d("MESSAGGI", "STOP LOADING");
         }
     }
 

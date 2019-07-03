@@ -13,10 +13,7 @@ import android.widget.TextView;
 import com.unison.appartment.R;
 import com.unison.appartment.fragments.UserHomeListFragment;
 import com.unison.appartment.fragments.UserHomeListFragment.OnHomeListFragmentInteractionListener;
-import com.unison.appartment.model.User;
 import com.unison.appartment.model.UserHome;
-
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di {@link UserHome} e che effettua una

@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import com.unison.appartment.adapters.MyFamilyMemberRecyclerViewAdapter;
 import com.unison.appartment.R;
 import com.unison.appartment.model.HomeUser;
-import com.unison.appartment.model.User;
 import com.unison.appartment.viewmodel.HomeUserViewModel;
 
 import java.util.List;

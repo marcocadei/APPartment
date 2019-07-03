@@ -39,8 +39,6 @@ import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class NotificationService extends Service {
@@ -276,7 +274,7 @@ public class NotificationService extends Service {
                 verificato che il reservationId sia diverso da null (in quanto non è possibile
                 fare altre modifiche al premio fintantoché questo è prenotato da qualcuno).
                  */
-                if (reward.isRequested()) {
+                if (reward.isRequested() && !reward.isDeleted()) {
                     // Mostro la notifica solo ai master
                     if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
                         // Non mostro la notifica se sono nel rewards fragment
@@ -356,7 +354,7 @@ public class NotificationService extends Service {
                 verificato che l'attributo marked sia uguale a true (in quanto non è possibile
                 fare altre modifiche al task fintantoché questo è marcato come completato da qualcuno).
                  */
-                if (task.isMarked()) {
+                if (task.isMarked() && !task.isDeleted()) {
                     // Mostro la notifica solo ai master
                     if (Appartment.getInstance().getUserHome().getRole() != Home.ROLE_SLAVE) {
                         // Non mostro la notifica se sono nel to-do fragment
