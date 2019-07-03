@@ -2,6 +2,7 @@ package com.unison.appartment.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.unison.appartment.model.UncompletedTask;
@@ -22,7 +23,7 @@ public class TodoTaskViewModel extends ViewModel {
         return repository.getTaskLiveData();
     }
 
-    public LiveData<Boolean> getErrorLiveData() {
+    public MutableLiveData<Boolean> getErrorLiveData() {
         return repository.getErrorLiveData();
     }
 

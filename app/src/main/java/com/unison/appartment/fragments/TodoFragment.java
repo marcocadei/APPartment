@@ -174,6 +174,8 @@ public class TodoFragment extends Fragment implements TodoListFragment.OnTodoLis
                 }
             } else if (resultCode == TaskDetailActivity.RESULT_EDITED) {
                 listFragment.editTask((UncompletedTask)data.getParcelableExtra(EXTRA_NEW_TASK));
+            } else if (resultCode == TaskDetailActivity.RESULT_ERROR) {
+                onTodoListError(true);
             }
         }
     }

@@ -242,6 +242,10 @@ public class PostRepository {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(postPath + DatabaseConstants.SEPARATOR + post.getId(), null);
         // Rimuovo il riferimento al post da home-users-refs
+        /*
+        Nota importante: Funziona solo sui propri post, altrimenti NON elimina il riferimento da
+        home-user-refs!
+         */
         childUpdates.put(homeUserRefPath + DatabaseConstants.SEPARATOR + post.getId(), null);
 
         rootRef.updateChildren(childUpdates);

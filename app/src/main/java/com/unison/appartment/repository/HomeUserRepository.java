@@ -54,7 +54,7 @@ public class HomeUserRepository {
         return homeUserLiveData;
     }
 
-    public LiveData<Boolean> getErrorLiveData() {
+    public MutableLiveData<Boolean> getErrorLiveData() {
         return error;
     }
 
@@ -75,7 +75,6 @@ public class HomeUserRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -100,11 +99,13 @@ public class HomeUserRepository {
         for (String rewardId : requestedRewards) {
             childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONID, null);
             childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, null);
+            childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, 0);
         }
         for (String taskId : assignedTasks) {
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERID, null);
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, null);
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_MARKED, false);
+            childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, 0);
         }
 
         if (newOwnerId != null) {
@@ -151,6 +152,11 @@ public class HomeUserRepository {
     }
 
     public void changeNickname(String userId, Set<String> requestedRewards, Set<String> assignedTasks, Set<String> ownPosts, String newNickname) {
+        if (Appartment.getInstance().getHomeUser(userId) == null) {
+            error.setValue(true);
+            return;
+        }
+
         String homeName = Appartment.getInstance().getHome().getName();
         String homeUserPath = DatabaseConstants.HOMEUSERS + DatabaseConstants.SEPARATOR + homeName +
                 DatabaseConstants.SEPARATOR + userId + DatabaseConstants.SEPARATOR +
@@ -164,14 +170,16 @@ public class HomeUserRepository {
 
         final Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(homeUserPath, newNickname);
-        for (String postId : ownPosts) {
-            childUpdates.put(basePostPath + postId + DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS_HOMENAME_POSTID_AUTHOR, newNickname);
-        }
+//        for (String postId : ownPosts) {
+//            childUpdates.put(basePostPath + postId + DatabaseConstants.SEPARATOR + DatabaseConstants.POSTS_HOMENAME_POSTID_AUTHOR, newNickname);
+//        }
         for (String rewardId : requestedRewards) {
             childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_RESERVATIONNAME, newNickname);
+            childUpdates.put(baseRewardPath + rewardId + DatabaseConstants.SEPARATOR + DatabaseConstants.REWARDS_HOMENAME_REWARDID_VERSION, 0);
         }
         for (String taskId : assignedTasks) {
             childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_ASSIGNEDUSERNAME, newNickname);
+            childUpdates.put(baseTaskPath + taskId + DatabaseConstants.SEPARATOR + DatabaseConstants.UNCOMPLETEDTASKS_HOMENAME_TASKID_VERSION, 0);
         }
         rootRef.updateChildren(childUpdates);
     }

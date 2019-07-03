@@ -75,7 +75,10 @@ public class RewardListFragment extends Fragment {
         viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean error) {
-                listener.onRewardListError(error);
+                if (error) {
+                    listener.onRewardListError(true);
+                    viewModel.getErrorLiveData().setValue(false);
+                }
             }
         });
 

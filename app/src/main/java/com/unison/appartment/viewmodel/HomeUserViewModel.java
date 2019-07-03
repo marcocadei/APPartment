@@ -3,6 +3,7 @@ package com.unison.appartment.viewmodel;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.unison.appartment.model.HomeUser;
@@ -24,7 +25,7 @@ public class HomeUserViewModel extends ViewModel {
         return repository.getHomeUserLiveData();
     }
 
-    public LiveData<Boolean> getErrorLiveData() {
+    public MutableLiveData<Boolean> getErrorLiveData() {
         return repository.getErrorLiveData();
     }
 

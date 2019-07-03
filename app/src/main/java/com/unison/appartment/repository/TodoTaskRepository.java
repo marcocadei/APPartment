@@ -1,6 +1,5 @@
 package com.unison.appartment.repository;
 
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class TodoTaskRepository {
 
@@ -57,7 +55,7 @@ public class TodoTaskRepository {
         return taskLiveData;
     }
 
-    public LiveData<Boolean> getErrorLiveData() {
+    public MutableLiveData<Boolean> getErrorLiveData() {
         return error;
     }
 
@@ -94,7 +92,6 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -113,7 +110,6 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -139,7 +135,6 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -165,7 +160,6 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -193,7 +187,6 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -225,7 +218,6 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
@@ -252,12 +244,16 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
 
     public void cancelCompletion(String taskId, String userId, int taskVersion) {
+        if (Appartment.getInstance().getHomeUser(userId) == null) {
+            error.setValue(true);
+            return;
+        }
+
         Map<String, Object> childUpdates = new HashMap<>();
 
         String homeName = Appartment.getInstance().getHome().getName();
@@ -278,12 +274,16 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }
 
     public void confirmCompletion(UncompletedTask task, String assignedUserId) {
+        if (Appartment.getInstance().getHomeUser(assignedUserId) == null) {
+            error.setValue(true);
+            return;
+        }
+
         Map<String, Object> childUpdates = new HashMap<>();
         String homeName = Appartment.getInstance().getHome().getName();
         String uncompletedTaskPath = DatabaseConstants.UNCOMPLETEDTASKS + DatabaseConstants.SEPARATOR + homeName +
@@ -322,7 +322,7 @@ public class TodoTaskRepository {
         childUpdates.put(completedTaskPath, completedTask);
 
         // Aggiornamento di completions
-        Completion completion = new Completion(Appartment.getInstance().getHomeUser(assignedUserId).getNickname(), task.getPoints(), (-1) * completionDate);
+        Completion completion = new Completion(homeUser.getNickname(), task.getPoints(), (-1) * completionDate);
         String key = rootRef.child(completionPath).push().getKey();
         childUpdates.put(completionPath + DatabaseConstants.SEPARATOR + key, completion);
 
@@ -334,7 +334,6 @@ public class TodoTaskRepository {
             public void onFailure(@NonNull Exception e) {
                 // C'è un errore e quindi lo notifico, ma subito dopo l'errore non c'è più
                 error.setValue(true);
-                error.setValue(false);
             }
         });
     }

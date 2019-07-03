@@ -20,8 +20,8 @@
             android:id="@+id/activity_main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:logo="@drawable/ic_family"
-            app:title="@string/placeholder_text"
+            app:logo="@drawable/ic_messages"
+            app:title="@string/activity_main_bottom_navigation_messages"
             app:titleMarginStart="32dp"
             app:titleTextColor="@color/colorPrimaryText"
             app:menu="@menu/activity_main_toolbar">
