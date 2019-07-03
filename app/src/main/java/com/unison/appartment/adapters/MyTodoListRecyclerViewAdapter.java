@@ -66,8 +66,7 @@ public class MyTodoListRecyclerViewAdapter extends ListAdapter<UncompletedTask, 
             holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check, null));
             holder.taskAssignedUser.setVisibility(View.GONE);
         }
-
-        if (uncompletedTask.isAssigned()) {
+        else {
             holder.itemIcon.setImageDrawable(res.getDrawable(R.drawable.ic_check_circle, null));
             if (uncompletedTask.getAssignedUserId().equals(new FirebaseAuth().getCurrentUserUid())) {
                 holder.taskAssignedUser.setText(res.getString(R.string.fragment_todo_text_assigned_user_self));
