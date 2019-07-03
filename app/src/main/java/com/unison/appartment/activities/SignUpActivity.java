@@ -30,7 +30,6 @@ import com.google.firebase.database.DatabaseError;
 import com.unison.appartment.database.DatabaseReader;
 import com.unison.appartment.database.DatabaseReaderListener;
 import com.unison.appartment.database.FirebaseDatabaseReader;
-import com.unison.appartment.model.HomeUser;
 import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 import com.unison.appartment.database.Auth;

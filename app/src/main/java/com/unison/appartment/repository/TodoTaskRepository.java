@@ -1,8 +1,6 @@
 package com.unison.appartment.repository;
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -14,7 +12,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.CompletedTask;
 import com.unison.appartment.model.Completion;
 import com.unison.appartment.model.HomeUser;

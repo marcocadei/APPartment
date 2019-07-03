@@ -1,24 +1,20 @@
 package com.unison.appartment.activities;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.appeaser.imagetransitionlibrary.ImageTransitionUtil;
-import com.appeaser.imagetransitionlibrary.TransitionImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.github.chrisbanes.photoview.PhotoView;
 import com.unison.appartment.R;
 import com.unison.appartment.utils.ImageUtils;
 

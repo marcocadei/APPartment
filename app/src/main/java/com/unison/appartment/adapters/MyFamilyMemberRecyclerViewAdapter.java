@@ -17,10 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.unison.appartment.R;
 import com.unison.appartment.model.HomeUser;
-import com.unison.appartment.model.User;
 import com.unison.appartment.fragments.FamilyMemberListFragment.OnFamilyMemberListFragmentInteractionListener;
-
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter Adapter} che può visualizzare una lista di

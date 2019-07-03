@@ -263,7 +263,7 @@ public class InsertPostFragment extends Fragment {
                 } else {
                     // Il permesso è stato negato, non effettuo la registrazione
                 }
-                return;
+                break;
             }
             // Altri CASE se l'applicazione richiede anche altri permessi
         }

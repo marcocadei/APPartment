@@ -1,7 +1,5 @@
 package com.unison.appartment.repository;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

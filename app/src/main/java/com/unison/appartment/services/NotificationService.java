@@ -39,8 +39,6 @@ import com.unison.appartment.model.UserHome;
 import com.unison.appartment.state.Appartment;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class NotificationService extends Service {

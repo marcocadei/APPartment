@@ -3,7 +3,6 @@ package com.unison.appartment.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -12,8 +11,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.unison.appartment.R;
-import com.unison.appartment.activities.UserProfileActivity;
 import com.unison.appartment.database.DatabaseConstants;
 import com.unison.appartment.database.FirebaseAuth;
 import com.unison.appartment.model.Home;
