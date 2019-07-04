@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_family"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FamilyFragment">
+
+    <FrameLayout
+        android:id="@+id/fragment_family_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_container_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_family_text_members">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/fragment_family_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_bar_component_height"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/fragment_family_text_members"
+        style="@style/Component.TextView.SingleLine.ListItemTitle"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_extra_small"
+        android:layout_marginBottom="@dimen/margin_extra_small"
+        android:textSize="@dimen/text_large"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_family_progress_container"
+        app:layout_constraintBottom_toTopOf="@id/fragment_family_member_list" />
+
+    <fragment
+        android:id="@+id/fragment_family_member_list"
+        android:name="com.unison.appartment.fragments.FamilyMemberListFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_family_text_members"
+        app:layout_constraintBottom_toTopOf="@id/fragment_family_layout_buttons"
+        tools:layout="@layout/fragment_family_member_list" />
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_family_layout_buttons"
+        style="@style/Component.Layout.ButtonSet"
+        app:layout_constraintTop_toBottomOf="@id/fragment_family_member_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_family_btn_stats"
+            style="@style/Component.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_family_btn_stats"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

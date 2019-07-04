@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".activities.EnterActivity">
+
+    <ImageView
+        android:id="@+id/activity_enter_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="320dp"
+        android:contentDescription="@string/caption_app_logo"
+        app:layout_constraintBottom_toTopOf="@+id/activity_enter_btn_signup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/logo_1000_text" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/activity_enter_btn_signup"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_title"
+        android:layout_marginEnd="@dimen/margin_title"
+        android:text="@string/activity_enter_btn_signup"
+        app:icon="@drawable/ic_person_add"
+        app:layout_constraintBottom_toTopOf="@id/activity_enter_btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_enter_logo" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/activity_enter_btn_login"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_title"
+        android:layout_marginEnd="@dimen/margin_title"
+        android:text="@string/activity_enter_btn_login"
+        app:icon="@drawable/rotated_270_ic_file_download"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_enter_btn_signup" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

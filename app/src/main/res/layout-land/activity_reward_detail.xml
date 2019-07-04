@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activity_reward_detail"
+    tools:context=".activities.RewardDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/activity_reward_detail_appbar"
+        style="@style/Component.AppBarWithBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activity_reward_detail_toolbar"
+            style="@style/Component.ToolbarWithBackButton"
+            app:menu="@menu/activity_reward_detail_toolbar"
+            app:title="@string/activity_reward_detail_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/activity_reward_detail_scroll"
+        style="@style/Component.ScrollView"
+        app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_appbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_layout_buttons">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Component.Layout.ScrollViewChild">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_reward_detail_layout_header"
+                app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_layout_attributes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/Component.Layout.Header">
+
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_name"
+                    style="@style/Component.TextView.MultiLine.ObjectTitle"
+                    android:text="@string/placeholder_text"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_reward_detail_layout_points"
+                    app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_layout_points"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/activity_reward_detail_layout_points" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/activity_reward_detail_layout_points"
+                    style="@style/Component.Layout.Points"
+                    app:layout_constraintStart_toEndOf="@id/activity_reward_detail_text_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/activity_reward_detail_text_points_value"
+                        style="@style/Component.TextView.SingleLine.PointsValue"
+                        android:text="@string/placeholder_number"
+                        app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_points_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/activity_reward_detail_text_points_name"
+                        style="@style/Component.TextView.SingleLine.PointsName"
+                        android:text="@string/general_points_name"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/activity_reward_detail_text_points_value"
+                        app:layout_constraintStart_toStartOf="@id/activity_reward_detail_text_points_value"
+                        app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_points_value" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_reward_detail_layout_attributes"
+                app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_layout_header"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/Component.Layout.AttributeSet">
+
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_description_title"
+                    style="@style/Component.TextView.MultiLine.AttributeTitle"
+                    android:text="@string/desc_rewards_homename_rewardid_description"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_description_value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_description_value"
+                    style="@style/Component.TextView.MultiLine.AttributeValue"
+                    android:text="@string/placeholder_text_long"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_reservation_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_description_title" />
+
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_reservation_title"
+                    style="@style/Component.TextView.MultiLine.AttributeTitle"
+                    android:text="@string/activity_reward_detail_text_reservation_title"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_reservation_value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_description_value" />
+
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_reservation_value"
+                    style="@style/Component.TextView.MultiLine.AttributeValue"
+                    android:text="@string/placeholder_text"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_text_info"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_reservation_title" />
+
+                <!-- Nota: Il drawableStart è creato appositamente già colorato poiché su alcuni
+                dispositivi anche definendo l'attributo android:Tint l'immagine non viene ricolorata. -->
+                <TextView
+                    android:id="@+id/activity_reward_detail_text_info"
+                    style="@style/Component.TextView.MultiLine.TextWithDrawableLeft"
+                    android:drawableStart="@drawable/ic_info_outline_color_6a1b9a"
+                    android:text="@string/activity_reward_detail_text_info"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_text_reservation_value" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_reward_detail_layout_buttons"
+        style="@style/Component.Layout.ButtonSet"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_scroll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_reward_detail_layout_not_delete_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/activity_reward_detail_btn_delete">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activity_reward_detail_btn_reserve"
+                style="@style/Component.Button"
+                android:text="@string/activity_reward_detail_btn_reserve_reward_available"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_btn_confirm_reservation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activity_reward_detail_btn_confirm_reservation"
+                style="@style/Component.Button"
+                android:text="@string/activity_reward_detail_btn_confirm_reservation"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/margin_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/activity_reward_detail_btn_cancel_reservation"
+                app:layout_constraintStart_toEndOf="@id/activity_reward_detail_btn_reserve"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activity_reward_detail_btn_cancel_reservation"
+                style="@style/Component.Button"
+                android:text="@string/activity_reward_detail_btn_cancel_reservation"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/activity_reward_detail_btn_confirm_reservation"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_reward_detail_btn_delete"
+            style="@style/Component.Button"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/activity_reward_detail_btn_delete"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_reward_detail_layout_not_delete_buttons" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_todo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.TodoFragment">
+
+    <FrameLayout
+        android:id="@+id/fragment_todo_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_container_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_todo_layout_empty_list">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/fragment_todo_progress"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_bar_component_height"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_todo_layout_empty_list"
+        app:layout_constraintTop_toBottomOf="@id/fragment_todo_progress_container"
+        app:layout_constraintBottom_toTopOf="@id/fragment_todo_todolist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        style="@style/Component.Layout.NestedScrollViewFixedElement">
+
+        <TextView
+            android:id="@+id/fragment_todo_empty_list_title"
+            style="@style/Component.TextView.MultiLine.EmptyListTitle"
+            app:layout_constraintBottom_toTopOf="@id/fragment_todo_empty_list_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_todo_empty_list_text"
+            style="@style/Component.TextView.MultiLine"
+            android:text="@string/fragment_todo_empty_list_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_todo_empty_list_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <fragment
+        android:id="@+id/fragment_todo_todolist"
+        android:name="com.unison.appartment.fragments.TodoListFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_todo_layout_empty_list"
+        tools:layout="@layout/fragment_todo_list" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_todo_float_add_task"
+        style="@style/CustomFloatingActionButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

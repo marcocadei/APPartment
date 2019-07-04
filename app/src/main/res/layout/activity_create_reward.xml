@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    tools:context=".activities.CreateRewardActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/activity_create_reward_appbar"
+        style="@style/Component.AppBarWithBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activity_create_reward_toolbar"
+            style="@style/Component.ToolbarWithBackButton"
+            app:title="@string/activity_create_reward_title_new" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        style="@style/Component.ScrollView"
+        app:layout_constraintTop_toBottomOf="@id/activity_create_reward_appbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Component.Layout.ScrollViewChild">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_create_reward_layout_title"
+                style="@style/Component.Layout.Header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_reward_input_name"
+                app:layout_constraintVertical_bias="0.5">
+
+                <TextView
+                    android:id="@+id/activity_create_reward_text_title"
+                    style="@style/Component.TextView.MultiLine.FancyTitleWithImage"
+                    android:text="@string/activity_create_reward_title_new"
+                    app:layout_constraintEnd_toStartOf="@+id/activity_create_reward_img_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/activity_create_reward_img_title"
+                    style="@style/Component.ImageView.FancyTitleImage"
+                    android:contentDescription="@string/caption_ic_card_giftcard"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_create_reward_text_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/activity_create_reward_text_title"
+                    app:layout_constraintTop_toTopOf="@+id/activity_create_reward_text_title"
+                    app:srcCompat="@drawable/ic_rewards" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_reward_input_name"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/desc_rewards_homename_rewardid_name"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@+id/activity_create_reward_input_points"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_reward_layout_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_reward_input_name_value"
+                    android:maxLength="32"
+                    style="@style/CustomFormTextFieldInput" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_reward_input_points"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/desc_rewards_homename_rewardid_points"
+                app:layout_constraintBottom_toTopOf="@id/activity_create_reward_input_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_create_reward_input_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_reward_input_points_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:maxLength="9"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_create_reward_input_description"
+                style="@style/CustomFormTextFieldLayout"
+                android:hint="@string/desc_rewards_homename_rewardid_description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_create_reward_input_points">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_create_reward_input_description_value"
+                    style="@style/CustomFormTextFieldInput"
+                    android:maxLength="256"
+                    android:inputType="textCapSentences|textImeMultiLine"
+                    android:imeOptions="actionDone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activity_create_reward_float_confirm"
+        style="@style/CustomFloatingActionButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_check" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/colorBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/post_sender"
+                android:text="@string/placeholder_text"
+                style="@style/Component.TextView.SingleLine.ListItemTitle"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/post_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fragment_audio_post_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/fragment_audio_post_state_play"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_audio_post_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fragment_audio_post_btn"
+                app:layout_constraintTop_toTopOf="@+id/fragment_audio_post_btn" />
+
+            <ImageButton
+                android:id="@+id/fragment_audio_post_btn"
+                style="@style/Component.ImageView.ListItemIcon"
+                android:contentDescription="@string/caption_ic_play_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/post_sender"
+                app:srcCompat="@drawable/ic_play_arrow" />
+
+            <TextView
+                android:id="@+id/post_date"
+                android:text="@string/placeholder_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/post_options"
+                app:layout_constraintTop_toTopOf="@+id/post_sender" />
+
+            <ImageView
+                android:id="@+id/post_options"
+                android:src="@drawable/ic_more_vert"
+                android:tint="@color/colorPrimary"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

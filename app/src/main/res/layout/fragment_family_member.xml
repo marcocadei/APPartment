@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_family_member"
+    style="@style/Component.Layout.ListItem">
+
+    <ImageView
+        android:id="@+id/fragment_family_member_img_member"
+        style="@style/Component.ImageView.ListItemIcon"
+        android:contentDescription="@string/caption_profile_pic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_family_member_layout_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_person" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_family_member_layout_name"
+        app:layout_constraintStart_toEndOf="@id/fragment_family_member_img_member"
+        app:layout_constraintEnd_toStartOf="@id/fragment_family_member_layout_points"
+        app:layout_constraintTop_toTopOf="@id/fragment_family_member_layout_points"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_family_member_layout_points"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/fragment_family_member_text_name"
+            android:text="@string/placeholder_text_long"
+            style="@style/Component.TextView.SingleLine.ListItemTitle"
+            app:layout_constraintBottom_toTopOf="@id/fragment_family_member_text_role"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_family_member_text_role"
+            android:text="@string/placeholder_text_long"
+            style="@style/Component.TextView.SingleLine.ListItemDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_family_member_text_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_family_member_layout_points"
+        style="@style/Component.Layout.Points"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fragment_family_member_layout_name"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fragment_family_member_text_points_value"
+            style="@style/Component.TextView.SingleLine.PointsValue"
+            android:text="@string/placeholder_number"
+            app:layout_constraintBottom_toTopOf="@id/fragment_family_member_text_points_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_family_member_text_points_name"
+            style="@style/Component.TextView.SingleLine.PointsName"
+            android:text="@string/general_points_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/fragment_family_member_text_points_value"
+            app:layout_constraintStart_toStartOf="@id/fragment_family_member_text_points_value"
+            app:layout_constraintTop_toBottomOf="@id/fragment_family_member_text_points_value" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
