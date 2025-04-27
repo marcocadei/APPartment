@@ -71,4 +71,4 @@ Once you've accumulated enough points you can ask for a reward! :tada:
 Those are created by a leader or the owner, which establishes an amount of points associated to it.  
 
 ## Contributors
-I've made this project with [Gianluca Roscigno](https://github.com/gianluca150) and [Andrea Pitosi](https://github.com/AndreaPitossi).
+I've made this project with [Gianluca Roscigno](https://github.com/gianluca150) and [Andrea Pitossi](https://github.com/AndreaPitossi).
